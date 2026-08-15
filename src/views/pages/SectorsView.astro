@@ -2,8 +2,11 @@
 import { MARKETS, type Locale } from '../../config';
 import { UI } from '../../i18n/ui';
 import { sectors as sectorData } from '../../lib/data';
+import { sectorsDataset } from '../../lib/schema';
 import { fmtCap, fmtDate, fmtNum, fmtPct, fmtRatioPct } from '../../lib/format';
 import Base from '../../layouts/Base.astro';
+import PageEssay from '../../components/PageEssay.astro';
+import { ESSAYS } from '../../i18n/page-essays';
 import Treemap from '../../components/Treemap.astro';
 import PlaceholderNotice from '../../components/PlaceholderNotice.astro';
 import ScrollArea from '../../components/ScrollArea.astro';
@@ -21,7 +24,7 @@ const windows = [
 ] as const;
 ---
 
-<Base lang={lang} page="sectors" title={t.sectors.title} description={t.sectors.intro} live={['sectors']}>
+<Base lang={lang} page="sectors" title={t.seo.sectors.title} description={t.seo.sectors.description} live={['sectors']} schema={[sectorsDataset(lang)]}>
   <div class="wrap">
     <PlaceholderNotice lang={lang} datasets={['sectors']} />
 
@@ -104,25 +107,29 @@ const windows = [
         );
       })
     }
-  </div>
+  
+    <PageEssay lang={lang} heading={ESSAYS.sectors[lang].heading} sections={ESSAYS.sectors[lang].sections} />
+</div>
+
+  <script slot="scripts" is:inline>
+    (() => {
+      const buttons = document.querySelectorAll('[data-window-btn]');
+      if (!buttons.length) return;
+      buttons.forEach((btn) =>
+        btn.addEventListener('click', () => {
+          const key = btn.dataset.windowBtn;
+          buttons.forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
+          document.querySelectorAll('[data-window]').forEach((g) => {
+            /* SVG <g> ignores the `hidden` IDL property — set display directly */
+            g.style.display = g.dataset.window === key ? '' : 'none';
+          });
+          document.querySelectorAll('[data-legend]').forEach((l) => {
+            l.hidden = l.dataset.legend !== key;
+          });
+        }),
+      );
+    })();
+  </script>
 </Base>
 
-<script is:inline>
-  (() => {
-    const buttons = document.querySelectorAll('[data-window-btn]');
-    if (!buttons.length) return;
-    buttons.forEach((btn) =>
-      btn.addEventListener('click', () => {
-        const key = btn.dataset.windowBtn;
-        buttons.forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
-        document.querySelectorAll('[data-window]').forEach((g) => {
-          /* SVG <g> ignores the `hidden` IDL property — set display directly */
-          g.style.display = g.dataset.window === key ? '' : 'none';
-        });
-        document.querySelectorAll('[data-legend]').forEach((l) => {
-          l.hidden = l.dataset.legend !== key;
-        });
-      }),
-    );
-  })();
-</script>
+

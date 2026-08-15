@@ -1,0 +1,19 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BlogIndexView from '../../../../views/pages/BlogIndexView.astro';
+import { postsFor, CATEGORIES } from '../../../../lib/blog';
+
+export const getStaticPaths = (async () => {
+  const all = await postsFor('ko');
+  /* Only categories that actually have a post — an empty category page is a
+     thin page Google will treat as soft-404. */
+  return CATEGORIES.filter((c) => all.some((p) => p.data.category === c)).map((c) => ({
+    params: { category: c },
+    props: { posts: all.filter((p) => p.data.category === c), category: c },
+  }));
+}) satisfies GetStaticPaths;
+
+const { posts, category } = Astro.props;
+---
+
+<BlogIndexView lang="ko" posts={posts} category={category} slug={`blog/category/${category}`} />

@@ -1,0 +1,186 @@
+---
+/**
+ * Blog index, shared by /blog/ and /ko/blog/ and by the category pages.
+ * One view, two languages, one set of markup.
+ */
+import type { Locale } from '../../config';
+import { UI, fill } from '../../i18n/ui';
+import { pageAbsolute, pageHref } from '../../lib/paths';
+import { categoriesWithCounts, categoryLabel, PAGE_SIZE, postsFor, slugOf, type Post } from '../../lib/blog';
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+
+interface Props {
+  lang: Locale;
+  posts: Post[];
+  featured?: Post[];
+  /** 1-based. */
+  pageNum?: number;
+  totalPages?: number;
+  /** Set on a category page. */
+  category?: string;
+  /** Canonical slug of this page, e.g. 'blog' or 'blog/category/data'. */
+  slug: string;
+}
+const { lang, posts, featured = [], pageNum = 1, totalPages = 1, category, slug } = Astro.props;
+const t = UI[lang];
+
+const cats = await categoriesWithCounts(lang);
+
+/* Only advertise a counterpart that exists. Korean has no `data` category and
+   only one page of posts, so a blanket same-slug hreflang pointed at two URLs
+   that were never built. */
+const otherLang: Locale = lang === 'en' ? 'ko' : 'en';
+const otherPosts = await postsFor(otherLang);
+const otherHasCategory = category ? otherPosts.some((p) => p.data.category === category) : true;
+const otherPageCount = Math.max(1, Math.ceil(otherPosts.length / PAGE_SIZE));
+const otherExists = otherPosts.length > 0 && otherHasCategory && pageNum <= otherPageCount;
+const selfUrl = pageAbsolute(lang, slug);
+const otherUrl = otherExists ? pageAbsolute(otherLang, slug) : null;
+const alternates = lang === 'en' ? { en: selfUrl, ko: otherUrl } : { en: otherUrl, ko: selfUrl };
+const catName = category ? categoryLabel(category, lang) : null;
+
+const heading = catName ? fill(t.blog.inCategory, { category: catName }) : t.blog.title;
+const seoTitle = catName
+  ? `${fill(t.blog.inCategory, { category: catName })} | StockPulse`
+  : pageNum > 1
+    ? `${t.blog.title} — ${fill(t.blog.pageOf, { n: pageNum, m: totalPages })} | StockPulse`
+    : t.blog.indexSeoTitle;
+const seoDesc = catName ? fill(t.blog.categorySeoDesc, { category: catName }) : t.blog.indexSeoDesc;
+
+/* Page 2+ of a paginated list is a thin, near-duplicate surface; keep it
+   crawlable for discovery but out of the index. */
+const noindex = pageNum > 1;
+
+const itemList = {
+  '@type': 'ItemList',
+  '@id': `${pageAbsolute(lang, slug)}#articles`,
+  name: heading,
+  numberOfItems: posts.length,
+  itemListOrder: 'https://schema.org/ItemListOrderDescending',
+  itemListElement: posts.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: pageAbsolute(lang, `blog/${slugOf(p)}`),
+    name: p.data.title,
+  })),
+};
+
+const breadcrumbs = catName
+  ? [
+      { name: t.nav.home, slug: '' },
+      { name: t.blog.title, slug: 'blog' },
+      { name: catName, slug: `blog/category/${category}` },
+    ]
+  : [
+      { name: t.nav.home, slug: '' },
+      { name: t.blog.title, slug: 'blog' },
+    ];
+---
+
+<Base
+  lang={lang}
+  page={slug}
+  title={seoTitle}
+  description={seoDesc}
+  noindex={noindex}
+  alternates={alternates}
+  langFallback="blog"
+  schema={[itemList]}
+  breadcrumbs={breadcrumbs}
+>
+  <div class="wrap">
+    <div class="page-head">
+      <h1>{heading}</h1>
+      <p class="lede">{catName ? seoDesc : t.blog.intro}</p>
+    </div>
+
+    <nav class="chip-row" aria-label={t.blog.categories} style="margin-bottom:1.4rem;">
+      <a class={`chip${!category ? ' chip-ok' : ''}`} href={pageHref(lang, 'blog')} aria-current={!category ? 'page' : undefined}>
+        {t.blog.allPosts}
+      </a>
+      {
+        cats.map((c) => (
+          <a
+            class={`chip${category === c.id ? ' chip-ok' : ''}`}
+            href={pageHref(lang, `blog/category/${c.id}`)}
+            aria-current={category === c.id ? 'page' : undefined}
+          >
+            {c.label} <b>{c.count}</b>
+          </a>
+        ))
+      }
+    </nav>
+
+    {
+      featured.length > 0 && (
+        <section aria-labelledby="featured-h">
+          <div class="section-head">
+            <h2 id="featured-h">{t.blog.featured}</h2>
+          </div>
+          <div class="post-grid post-grid-feature">
+            {featured.map((p) => (
+              <PostCard lang={lang} post={p} feature />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <section aria-labelledby="list-h">
+      <div class="section-head">
+        <h2 id="list-h">{catName ?? t.blog.allPosts}</h2>
+        {totalPages > 1 && <p>{fill(t.blog.pageOf, { n: pageNum, m: totalPages })}</p>}
+      </div>
+
+      {
+        posts.length === 0 ? (
+          <p class="muted">{t.blog.noPosts}</p>
+        ) : (
+          <div class="post-grid">
+            {posts.map((p) => (
+              <PostCard lang={lang} post={p} />
+            ))}
+          </div>
+        )
+      }
+
+      {
+        totalPages > 1 && (
+          <nav class="pager" aria-label={t.blog.allPosts}>
+            {pageNum > 1 ? (
+              <a class="btn" href={pageHref(lang, pageNum === 2 ? 'blog' : `blog/page/${pageNum - 1}`)} rel="prev">
+                ← {t.blog.prevPage}
+              </a>
+            ) : (
+              <span />
+            )}
+            {pageNum < totalPages && (
+              <a class="btn" href={pageHref(lang, `blog/page/${pageNum + 1}`)} rel="next">
+                {t.blog.nextPage} →
+              </a>
+            )}
+          </nav>
+        )
+      }
+    </section>
+  </div>
+</Base>
+
+<style>
+  .post-grid {
+    display: grid;
+    gap: 0.7rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+  .post-grid-feature {
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    margin-bottom: 0.5rem;
+  }
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.4rem;
+  }
+</style>

@@ -1,7 +1,7 @@
 ---
 import type { Locale } from '../config';
 import { UI } from '../i18n/ui';
-import { fmtNum, relativeTime } from '../lib/format';
+import { fmtDateTime, fmtNum } from '../lib/format';
 import type { NewsItem } from '../lib/types';
 
 interface Props {
@@ -21,6 +21,7 @@ const arrow = item.sentimentLabel === 'bullish' ? '▲' : item.sentimentLabel ==
   class="news-item"
   data-tickers={item.tickers.join(',')}
   data-lang={item.lang}
+  {...(item.lang === 'en' || item.lang === 'ko' ? { lang: item.lang } : {})}
   data-sentiment={item.sentimentLabel}
 >
   <h3>
@@ -34,7 +35,9 @@ const arrow = item.sentimentLabel === 'bullish' ? '▲' : item.sentimentLabel ==
     </span>
     <span>{item.source}</span>
     <span aria-hidden="true">·</span>
-    <time datetime={item.publishedAt} data-rel>{relativeTime(item.publishedAt, lang, now)}</time>
+    {/* Absolute in the HTML, relative once JS runs. A build-time "1 hour ago"
+        is wrong the moment it is cached, and one of them read "in 2 hours". */}
+    <time datetime={item.publishedAt} data-rel>{fmtDateTime(item.publishedAt, lang)}</time>
     <span aria-hidden="true">·</span>
     <span class="badge">{item.lang.toUpperCase()}</span>
     {

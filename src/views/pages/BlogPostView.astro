@@ -1,0 +1,389 @@
+---
+/**
+ * A single article.
+ *
+ * The provenance block below is the point of this page as much as the prose is.
+ * Who wrote it, who checked it, whether a machine drafted it, and what it is
+ * based on are the E-E-A-T signals a YMYL finance page is judged on, and the
+ * AdSense "misleading representation" policy treats concealing machine
+ * involvement as a violation rather than an omission. So the disclosure is
+ * rendered above the article body at full contrast, not tucked into a footer.
+ */
+import type { Locale } from '../../config';
+import { SITE } from '../../config';
+import { UI, fill } from '../../i18n/ui';
+import { absolute, pageAbsolute, pageHref } from '../../lib/paths';
+import { fmtDate } from '../../lib/format';
+import {
+  authorOf,
+  categoryLabel,
+  lastModified,
+  readingTime,
+  slugOf,
+  type Post,
+} from '../../lib/blog';
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+
+interface Props {
+  lang: Locale;
+  post: Post;
+  /** Rendered markdown. */
+  Content: any;
+  related: Post[];
+  newer: Post | null;
+  older: Post | null;
+  /** Absolute URL of the counterpart post, or null when untranslated. */
+  counterpartUrl: string | null;
+}
+const { lang, post, Content, related, newer, older, counterpartUrl } = Astro.props;
+const t = UI[lang];
+const d = post.data;
+const slug = slugOf(post);
+const pageSlug = `blog/${slug}`;
+const author = authorOf(post);
+const mins = readingTime(post.body ?? '');
+const modified = lastModified(post);
+const url = pageAbsolute(lang, pageSlug);
+
+/* A post with no counterpart advertises only itself. Pointing hreflang at a
+   URL that was never built is worse than emitting no alternate at all. */
+const alternates =
+  lang === 'en' ? { en: url, ko: counterpartUrl } : { en: counterpartUrl, ko: url };
+
+const articleSchema = {
+  '@type': 'BlogPosting',
+  '@id': `${url}#article`,
+  headline: d.title.slice(0, 110),
+  description: d.description,
+  url,
+  datePublished: d.publishedAt.toISOString(),
+  dateModified: modified.toISOString(),
+  inLanguage: lang === 'ko' ? 'ko-KR' : 'en-US',
+  mainEntityOfPage: { '@id': `${url}#page` },
+  image: [absolute(lang === 'ko' ? 'og-ko.png' : 'og-en.png')],
+  author: {
+    '@type': 'Organization',
+    name: author.name,
+    url: pageAbsolute(lang, 'editorial-policy'),
+  },
+  publisher: { '@id': `${absolute('')}#publisher` },
+  articleSection: categoryLabel(d.category, lang),
+  keywords: d.tags.join(', '),
+  wordCount: (post.body ?? '').split(/\s+/).length,
+  isAccessibleForFree: true,
+  license: pageAbsolute(lang, 'disclaimer'),
+  ...(d.aiAssisted && d.aiNote ? { creativeWorkStatus: 'Published', usageInfo: pageAbsolute(lang, 'editorial-policy') } : {}),
+};
+
+const breadcrumbs = [
+  { name: t.nav.home, slug: '' },
+  { name: t.blog.title, slug: 'blog' },
+  { name: categoryLabel(d.category, lang), slug: `blog/category/${d.category}` },
+];
+---
+
+<Base
+  lang={lang}
+  page={pageSlug}
+  title={d.seoTitle || d.title}
+  description={d.description}
+  ogType="article"
+  publishedTime={d.publishedAt.toISOString()}
+  modifiedTime={modified.toISOString()}
+  alternates={alternates}
+  langFallback="blog"
+  schema={[articleSchema]}
+  breadcrumbs={breadcrumbs}
+>
+  <div class="wrap wrap-narrow">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href={pageHref(lang, 'blog')}>{t.blog.title}</a>
+      <span aria-hidden="true">/</span>
+      <a href={pageHref(lang, `blog/category/${d.category}`)}>{categoryLabel(d.category, lang)}</a>
+    </nav>
+
+    <article>
+      <header class="post-head">
+        <h1>{d.title}</h1>
+        <p class="post-dates">
+          <span>
+            {t.blog.published}{' '}
+            <time datetime={d.publishedAt.toISOString()}>{fmtDate(d.publishedAt.toISOString(), lang)}</time>
+          </span>
+          {
+            d.updatedAt && (
+              <span>
+                {t.blog.updated}{' '}
+                <time datetime={d.updatedAt.toISOString()}>{fmtDate(d.updatedAt.toISOString(), lang)}</time>
+              </span>
+            )
+          }
+          <span>{fill(t.blog.readingTime, { n: mins })}</span>
+          <a class="chip" href={pageHref(lang, `blog/category/${d.category}`)}>{categoryLabel(d.category, lang)}</a>
+        </p>
+        <p class="lede">{d.description}</p>
+      </header>
+
+      {/* ---- provenance: who is accountable, and how it was made ---- */}
+      <section class="provenance" aria-labelledby="prov-h">
+        <h2 id="prov-h" class="visually-hidden">{t.blog.aiTitle}</h2>
+
+        <div class="prov-people">
+          <p class="prov-line">
+            <span class="notice-k">{t.blog.writtenBy}</span>
+            <b>{author.name}</b>
+            <span class="muted"> · {author.role[lang]}</span>
+          </p>
+          <p class="prov-bio">{author.bio[lang]}</p>
+          <p class="prov-line">
+            <span class="notice-k">{t.blog.reviewedBy}</span>
+            <b>{d.reviewedBy}</b>
+          </p>
+          <p class="prov-bio">{t.blog.reviewedByHelp}</p>
+        </div>
+
+        <div class={`prov-ai${d.aiAssisted ? ' prov-ai-on' : ''}`}>
+          <p class="prov-line">
+            <span aria-hidden="true">{d.aiAssisted ? '◐' : '✎'}</span>
+            <b>{d.aiAssisted ? t.blog.aiBadge : t.blog.humanOnly}</b>
+          </p>
+          {d.aiAssisted && d.aiNote && <p class="prov-bio">{d.aiNote}</p>}
+          <p class="prov-bio">
+            <a href={pageHref(lang, 'editorial-policy')}>{t.nav.editorial}</a>
+          </p>
+        </div>
+      </section>
+
+      <div class="prose post-body">
+        <Content />
+      </div>
+
+      {/* ---- sources ---- */}
+      <section class="sources" aria-labelledby="src-h">
+        <h2 id="src-h">{t.blog.sources}</h2>
+        <p class="small muted">{t.blog.sourcesHelp}</p>
+        <ol>
+          {
+            d.sources.map((s) => (
+              <li>
+                {s.url ? (
+                  <a href={s.url} rel="noopener nofollow" target="_blank">
+                    {s.label}
+                  </a>
+                ) : (
+                  <span>{s.label}</span>
+                )}
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      {
+        (d.tags.length > 0 || d.tickers.length > 0) && (
+          <section class="post-tags" aria-label={t.blog.tags}>
+            {d.tags.length > 0 && (
+              <p class="chip-row">
+                <span class="notice-k">{t.blog.tags}</span>
+                {d.tags.map((tag) => (
+                  <span class="chip">{tag}</span>
+                ))}
+              </p>
+            )}
+            {d.tickers.length > 0 && (
+              <p class="chip-row">
+                <span class="notice-k">{t.blog.tickers}</span>
+                {d.tickers.map((tk) => (
+                  <a class="chip" href={`${pageHref(lang, '')}#us/ultra_short`}>
+                    {tk}
+                  </a>
+                ))}
+              </p>
+            )}
+          </section>
+        )
+      }
+
+      {!counterpartUrl && <p class="small muted">{t.blog.onlyLang}</p>}
+    </article>
+
+    {
+      (newer || older) && (
+        <nav class="post-nav" aria-label={t.blog.backToBlog}>
+          {newer ? (
+            <a class="post-nav-link" href={pageHref(lang, `blog/${slugOf(newer)}`)} rel="prev">
+              <span class="notice-k">← {t.blog.newerPost}</span>
+              <span>{newer.data.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {older && (
+            <a class="post-nav-link post-nav-next" href={pageHref(lang, `blog/${slugOf(older)}`)} rel="next">
+              <span class="notice-k">{t.blog.olderPost} →</span>
+              <span>{older.data.title}</span>
+            </a>
+          )}
+        </nav>
+      )
+    }
+
+    {
+      related.length > 0 && (
+        <section aria-labelledby="rel-h">
+          <div class="section-head">
+            <h2 id="rel-h">{t.blog.related}</h2>
+          </div>
+          <div class="related-grid">
+            {related.map((p) => (
+              <PostCard lang={lang} post={p} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <p style="margin-top:2rem;">
+      <a href={pageHref(lang, 'blog')}>← {t.blog.backToBlog}</a>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .crumbs {
+    font-size: 0.78rem;
+    color: var(--muted);
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+  }
+  .post-head h1 {
+    margin-bottom: 0.4rem;
+  }
+  .post-dates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.9rem;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 0.7rem;
+  }
+  .post-dates a.chip {
+    text-decoration: none;
+  }
+
+  .provenance {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    padding: 0.9rem 1rem;
+    margin: 1.2rem 0 1.8rem;
+  }
+  @media (max-width: 700px) {
+    .provenance {
+      grid-template-columns: 1fr;
+    }
+  }
+  .prov-line {
+    margin: 0 0 0.15rem;
+    font-size: 0.86rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-items: baseline;
+  }
+  .prov-bio {
+    margin: 0 0 0.6rem;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .prov-bio:last-child {
+    margin-bottom: 0;
+  }
+  /* The AI disclosure is a peer of the byline, not a footnote under it. */
+  .prov-ai {
+    border-inline-start: 3px solid var(--border-strong);
+    padding-inline-start: 0.8rem;
+  }
+  .prov-ai-on {
+    border-inline-start-color: var(--warn-edge);
+  }
+  .prov-ai-on .prov-line b {
+    color: var(--warn-text);
+  }
+
+  .sources {
+    margin-top: 2rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+  .sources h2 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  .sources ol {
+    margin: 0.5rem 0 0;
+    padding-inline-start: 1.3rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  .sources li {
+    margin-bottom: 0.3rem;
+  }
+
+  .post-tags {
+    margin-top: 1.2rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .post-tags p {
+    margin: 0;
+  }
+
+  .post-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+    margin-top: 2rem;
+  }
+  .post-nav-link {
+    display: grid;
+    gap: 0.2rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.7rem 0.85rem;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+  .post-nav-link:hover {
+    background: var(--surface);
+  }
+  .post-nav-next {
+    text-align: end;
+  }
+  @media (max-width: 640px) {
+    .post-nav {
+      grid-template-columns: 1fr;
+    }
+    .post-nav-next {
+      text-align: start;
+    }
+  }
+  .related-grid {
+    display: grid;
+    gap: 0.7rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  .post-body :global(h2) {
+    margin-top: 2rem;
+  }
+</style>

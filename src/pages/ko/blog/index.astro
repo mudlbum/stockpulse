@@ -1,0 +1,17 @@
+---
+import BlogIndexView from '../../../views/pages/BlogIndexView.astro';
+import { postsFor, PAGE_SIZE } from '../../../lib/blog';
+
+const all = await postsFor('ko');
+const featured = all.filter((p) => p.data.featured).slice(0, 3);
+const totalPages = Math.max(1, Math.ceil(all.length / PAGE_SIZE));
+---
+
+<BlogIndexView
+  lang="ko"
+  posts={all.slice(0, PAGE_SIZE)}
+  featured={featured}
+  pageNum={1}
+  totalPages={totalPages}
+  slug="blog"
+/>

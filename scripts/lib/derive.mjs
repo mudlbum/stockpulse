@@ -72,14 +72,21 @@ export function deriveMetrics(stock) {
 
   stock.ebitdaTTM = (() => {
     if (!isNum(ebit)) return null;
-    // D&A is not reliably tagged quarterly across filers. Approximating it from
-    // the operating-cash-flow-to-EBIT wedge is cruder than reading the tag, but
-    // it is available for every filer, and the alternative is nulling the whole
-    // balance-sheet factor for most of the market.
-    const da = isNum(ocf) && isNum(stock.quarters?.at(-1)?.netIncome)
-      ? Math.max(0, ocf - ttm(q, 'netIncome'))
-      : null;
-    return isNum(da) ? ebit + da : ebit * 1.15;
+    // D&A is not reliably tagged quarterly across filers, so it is approximated
+    // from the operating-cash-flow-to-net-income wedge. That is crude but it is
+    // derived from this company's own reported figures.
+    //
+    // What it deliberately does NOT do is fall back to a flat multiple of EBIT.
+    // An earlier version returned `ebit * 1.15` when the wedge was uncomputable,
+    // which invents a 15% D&A rate identical for a software firm and a steel
+    // mill and then feeds it into net-debt/EBITDA — a leverage number that
+    // decides whether a company passes the balance-sheet screen. A fabricated
+    // denominator producing a confident-looking leverage ratio is worse than a
+    // null, because null is handled honestly by the completeness gate.
+    const ni = ttm(q, 'netIncome');
+    if (!isNum(ocf) || !isNum(ni)) return null;
+    const da = Math.max(0, ocf - ni);
+    return ebit + da;
   })();
 
   stock.interestCoverage = isNum(ebit) && isNum(interest) && interest > 0 ? ebit / interest : null;
@@ -115,10 +122,24 @@ export function deriveMetrics(stock) {
     const capex = isNum(capexTtm) ? Math.abs(capexTtm) : null;
     if (!isNum(capex)) return null;
     const nopat = ebit * 0.79;
-    // Net reinvestment = capex less the depreciation implied by the OCF wedge.
-    const da = isNum(ocf) ? Math.max(0, ocf - (ttm(q, 'netIncome') ?? 0)) : 0;
-    const net = capex - da;
-    return nopat > 0 ? Math.max(-0.5, Math.min(1.5, net / nopat)) : null;
+    if (nopat <= 0) return null;
+
+    // Reinvestment is capex + R&D + acquisitions, less depreciation.
+    //
+    // Capex alone systematically understates reinvestment for exactly the
+    // businesses this factor is meant to identify: a software company that
+    // compounds by spending on R&D, or a serial acquirer that compounds by
+    // buying capacity, both look capital-light and score as though they have no
+    // reinvestment runway at all. R&D and acquisitions are genuine deployments
+    // of capital into future growth even though accounting treats one as an
+    // expense and the other as an investing cash flow.
+    const rnd = Math.abs(ttm(q, 'researchAndDevelopment') ?? 0);
+    const acq = Math.abs(ttm(q, 'acquisitions') ?? 0);
+    const ni = ttm(q, 'netIncome');
+    const da = isNum(ocf) && isNum(ni) ? Math.max(0, ocf - ni) : 0;
+
+    const net = capex + rnd + acq - da;
+    return Math.max(-0.5, Math.min(1.5, net / nopat));
   })();
 
   const shareSeries = annual.map((a) => a.sharesOutstanding).filter(isNum);

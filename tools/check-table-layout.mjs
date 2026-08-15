@@ -42,6 +42,12 @@ const PAGES = [
   ['ko-home', '/stockpulse/ko/'],
   ['ko-performance', '/stockpulse/ko/performance'],
   ['ko-methodology', '/stockpulse/ko/methodology'],
+  ['blog', '/stockpulse/blog'],
+  ['blog-post', '/stockpulse/blog/atr-stops'],
+  ['blog-category', '/stockpulse/blog/category/methodology'],
+  ['rankings-us-ultra-short', '/stockpulse/rankings/us-ultra-short'],
+  ['rankings-korea-long', '/stockpulse/rankings/korea-long-term'],
+  ['ko-blog-post', '/stockpulse/ko/blog/krx-price-limit'],
 ];
 
 const WIDTHS = [1600, 1440, 1280, 1180, 1000, 900, 760, 390];

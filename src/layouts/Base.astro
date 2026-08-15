@@ -4,10 +4,12 @@
  * <head>. Every crawler-facing URL below goes through absolute() and every
  * in-page URL through href() — see src/lib/paths.ts for why that matters.
  */
-import { SITE, type Locale } from '../config';
-import { absolute, href, pageAbsolute } from '../lib/paths';
+import { ADS_ENABLED, ADSENSE_CLIENT, SITE, type Locale } from '../config';
+import { absolute, href, pageAbsolute, pageHref } from '../lib/paths';
+import { SITE_URL as SITE_URL_PREFIX } from '../config';
 import { UI } from '../i18n/ui';
-import { dataGeneratedAt, isPlaceholder, REFRESH_MS } from '../lib/data';
+import { composeTitle, serpDescription } from '../lib/serp';
+import { dataGeneratedAt, datasetGeneratedAt, isPlaceholder, REFRESH_MS } from '../lib/data';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import '../styles/global.css';
@@ -20,53 +22,174 @@ interface Props {
   description?: string;
   /** Datasets this page wants re-polled from public/data every 120s. */
   live?: string[];
+  /** Force noindex regardless of data state (unshipped features, stubs). */
+  noindex?: boolean;
+  /** 'article' for blog posts and the long-form policy/reference pages. */
+  ogType?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  /**
+   * Absolute hreflang targets, per language. Pass `null` for a language that
+   * has no counterpart — a post with no translation must not advertise one.
+   * Omit entirely to derive them from `page`.
+   */
+  alternates?: Partial<Record<Locale, string | null>>;
+  /** Extra schema.org nodes merged into the page's @graph. */
+  schema?: unknown[];
+  /** Rendered as BreadcrumbList; `url` is a site-relative page slug. */
+  breadcrumbs?: { name: string; slug: string }[];
+  /**
+   * Where the header's language switch should go when this page has no
+   * counterpart in the other language. Without it the switch links to a URL
+   * that was never built — which is how untranslated posts shipped a 404 in
+   * the one control every Korean reader uses first.
+   */
+  langFallback?: string;
 }
 
-const { lang, page = '', title, description, live = [] } = Astro.props;
+const {
+  lang,
+  page = '',
+  title,
+  description,
+  live = [],
+  noindex = false,
+  ogType = 'website',
+  publishedTime,
+  modifiedTime,
+  alternates,
+  schema = [],
+  breadcrumbs = [],
+  langFallback,
+} = Astro.props;
 const t = UI[lang];
 
 const canonical = pageAbsolute(lang, page);
-const altEn = pageAbsolute('en', page);
-const altKo = pageAbsolute('ko', page);
-const desc = description || SITE.description[lang];
-const fullTitle = page === '' ? `${SITE.name} — ${SITE.tagline[lang]}` : `${title} · ${SITE.name}`;
+
+/* hreflang. Default is the same slug in both languages; blog posts override it
+   because a post without a counterpart must emit self-only hreflang rather
+   than link to a URL that was never built. */
+const altEn = alternates ? alternates.en : pageAbsolute('en', page);
+const altKo = alternates ? alternates.ko : pageAbsolute('ko', page);
+const xDefault = altEn ?? altKo ?? canonical;
+
+/* Both are width-budgeted in display units, not characters — see lib/serp.ts.
+   The audit re-checks the emitted HTML so this cannot silently regress. */
+const desc = serpDescription(description || SITE.description[lang]);
+const fullTitle = composeTitle(title, SITE.name);
 const ogLocale = lang === 'ko' ? 'ko_KR' : 'en_US';
+const bcp47 = lang === 'ko' ? 'ko-KR' : 'en-US';
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'WebSite',
-      '@id': `${absolute('')}#website`,
-      url: absolute(''),
-      name: SITE.name,
-      description: SITE.description[lang],
-      inLanguage: lang === 'ko' ? 'ko-KR' : 'en-US',
-      publisher: { '@id': `${absolute('')}#publisher` },
-    },
-    {
-      '@type': 'Organization',
-      '@id': `${absolute('')}#publisher`,
-      name: SITE.name,
-      url: absolute(''),
-      description: SITE.description.en,
-    },
-    {
-      '@type': 'WebPage',
-      '@id': `${canonical}#page`,
-      url: canonical,
-      name: fullTitle,
-      description: desc,
-      inLanguage: lang === 'ko' ? 'ko-KR' : 'en-US',
-      isPartOf: { '@id': `${absolute('')}#website` },
-      dateModified: dataGeneratedAt,
-      license: absolute('disclaimer'),
-    },
-  ],
+/* Social cards must be raster. Every major unfurler rejects image/svg+xml, so
+   an SVG og:image means every share is blank. One PNG per language, because
+   the previous single card stacked both taglines. */
+const ogImage = absolute(lang === 'ko' ? 'og-ko.png' : 'og-en.png');
+const ogImageAlt = lang === 'ko'
+  ? 'StockPulse — 미국·한국 증시 일간 종목 순위'
+  : 'StockPulse — daily US and Korea stock rankings across four horizons';
+
+/* The language switch must always resolve. Prefer the real counterpart; fall
+   back to the section index; never emit a link to a page that does not exist. */
+const otherLocale: Locale = lang === 'en' ? 'ko' : 'en';
+const otherAlt = otherLocale === 'en' ? altEn : altKo;
+const switchIsTranslation = Boolean(otherAlt);
+const switchHref = otherAlt
+  ? otherAlt.replace(SITE_URL_PREFIX, '')
+  : pageHref(otherLocale, langFallback ?? '');
+
+const siteId = (l: Locale) => `${absolute('')}#website-${l}`;
+const publisherId = `${absolute('')}#publisher`;
+
+const publisher: Record<string, unknown> = {
+  '@type': 'Organization',
+  '@id': publisherId,
+  name: SITE.name,
+  url: absolute(''),
+  logo: { '@type': 'ImageObject', url: absolute('og-en.png'), width: 1200, height: 630 },
+  /* No `description` here on purpose. It is the one field that would be
+     language-dependent on a language-independent @id, which is exactly the
+     last-write-wins collision this graph used to have. The localized
+     description lives on the language-scoped WebSite nodes below. */
 };
+if (SITE.founderName) {
+  publisher.founder = {
+    '@type': 'Person',
+    name: SITE.founderName,
+    ...(SITE.founderUrl ? { url: SITE.founderUrl, sameAs: [SITE.founderUrl] } : {}),
+  };
+}
+if (SITE.contactEmail) {
+  publisher.contactPoint = {
+    '@type': 'ContactPoint',
+    contactType: 'customer support',
+    email: SITE.contactEmail,
+    url: pageAbsolute(lang, 'contact'),
+    availableLanguage: ['en', 'ko'],
+  };
+}
 
-/** Datasets the client may re-poll. Keys map to public/data/<key>.json. */
-const liveUrls = Object.fromEntries(live.map((name) => [name, href(`data/${name}.json`)]));
+const otherLang: Locale = lang === 'en' ? 'ko' : 'en';
+
+const graph: unknown[] = [
+  {
+    '@type': 'WebSite',
+    '@id': siteId(lang),
+    url: absolute(''),
+    name: SITE.name,
+    description: SITE.description[lang],
+    inLanguage: bcp47,
+    publisher: { '@id': publisherId },
+    /* Language-scoped ids linked as translations of one another, so a consumer
+       merging the graph keeps both descriptions instead of overwriting one. */
+    [lang === 'en' ? 'workTranslation' : 'translationOfWork']: { '@id': siteId(otherLang) },
+  },
+  publisher,
+  {
+    '@type': ogType === 'article' ? 'WebPage' : 'WebPage',
+    '@id': `${canonical}#page`,
+    url: canonical,
+    name: fullTitle,
+    description: desc,
+    inLanguage: bcp47,
+    isPartOf: { '@id': siteId(lang) },
+    dateModified: modifiedTime || dataGeneratedAt,
+    ...(publishedTime ? { datePublished: publishedTime } : {}),
+    /* pageAbsolute, not absolute — the latter omits the trailing slash and
+       301s, and pointed Korean pages at the English disclaimer. */
+    license: pageAbsolute(lang, 'disclaimer'),
+    primaryImageOfPage: { '@type': 'ImageObject', url: ogImage, width: 1200, height: 630 },
+  },
+];
+
+if (breadcrumbs.length) {
+  graph.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${canonical}#breadcrumbs`,
+    itemListElement: breadcrumbs.map((b, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: b.name,
+      item: pageAbsolute(lang, b.slug),
+    })),
+  });
+}
+
+graph.push(...schema);
+
+const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
+
+/**
+ * Datasets the client may re-poll. Keys map to public/data/<key>.json.
+ * `at` seeds the client's "last seen" per dataset from the exact timestamp this
+ * page was rendered from — seeding from a global max would make the first poll
+ * of every other dataset look like a change and fire a spurious refresh.
+ */
+const liveUrls = Object.fromEntries(
+  live.map((name) => [
+    name,
+    { url: href(`data/${name}.json`), at: (datasetGeneratedAt as Record<string, string>)[name] ?? dataGeneratedAt },
+  ]),
+);
 ---
 
 <!doctype html>
@@ -78,24 +201,37 @@ const liveUrls = Object.fromEntries(live.map((name) => [name, href(`data/${name}
     <meta name="description" content={desc} />
     <link rel="canonical" href={canonical} />
 
-    <link rel="alternate" hreflang="en" href={altEn} />
-    <link rel="alternate" hreflang="ko" href={altKo} />
-    <link rel="alternate" hreflang="x-default" href={altEn} />
+    {altEn && <link rel="alternate" hreflang="en" href={altEn} />}
+    {altKo && <link rel="alternate" hreflang="ko" href={altKo} />}
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={desc} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:locale:alternate" content={lang === 'ko' ? 'en_US' : 'ko_KR'} />
-    <meta property="og:image" content={absolute('og.svg')} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    {ogType === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {ogType === 'article' && <meta property="article:modified_time" content={modifiedTime || dataGeneratedAt} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={desc} />
-    <meta name="twitter:image" content={absolute('og.svg')} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
-    <meta name="robots" content="index,follow,max-image-preview:large" />
+    {/* A placeholder build publishes fabricated prices against real tickers
+        and news links to example.com. On a YMYL finance site that is a
+        manual-action risk, so it is never indexable. */}
+    <meta
+      name="robots"
+      content={isPlaceholder || noindex ? 'noindex,nofollow' : 'index,follow,max-image-preview:large'}
+    />
     <meta name="generator" content={Astro.generator} />
     <meta name="sp:data-generated-at" content={dataGeneratedAt} />
 
@@ -103,6 +239,37 @@ const liveUrls = Object.fromEntries(live.map((name) => [name, href(`data/${name}
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} rankings`} href={absolute('rss.xml')} />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    {/* ---- advertising and consent -------------------------------------
+        The ONLY third-party script this site ever loads, and it is emitted
+        only when src/config.ts has an ADSENSE_CLIENT. Shipped unset, so a
+        default build makes zero third-party requests — verify with the network
+        panel: the request count for a fresh page load should be same-origin
+        only.
+
+        This one tag does double duty. It serves ads, and it is also what
+        delivers Google's consent management platform (AdSense → Privacy &
+        messaging), which is registered with the IAB TCF. That registration is
+        the entire point: since January 2024 (EEA/UK) and July 2024
+        (Switzerland), serving ANY ad impression to those users requires a
+        Google-certified TCF CMP. A hand-rolled banner is not one — it emits no
+        TC string, Google will not accept it, and the traffic falls back to
+        non-personalized/limited ads. So there is deliberately no home-grown
+        consent dialog anywhere in this codebase, and there should never be one.
+
+        The message itself is configured in the AdSense UI, not here. Nothing
+        about that flow makes this site PIPA-compliant for Korean users — see
+        /privacy 제4조–제6조 and docs/LAUNCH_CHECKLIST.md. */}
+    {
+      ADS_ENABLED && (
+        <script
+          is:inline
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+          crossorigin="anonymous"
+        />
+      )
+    }
 
     <noscript>
       <style>
@@ -132,7 +299,7 @@ const liveUrls = Object.fromEntries(live.map((name) => [name, href(`data/${name}
 
   <body>
     <a class="skip-link" href="#main">{t.skipToContent}</a>
-    <SiteHeader lang={lang} page={page} />
+    <SiteHeader lang={lang} page={page} switchHref={switchHref} switchIsTranslation={switchIsTranslation} />
 
     <main id="main">
       <slot />
@@ -252,37 +419,68 @@ const liveUrls = Object.fromEntries(live.map((name) => [name, href(`data/${name}
 
     {/* ---- background data refresh ------------------------------------
         Static build + a polled JSON file is the whole "live" story. Pages
-        listen for the sp:data event and patch what they can. */}
+        listen for sp:data and patch what they can.
+
+        This body is written as the script's direct children, NOT wrapped in a
+        JSX expression containing a template literal. `is:inline` emits children
+        verbatim, so `<script is:inline>{`...`}</script>` ships a literal brace,
+        backtick and brace to the browser, which parses as a block statement
+        containing an unused string — the IIFE never runs, and this refresh
+        silently did nothing on every page for its entire life. */}
     {
       live.length > 0 && (
         <script is:inline define:vars={{ liveUrls, refreshMs: REFRESH_MS }}>
-          {`
-        (() => {
-          const seen = {};
-          async function poll(name, url) {
-            try {
-              const res = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
-              if (!res.ok) return;
-              const payload = await res.json();
-              if (seen[name] === payload.generatedAt) return;
-              const first = seen[name] === undefined;
-              seen[name] = payload.generatedAt;
-              document.dispatchEvent(
-                new CustomEvent('sp:data', { detail: { name, payload, first } }),
-              );
-            } catch (_) {
-              /* offline or the file is not published yet — try again next tick */
+          (() => {
+            const seen = {};
+            for (const name of Object.keys(liveUrls)) seen[name] = liveUrls[name].at;
+
+            async function poll(name, url) {
+              try {
+                /* A plain conditional GET. The browser attaches If-None-Match /
+                   If-Modified-Since, so an unchanged file costs a 304 and no
+                   payload. The old code defeated exactly this with a `?t=`
+                   cache-buster plus `no-store`, re-downloading ~26KB every
+                   two minutes to learn nothing.
+
+                   No separate sentinel file: health.json is written by a
+                   different pipeline stage and can lag or stay placeholder
+                   while rankings is real, so it cannot stand in for "did the
+                   data move". The 304 is the cheap check. */
+                const res = await fetch(url, { headers: { Accept: 'application/json' } });
+                if (!res.ok) return;
+                const payload = await res.json();
+                if (!payload || payload.generatedAt === seen[name]) return;
+                seen[name] = payload.generatedAt;
+                document.dispatchEvent(new CustomEvent('sp:data', { detail: { name, payload } }));
+              } catch (_) {
+                /* offline, or the file is not published yet — retry next tick */
+              }
             }
-          }
-          function tick() {
-            for (const [name, url] of Object.entries(liveUrls)) poll(name, url);
-          }
-          tick();
-          setInterval(tick, refreshMs);
-        })();
-      `}
+
+            function tick() {
+              if (document.hidden) return;
+              for (const name of Object.keys(liveUrls)) poll(name, liveUrls[name].url);
+            }
+
+            /* No tick on load: the HTML was rendered from this exact data at
+               build time, so an immediate refetch competes with LCP to confirm
+               what the page already shows. */
+            let timer = setInterval(tick, refreshMs);
+            document.addEventListener('visibilitychange', () => {
+              if (document.hidden) {
+                clearInterval(timer);
+                timer = 0;
+              } else if (!timer) {
+                /* catch up once on return, then resume the cadence */
+                tick();
+                timer = setInterval(tick, refreshMs);
+              }
+            });
+          })();
         </script>
       )
     }
+
+    <slot name="scripts" />
   </body>
 </html>

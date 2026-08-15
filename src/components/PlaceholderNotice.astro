@@ -26,7 +26,9 @@ const name = (d: DatasetName) => t.datasetName[d];
 {
   placeholder.length > 0 && (
     <div class="notice notice-warn" role="status" style="margin-bottom:1rem;">
-      <h2>{t.placeholderTitle}</h2>
+      {/* Not an <h2>: this renders above the page <h1> on twelve pages and an
+          h2-before-h1 inverts the document outline. */}
+      <p class="notice-title"><strong>{t.placeholderTitle}</strong></p>
       <p>
         {t.placeholderSome}{' '}
         <b>{placeholder.map(name).join(', ')}</b>

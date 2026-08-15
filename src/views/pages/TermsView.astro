@@ -1,0 +1,67 @@
+---
+/**
+ * /terms — the legal relationship, as distinct from /disclaimer (what the
+ * content is) and /privacy (what happens to data).
+ *
+ * The governing-law clause carries a {jurisdiction} placeholder from
+ * SITE.governingLaw. While that placeholder is still bracketed, the page shows
+ * a warning to the operator rather than quietly shipping an empty choice of
+ * law — an unfilled clause is worse than none, because it advertises that the
+ * terms were never read. See docs/LAUNCH_CHECKLIST.md.
+ */
+import { SITE, type Locale } from '../../config';
+import { UI } from '../../i18n/ui';
+import { pageHref } from '../../lib/paths';
+import Base from '../../layouts/Base.astro';
+import LegalSections from '../../components/LegalSections.astro';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+
+const jurisdiction = SITE.governingLaw[lang];
+const jurisdictionUnset = jurisdiction.includes('[');
+---
+
+<Base lang={lang} page="terms" title={t.seo.terms.title} description={t.seo.terms.description}>
+  <div class="wrap wrap-narrow">
+    <div class="page-head">
+      <h1>{t.terms.title}</h1>
+      <p class="lede">{t.terms.lead}</p>
+      <p class="small muted">
+        {t.terms.effectiveLabel}{' '}
+        <time datetime={SITE.legalEffectiveDate} class="mono">{SITE.legalEffectiveDate}</time>
+      </p>
+    </div>
+
+    {
+      jurisdictionUnset && (
+        <div class="notice notice-warn" role="note">
+          <p>{t.terms.governingLawUnset}</p>
+        </div>
+      )
+    }
+
+    <div class="prose">
+      <LegalSections sections={t.terms.sections} idPrefix="tm" vars={{ jurisdiction }} />
+
+      <hr />
+
+      <h2>{t.terms.contactHeading}</h2>
+      <p>
+        <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+      </p>
+      <p class="small muted">
+        <a href={pageHref(lang, 'disclaimer')}>{t.nav.disclaimer}</a>
+        {' · '}
+        <a href={pageHref(lang, 'privacy')}>{t.nav.privacy}</a>
+        {' · '}
+        <a href={pageHref(lang, 'editorial-policy')}>{t.nav.editorial}</a>
+        {' · '}
+        <a href={pageHref(lang, 'methodology')}>{t.nav.methodology}</a>
+      </p>
+    </div>
+  </div>
+</Base>

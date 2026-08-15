@@ -6,8 +6,12 @@ import { UI } from '../i18n/ui';
 interface Props {
   lang: Locale;
   page: string;
+  /** Resolved by the layout — a real counterpart, or a section fallback. */
+  switchHref: string;
+  /** False when the target is a fallback rather than a translation of this page. */
+  switchIsTranslation?: boolean;
 }
-const { lang, page } = Astro.props;
+const { lang, page, switchHref, switchIsTranslation = true } = Astro.props;
 const t = UI[lang];
 const other: Locale = lang === 'en' ? 'ko' : 'en';
 
@@ -17,6 +21,7 @@ const items = [
   { slug: 'news', label: t.nav.news },
   { slug: 'sectors', label: t.nav.sectors },
   { slug: 'simulator', label: t.nav.simulator },
+  { slug: 'blog', label: t.nav.blog },
   { slug: 'methodology', label: t.nav.methodology },
   { slug: 'alerts', label: t.nav.alerts },
   { slug: 'about', label: t.nav.about },
@@ -44,7 +49,14 @@ const themeLabels = { system: t.theme.system, light: t.theme.light, dark: t.them
     </nav>
 
     <div class="header-tools">
-      <a class="btn btn-sm" href={pageHref(other, page)} hreflang={other} lang={other} rel="alternate">
+      <a
+        class="btn btn-sm"
+        href={switchHref}
+        hreflang={other}
+        lang={other}
+        rel={switchIsTranslation ? 'alternate' : undefined}
+        title={switchIsTranslation ? t.langSwitch : t.langSwitchFallback}
+      >
         {t.langSwitchShort}
       </a>
       <button

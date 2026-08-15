@@ -52,6 +52,16 @@ export function splitPlaceholder(datasets: DatasetName[]) {
 /** True when ANY dataset in the build is still placeholder output. */
 export const isPlaceholder = (Object.values(placeholderStatus) as boolean[]).some(Boolean);
 
+/** Each dataset's own generation timestamp, so the client can tell per file
+ *  whether the published data has actually moved since this page was built. */
+export const datasetGeneratedAt: Record<DatasetName, string> = {
+  rankings: rankings.generatedAt,
+  news: news.generatedAt,
+  performance: performance.generatedAt,
+  sectors: sectors.generatedAt,
+  health: health.generatedAt,
+};
+
 /** Newest generation timestamp across all datasets — used for the footer stamp. */
 export const dataGeneratedAt = [
   rankings.generatedAt,

@@ -4,6 +4,8 @@ import { UI, fill } from '../../i18n/ui';
 import { news } from '../../lib/data';
 import { fmtNum } from '../../lib/format';
 import Base from '../../layouts/Base.astro';
+import PageEssay from '../../components/PageEssay.astro';
+import { ESSAYS } from '../../i18n/page-essays';
 import NewsItemCard from '../../components/NewsItem.astro';
 import PlaceholderNotice from '../../components/PlaceholderNotice.astro';
 import ScrollArea from '../../components/ScrollArea.astro';
@@ -20,7 +22,7 @@ const tickers = [...new Set(news.items.flatMap((i) => i.tickers))].sort();
 const statusClass: Record<string, string> = { ok: 'chip-ok', degraded: 'chip-warn', failing: 'chip-danger' };
 ---
 
-<Base lang={lang} page="news" title={t.news.title} description={t.news.intro} live={['news']}>
+<Base lang={lang} page="news" title={t.seo.news.title} description={t.seo.news.description} live={['news']}>
   <div class="wrap">
     <PlaceholderNotice lang={lang} datasets={['news']} />
 
@@ -76,7 +78,7 @@ const statusClass: Record<string, string> = { ok: 'chip-ok', degraded: 'chip-war
 
     <section aria-labelledby="feed-h">
       <div class="section-head">
-        <h2 id="feed-h">{t.news.title}</h2>
+        <h2 id="feed-h">{t.news.feedHeading}</h2>
       </div>
 
       <div class="field-row" style="margin-bottom:.9rem;">
@@ -158,51 +160,55 @@ const statusClass: Record<string, string> = { ok: 'chip-ok', degraded: 'chip-war
         </ScrollArea>
       </details>
     </section>
-  </div>
+  
+    <PageEssay lang={lang} heading={ESSAYS.news[lang].heading} sections={ESSAYS.news[lang].sections} />
+</div>
+
+  <script slot="scripts" is:inline define:vars={{ showingTpl: t.news.showing }}>
+    (() => {
+      const list = document.getElementById('news-feed');
+      if (!list) return;
+      const items = [...list.querySelectorAll('.news-item')];
+      const count = document.getElementById('news-count');
+      const none = document.getElementById('news-none');
+      const sel = {
+        ticker: document.getElementById('n-ticker'),
+        lang: document.getElementById('n-lang'),
+        sent: document.getElementById('n-sent'),
+      };
+
+      function render() {
+        let shown = 0;
+        items.forEach((li) => {
+          const tickers = (li.dataset.tickers || '').split(',').filter(Boolean);
+          const ok =
+            (!sel.ticker.value || tickers.includes(sel.ticker.value)) &&
+            (!sel.lang.value || li.dataset.lang === sel.lang.value) &&
+            (!sel.sent.value || li.dataset.sentiment === sel.sent.value);
+          li.hidden = !ok;
+          if (ok) shown++;
+        });
+        count.textContent = showingTpl.replace('{n}', shown).replace('{total}', items.length);
+        none.hidden = shown > 0;
+      }
+
+      Object.values(sel).forEach((s) => s.addEventListener('change', render));
+      document.getElementById('n-clear').addEventListener('click', () => {
+        Object.values(sel).forEach((s) => (s.value = ''));
+        render();
+      });
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-filter-ticker]');
+        if (!btn) return;
+        const tk = btn.dataset.filterTicker;
+        sel.ticker.value = sel.ticker.value === tk ? '' : tk;
+        render();
+        list.scrollIntoView({ block: 'nearest' });
+      });
+
+      render();
+    })();
+  </script>
 </Base>
 
-<script is:inline define:vars={{ showingTpl: t.news.showing }}>
-  (() => {
-    const list = document.getElementById('news-feed');
-    if (!list) return;
-    const items = [...list.querySelectorAll('.news-item')];
-    const count = document.getElementById('news-count');
-    const none = document.getElementById('news-none');
-    const sel = {
-      ticker: document.getElementById('n-ticker'),
-      lang: document.getElementById('n-lang'),
-      sent: document.getElementById('n-sent'),
-    };
 
-    function render() {
-      let shown = 0;
-      items.forEach((li) => {
-        const tickers = (li.dataset.tickers || '').split(',').filter(Boolean);
-        const ok =
-          (!sel.ticker.value || tickers.includes(sel.ticker.value)) &&
-          (!sel.lang.value || li.dataset.lang === sel.lang.value) &&
-          (!sel.sent.value || li.dataset.sentiment === sel.sent.value);
-        li.hidden = !ok;
-        if (ok) shown++;
-      });
-      count.textContent = showingTpl.replace('{n}', shown).replace('{total}', items.length);
-      none.hidden = shown > 0;
-    }
-
-    Object.values(sel).forEach((s) => s.addEventListener('change', render));
-    document.getElementById('n-clear').addEventListener('click', () => {
-      Object.values(sel).forEach((s) => (s.value = ''));
-      render();
-    });
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-filter-ticker]');
-      if (!btn) return;
-      const tk = btn.dataset.filterTicker;
-      sel.ticker.value = sel.ticker.value === tk ? '' : tk;
-      render();
-      list.scrollIntoView({ block: 'nearest' });
-    });
-
-    render();
-  })();
-</script>

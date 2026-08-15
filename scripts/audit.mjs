@@ -33,6 +33,52 @@ async function walk(dir, out = []) {
   return out;
 }
 
+/**
+ * SERP width, in display units rather than characters.
+ *
+ * Google truncates on rendered pixel width, and a CJK glyph occupies roughly
+ * twice the width of a latin one. Counting `.length` therefore reports a
+ * Korean description as comfortably short while it overflows in the SERP —
+ * which is exactly how seven of nine Korean descriptions shipped over budget
+ * while appearing fine. Every unit here is "one latin character wide".
+ */
+function displayWidth(s) {
+  let w = 0;
+  for (const ch of String(s)) {
+    const c = ch.codePointAt(0);
+    const wide =
+      (c >= 0x1100 && c <= 0x115f) ||
+      (c >= 0x2e80 && c <= 0x303e) ||
+      (c >= 0x3041 && c <= 0x33ff) ||
+      (c >= 0x3400 && c <= 0x4dbf) ||
+      (c >= 0x4e00 && c <= 0x9fff) ||
+      (c >= 0xa000 && c <= 0xa4cf) ||
+      (c >= 0xac00 && c <= 0xd7a3) ||
+      (c >= 0xf900 && c <= 0xfaff) ||
+      (c >= 0xfe30 && c <= 0xfe6f) ||
+      (c >= 0xff00 && c <= 0xff60) ||
+      (c >= 0xffe0 && c <= 0xffe6);
+    w += wide ? 2 : 1;
+  }
+  return w;
+}
+
+const TITLE_MAX = 60;
+const DESC_MAX = 155;
+/* Soft floor. Not a Google rule — a snippet materially shorter than this is
+   usually a page that forgot to write one, which is the thing worth catching. */
+const DESC_MIN = 60;
+
+function decodeEntities(s) {
+  return s
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'");
+}
+
 /** Compliance notice text fragments that must appear alongside any ranking table. */
 const COMPLIANCE_EN = 'not personalized financial advice';
 const COMPLIANCE_KO = '개인별 투자자문이 아닙니다';
@@ -72,6 +118,20 @@ async function main() {
     if (!/<meta\s+name="description"\s+content="[^"]{40,}"/.test(html)) {
       problem(file, 'seo', 'missing or short meta description');
     }
+    const titleText = decodeEntities(/<title>([\s\S]*?)<\/title>/.exec(html)?.[1] ?? '');
+    const tw = displayWidth(titleText);
+    if (tw > TITLE_MAX) {
+      problem(file, 'seo-width', `<title> is ${tw} display units (max ${TITLE_MAX}): ${titleText.slice(0, 70)}`);
+    }
+    const descText = decodeEntities(/<meta\s+name="description"\s+content="([^"]*)"/.exec(html)?.[1] ?? '');
+    const dw = displayWidth(descText);
+    if (dw > DESC_MAX) {
+      problem(file, 'seo-width', `meta description is ${dw} display units (max ${DESC_MAX})`);
+    }
+    if (descText && dw < DESC_MIN) {
+      problem(file, 'seo-width', `meta description is only ${dw} display units (aim for ${DESC_MIN}-${DESC_MAX})`);
+    }
+
     if (!/<link\s+rel="canonical"/.test(html)) problem(file, 'seo', 'missing canonical');
     if (!/<html[^>]+lang="(en|ko)"/.test(html)) problem(file, 'a11y', 'missing or invalid <html lang>');
     if (!/hreflang="/.test(html)) problem(file, 'seo', 'missing hreflang pairing');

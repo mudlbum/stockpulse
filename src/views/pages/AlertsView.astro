@@ -3,6 +3,8 @@ import type { Locale } from '../../config';
 import { UI } from '../../i18n/ui';
 import { absolute, href } from '../../lib/paths';
 import Base from '../../layouts/Base.astro';
+import PageEssay from '../../components/PageEssay.astro';
+import { ESSAYS } from '../../i18n/page-essays';
 
 interface Props {
   lang: Locale;
@@ -18,7 +20,10 @@ const feeds = [
 ];
 ---
 
-<Base lang={lang} page="alerts" title={t.alerts.title} description={t.alerts.intro}>
+{/* Announces a feature that does not exist. Indexing a page whose headline
+    promise is unavailable is the definition of a thin result, so it stays out
+    of the index (and out of the sitemap) until alerts actually ship. */}
+<Base lang={lang} page="alerts" title={t.seo.alerts.title} description={t.seo.alerts.description} noindex={true}>
   <div class="wrap wrap-narrow">
     <div class="page-head">
       <h1>{t.alerts.title}</h1>
@@ -81,7 +86,9 @@ const feeds = [
         <p id="form-note-text" class="small muted" style="margin:.7rem 0 0;">{t.alerts.contact}</p>
       </form>
     </section>
-  </div>
+  
+    <PageEssay lang={lang} heading={ESSAYS.alerts[lang].heading} sections={ESSAYS.alerts[lang].sections} />
+</div>
 </Base>
 
 <style>

@@ -5,8 +5,10 @@ import {
   scoreUniverse, tradeParameters, WEIGHTS,
 } from '../scripts/lib/score.mjs';
 import {
-  crowdingPenalty, distressGate, gapTent, gapQuality, piotroski, ttm,
+  averageInvestedCapital, crowdingPenalty, distressGate, gapTent, gapQuality,
+  piotroski, roic, ttm,
 } from '../scripts/lib/factors.mjs';
+import { atr, ema } from '../scripts/lib/indicators.mjs';
 import { makeBars, makeQuarters } from './fixtures/generate.mjs';
 
 // ── factor shapes ──────────────────────────────────────────────────────────
@@ -276,4 +278,56 @@ test('riskGauge spreads across quintiles', () => {
   const g = riskGauge(rows);
   assert.ok(new Set(g).size >= 4, `expected spread across quintiles, got ${[...new Set(g)]}`);
   assert.ok(Math.min(...g) >= 1 && Math.max(...g) <= 5);
+});
+
+// ── regressions for the doc↔code mismatches found during content review ─────
+
+test('mid-term stop takes the tighter of the ATR and EMA50 legs', () => {
+  // METHODOLOGY §4.4 always specified both; only the ATR leg was implemented.
+  // A name well above its 50-day should stop out on the EMA50 leg, because the
+  // thesis ("this trend is intact") is already dead by the time price gets
+  // there — a wider ATR stop just pays more to learn the same thing.
+  const bars = makeBars({ n: 300, seed: 77, drift: 0.0018, vol: 0.008 });
+  const t = tradeParameters({ bars }, 'mid_term');
+  const close = bars[bars.length - 1].close;
+  const a = atr(bars, 14);
+  const e50 = ema(bars.map((b) => b.close), 50);
+
+  assert.ok(Number.isFinite(e50));
+  const expected = Math.min(close - 2.5 * a, e50 - 0.5 * a);
+  assert.ok(Math.abs(t.stop - expected) < 0.02, `stop ${t.stop} vs expected ${expected}`);
+  assert.ok(t.stop <= close - 2.5 * a + 0.02, 'must never be looser than the ATR leg');
+});
+
+test('mid-term stop falls back to the ATR leg without enough history for an EMA50', () => {
+  const bars = makeBars({ n: 80, seed: 78 });
+  const t = tradeParameters({ bars }, 'mid_term');
+  const close = bars[bars.length - 1].close;
+  const a = atr(bars, 14);
+  assert.ok(Math.abs(t.stop - (close - 2.5 * a)) < 0.02);
+});
+
+test('ROIC averages invested capital over four quarters, not the closing balance', () => {
+  // A mid-year capital raise inflates the closing balance sheet and depresses
+  // ROIC against a full year of NOPAT. Averaging the period the flow was earned
+  // over is the standard treatment and is what METHODOLOGY §5.3 specifies.
+  const base = makeQuarters({ n: 8 });
+  const steady = base.map((q) => ({ ...q, totalEquity: 1000, longTermDebt: 0, cash: 0, operatingIncome: 100, pretaxIncome: 100, incomeTaxExpense: 21 }));
+  // Same company, but it doubled its equity in the final quarter.
+  const raised = steady.map((q, i) => (i === steady.length - 1 ? { ...q, totalEquity: 2000 } : q));
+
+  const rSteady = roic(steady, steady.at(-1));
+  const rRaised = roic(raised, raised.at(-1));
+  assert.ok(Number.isFinite(rSteady) && Number.isFinite(rRaised));
+  // Averaging must leave the raise only partly reflected, so ROIC sits between
+  // the un-raised value and the naive closing-balance value.
+  const naive = (400 * 0.79) / 2000;
+  assert.ok(rRaised > naive, `averaged ${rRaised} should exceed naive closing-balance ${naive}`);
+  assert.ok(rRaised < rSteady, 'a capital raise must still reduce ROIC');
+});
+
+test('averageInvestedCapital falls back to the balance sheet when quarters lack balance fields', () => {
+  const q = makeQuarters({ n: 4 }).map(({ totalEquity, longTermDebt, ...rest }) => rest);
+  const ic = averageInvestedCapital(q, { totalEquity: 500, longTermDebt: 100, cash: 50 });
+  assert.equal(ic, 550);
 });

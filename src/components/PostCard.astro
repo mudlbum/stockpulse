@@ -1,0 +1,78 @@
+---
+import type { Locale } from '../config';
+import { UI, fill } from '../i18n/ui';
+import { pageHref } from '../lib/paths';
+import { fmtDate } from '../lib/format';
+import { categoryLabel, readingTime, slugOf, type Post } from '../lib/blog';
+
+interface Props {
+  lang: Locale;
+  post: Post;
+  /** Larger treatment for the featured strip. */
+  feature?: boolean;
+}
+const { lang, post, feature = false } = Astro.props;
+const t = UI[lang];
+const d = post.data;
+const url = pageHref(lang, `blog/${slugOf(post)}`);
+const mins = readingTime(post.body ?? '');
+---
+
+<article class={`post-card${feature ? ' post-card-feature' : ''}`}>
+  <div class="post-card-meta">
+    <a class="chip" href={pageHref(lang, `blog/category/${d.category}`)}>{categoryLabel(d.category, lang)}</a>
+    <time datetime={d.publishedAt.toISOString()}>{fmtDate(d.publishedAt.toISOString(), lang)}</time>
+    <span aria-hidden="true">·</span>
+    <span>{fill(t.blog.readingTime, { n: mins })}</span>
+    {d.aiAssisted && <span class="badge badge-warn">{t.blog.aiBadge}</span>}
+  </div>
+  <h3><a href={url}>{d.title}</a></h3>
+  <p>{d.description}</p>
+</article>
+
+<style>
+  .post-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+    padding: 0.9rem 1rem 1rem;
+  }
+  .post-card-feature {
+    background: var(--surface);
+    border-color: var(--border-strong);
+  }
+  .post-card h3 {
+    font-size: 1.02rem;
+    line-height: 1.35;
+    margin: 0.35rem 0 0.35rem;
+  }
+  .post-card-feature h3 {
+    font-size: 1.14rem;
+  }
+  .post-card h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  .post-card h3 a:hover {
+    color: var(--link);
+    text-decoration: underline;
+  }
+  .post-card p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .post-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.55rem;
+    align-items: center;
+    font-size: 0.74rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .post-card-meta a.chip {
+    text-decoration: none;
+  }
+</style>

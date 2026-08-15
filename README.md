@@ -30,6 +30,9 @@ browser-local portfolio simulator.
   here in advance. It is also published on the site at `/methodology`.
 - **[`docs/DATA_SOURCES.md`](docs/DATA_SOURCES.md)** — every source, why it was
   chosen, and the ones that were rejected with the reasons.
+- **[`docs/LAUNCH_CHECKLIST.md`](docs/LAUNCH_CHECKLIST.md)** — every placeholder
+  that must be replaced before going live, and every compliance step, in order.
+  Read it before deploying and before applying to AdSense.
 
 ---
 

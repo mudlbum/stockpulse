@@ -11,7 +11,9 @@ import { HORIZONS, MARKETS, SITE, type HorizonId, type Locale, type MarketId } f
 import { UI } from '../../i18n/ui';
 import { HORIZON_INK } from '../../lib/theme';
 import { pageHref } from '../../lib/paths';
+import { boardSlug } from '../../i18n/horizon-pages';
 import { news, rankings } from '../../lib/data';
+import { boardItemLists, rankingsDataset } from '../../lib/schema';
 import Base from '../../layouts/Base.astro';
 import BoardTable from '../../components/BoardTable.astro';
 import RegimeBanner from '../../components/RegimeBanner.astro';
@@ -42,8 +44,9 @@ const locale = lang === 'ko' ? 'ko-KR' : 'en-US';
 <Base
   lang={lang}
   page=""
-  title={t.home.title}
-  description={SITE.description[lang]}
+  title={t.seo.home.title}
+  description={t.seo.home.description}
+  schema={[rankingsDataset(lang), ...boardItemLists(lang)]}
   live={['rankings']}
 >
   <div class="wrap">
@@ -100,17 +103,61 @@ const locale = lang === 'ko' ? 'ko-KR' : 'en-US';
       </div>
     </div>
 
+    {/* Only the visible board ships as markup. The other seven were ~610KB of
+        parsed, styled, never-painted tables — 87% of the page for content no
+        reader sees until they click. Each stub carries the URL of its own
+        landing page, whose server-rendered board is fetched and injected on
+        first activation, so there is exactly one definition of a board row and
+        it lives in BoardTable.astro. */}
     {
       markets.map((m) =>
-        HORIZONS.map((h) => (
-          <BoardTable
-            lang={lang}
-            board={rankings.boards[m][h.id]}
-            selected={m === DEFAULT_MARKET && h.id === DEFAULT_HORIZON}
-          />
-        )),
+        HORIZONS.map((h) =>
+          m === DEFAULT_MARKET && h.id === DEFAULT_HORIZON ? (
+            <BoardTable lang={lang} board={rankings.boards[m][h.id]} selected={true} />
+          ) : (
+            <section
+              class="board-panel board-lazy"
+              id={`board-${m.toLowerCase()}-${h.id}`}
+              data-board={`${m}/${h.id}`}
+              data-src={pageHref(lang, boardSlug(m, h.id))}
+              data-horizon={h.id}
+              role="tabpanel"
+              tabindex="0"
+              aria-labelledby={`tab-${h.id}`}
+              aria-busy="true"
+              hidden
+            >
+              <h2 class="board-heading">
+                {t.common.market[m]} · {h.label[lang]}
+                <span class="board-heading-win">{h.window[lang]}</span>
+              </h2>
+              <p class="board-loading">
+                <a href={pageHref(lang, boardSlug(m, h.id))}>{t.home.openBoard}</a>
+              </p>
+            </section>
+          ),
+        ),
       )
     }
+
+    <noscript>
+      <nav aria-label={t.home.allBoards}>
+        <h2>{t.home.allBoards}</h2>
+        <ul>
+          {
+            markets.map((m) =>
+              HORIZONS.map((h) => (
+                <li>
+                  <a href={pageHref(lang, boardSlug(m, h.id))}>
+                    {t.common.market[m]} · {h.label[lang]} ({h.window[lang]})
+                  </a>
+                </li>
+              )),
+            )
+          }
+        </ul>
+      </nav>
+    </noscript>
 
     <section id="news" aria-labelledby="news-h">
       <div class="section-head">
@@ -141,222 +188,251 @@ const locale = lang === 'ko' ? 'ko-KR' : 'en-US';
     <span id="live-msg">{t.home.newPublish}</span>
     <button type="button" class="btn btn-sm" onclick="location.reload()">{t.home.reload}</button>
   </div>
-</Base>
 
-<script
-  is:inline
-  define:vars={{
-    defaultMarket: DEFAULT_MARKET,
-    defaultHorizon: DEFAULT_HORIZON,
-    horizonIds: HORIZONS.map((h) => h.id),
-    marketIds: markets,
-    numFmt,
-    locale,
-    filterLabel: t.home.newsFilterOn,
-    clearLabel: t.home.clearFilter,
-  }}
->
-  (() => {
-    /* ------------------------------------------------------------ tabs */
-    let market = defaultMarket;
-    let horizon = defaultHorizon;
+  <script slot="scripts"
+    is:inline
+    define:vars={{
+      defaultMarket: DEFAULT_MARKET,
+      defaultHorizon: DEFAULT_HORIZON,
+      horizonIds: HORIZONS.map((h) => h.id),
+      marketIds: markets,
+      numFmt,
+      locale,
+      filterLabel: t.home.newsFilterOn,
+      clearLabel: t.home.clearFilter,
+    }}
+  >
+    (() => {
+      /* ------------------------------------------------------------ tabs */
+      let market = defaultMarket;
+      let horizon = defaultHorizon;
 
-    const panels = document.querySelectorAll('.board-panel[data-board]');
-    const regimes = document.querySelectorAll('[data-regime-market]');
-    const marketBtns = document.querySelectorAll('[data-market]');
-    const horizonBtns = document.querySelectorAll('.horizon-tab[data-horizon]');
+      const panels = document.querySelectorAll('.board-panel[data-board]');
+      const regimes = document.querySelectorAll('[data-regime-market]');
+      const marketBtns = document.querySelectorAll('[data-market]');
+      const horizonBtns = document.querySelectorAll('.horizon-tab[data-horizon]');
 
-    function apply(push) {
-      panels.forEach((p) => {
-        p.hidden = p.dataset.board !== market + '/' + horizon;
-      });
-      regimes.forEach((r) => {
-        r.hidden = r.dataset.regimeMarket !== market;
-      });
-      marketBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.market === market)));
-      horizonBtns.forEach((b) => {
-        const on = b.dataset.horizon === horizon;
-        b.setAttribute('aria-selected', String(on));
-        b.setAttribute('aria-controls', 'board-' + market.toLowerCase() + '-' + b.dataset.horizon);
-        /* roving tabindex: one stop in the tab order, arrows move within it */
-        if (on) b.removeAttribute('tabindex');
-        else b.setAttribute('tabindex', '-1');
-      });
-      const hash = '#' + market.toLowerCase() + '/' + horizon;
-      if (push && location.hash !== hash) history.replaceState(null, '', hash);
-      /* the panel that just became visible can now be measured — the shared
-         affordance script in Base.astro listens for this */
-      document.dispatchEvent(new CustomEvent('sp:relayout'));
-    }
-
-    function fromHash() {
-      const raw = (location.hash || '').replace(/^#/, '');
-      if (!raw) return false;
-      const [m, h] = raw.split('/');
-      const mm = marketIds.find((x) => x.toLowerCase() === (m || '').toLowerCase());
-      const hh = horizonIds.find((x) => x === h);
-      if (!mm || !hh) return false;
-      market = mm;
-      horizon = hh;
-      return true;
-    }
-
-    marketBtns.forEach((b) =>
-      b.addEventListener('click', () => {
-        market = b.dataset.market;
-        apply(true);
-      }),
-    );
-    horizonBtns.forEach((b) =>
-      b.addEventListener('click', () => {
-        horizon = b.dataset.horizon;
-        apply(true);
-      }),
-    );
-    window.addEventListener('hashchange', () => {
-      if (fromHash()) apply(false);
-    });
-
-    fromHash();
-    apply(false);
-
-    /* keyboard: arrow keys move between horizon tabs */
-    document.querySelectorAll('[role="tablist"]').forEach((list) => {
-      list.addEventListener('keydown', (e) => {
-        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-        const tabs = [...list.querySelectorAll('[role="tab"]')];
-        const i = tabs.indexOf(document.activeElement);
-        if (i < 0) return;
-        e.preventDefault();
-        const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
-        next.focus();
-        next.click();
-      });
-    });
-
-    /* --------------------------------------------------- detail rows */
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-detail-toggle]');
-      if (!btn) return;
-      const row = document.getElementById(btn.dataset.detailToggle);
-      if (!row) return;
-      const open = row.hidden;
-      row.hidden = !open;
-      btn.setAttribute('aria-expanded', String(open));
-      btn.querySelector('.dt-open').hidden = open;
-      btn.querySelector('.dt-close').hidden = !open;
-    });
-
-    /* ------------------------------------------------- news filtering */
-    const chip = document.getElementById('news-filter-chip');
-    const chipText = document.getElementById('news-filter-text');
-    const empty = document.getElementById('news-empty');
-    const items = document.querySelectorAll('#home-news .news-item');
-    let activeTicker = null;
-
-    function applyFilter() {
-      let shown = 0;
-      items.forEach((li) => {
-        const list = (li.dataset.tickers || '').split(',').filter(Boolean);
-        const match = !activeTicker || list.includes(activeTicker);
-        li.hidden = !match;
-        if (match) shown++;
-      });
-      chip.hidden = !activeTicker;
-      if (activeTicker) chipText.textContent = filterLabel.replace('{ticker}', activeTicker);
-      empty.hidden = shown > 0;
-      document.querySelectorAll('tr.row[data-ticker]').forEach((tr) => {
-        tr.classList.toggle('is-selected', tr.dataset.ticker === activeTicker);
-      });
-    }
-
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-filter-ticker]');
-      if (btn) {
-        const tk = btn.dataset.filterTicker;
-        activeTicker = activeTicker === tk ? null : tk;
-        applyFilter();
-        if (activeTicker) document.getElementById('news').scrollIntoView({ block: 'nearest' });
-        return;
+      /* Fetch a board's server-rendered markup from its own landing page and
+         move it in. There is no client-side row template, so the two copies
+         cannot disagree — there is only one copy. */
+      const loading = new Set();
+      async function hydrate(panel) {
+        const src = panel.dataset.src;
+        if (!src || panel.dataset.loaded || loading.has(src)) return;
+        loading.add(src);
+        try {
+          const res = await fetch(src, { headers: { Accept: 'text/html' } });
+          if (!res.ok) return;
+          const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+          const fresh = doc.querySelector('.board-panel[data-board="' + panel.dataset.board + '"]');
+          if (!fresh) return;
+          panel.innerHTML = fresh.innerHTML;
+          panel.dataset.loaded = '1';
+          panel.classList.remove('board-lazy');
+          panel.removeAttribute('aria-busy');
+          document.dispatchEvent(new CustomEvent('sp:relayout'));
+        } catch (_) {
+          /* offline or blocked — the link inside the stub still works */
+        } finally {
+          loading.delete(src);
+        }
       }
-      if (e.target.closest('#clear-filter')) {
-        activeTicker = null;
-        applyFilter();
-      }
-    });
 
-    /* --------------------------------------- live patch every 120s */
-    const fmtCache = {};
-    function nf(currency, digits, style) {
-      const key = currency + digits + style;
-      if (!fmtCache[key]) {
-        fmtCache[key] = new Intl.NumberFormat(locale, {
-          style: style,
-          currency: style === 'currency' ? currency : undefined,
-          minimumFractionDigits: digits,
-          maximumFractionDigits: digits,
+      function apply(push) {
+        panels.forEach((p) => {
+          p.hidden = p.dataset.board !== market + '/' + horizon;
+          if (!p.hidden) hydrate(p);
+        });
+        regimes.forEach((r) => {
+          r.hidden = r.dataset.regimeMarket !== market;
+        });
+        marketBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.market === market)));
+        horizonBtns.forEach((b) => {
+          const on = b.dataset.horizon === horizon;
+          b.setAttribute('aria-selected', String(on));
+          b.setAttribute('aria-controls', 'board-' + market.toLowerCase() + '-' + b.dataset.horizon);
+          /* roving tabindex: one stop in the tab order, arrows move within it */
+          if (on) b.removeAttribute('tabindex');
+          else b.setAttribute('tabindex', '-1');
+        });
+        const hash = '#' + market.toLowerCase() + '/' + horizon;
+        if (push && location.hash !== hash) history.replaceState(null, '', hash);
+        /* the panel that just became visible can now be measured — the shared
+           affordance script in Base.astro listens for this */
+        document.dispatchEvent(new CustomEvent('sp:relayout'));
+      }
+
+      function fromHash() {
+        const raw = (location.hash || '').replace(/^#/, '');
+        if (!raw) return false;
+        const [m, h] = raw.split('/');
+        const mm = marketIds.find((x) => x.toLowerCase() === (m || '').toLowerCase());
+        const hh = horizonIds.find((x) => x === h);
+        if (!mm || !hh) return false;
+        market = mm;
+        horizon = hh;
+        return true;
+      }
+
+      marketBtns.forEach((b) =>
+        b.addEventListener('click', () => {
+          market = b.dataset.market;
+          apply(true);
+        }),
+      );
+      horizonBtns.forEach((b) =>
+        b.addEventListener('click', () => {
+          horizon = b.dataset.horizon;
+          apply(true);
+        }),
+      );
+      window.addEventListener('hashchange', () => {
+        if (fromHash()) apply(false);
+      });
+
+      fromHash();
+      apply(false);
+
+      /* keyboard: arrow keys move between horizon tabs */
+      document.querySelectorAll('[role="tablist"]').forEach((list) => {
+        list.addEventListener('keydown', (e) => {
+          if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+          const tabs = [...list.querySelectorAll('[role="tab"]')];
+          const i = tabs.indexOf(document.activeElement);
+          if (i < 0) return;
+          e.preventDefault();
+          const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+          next.focus();
+          next.click();
+        });
+      });
+
+      /* --------------------------------------------------- detail rows */
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-detail-toggle]');
+        if (!btn) return;
+        const row = document.getElementById(btn.dataset.detailToggle);
+        if (!row) return;
+        const open = row.hidden;
+        row.hidden = !open;
+        btn.setAttribute('aria-expanded', String(open));
+        btn.querySelector('.dt-open').hidden = open;
+        btn.querySelector('.dt-close').hidden = !open;
+      });
+
+      /* ------------------------------------------------- news filtering */
+      const chip = document.getElementById('news-filter-chip');
+      const chipText = document.getElementById('news-filter-text');
+      const empty = document.getElementById('news-empty');
+      const items = document.querySelectorAll('#home-news .news-item');
+      let activeTicker = null;
+
+      function applyFilter() {
+        let shown = 0;
+        items.forEach((li) => {
+          const list = (li.dataset.tickers || '').split(',').filter(Boolean);
+          const match = !activeTicker || list.includes(activeTicker);
+          li.hidden = !match;
+          if (match) shown++;
+        });
+        chip.hidden = !activeTicker;
+        if (activeTicker) chipText.textContent = filterLabel.replace('{ticker}', activeTicker);
+        empty.hidden = shown > 0;
+        document.querySelectorAll('tr.row[data-ticker]').forEach((tr) => {
+          tr.classList.toggle('is-selected', tr.dataset.ticker === activeTicker);
         });
       }
-      return fmtCache[key];
-    }
-    function pct(v) {
-      const s = nf('USD', 2, 'decimal').format(Math.abs(v));
-      return (v > 0 ? '+' : v < 0 ? '−' : '') + s + '%';
-    }
-    function setText(root, sel, text) {
-      const el = root.querySelector(sel);
-      if (el && el.textContent !== text) el.textContent = text;
-    }
 
-    document.addEventListener('sp:data', (e) => {
-      const { name, payload } = e.detail;
-      if (name !== 'rankings' || !payload || !payload.boards) return;
-      const built = document.querySelector('meta[name="sp:data-generated-at"]');
-      if (built && built.content === payload.generatedAt) return;
-
-      let structural = false;
-
-      document.querySelectorAll('tr.row[data-key]').forEach((tr) => {
-        const [m, h, tk] = (tr.dataset.key || '').split('|');
-        const board = payload.boards[m] && payload.boards[m][h];
-        if (!board) return;
-        const r = (board.rows || []).find((x) => x.ticker === tk);
-        if (!r) {
-          structural = true;
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-filter-ticker]');
+        if (btn) {
+          const tk = btn.dataset.filterTicker;
+          activeTicker = activeTicker === tk ? null : tk;
+          applyFilter();
+          if (activeTicker) document.getElementById('news').scrollIntoView({ block: 'nearest' });
           return;
         }
-        const cfg = numFmt[m] || numFmt.US;
-        setText(tr, '[data-live="price"]', nf(cfg.currency, cfg.digits, 'currency').format(r.price));
-        const chg = tr.querySelector('[data-live="changePct"]');
-        if (chg) {
-          const dir = r.changePct > 0 ? 'up' : r.changePct < 0 ? 'down' : 'flat';
-          chg.className = 'chg ' + dir;
-          chg.innerHTML =
-            '<span aria-hidden="true">' +
-            (dir === 'up' ? '▲' : dir === 'down' ? '▼' : '–') +
-            '</span> ' +
-            pct(r.changePct);
+        if (e.target.closest('#clear-filter')) {
+          activeTicker = null;
+          applyFilter();
         }
-        setText(tr, '[data-live="score"]', nf('USD', 1, 'decimal').format(r.score));
-        const rankEl = tr.querySelector('.rank-no');
-        if (rankEl && String(r.rank) !== rankEl.textContent.trim()) structural = true;
       });
 
-      const dateFmt = new Intl.DateTimeFormat(locale, {
-        year: 'numeric',
-        month: 'short',
-        day: '2-digit',
-        timeZone: 'UTC',
-      });
-      document.querySelectorAll('.board-panel[data-board]').forEach((p) => {
-        const [m, h] = (p.dataset.board || '').split('/');
-        const board = payload.boards[m] && payload.boards[m][h];
-        if (!board) return;
-        setText(p, '[data-live="turnover"]', Math.round(board.turnover30d * 100) + '%');
-        if (board.asOf) setText(p, '[data-live="asOf"]', dateFmt.format(new Date(board.asOf + 'T00:00:00Z')));
-      });
+      /* --------------------------------------- live patch every 120s */
+      const fmtCache = {};
+      function nf(currency, digits, style) {
+        const key = currency + digits + style;
+        if (!fmtCache[key]) {
+          fmtCache[key] = new Intl.NumberFormat(locale, {
+            style: style,
+            currency: style === 'currency' ? currency : undefined,
+            minimumFractionDigits: digits,
+            maximumFractionDigits: digits,
+          });
+        }
+        return fmtCache[key];
+      }
+      function pct(v) {
+        const s = nf('USD', 2, 'decimal').format(Math.abs(v));
+        return (v > 0 ? '+' : v < 0 ? '−' : '') + s + '%';
+      }
+      function setText(root, sel, text) {
+        const el = root.querySelector(sel);
+        if (el && el.textContent !== text) el.textContent = text;
+      }
 
-      if (structural) document.getElementById('live-bar').hidden = false;
-    });
-  })();
-</script>
+      document.addEventListener('sp:data', (e) => {
+        const { name, payload } = e.detail;
+        if (name !== 'rankings' || !payload || !payload.boards) return;
+        const built = document.querySelector('meta[name="sp:data-generated-at"]');
+        if (built && built.content === payload.generatedAt) return;
+
+        let structural = false;
+
+        document.querySelectorAll('tr.row[data-key]').forEach((tr) => {
+          const [m, h, tk] = (tr.dataset.key || '').split('|');
+          const board = payload.boards[m] && payload.boards[m][h];
+          if (!board) return;
+          const r = (board.rows || []).find((x) => x.ticker === tk);
+          if (!r) {
+            structural = true;
+            return;
+          }
+          const cfg = numFmt[m] || numFmt.US;
+          setText(tr, '[data-live="price"]', nf(cfg.currency, cfg.digits, 'currency').format(r.price));
+          const chg = tr.querySelector('[data-live="changePct"]');
+          if (chg) {
+            const dir = r.changePct > 0 ? 'up' : r.changePct < 0 ? 'down' : 'flat';
+            chg.className = 'chg ' + dir;
+            chg.innerHTML =
+              '<span aria-hidden="true">' +
+              (dir === 'up' ? '▲' : dir === 'down' ? '▼' : '–') +
+              '</span> ' +
+              pct(r.changePct);
+          }
+          setText(tr, '[data-live="score"]', nf('USD', 1, 'decimal').format(r.score));
+          const rankEl = tr.querySelector('.rank-no');
+          if (rankEl && String(r.rank) !== rankEl.textContent.trim()) structural = true;
+        });
+
+        const dateFmt = new Intl.DateTimeFormat(locale, {
+          year: 'numeric',
+          month: 'short',
+          day: '2-digit',
+          timeZone: 'UTC',
+        });
+        document.querySelectorAll('.board-panel[data-board]').forEach((p) => {
+          const [m, h] = (p.dataset.board || '').split('/');
+          const board = payload.boards[m] && payload.boards[m][h];
+          if (!board) return;
+          setText(p, '[data-live="turnover"]', Math.round(board.turnover30d * 100) + '%');
+          if (board.asOf) setText(p, '[data-live="asOf"]', dateFmt.format(new Date(board.asOf + 'T00:00:00Z')));
+        });
+
+        if (structural) document.getElementById('live-bar').hidden = false;
+      });
+    })();
+  </script>
+</Base>
+
+

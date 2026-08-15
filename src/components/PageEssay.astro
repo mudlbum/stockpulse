@@ -1,0 +1,70 @@
+---
+/**
+ * Original, server-rendered explanatory prose for a tool page.
+ *
+ * The AdSense inventory-value policy bars pages that are "embedded or copied
+ * content from others without additional commentary, curation, or otherwise
+ * adding value". A page whose entire substance is a rendered dataset — worse,
+ * one where the substance is behind `class="js-only"` and a crawler sees only
+ * disclaimers, as /simulator/ did at a 5.7% text-to-HTML ratio — is precisely
+ * the shape that gets refused.
+ *
+ * So every tool page carries this: what it is, how to read it, and when it
+ * misleads. Server-rendered, in the page language, and written for the reader
+ * rather than for the crawler.
+ */
+import type { Locale } from '../config';
+
+export interface EssaySection {
+  h: string;
+  p: string[];
+}
+
+interface Props {
+  lang: Locale;
+  heading: string;
+  sections: EssaySection[];
+  /** Heading level of the section titles; the page owns h1/h2 ordering. */
+  level?: 2 | 3;
+}
+const { heading, sections, level = 3 } = Astro.props;
+const Sub = `h${level}` as 'h2' | 'h3';
+---
+
+<section class="page-essay" aria-labelledby="essay-h">
+  <h2 id="essay-h">{heading}</h2>
+  {
+    sections.map((s) => (
+      <div class="essay-block">
+        <Sub>{s.h}</Sub>
+        {s.p.map((para) => (
+          <p>{para}</p>
+        ))}
+      </div>
+    ))
+  }
+</section>
+
+<style>
+  .page-essay {
+    max-width: 80ch;
+  }
+  .page-essay h2 {
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border);
+  }
+  .essay-block {
+    margin-bottom: 1.4rem;
+  }
+  .essay-block :global(h3) {
+    font-size: 0.98rem;
+    margin-bottom: 0.35rem;
+  }
+  .page-essay p {
+    line-height: 1.65;
+    margin-bottom: 0.7rem;
+  }
+  html[lang='ko'] .page-essay p {
+    line-height: 1.75;
+  }
+</style>

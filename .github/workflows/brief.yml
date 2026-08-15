@@ -1,0 +1,72 @@
+name: Draft market brief
+
+# One brief per market per day, opened as a PULL REQUEST — never auto-merged.
+#
+# Google's publisher policies bar "automatically generated content without
+# manual review or curation", and the Search spam policy defines scaled content
+# abuse in terms of purpose and value rather than volume. A cron that publishes
+# straight to the site would be exactly the pattern those policies describe,
+# however good the prose is. So the automation stops at "draft ready for a
+# human", and a person merges it.
+#
+# The drafter also declines to write anything when the day produced too few
+# verifiable facts. A page that exists only because the schedule fired is the
+# thing to avoid.
+
+on:
+  schedule:
+    - cron: '0 22 * * 1-5'   # after the US post-close refresh
+    - cron: '40 7 * * 1-5'   # after the KR post-close refresh
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: market-brief
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+
+      - name: Draft
+        id: draft
+        run: |
+          npm run brief | tee /tmp/brief.log
+          if git diff --quiet --exit-code -- src/content/posts; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify the draft actually builds
+        if: steps.draft.outputs.changed == 'true'
+        run: |
+          # A draft that breaks the content schema must not become a PR.
+          npx astro sync
+          SITE_URL=https://example.github.io BASE_PATH=/ npm run build
+
+      - name: Open a review PR
+        if: steps.draft.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BRANCH="brief/$(date -u +%Y-%m-%d-%H%M)"
+          git config user.name 'stockpulse-bot'
+          git config user.email 'stockpulse-bot@users.noreply.github.com'
+          git checkout -b "$BRANCH"
+          git add src/content/posts
+          git commit -m "draft: market brief $(date -u +%Y-%m-%d)"
+          git push -u origin "$BRANCH"
+          gh pr create \
+            --title "Market brief draft — $(date -u +%Y-%m-%d)" \
+            --body-file .github/brief-pr-body.md

@@ -1,0 +1,43 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import BlogPostView from '../../../views/pages/BlogPostView.astro';
+import { counterpart, neighbours, postsFor, relatedTo, slugOf, type Post } from '../../../lib/blog';
+import { pageAbsolute } from '../../../lib/paths';
+
+export const getStaticPaths = (async () => {
+  const posts = await postsFor('ko');
+  const out: {
+    params: { slug: string };
+    props: { post: Post; related: Post[]; newer: Post | null; older: Post | null; counterpartUrl: string | null };
+  }[] = [];
+  for (const post of posts) {
+    const other = await counterpart(post);
+    const { newer, older } = neighbours(post, posts);
+    out.push({
+      params: { slug: slugOf(post) },
+      props: {
+        post,
+        related: relatedTo(post, posts),
+        newer,
+        older,
+        counterpartUrl: other ? pageAbsolute(other.data.lang, `blog/${slugOf(other)}`) : null,
+      },
+    });
+  }
+  return out;
+}) satisfies GetStaticPaths;
+
+const { post, related, newer, older, counterpartUrl } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BlogPostView
+  lang="ko"
+  post={post}
+  Content={Content}
+  related={related}
+  newer={newer}
+  older={older}
+  counterpartUrl={counterpartUrl}
+/>

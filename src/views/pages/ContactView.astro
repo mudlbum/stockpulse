@@ -1,0 +1,119 @@
+---
+/**
+ * /contact — a real, monitored channel. AdSense will not approve a site whose
+ * only contact route is a form that goes nowhere, and PIPA/GDPR both require a
+ * working address for access and deletion requests.
+ *
+ * The address comes from SITE.contactEmail and is never written inline here.
+ * NOTE FOR THE OPERATOR: `hello@example.com` in src/config.ts is a PLACEHOLDER
+ * and must be replaced with a real mailbox that a person actually reads before
+ * this site goes live. It appears on this page, on /privacy, on /terms and in
+ * the footer of every page. See docs/LAUNCH_CHECKLIST.md step 1.
+ *
+ * The repository link is surfaced beside it on purpose: a public repo is a
+ * verifiable transparency channel in a way an email address is not — anyone can
+ * read the code that produced any number on this site and raise an issue in the
+ * open.
+ */
+import { SITE, type Locale } from '../../config';
+import { UI, fill } from '../../i18n/ui';
+import { pageHref } from '../../lib/paths';
+import Base from '../../layouts/Base.astro';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+
+/** Display form of the repo URL: 'github.com/owner/repo' without the scheme. */
+const repoLabel = SITE.repoUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '');
+const isPlaceholderEmail = /example\.(com|org|net)$/i.test(SITE.contactEmail);
+---
+
+<Base lang={lang} page="contact" title={t.seo.contact.title} description={t.seo.contact.description}>
+  <div class="wrap wrap-narrow">
+    <div class="page-head">
+      <h1>{t.contact.title}</h1>
+      <p class="lede">{t.contact.lead}</p>
+    </div>
+
+    {/* Self-flagging: a placeholder address that reaches production announces
+        itself rather than sitting there looking like a working mailbox. */}
+    {
+      isPlaceholderEmail && (
+        <div class="notice notice-warn" role="note" style="margin-bottom:1.6rem;">
+          <p>
+            <b>{SITE.contactEmail}</b> is a placeholder address and does not receive mail. It must be replaced in
+            <code> src/config.ts </code> before launch.
+          </p>
+        </div>
+      )
+    }
+
+    <section aria-labelledby="c-email">
+      <div class="section-head">
+        <h2 id="c-email">{t.contact.emailHeading}</h2>
+      </div>
+      <p class="contact-address">
+        <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+      </p>
+      <p>{t.contact.emailNote}</p>
+    </section>
+
+    <section aria-labelledby="c-response">
+      <div class="section-head">
+        <h2 id="c-response">{t.contact.responseHeading}</h2>
+      </div>
+      <p>{fill(t.contact.responseNote, { days: SITE.responseDays })}</p>
+    </section>
+
+    <section aria-labelledby="c-repo">
+      <div class="section-head">
+        <h2 id="c-repo">{t.contact.repoHeading}</h2>
+      </div>
+      <p class="contact-address">
+        <a href={SITE.repoUrl} rel="noopener">{repoLabel}</a>
+      </p>
+      <p>{t.contact.repoNote}</p>
+    </section>
+
+    <section aria-labelledby="c-corrections">
+      <div class="section-head">
+        <h2 id="c-corrections">{t.contact.correctionsHeading}</h2>
+      </div>
+      <p>{t.contact.correctionsNote}</p>
+      <p class="small muted">
+        <a href={pageHref(lang, 'editorial-policy')}>{t.nav.editorial} →</a>
+      </p>
+    </section>
+
+    <section aria-labelledby="c-noadvice">
+      <div class="section-head">
+        <h2 id="c-noadvice">{t.contact.noAdviceHeading}</h2>
+      </div>
+      <p>{t.contact.noAdviceNote}</p>
+      <p class="small muted">
+        <a href={pageHref(lang, 'disclaimer')}>{t.nav.disclaimer} →</a>
+      </p>
+    </section>
+
+    <section aria-labelledby="c-privacy">
+      <div class="section-head">
+        <h2 id="c-privacy">{t.contact.privacyHeading}</h2>
+      </div>
+      <p>{t.contact.privacyNote}</p>
+      <p class="small muted">
+        <a href={pageHref(lang, 'privacy')}>{t.nav.privacy} →</a>
+      </p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .contact-address {
+    font-size: 1.05rem;
+    margin: 0 0 0.5rem;
+    overflow-wrap: anywhere;
+  }
+</style>

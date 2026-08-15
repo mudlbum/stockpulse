@@ -1,0 +1,197 @@
+---
+/**
+ * One board, full width, with original framing that appears nowhere else.
+ *
+ * These are the site's only pages that target how people actually search
+ * ("korea long term stock ranking", "1-5 day momentum screen"). The prose is
+ * load-bearing for that, but the "what it cannot tell you" section is
+ * load-bearing for something else: a landing page for a stock screen that only
+ * sells the screen is exactly the framing the publisher policies prohibit.
+ */
+import { HORIZONS, MARKETS, type HorizonId, type Locale, type MarketId } from '../../config';
+import { UI } from '../../i18n/ui';
+import { boardSlug, copyFor, SECTION_HEADINGS } from '../../i18n/horizon-pages';
+import { pageAbsolute, pageHref } from '../../lib/paths';
+import { rankings } from '../../lib/data';
+import { fmtRatioPct, fmtDate } from '../../lib/format';
+import { categoryLabel, postsFor, slugOf, type Post } from '../../lib/blog';
+import Base from '../../layouts/Base.astro';
+import BoardTable from '../../components/BoardTable.astro';
+import RegimeBanner from '../../components/RegimeBanner.astro';
+import PlaceholderNotice from '../../components/PlaceholderNotice.astro';
+
+interface Props {
+  lang: Locale;
+  market: MarketId;
+  horizon: HorizonId;
+}
+const { lang, market, horizon } = Astro.props;
+const t = UI[lang];
+const H = SECTION_HEADINGS[lang];
+const c = copyFor(market, horizon, lang);
+const h = HORIZONS.find((x) => x.id === horizon)!;
+const board = rankings.boards[market][horizon];
+const slug = boardSlug(market, horizon);
+
+/* Explainers that actually relate to this horizon, matched on tag overlap with
+   the horizon's own vocabulary. Contextual internal linking the site had none
+   of. */
+const TAG_HINTS: Record<HorizonId, string[]> = {
+  ultra_short: ['atr', 'volatility', 'relative-volume', 'volume', 'stops', 'risk', 'regime'],
+  mid_term: ['earnings-drift', 'momentum', 'trend', 'sector', 'money-flow', 'regime'],
+  long_term: ['roic', 'fcf', 'piotroski', 'valuation', 'quality', 'accounting'],
+  ultra_long: ['moat', 'roic', 'fcf', 'quality', 'compounding'],
+};
+const hints = new Set(TAG_HINTS[horizon]);
+const all = await postsFor(lang);
+const related: Post[] = all
+  .map((p) => ({ p, score: p.data.tags.filter((tag) => hints.has(tag)).length }))
+  .filter((x) => x.score > 0)
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 4)
+  .map((x) => x.p);
+
+const itemList = {
+  '@type': 'ItemList',
+  '@id': `${pageAbsolute(lang, slug)}#board`,
+  name: c.h1,
+  numberOfItems: board.rows.length,
+  itemListOrder: 'https://schema.org/ItemListOrderDescending',
+  itemListElement: board.rows.map((r) => ({
+    '@type': 'ListItem',
+    position: r.rank,
+    name: `${r.ticker} — ${r.name}`,
+  })),
+};
+
+const breadcrumbs = [
+  { name: t.nav.home, slug: '' },
+  { name: c.h1, slug },
+];
+
+const otherBoards = MARKETS.flatMap((m) =>
+  HORIZONS.map((hz) => ({ m: m.id, hz: hz.id, label: `${t.common.market[m.id]} · ${hz.label[lang]}` })),
+).filter((x) => !(x.m === market && x.hz === horizon));
+---
+
+<Base
+  lang={lang}
+  page={slug}
+  title={c.title}
+  description={c.description}
+  live={['rankings']}
+  schema={[itemList]}
+  breadcrumbs={breadcrumbs}
+>
+  <div class="wrap">
+    <PlaceholderNotice lang={lang} datasets={['rankings']} />
+
+    <div class="page-head">
+      <h1>{c.h1}</h1>
+      <p class="lede">{c.description}</p>
+      <p class="small muted">
+        {t.home.asOf} <time datetime={board.asOf}>{fmtDate(board.asOf, lang)}</time> ·{' '}
+        {t.home.turnover} {fmtRatioPct(board.turnover30d, 0, lang)} ·{' '}
+        <a href={`${pageHref(lang, '')}#${market.toLowerCase()}/${horizon}`}>{t.nav.home}</a>
+      </p>
+    </div>
+
+    <RegimeBanner lang={lang} market={market} regime={rankings.regime[market]} selected={true} />
+
+    <div style="margin-top:1.2rem;">
+      <BoardTable lang={lang} board={board} selected={true} standalone={true} />
+    </div>
+
+    <section aria-labelledby="screens-h">
+      <div class="section-head"><h2 id="screens-h">{H.screensFor}</h2></div>
+      <ul class="reason-list">
+        {c.screensFor.map((s) => <li>{s}</li>)}
+      </ul>
+    </section>
+
+    <section aria-labelledby="reading-h">
+      <div class="section-head"><h2 id="reading-h">{H.reading}</h2></div>
+      <ul class="reason-list">
+        {c.reading.map((s) => <li>{s}</li>)}
+      </ul>
+    </section>
+
+    <section aria-labelledby="market-h">
+      <div class="section-head"><h2 id="market-h">{H.market}</h2></div>
+      <p class="prose-p">{c.marketNote}</p>
+    </section>
+
+    <section aria-labelledby="cannot-h">
+      <div class="section-head"><h2 id="cannot-h">{H.cannot}</h2></div>
+      <ul class="reason-list">
+        {c.cannot.map((s) => <li>{s}</li>)}
+      </ul>
+    </section>
+
+    <section aria-labelledby="record-h">
+      <div class="section-head"><h2 id="record-h">{H.record}</h2></div>
+      <p class="prose-p">
+        <a href={pageHref(lang, 'performance')}>{t.common.seePerformance} →</a>{' '}
+        <span class="muted">{t.perf.controlHelp}</span>
+      </p>
+    </section>
+
+    {
+      related.length > 0 && (
+        <section aria-labelledby="more-h">
+          <div class="section-head"><h2 id="more-h">{H.more}</h2></div>
+          <ul class="link-list">
+            {related.map((p) => (
+              <li>
+                <a href={pageHref(lang, `blog/${slugOf(p)}`)}>{p.data.title}</a>
+                <span class="muted small"> · {categoryLabel(p.data.category, lang)}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section aria-labelledby="other-h">
+      <div class="section-head"><h2 id="other-h">{t.home.horizon}</h2></div>
+      <nav class="chip-row" aria-labelledby="other-h">
+        {
+          otherBoards.map((b) => (
+            <a class="chip" href={pageHref(lang, boardSlug(b.m, b.hz))}>
+              {b.label}
+            </a>
+          ))
+        }
+      </nav>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .reason-list {
+    margin: 0;
+    padding-inline-start: 1.2rem;
+    max-width: 82ch;
+  }
+  .reason-list li {
+    margin-bottom: 0.6rem;
+    line-height: 1.65;
+  }
+  html[lang='ko'] .reason-list li {
+    line-height: 1.75;
+  }
+  .prose-p {
+    max-width: 82ch;
+    line-height: 1.65;
+  }
+  html[lang='ko'] .prose-p {
+    line-height: 1.75;
+  }
+  .link-list {
+    margin: 0;
+    padding-inline-start: 1.2rem;
+  }
+  .link-list li {
+    margin-bottom: 0.35rem;
+  }
+</style>

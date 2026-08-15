@@ -90,6 +90,10 @@ export const CONCEPTS = {
   operatingCashFlow: ['NetCashProvidedByUsedInOperatingActivities', 'NetCashProvidedByUsedInOperatingActivitiesContinuingOperations'],
   capex: ['PaymentsToAcquirePropertyPlantAndEquipment', 'PaymentsToAcquireProductiveAssets'],
   dividendsPaid: ['PaymentsOfDividendsCommonStock', 'PaymentsOfDividends'],
+  // Both feed the reinvestment-rate factor. Capex alone understates
+  // reinvestment for R&D-led and acquisitive compounders — see derive.mjs.
+  researchAndDevelopment: ['ResearchAndDevelopmentExpense'],
+  acquisitions: ['PaymentsToAcquireBusinessesNetOfCashAcquired', 'PaymentsToAcquireBusinessesAndInterestInAffiliatesGross'],
   // Instantaneous (balance sheet) — must be requested with the "I" period form.
   totalAssets: ['Assets'],
   totalEquity: ['StockholdersEquity', 'StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest'],

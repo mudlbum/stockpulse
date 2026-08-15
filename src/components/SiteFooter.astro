@@ -1,5 +1,5 @@
 ---
-import { SITE, type Locale } from '../config';
+import { ADS_ENABLED, SITE, type Locale } from '../config';
 import { absolute, href, pageHref } from '../lib/paths';
 import { UI } from '../i18n/ui';
 import { dataGeneratedAt, rankings } from '../lib/data';
@@ -10,17 +10,50 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = UI[lang];
+
+/** Every policy page, on every page of the site. AdSense review looks for
+    exactly this: a persistent, reachable link to the privacy policy. */
+const legal = [
+  { slug: 'disclaimer', label: t.nav.disclaimer },
+  { slug: 'privacy', label: t.nav.privacy },
+  { slug: 'terms', label: t.nav.terms },
+  { slug: 'editorial-policy', label: t.nav.editorial },
+  { slug: 'contact', label: t.nav.contact },
+  { slug: 'methodology', label: t.nav.methodology },
+];
 ---
 
 <footer class="site-footer">
   <div class="wrap footer-grid">
     <p class="footer-disclaimer">
       {t.footerDisclaimer}
-      {' '}
-      <a href={pageHref(lang, 'disclaimer')}>{t.nav.disclaimer}</a>
-      {' · '}
-      <a href={pageHref(lang, 'methodology')}>{t.nav.methodology}</a>
     </p>
+
+    <nav class="footer-legal" aria-label={t.footerLegal}>
+      {
+        legal.map((l, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> · </span>}
+            <a href={pageHref(lang, l.slug)}>{l.label}</a>
+          </>
+        ))
+      }
+      {
+        /* Re-opens the consent dialog. Rendered ONLY when an ad client is
+           configured, because without one there is no CMP loaded and no
+           consent to revisit — and it starts hidden, revealed by the script
+           below only once the CMP's API is genuinely present. A control that
+           does nothing is worse than no control. */
+        ADS_ENABLED && (
+          <>
+            <span aria-hidden="true"> · </span>
+            <button id="cookie-settings" type="button" class="linklike" hidden>
+              {t.cookieSettings}
+            </button>
+          </>
+        )
+      }
+    </nav>
 
     <p class="nowrap">
       {t.dataAsOf}{' '}
@@ -34,9 +67,9 @@ const t = UI[lang];
     <p class="nowrap">
       <a href={href('data/rankings.json')}>rankings.json</a>
       {' · '}
-      <a href={absolute('rss.xml')}>RSS</a>
+      <a href={href('rss.xml')}>RSS</a>
       {' · '}
-      <a href={absolute('llms.txt')}>llms.txt</a>
+      <a href={href('llms.txt')}>llms.txt</a>
     </p>
 
     <p style="flex:1 1 100%; margin:0; opacity:.85;">
@@ -44,3 +77,76 @@ const t = UI[lang];
     </p>
   </div>
 </footer>
+
+{/* Re-consent control for Google's CMP (AdSense → Privacy & messaging).
+
+    Two APIs, in preference order:
+      googlefc.showRevocationMessage()      — Funding Choices / Google CMP
+      __tcfapi('displayConsentUi', 2, cb)   — the TCF v2 equivalent
+
+    Neither exists unless a certified CMP actually loaded AND decided this
+    visitor is in a region where a message applies, so the button stays hidden
+    until one of them answers — a "Cookie settings" control that opens nothing
+    is worse than no control. The CMP arrives with the async AdSense tag and may
+    land after this runs, hence a bounded poll (10s) rather than one check.
+
+    NOTE ON THE SCRIPT BODY: the JS is written directly as the element's
+    children, NOT wrapped in {`…`}. Inside an is:inline script Astro emits the
+    children verbatim, so a template-literal wrapper ships to the browser as a
+    literal `{` + backtick — which parses as a block containing an unused string
+    and silently never executes. */}
+{
+  ADS_ENABLED && (
+    <script is:inline>
+      (function () {
+        var btn = document.getElementById('cookie-settings');
+        if (!btn) return;
+        function api() {
+          if (window.googlefc && typeof window.googlefc.showRevocationMessage === 'function') {
+            return function () { window.googlefc.showRevocationMessage(); };
+          }
+          if (typeof window.__tcfapi === 'function') {
+            return function () { window.__tcfapi('displayConsentUi', 2, function () {}); };
+          }
+          return null;
+        }
+        var tries = 0;
+        var timer = setInterval(function () {
+          var fn = api();
+          if (fn) {
+            clearInterval(timer);
+            btn.hidden = false;
+            btn.addEventListener('click', function () { fn(); });
+          } else if (++tries > 40) {
+            clearInterval(timer);
+          }
+        }, 250);
+      })();
+    </script>
+  )
+}
+
+<style>
+  .footer-legal {
+    flex: 1 1 100%;
+    margin: 0;
+    line-height: 1.9;
+  }
+  /* A button that has to read as one of the links beside it. Rendered as a
+     button because it performs an action rather than navigating, which is what
+     a screen reader should be told. */
+  .linklike {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .linklike:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+</style>

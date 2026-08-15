@@ -73,4 +73,10 @@ export const PAGES = [
   { slug: 'alerts', changefreq: 'monthly', priority: '0.4' },
   { slug: 'about', changefreq: 'monthly', priority: '0.4' },
   { slug: 'disclaimer', changefreq: 'monthly', priority: '0.5' },
+  /* Legal / policy surface. AdSense review reads these, and /privacy is the one
+     page Google explicitly requires before an application is approved. */
+  { slug: 'privacy', changefreq: 'yearly', priority: '0.5' },
+  { slug: 'terms', changefreq: 'yearly', priority: '0.4' },
+  { slug: 'editorial-policy', changefreq: 'yearly', priority: '0.4' },
+  { slug: 'contact', changefreq: 'yearly', priority: '0.4' },
 ] as const;

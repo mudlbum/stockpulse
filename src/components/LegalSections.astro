@@ -1,0 +1,67 @@
+---
+/**
+ * Renders the body of a policy page from `LegalSection[]` in src/i18n/ui.ts.
+ *
+ * Both languages go through this component, so the only thing that differs
+ * between /privacy and /ko/privacy is the array of strings — which is what lets
+ * the Korean 개인정보처리방침 be a genuinely different document (different
+ * sections, different count, PIPA's disclosure list rather than Google's)
+ * without duplicating a single line of markup.
+ *
+ * `vars` is applied to every paragraph through fill(), so a policy can carry a
+ * {jurisdiction} or {days} placeholder inline without the view having to know
+ * which paragraph it lands in.
+ */
+import { fill, type LegalSection } from '../i18n/ui';
+
+interface Props {
+  sections: LegalSection[];
+  /** Prefix for the generated heading ids — must be unique per page. */
+  idPrefix: string;
+  vars?: Record<string, string | number>;
+}
+
+const { sections, idPrefix, vars } = Astro.props;
+---
+
+{
+  sections.map((s, i) => (
+    <section aria-labelledby={`${idPrefix}-${i}`}>
+      <h2 id={`${idPrefix}-${i}`}>{s.h}</h2>
+      {s.p.map((para) => (
+        <p>{vars ? fill(para, vars) : para}</p>
+      ))}
+      {s.links && s.links.length > 0 && (
+        <ul class="ref-list">
+          {s.links.map((l) => (
+            <li>
+              <a href={l.url} rel="noopener nofollow">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  ))
+}
+
+<style>
+  /* Outbound reference links belong to the section that cites them, not to a
+     link dump at the foot of the page — an AdSense reviewer looking for the
+     Google partner-sites link should find it in the advertising section. */
+  .ref-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.6rem 0 1.2rem;
+    display: grid;
+    gap: 0.35rem;
+    border-inline-start: 3px solid var(--border);
+    padding-inline-start: 0.85rem;
+  }
+  .ref-list li {
+    margin: 0;
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+  }
+</style>

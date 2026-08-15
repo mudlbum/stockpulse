@@ -9,6 +9,8 @@ import { HORIZONS, MARKETS, type Locale } from '../../config';
 import { UI } from '../../i18n/ui';
 import { rankings } from '../../lib/data';
 import Base from '../../layouts/Base.astro';
+import PageEssay from '../../components/PageEssay.astro';
+import { ESSAYS } from '../../i18n/page-essays';
 import ComplianceNotice from '../../components/ComplianceNotice.astro';
 import PlaceholderNotice from '../../components/PlaceholderNotice.astro';
 import ScrollArea from '../../components/ScrollArea.astro';
@@ -60,7 +62,7 @@ const defaults = { US: 10000, KR: 50000000 };
 const locale = lang === 'ko' ? 'ko-KR' : 'en-US';
 ---
 
-<Base lang={lang} page="simulator" title={t.sim.title} description={t.sim.intro}>
+<Base lang={lang} page="simulator" title={t.seo.simulator.title} description={t.seo.simulator.description}>
   <div class="wrap">
     <PlaceholderNotice lang={lang} datasets={['rankings']} />
 
@@ -81,7 +83,7 @@ const locale = lang === 'ko' ? 'ko-KR' : 'en-US';
     </noscript>
 
     <section class="panel js-only" aria-labelledby="sim-inputs">
-      <h2 id="sim-inputs" class="visually-hidden">{t.sim.title}</h2>
+      <h2 id="sim-inputs" class="visually-hidden">{t.sim.inputsHeading}</h2>
       <div class="field-row">
         <div class="field">
           <label for="s-amount">{t.sim.amount}</label>
@@ -153,322 +155,325 @@ const locale = lang === 'ko' ? 'ko-KR' : 'en-US';
       </ScrollArea>
       <p class="muted small" id="s-empty" hidden>{t.sim.emptyBoard}</p>
     </section>
+    <PageEssay lang={lang} heading={ESSAYS.simulator[lang].heading} sections={ESSAYS.simulator[lang].sections} />
   </div>
 
   <script type="application/json" id="sim-boards" set:html={JSON.stringify(boards)} />
+
+  <script slot="scripts"
+    is:inline
+    define:vars={{
+      locale,
+      defaults,
+      labels: {
+        outcomes: t.sim.outcomes,
+        unavailable: t.sim.outcomeUnavailable,
+        perPosition: t.sim.perPosition,
+        invested: t.sim.invested,
+        cash: t.sim.cash,
+        cashHelp: t.sim.cashHelp,
+        stopExposure: t.sim.stopExposure,
+        stopExposureHelp: t.sim.stopExposureHelp,
+        noStopPositions: t.sim.noStopPositions,
+        projected: t.sim.projected,
+        projectedPnl: t.sim.projectedPnl,
+        commissionCost: t.sim.commissionCost,
+        netPnl: t.sim.netPnl,
+        total: t.sim.total,
+        exportedAt: t.sim.exportedAt,
+        noStop: t.home.noStop,
+      },
+      basisLabels: t.home.targetBasisLabel,
+      basisHelp: t.home.targetBasisHelp,
+    }}
+  >
+    (() => {
+      const boards = JSON.parse(document.getElementById('sim-boards').textContent);
+      const el = (id) => document.getElementById(id);
+      const amountEl = el('s-amount');
+      const marketEl = el('s-market');
+      const horizonEl = el('s-horizon');
+      const commEl = el('s-commission');
+      const allEl = el('s-outcome-all');
+      const tbody = el('s-table').querySelector('tbody');
+      const tiles = el('s-tiles');
+      const empty = el('s-empty');
+      const stopNote = el('s-stop-note');
+
+      /* the entire scenario — nothing leaves this object */
+      const state = { outcomes: {} };
+
+      const fmtCache = {};
+      function money(v, currency) {
+        const key = 'm' + currency;
+        if (!fmtCache[key]) {
+          fmtCache[key] = new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency,
+            minimumFractionDigits: currency === 'KRW' ? 0 : 2,
+            maximumFractionDigits: currency === 'KRW' ? 0 : 2,
+          });
+        }
+        return fmtCache[key].format(v);
+      }
+      function num(v, d) {
+        const key = 'n' + d;
+        if (!fmtCache[key]) {
+          fmtCache[key] = new Intl.NumberFormat(locale, { minimumFractionDigits: d, maximumFractionDigits: d });
+        }
+        return fmtCache[key].format(v);
+      }
+
+      function boardKey() {
+        return marketEl.value + '/' + horizonEl.value;
+      }
+
+      /* ordered worst → best, with "unchanged" last as the neutral case */
+      function outcomesFor(row) {
+        const out = [];
+        if (row.stop !== null && row.stop !== undefined) out.push('stop');
+        if (row.targets) out.push('conservative', 'base', 'bull');
+        out.push('flat');
+        return out;
+      }
+
+      function exitPrice(row, outcome, entry) {
+        if (outcome === 'stop' && row.stop != null) return row.stop;
+        if (row.targets && (outcome === 'conservative' || outcome === 'base' || outcome === 'bull')) {
+          return row.targets[outcome];
+        }
+        return entry;
+      }
+
+      function compute() {
+        const board = boards[boardKey()];
+        const amount = Math.max(0, Number(amountEl.value) || 0);
+        const bps = Math.max(0, Number(commEl.value) || 0);
+        if (!board || board.rows.length === 0) {
+          return { board, amount, bps, positions: [], invested: 0, cash: amount, stopExposure: 0, noStopCount: 0, projected: 0, commission: 0 };
+        }
+        const per = amount / board.rows.length;
+        let invested = 0;
+        let stopExposure = 0;
+        let noStopCount = 0;
+        let projected = 0;
+        let commission = 0;
+
+        const positions = board.rows.map((row) => {
+          const entry = (row.entry.low + row.entry.high) / 2;
+          const shares = entry > 0 ? Math.floor(per / entry) : 0;
+          const cost = shares * entry;
+          const avail = outcomesFor(row);
+          let outcome = state.outcomes[row.ticker];
+          if (!outcome || avail.indexOf(outcome) < 0) outcome = avail.indexOf('base') >= 0 ? 'base' : avail[0];
+          const exit = exitPrice(row, outcome, entry);
+          const value = shares * exit;
+          const comm = ((cost + value) * bps) / 10000;
+
+          invested += cost;
+          projected += value;
+          commission += comm;
+          if (row.stop != null) stopExposure += Math.max(0, entry - row.stop) * shares;
+          else noStopCount++;
+
+          return { row, entry, shares, cost, outcome, avail, exit, value, pnl: value - cost, comm };
+        });
+
+        return {
+          board,
+          amount,
+          bps,
+          positions,
+          invested,
+          cash: amount - invested,
+          stopExposure,
+          noStopCount,
+          projected,
+          commission,
+          per,
+        };
+      }
+
+      function tile(k, v, note, cls) {
+        return (
+          '<div class="tile"><span class="k">' +
+          k +
+          '</span><span class="v ' +
+          (cls || '') +
+          '">' +
+          v +
+          '</span>' +
+          (note ? '<p class="note">' + note + '</p>' : '') +
+          '</div>'
+        );
+      }
+
+      function render() {
+        const r = compute();
+        const cur = r.board ? r.board.currency : 'USD';
+        empty.hidden = r.positions.length > 0;
+
+        /* The projected P&L below is arithmetic on the board's target tiers, and
+           those tiers mean different things per horizon. Say which, right next
+           to the number, so a 5–10 year scenario never reads as a forecast. */
+        const basis = (r.board && r.board.targetBasis) || 'atr';
+        const labelEl = el('s-basis-label');
+        labelEl.textContent = basisLabels[basis] || basis;
+        labelEl.className = 'basis-inline' + (basis === 'compounding_scenarios' ? ' basis-scenario' : '');
+        el('s-basis-help').textContent = ' — ' + (basisHelp[basis] || '');
+
+        const pnl = r.projected - r.invested;
+        const net = pnl - r.commission;
+
+        tiles.innerHTML =
+          tile(labels.perPosition, money(r.per || 0, cur), null) +
+          tile(labels.invested, money(r.invested, cur), null) +
+          tile(labels.cash, money(r.cash, cur), labels.cashHelp) +
+          tile(labels.stopExposure, '−' + money(r.stopExposure, cur), labels.stopExposureHelp, 'down') +
+          tile(labels.projectedPnl, (pnl >= 0 ? '▲ ' : '▼ ') + money(Math.abs(pnl), cur), null, pnl >= 0 ? 'up' : 'down') +
+          tile(labels.commissionCost, '−' + money(r.commission, cur), null) +
+          tile(labels.netPnl, (net >= 0 ? '▲ ' : '▼ ') + money(Math.abs(net), cur), null, net >= 0 ? 'up' : 'down');
+
+        stopNote.textContent = r.noStopCount > 0 ? labels.noStopPositions.replace('{n}', r.noStopCount) : '';
+
+        tbody.innerHTML = r.positions
+          .map((p) => {
+            const opts = p.avail
+              .map(
+                (o) =>
+                  '<option value="' + o + '"' + (o === p.outcome ? ' selected' : '') + '>' + labels.outcomes[o] + '</option>',
+              )
+              .join('');
+            return (
+              '<tr>' +
+              '<td><b class="mono">' +
+              p.row.ticker +
+              '</b> <span class="muted">' +
+              p.row.name +
+              '</span></td>' +
+              '<td class="num-cell">' +
+              money(p.entry, cur) +
+              '</td>' +
+              '<td class="num-cell">' +
+              num(p.shares, 0) +
+              '</td>' +
+              '<td class="num-cell">' +
+              money(p.cost, cur) +
+              '</td>' +
+              '<td class="num-cell">' +
+              (p.row.stop != null
+                ? money(p.row.stop, cur)
+                : '<span class="badge badge-warn">' + labels.noStop + '</span>') +
+              '</td>' +
+              '<td class="wrap-cell"><select data-outcome="' +
+              p.row.ticker +
+              '" aria-label="' +
+              p.row.ticker +
+              '">' +
+              opts +
+              '</select>' +
+              /* ultra-long publishes neither a stop nor price targets, so the
+                 only outcome the data supports is "unchanged" — say so rather
+                 than showing a lone option with no explanation */
+              (p.avail.length === 1
+                ? ' <span class="badge badge-warn">' + labels.unavailable + '</span>'
+                : '') +
+              '</td>' +
+              '<td class="num-cell">' +
+              money(p.value, cur) +
+              '</td>' +
+              '<td class="num-cell ' +
+              (p.pnl >= 0 ? 'up' : 'down') +
+              '"><span aria-hidden="true">' +
+              (p.pnl >= 0 ? '▲' : '▼') +
+              '</span> ' +
+              money(Math.abs(p.pnl), cur) +
+              '</td>' +
+              '</tr>'
+            );
+          })
+          .join('');
+      }
+
+      tbody.addEventListener('change', (e) => {
+        const sel = e.target.closest('[data-outcome]');
+        if (!sel) return;
+        state.outcomes[sel.dataset.outcome] = sel.value;
+        render();
+      });
+
+      [amountEl, commEl].forEach((n) => n.addEventListener('input', render));
+      marketEl.addEventListener('change', () => {
+        amountEl.value = defaults[marketEl.value];
+        state.outcomes = {};
+        render();
+      });
+      horizonEl.addEventListener('change', () => {
+        state.outcomes = {};
+        render();
+      });
+      allEl.addEventListener('change', () => {
+        if (!allEl.value) return;
+        const r = compute();
+        r.positions.forEach((p) => {
+          if (p.avail.indexOf(allEl.value) >= 0) state.outcomes[p.row.ticker] = allEl.value;
+        });
+        render();
+      });
+
+      el('s-export').addEventListener('click', () => {
+        const r = compute();
+        const payload = {
+          exportedAt: new Date().toISOString(),
+          disclaimer:
+            'Hypothetical scenario generated in the browser by the StockPulse simulator. Not investment advice. Nothing was stored server-side.',
+          inputs: {
+            amount: r.amount,
+            market: marketEl.value,
+            horizon: horizonEl.value,
+            commissionBps: r.bps,
+            currency: r.board ? r.board.currency : null,
+            boardAsOf: r.board ? r.board.asOf : null,
+          },
+          totals: {
+            perPosition: r.per,
+            invested: r.invested,
+            uninvestedCash: r.cash,
+            aggregateStopExposure: r.stopExposure,
+            positionsWithoutPriceStop: r.noStopCount,
+            projectedValue: r.projected,
+            projectedPnl: r.projected - r.invested,
+            commissionRoundTrip: r.commission,
+            netPnl: r.projected - r.invested - r.commission,
+          },
+          positions: r.positions.map((p) => ({
+            ticker: p.row.ticker,
+            name: p.row.name,
+            sector: p.row.sector,
+            entryPrice: p.entry,
+            shares: p.shares,
+            cost: p.cost,
+            stop: p.row.stop,
+            outcomeAssumption: p.outcome,
+            exitPrice: p.exit,
+            projectedValue: p.value,
+            projectedPnl: p.pnl,
+          })),
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'stockpulse-scenario-' + marketEl.value + '-' + horizonEl.value + '.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      });
+
+      render();
+    })();
+  </script>
 </Base>
 
-<script
-  is:inline
-  define:vars={{
-    locale,
-    defaults,
-    labels: {
-      outcomes: t.sim.outcomes,
-      unavailable: t.sim.outcomeUnavailable,
-      perPosition: t.sim.perPosition,
-      invested: t.sim.invested,
-      cash: t.sim.cash,
-      cashHelp: t.sim.cashHelp,
-      stopExposure: t.sim.stopExposure,
-      stopExposureHelp: t.sim.stopExposureHelp,
-      noStopPositions: t.sim.noStopPositions,
-      projected: t.sim.projected,
-      projectedPnl: t.sim.projectedPnl,
-      commissionCost: t.sim.commissionCost,
-      netPnl: t.sim.netPnl,
-      total: t.sim.total,
-      exportedAt: t.sim.exportedAt,
-      noStop: t.home.noStop,
-    },
-    basisLabels: t.home.targetBasisLabel,
-    basisHelp: t.home.targetBasisHelp,
-  }}
->
-  (() => {
-    const boards = JSON.parse(document.getElementById('sim-boards').textContent);
-    const el = (id) => document.getElementById(id);
-    const amountEl = el('s-amount');
-    const marketEl = el('s-market');
-    const horizonEl = el('s-horizon');
-    const commEl = el('s-commission');
-    const allEl = el('s-outcome-all');
-    const tbody = el('s-table').querySelector('tbody');
-    const tiles = el('s-tiles');
-    const empty = el('s-empty');
-    const stopNote = el('s-stop-note');
 
-    /* the entire scenario — nothing leaves this object */
-    const state = { outcomes: {} };
-
-    const fmtCache = {};
-    function money(v, currency) {
-      const key = 'm' + currency;
-      if (!fmtCache[key]) {
-        fmtCache[key] = new Intl.NumberFormat(locale, {
-          style: 'currency',
-          currency,
-          minimumFractionDigits: currency === 'KRW' ? 0 : 2,
-          maximumFractionDigits: currency === 'KRW' ? 0 : 2,
-        });
-      }
-      return fmtCache[key].format(v);
-    }
-    function num(v, d) {
-      const key = 'n' + d;
-      if (!fmtCache[key]) {
-        fmtCache[key] = new Intl.NumberFormat(locale, { minimumFractionDigits: d, maximumFractionDigits: d });
-      }
-      return fmtCache[key].format(v);
-    }
-
-    function boardKey() {
-      return marketEl.value + '/' + horizonEl.value;
-    }
-
-    /* ordered worst → best, with "unchanged" last as the neutral case */
-    function outcomesFor(row) {
-      const out = [];
-      if (row.stop !== null && row.stop !== undefined) out.push('stop');
-      if (row.targets) out.push('conservative', 'base', 'bull');
-      out.push('flat');
-      return out;
-    }
-
-    function exitPrice(row, outcome, entry) {
-      if (outcome === 'stop' && row.stop != null) return row.stop;
-      if (row.targets && (outcome === 'conservative' || outcome === 'base' || outcome === 'bull')) {
-        return row.targets[outcome];
-      }
-      return entry;
-    }
-
-    function compute() {
-      const board = boards[boardKey()];
-      const amount = Math.max(0, Number(amountEl.value) || 0);
-      const bps = Math.max(0, Number(commEl.value) || 0);
-      if (!board || board.rows.length === 0) {
-        return { board, amount, bps, positions: [], invested: 0, cash: amount, stopExposure: 0, noStopCount: 0, projected: 0, commission: 0 };
-      }
-      const per = amount / board.rows.length;
-      let invested = 0;
-      let stopExposure = 0;
-      let noStopCount = 0;
-      let projected = 0;
-      let commission = 0;
-
-      const positions = board.rows.map((row) => {
-        const entry = (row.entry.low + row.entry.high) / 2;
-        const shares = entry > 0 ? Math.floor(per / entry) : 0;
-        const cost = shares * entry;
-        const avail = outcomesFor(row);
-        let outcome = state.outcomes[row.ticker];
-        if (!outcome || avail.indexOf(outcome) < 0) outcome = avail.indexOf('base') >= 0 ? 'base' : avail[0];
-        const exit = exitPrice(row, outcome, entry);
-        const value = shares * exit;
-        const comm = ((cost + value) * bps) / 10000;
-
-        invested += cost;
-        projected += value;
-        commission += comm;
-        if (row.stop != null) stopExposure += Math.max(0, entry - row.stop) * shares;
-        else noStopCount++;
-
-        return { row, entry, shares, cost, outcome, avail, exit, value, pnl: value - cost, comm };
-      });
-
-      return {
-        board,
-        amount,
-        bps,
-        positions,
-        invested,
-        cash: amount - invested,
-        stopExposure,
-        noStopCount,
-        projected,
-        commission,
-        per,
-      };
-    }
-
-    function tile(k, v, note, cls) {
-      return (
-        '<div class="tile"><span class="k">' +
-        k +
-        '</span><span class="v ' +
-        (cls || '') +
-        '">' +
-        v +
-        '</span>' +
-        (note ? '<p class="note">' + note + '</p>' : '') +
-        '</div>'
-      );
-    }
-
-    function render() {
-      const r = compute();
-      const cur = r.board ? r.board.currency : 'USD';
-      empty.hidden = r.positions.length > 0;
-
-      /* The projected P&L below is arithmetic on the board's target tiers, and
-         those tiers mean different things per horizon. Say which, right next
-         to the number, so a 5–10 year scenario never reads as a forecast. */
-      const basis = (r.board && r.board.targetBasis) || 'atr';
-      const labelEl = el('s-basis-label');
-      labelEl.textContent = basisLabels[basis] || basis;
-      labelEl.className = 'basis-inline' + (basis === 'compounding_scenarios' ? ' basis-scenario' : '');
-      el('s-basis-help').textContent = ' — ' + (basisHelp[basis] || '');
-
-      const pnl = r.projected - r.invested;
-      const net = pnl - r.commission;
-
-      tiles.innerHTML =
-        tile(labels.perPosition, money(r.per || 0, cur), null) +
-        tile(labels.invested, money(r.invested, cur), null) +
-        tile(labels.cash, money(r.cash, cur), labels.cashHelp) +
-        tile(labels.stopExposure, '−' + money(r.stopExposure, cur), labels.stopExposureHelp, 'down') +
-        tile(labels.projectedPnl, (pnl >= 0 ? '▲ ' : '▼ ') + money(Math.abs(pnl), cur), null, pnl >= 0 ? 'up' : 'down') +
-        tile(labels.commissionCost, '−' + money(r.commission, cur), null) +
-        tile(labels.netPnl, (net >= 0 ? '▲ ' : '▼ ') + money(Math.abs(net), cur), null, net >= 0 ? 'up' : 'down');
-
-      stopNote.textContent = r.noStopCount > 0 ? labels.noStopPositions.replace('{n}', r.noStopCount) : '';
-
-      tbody.innerHTML = r.positions
-        .map((p) => {
-          const opts = p.avail
-            .map(
-              (o) =>
-                '<option value="' + o + '"' + (o === p.outcome ? ' selected' : '') + '>' + labels.outcomes[o] + '</option>',
-            )
-            .join('');
-          return (
-            '<tr>' +
-            '<td><b class="mono">' +
-            p.row.ticker +
-            '</b> <span class="muted">' +
-            p.row.name +
-            '</span></td>' +
-            '<td class="num-cell">' +
-            money(p.entry, cur) +
-            '</td>' +
-            '<td class="num-cell">' +
-            num(p.shares, 0) +
-            '</td>' +
-            '<td class="num-cell">' +
-            money(p.cost, cur) +
-            '</td>' +
-            '<td class="num-cell">' +
-            (p.row.stop != null
-              ? money(p.row.stop, cur)
-              : '<span class="badge badge-warn">' + labels.noStop + '</span>') +
-            '</td>' +
-            '<td class="wrap-cell"><select data-outcome="' +
-            p.row.ticker +
-            '" aria-label="' +
-            p.row.ticker +
-            '">' +
-            opts +
-            '</select>' +
-            /* ultra-long publishes neither a stop nor price targets, so the
-               only outcome the data supports is "unchanged" — say so rather
-               than showing a lone option with no explanation */
-            (p.avail.length === 1
-              ? ' <span class="badge badge-warn">' + labels.unavailable + '</span>'
-              : '') +
-            '</td>' +
-            '<td class="num-cell">' +
-            money(p.value, cur) +
-            '</td>' +
-            '<td class="num-cell ' +
-            (p.pnl >= 0 ? 'up' : 'down') +
-            '"><span aria-hidden="true">' +
-            (p.pnl >= 0 ? '▲' : '▼') +
-            '</span> ' +
-            money(Math.abs(p.pnl), cur) +
-            '</td>' +
-            '</tr>'
-          );
-        })
-        .join('');
-    }
-
-    tbody.addEventListener('change', (e) => {
-      const sel = e.target.closest('[data-outcome]');
-      if (!sel) return;
-      state.outcomes[sel.dataset.outcome] = sel.value;
-      render();
-    });
-
-    [amountEl, commEl].forEach((n) => n.addEventListener('input', render));
-    marketEl.addEventListener('change', () => {
-      amountEl.value = defaults[marketEl.value];
-      state.outcomes = {};
-      render();
-    });
-    horizonEl.addEventListener('change', () => {
-      state.outcomes = {};
-      render();
-    });
-    allEl.addEventListener('change', () => {
-      if (!allEl.value) return;
-      const r = compute();
-      r.positions.forEach((p) => {
-        if (p.avail.indexOf(allEl.value) >= 0) state.outcomes[p.row.ticker] = allEl.value;
-      });
-      render();
-    });
-
-    el('s-export').addEventListener('click', () => {
-      const r = compute();
-      const payload = {
-        exportedAt: new Date().toISOString(),
-        disclaimer:
-          'Hypothetical scenario generated in the browser by the StockPulse simulator. Not investment advice. Nothing was stored server-side.',
-        inputs: {
-          amount: r.amount,
-          market: marketEl.value,
-          horizon: horizonEl.value,
-          commissionBps: r.bps,
-          currency: r.board ? r.board.currency : null,
-          boardAsOf: r.board ? r.board.asOf : null,
-        },
-        totals: {
-          perPosition: r.per,
-          invested: r.invested,
-          uninvestedCash: r.cash,
-          aggregateStopExposure: r.stopExposure,
-          positionsWithoutPriceStop: r.noStopCount,
-          projectedValue: r.projected,
-          projectedPnl: r.projected - r.invested,
-          commissionRoundTrip: r.commission,
-          netPnl: r.projected - r.invested - r.commission,
-        },
-        positions: r.positions.map((p) => ({
-          ticker: p.row.ticker,
-          name: p.row.name,
-          sector: p.row.sector,
-          entryPrice: p.entry,
-          shares: p.shares,
-          cost: p.cost,
-          stop: p.row.stop,
-          outcomeAssumption: p.outcome,
-          exitPrice: p.exit,
-          projectedValue: p.value,
-          projectedPnl: p.pnl,
-        })),
-      };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'stockpulse-scenario-' + marketEl.value + '-' + horizonEl.value + '.json';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    });
-
-    render();
-  })();
-</script>

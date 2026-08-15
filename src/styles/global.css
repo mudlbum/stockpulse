@@ -543,6 +543,14 @@ select:disabled {
   padding: 0.75rem 0.95rem;
   font-size: 0.85rem;
 }
+.notice .notice-title {
+  margin: 0 0 0.3rem;
+}
+.notice .notice-title strong {
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 .notice h2,
 .notice h3 {
   font-size: 0.86rem;
@@ -768,6 +776,26 @@ html[lang='ko'] .compliance {
 }
 
 /* ----------------------------------------------------------- board meta */
+
+.board-loading {
+  padding: 1.4rem 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.board-heading {
+  font-size: 1.05rem;
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.board-heading-win {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
 
 .board-meta {
   display: flex;

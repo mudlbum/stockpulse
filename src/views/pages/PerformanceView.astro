@@ -9,9 +9,12 @@
 import { HORIZONS, MARKETS, type Locale } from '../../config';
 import { UI, fill } from '../../i18n/ui';
 import { performance as perf } from '../../lib/data';
+import { performanceDataset } from '../../lib/schema';
 import { fmtDate, fmtNum, fmtPct, fmtRatioPct } from '../../lib/format';
 import { pageHref } from '../../lib/paths';
 import Base from '../../layouts/Base.astro';
+import PageEssay from '../../components/PageEssay.astro';
+import { ESSAYS } from '../../i18n/page-essays';
 import ComplianceNotice from '../../components/ComplianceNotice.astro';
 import PlaceholderNotice from '../../components/PlaceholderNotice.astro';
 import EquityChart from '../../components/EquityChart.astro';
@@ -30,7 +33,7 @@ const horizonLabel = Object.fromEntries(HORIZONS.map((h) => [h.id, h.label[lang]
 const warnedHorizons = HORIZONS.filter((h) => perf.summary.byHorizon[h.id]?.sampleWarning);
 ---
 
-<Base lang={lang} page="performance" title={t.perf.title} description={t.perf.intro} live={['performance']}>
+<Base lang={lang} page="performance" title={t.seo.performance.title} description={t.seo.performance.description} live={['performance']} schema={[performanceDataset(lang)]}>
   <div class="wrap">
     <PlaceholderNotice lang={lang} datasets={['performance']} />
 
@@ -308,73 +311,77 @@ const warnedHorizons = HORIZONS.filter((h) => perf.summary.byHorizon[h.id]?.samp
         <a href={pageHref(lang, 'methodology')}>{t.common.readMethodology} →</a>
       </p>
     </section>
-  </div>
+  
+    <PageEssay lang={lang} heading={ESSAYS.performance[lang].heading} sections={ESSAYS.performance[lang].sections} />
+</div>
+
+  <script slot="scripts" is:inline define:vars={{ showingTpl: t.perf.showing }}>
+    (() => {
+      const table = document.getElementById('ledger');
+      if (!table) return;
+      const tbody = table.querySelector('tbody');
+      const rows = [...tbody.querySelectorAll('tr')];
+      const total = rows.length;
+      const countEl = document.getElementById('ledger-count');
+      const emptyEl = document.getElementById('ledger-empty');
+      const selects = {
+        market: document.getElementById('f-market'),
+        horizon: document.getElementById('f-horizon'),
+        status: document.getElementById('f-status'),
+      };
+      let sortKey = 'date';
+      let sortDir = -1;
+
+      function value(row, key) {
+        const raw = row.dataset[key];
+        if (key === 'date' || key === 'ticker') return raw || '';
+        const n = parseFloat(raw);
+        return Number.isFinite(n) ? n : -Infinity;
+      }
+
+      function render() {
+        const f = {
+          market: selects.market.value,
+          horizon: selects.horizon.value,
+          status: selects.status.value,
+        };
+        const visible = rows.filter(
+          (r) =>
+            (!f.market || r.dataset.market === f.market) &&
+            (!f.horizon || r.dataset.horizon === f.horizon) &&
+            (!f.status || r.dataset.status === f.status),
+        );
+        visible.sort((a, b) => {
+          const va = value(a, sortKey);
+          const vb = value(b, sortKey);
+          if (va < vb) return -1 * sortDir;
+          if (va > vb) return 1 * sortDir;
+          return 0;
+        });
+        tbody.replaceChildren(...visible);
+        countEl.textContent = showingTpl.replace('{n}', visible.length).replace('{total}', total);
+        emptyEl.hidden = visible.length > 0;
+      }
+
+      Object.values(selects).forEach((s) => s.addEventListener('change', render));
+
+      table.querySelectorAll('th[data-sort]').forEach((th) => {
+        th.querySelector('button').addEventListener('click', () => {
+          const key = th.dataset.sort;
+          if (sortKey === key) sortDir *= -1;
+          else {
+            sortKey = key;
+            sortDir = key === 'ticker' ? 1 : -1;
+          }
+          table.querySelectorAll('th[data-sort]').forEach((o) => o.removeAttribute('aria-sort'));
+          th.setAttribute('aria-sort', sortDir === 1 ? 'ascending' : 'descending');
+          render();
+        });
+      });
+
+      render();
+    })();
+  </script>
 </Base>
 
-<script is:inline define:vars={{ showingTpl: t.perf.showing }}>
-  (() => {
-    const table = document.getElementById('ledger');
-    if (!table) return;
-    const tbody = table.querySelector('tbody');
-    const rows = [...tbody.querySelectorAll('tr')];
-    const total = rows.length;
-    const countEl = document.getElementById('ledger-count');
-    const emptyEl = document.getElementById('ledger-empty');
-    const selects = {
-      market: document.getElementById('f-market'),
-      horizon: document.getElementById('f-horizon'),
-      status: document.getElementById('f-status'),
-    };
-    let sortKey = 'date';
-    let sortDir = -1;
 
-    function value(row, key) {
-      const raw = row.dataset[key];
-      if (key === 'date' || key === 'ticker') return raw || '';
-      const n = parseFloat(raw);
-      return Number.isFinite(n) ? n : -Infinity;
-    }
-
-    function render() {
-      const f = {
-        market: selects.market.value,
-        horizon: selects.horizon.value,
-        status: selects.status.value,
-      };
-      const visible = rows.filter(
-        (r) =>
-          (!f.market || r.dataset.market === f.market) &&
-          (!f.horizon || r.dataset.horizon === f.horizon) &&
-          (!f.status || r.dataset.status === f.status),
-      );
-      visible.sort((a, b) => {
-        const va = value(a, sortKey);
-        const vb = value(b, sortKey);
-        if (va < vb) return -1 * sortDir;
-        if (va > vb) return 1 * sortDir;
-        return 0;
-      });
-      tbody.replaceChildren(...visible);
-      countEl.textContent = showingTpl.replace('{n}', visible.length).replace('{total}', total);
-      emptyEl.hidden = visible.length > 0;
-    }
-
-    Object.values(selects).forEach((s) => s.addEventListener('change', render));
-
-    table.querySelectorAll('th[data-sort]').forEach((th) => {
-      th.querySelector('button').addEventListener('click', () => {
-        const key = th.dataset.sort;
-        if (sortKey === key) sortDir *= -1;
-        else {
-          sortKey = key;
-          sortDir = key === 'ticker' ? 1 : -1;
-        }
-        table.querySelectorAll('th[data-sort]').forEach((o) => o.removeAttribute('aria-sort'));
-        th.setAttribute('aria-sort', sortDir === 1 ? 'ascending' : 'descending');
-        render();
-      });
-    });
-
-    render();
-  })();
-</script>

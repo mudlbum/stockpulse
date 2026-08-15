@@ -18,7 +18,7 @@ import raw from '../../../docs/METHODOLOGY.md?raw';
 import { SITE, type Locale } from '../../config';
 import { UI } from '../../i18n/ui';
 import { KO_LIMITATIONS, KO_NOTES, KO_PRINCIPLES, KO_SECTION_TITLES } from '../../i18n/methodology-ko';
-import { pageHref } from '../../lib/paths';
+import { pageAbsolute, pageHref } from '../../lib/paths';
 import Base from '../../layouts/Base.astro';
 import ScrollArea from '../../components/ScrollArea.astro';
 
@@ -67,7 +67,22 @@ const versionMatch = raw.match(/\*\*Version\s+([^*]+)\*\*/);
 const version = versionMatch ? versionMatch[1].trim() : SITE.methodologyVersion;
 ---
 
-<Base lang={lang} page="methodology" title={t.methodology.title} description={t.methodology.intro}>
+{/* The Korean page renders the English document almost in full — a Korean
+    summary on top of an English body. hreflang would tell Google that is a
+    Korean translation of this page, which it is not, and that mis-signal is
+    worse than having no Korean variant listed. So: KO is noindex, neither side
+    advertises the other, and the sitemap omits it. Remove all three when the
+    document is actually translated. */}
+<Base
+  lang={lang}
+  page="methodology"
+  title={t.seo.methodology.title}
+  description={t.seo.methodology.description}
+  noindex={lang === 'ko'}
+  alternates={{ en: pageAbsolute('en', 'methodology'), ko: null }}
+  langFallback="methodology"
+  ogType="article"
+>
   <div class="wrap wrap-narrow">
     <div class="page-head">
       <h1>{t.methodology.title}</h1>
@@ -142,7 +157,7 @@ const version = versionMatch ? versionMatch[1].trim() : SITE.methodologyVersion;
     </section>
 
     <section aria-labelledby="doc-h">
-      <h2 id="doc-h">{lang === 'ko' ? KO_NOTES.fullHeading : t.methodology.title}</h2>
+      <h2 id="doc-h">{lang === 'ko' ? KO_NOTES.fullHeading : t.methodology.fullHeading}</h2>
       <article class="prose" lang="en" set:html={html} />
     </section>
   </div>

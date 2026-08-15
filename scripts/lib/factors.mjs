@@ -255,9 +255,31 @@ export function roic(quarters, balance) {
   if (isNum(pretax) && pretax > 0 && isNum(taxExp)) rate = clip(taxExp / pretax, 0.1, 0.35);
   const nopat = ebit * (1 - rate);
 
-  const ic = investedCapital(balance);
+  // Average invested capital across the trailing four quarters, not the latest
+  // balance sheet alone.
+  //
+  // NOPAT is a FLOW measured over twelve months; invested capital is a STOCK
+  // measured at an instant. Dividing a year of profit by the closing balance
+  // mismatches the two, and the error is largest exactly where it matters most:
+  // a company that raised capital or closed an acquisition mid-year shows an
+  // inflated denominator and an artificially depressed ROIC, while one that
+  // bought back stock late in the year prints a flattering one. Averaging the
+  // period the flow was earned over is the standard treatment.
+  const ic = averageInvestedCapital(quarters, balance);
   if (!isNum(ic) || ic <= 0) return null;
   return nopat / ic;
+}
+
+/**
+ * Mean invested capital over the trailing four quarters, falling back to the
+ * latest balance sheet when the quarterly rows do not carry balance fields
+ * (which is the norm for the Korean snapshot path).
+ */
+export function averageInvestedCapital(quarters, balance) {
+  const last4 = (quarters ?? []).slice(-4);
+  const values = last4.map(investedCapital).filter((x) => isNum(x) && x > 0);
+  if (values.length >= 2) return values.reduce((a, b) => a + b, 0) / values.length;
+  return investedCapital(balance);
 }
 
 export function investedCapital(b) {

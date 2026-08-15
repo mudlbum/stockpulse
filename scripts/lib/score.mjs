@@ -7,7 +7,7 @@
  */
 
 import { correlation, isNum, normalizeBySector, normalizeFactor, toDisplayScore, weightedScore } from './stats.mjs';
-import { atr, returnSeries, sma } from './indicators.mjs';
+import { atr, ema, returnSeries, sma } from './indicators.mjs';
 
 export const WEIGHTS = {
   ultra_short: {
@@ -404,8 +404,15 @@ export function tradeParameters(row, horizon) {
       };
     case 'mid_term':
       return {
+        // The stop is the TIGHTER of a volatility stop and a trend stop.
+        //
+        // METHODOLOGY §4.4 has always specified both, but only the ATR leg was
+        // implemented. The EMA50 leg matters: a mid-term thesis is "this trend
+        // is intact", so once price closes decisively under the 50-day the
+        // thesis is already wrong and a wider ATR stop just pays more to learn
+        // it. Taking the min keeps whichever invalidates first.
         entry: band(0.6, 0.3),
-        stop: round(close - 2.5 * a, close),
+        stop: round(midTermStop(row, close, a), close),
         targets: {
           conservative: round(close + 2.5 * a, close),
           base: round(close + 4.5 * a, close),
@@ -451,6 +458,19 @@ export function tradeParameters(row, horizon) {
     default:
       return null;
   }
+}
+
+/**
+ * Mid-term stop: `min(close - 2.5*ATR, EMA50 - 0.5*ATR)`. METHODOLOGY §4.4.
+ * Falls back to the ATR leg alone when there is not enough history for an EMA50
+ * (the EMA needs 3x its period before it is a real EMA rather than a seed SMA).
+ */
+function midTermStop(row, close, a) {
+  const atrStop = close - 2.5 * a;
+  const closes = (row.bars ?? []).map((b) => b.close);
+  const e50 = ema(closes, 50);
+  if (!isNum(e50)) return atrStop;
+  return Math.min(atrStop, e50 - 0.5 * a);
 }
 
 /**

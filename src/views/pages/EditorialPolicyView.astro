@@ -1,0 +1,52 @@
+---
+/**
+ * /editorial-policy — an E-E-A-T asset, and the page that makes the AI
+ * disclosure credible rather than a line of boilerplate.
+ *
+ * Most of the substance is already committed to in docs/METHODOLOGY.md §9
+ * ("Anti-gaming commitments") and §11 ("Change control"). This page states it
+ * as policy on the site itself, where a reader — or a reviewer — will actually
+ * look for it, and links back to the methodology and the audit that implement
+ * it.
+ */
+import { SITE, type Locale } from '../../config';
+import { UI } from '../../i18n/ui';
+import { pageHref } from '../../lib/paths';
+import Base from '../../layouts/Base.astro';
+import LegalSections from '../../components/LegalSections.astro';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+---
+
+<Base lang={lang} page="editorial-policy" title={t.seo.editorial.title} description={t.seo.editorial.description}>
+  <div class="wrap wrap-narrow">
+    <div class="page-head">
+      <h1>{t.editorial.title}</h1>
+      <p class="lede">{t.editorial.lead}</p>
+      <p class="small muted">
+        {t.editorial.effectiveLabel}{' '}
+        <time datetime={SITE.legalEffectiveDate} class="mono">{SITE.legalEffectiveDate}</time>
+      </p>
+    </div>
+
+    <div class="prose">
+      <LegalSections sections={t.editorial.sections} idPrefix="ed" />
+
+      <hr />
+
+      <p class="small muted">
+        <a href={pageHref(lang, 'methodology')}>{t.nav.methodology}</a>
+        {' · '}
+        <a href={pageHref(lang, 'performance')}>{t.nav.performance}</a>
+        {' · '}
+        <a href={pageHref(lang, 'contact')}>{t.nav.contact}</a>
+        {' · '}
+        <a href={pageHref(lang, 'disclaimer')}>{t.nav.disclaimer}</a>
+      </p>
+    </div>
+  </div>
+</Base>

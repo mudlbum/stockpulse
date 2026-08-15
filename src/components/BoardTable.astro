@@ -4,6 +4,8 @@ import { UI } from '../i18n/ui';
 import { fmtDate, fmtNum, fmtRatioPct } from '../lib/format';
 import { HORIZON_INK } from '../lib/theme';
 import type { Board } from '../lib/types';
+import { boardSlug } from '../i18n/horizon-pages';
+import { pageHref } from '../lib/paths';
 import StockRow from './StockRow.astro';
 import ComplianceNotice from './ComplianceNotice.astro';
 import ScrollArea from './ScrollArea.astro';
@@ -12,8 +14,14 @@ interface Props {
   lang: Locale;
   board: Board;
   selected: boolean;
+  /** On a per-horizon landing page this is the only board, so it is not a
+      tabpanel and is never hidden. */
+  standalone?: boolean;
+  /** Heading level for the board title — h2 on the home page, h3 when the
+      landing page already owns the h2 slot. */
+  headingId?: string;
 }
-const { lang, board, selected } = Astro.props;
+const { lang, board, selected, standalone = false, headingId } = Astro.props;
 const t = UI[lang];
 const h = HORIZONS.find((x) => x.id === board.horizon)!;
 const ink = HORIZON_INK[board.horizon];
@@ -32,13 +40,16 @@ const emptyText = board.emptyReason?.[lang] ?? t.home.emptyBoard;
   data-board={`${board.market}/${board.horizon}`}
   data-horizon={board.horizon}
   style={styleVars}
-  hidden={!selected}
-  role="tabpanel"
-  tabindex="0"
-  aria-labelledby={`tab-${board.horizon}`}
+  hidden={standalone ? undefined : !selected}
+  role={standalone ? undefined : 'tabpanel'}
+  tabindex={standalone ? undefined : '0'}
+  aria-labelledby={standalone ? undefined : `tab-${board.horizon}`}
 >
-  <h2 id={`bh-${boardId}`} class="visually-hidden">
+  {/* Visible, not visually-hidden: "United States · Ultra Short" is the most
+      query-relevant heading on the page and hiding it threw that away. */}
+  <h2 id={headingId ?? `bh-${boardId}`} class="board-heading">
     {t.common.market[board.market]} · {h.label[lang]}
+    <span class="board-heading-win">{h.window[lang]}</span>
   </h2>
 
   <div class="board-meta">
@@ -58,6 +69,11 @@ const emptyText = board.emptyReason?.[lang] ?? t.home.emptyBoard;
       <span class="k">{t.home.columns.rank}</span>
       <span class="v">{fmtNum(board.rows.length, 0, lang)}</span>
     </span>
+    {!standalone && (
+      <span class="metric">
+        <a href={pageHref(lang, boardSlug(board.market, board.horizon))}>{t.home.boardPermalink} →</a>
+      </span>
+    )}
     <p class="eod">{t.home.eodNote}</p>
   </div>
 

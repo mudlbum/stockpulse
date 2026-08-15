@@ -19,7 +19,10 @@
     "check": "astro check",
     "contrast": "node tools/contrast.mjs",
     "data:placeholder": "node tools/make-placeholder-data.mjs",
-    "check:layout": "node tools/check-table-layout.mjs"
+    "check:layout": "node tools/check-table-layout.mjs",
+    "check:refresh": "node tools/check-live-refresh.mjs",
+    "og": "node tools/make-og-images.mjs",
+    "brief": "node scripts/write-brief.mjs"
   },
   "dependencies": {
     "astro": "^5.2.5"
@@ -30,6 +33,7 @@
     "linkedom": "^0.18.5",
     "marked": "^18.0.9",
     "playwright": "^1.62.1",
+    "sharp": "^0.35.3",
     "typescript": "^5.9.3"
   },
   "engines": {

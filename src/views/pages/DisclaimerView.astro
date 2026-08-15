@@ -2,6 +2,7 @@
 import { SITE, type Locale } from '../../config';
 import { UI } from '../../i18n/ui';
 import { pageHref } from '../../lib/paths';
+import { faqSchema } from '../../lib/schema';
 import Base from '../../layouts/Base.astro';
 import ComplianceNotice from '../../components/ComplianceNotice.astro';
 
@@ -12,7 +13,7 @@ const { lang } = Astro.props;
 const t = UI[lang];
 ---
 
-<Base lang={lang} page="disclaimer" title={t.disclaimer.title} description={t.disclaimer.lead}>
+<Base lang={lang} page="disclaimer" title={t.seo.disclaimer.title} description={t.seo.disclaimer.description} ogType="article" schema={[faqSchema(lang, t.disclaimer.sections as unknown as { h: string; p: string[] }[])]}>
   <div class="wrap wrap-narrow">
     <div class="page-head">
       <h1>{t.disclaimer.title}</h1>

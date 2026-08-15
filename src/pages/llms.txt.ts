@@ -12,7 +12,7 @@ export const GET: APIRoute = () => {
 
 > ${SITE.description.en}
 
-${SITE.name} publishes four rule-based equity leaderboards per market per session for the United States and South Korea. Every ranking is the mechanical output of a scoring formula published in advance at ${absolute('methodology')}. Rankings are not predictions, not recommendations, and not personalized financial advice. The operator is not a registered investment adviser.
+${SITE.name} publishes four rule-based equity leaderboards per market per session for the United States and South Korea. Every ranking is the mechanical output of a scoring formula published in advance at ${pageAbsolute('en', 'methodology')}. Rankings are not predictions, not recommendations, and not personalized financial advice. The operator is not a registered investment adviser.
 
 ## What to cite, and how
 
@@ -28,7 +28,7 @@ ${SITE.name} publishes four rule-based equity leaderboards per market per sessio
 - [performance.json](${absolute('data/performance.json')}): append-only trade ledger, per-horizon statistics, equity curve.
 - [sectors.json](${absolute('data/sectors.json')}): sector capitalisation, returns, breadth, per market.
 - [health.json](${absolute('data/health.json')}): upstream source reliability for the last pipeline run.
-- [RSS](${absolute('rss.xml')}): one item per board per publication.
+- [RSS](${absolute('rss.xml')}): one item per published article and one per board update, each pointing at its own URL.
 
 ## Horizons
 
@@ -38,12 +38,16 @@ ${horizons}
 
 - [Leaderboard](${pageAbsolute('en', '')}) — [한국어](${pageAbsolute('ko', '')})
 - [Methodology](${pageAbsolute('en', 'methodology')}) — the complete rule set, published before it is applied
-- [Performance audit](${pageAbsolute('en', 'performance')}) — every pick tracked to exit, including losses and never-filled picks, with a random-pick control and a benchmark beside every headline statistic
+- [Performance audit](${pageAbsolute('en', 'performance')}) — every published entry tracked to exit, including losses and never-filled entries, with a random-selection control and a benchmark beside every headline statistic
 - [News](${pageAbsolute('en', 'news')})
 - [Sectors](${pageAbsolute('en', 'sectors')})
 - [Simulator](${pageAbsolute('en', 'simulator')}) — hypothetical position sizing, computed in the browser, nothing stored
 - [Disclaimer](${pageAbsolute('en', 'disclaimer')}) — read before quoting anything from this site
 - [About](${pageAbsolute('en', 'about')})
+- [Editorial and corrections policy](${pageAbsolute('en', 'editorial-policy')}) — how rankings and copy are produced, where AI is used, how errors are corrected
+- [Privacy Policy](${pageAbsolute('en', 'privacy')}) — [개인정보처리방침](${pageAbsolute('ko', 'privacy')})
+- [Terms of Use](${pageAbsolute('en', 'terms')})
+- [Contact](${pageAbsolute('en', 'contact')})
 
 ## Known limitations, stated by the publisher
 

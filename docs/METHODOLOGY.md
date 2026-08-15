@@ -194,11 +194,13 @@ Minimum completeness: **4 of 5** factors present.
 **RelativeVolume (weight 0.30)**
 
 ```
-RVOL = today_volume / median(volume, last 30 sessions)
+RVOL = today_volume / median(volume, prior 30 sessions, EXCLUDING today)
 ```
 
 Median, not mean — a single earnings-day volume spike three weeks ago would
-otherwise raise the denominator and hide today's genuine spike. Log-transformed
+otherwise raise the denominator and hide today's genuine spike. Today's own bar
+is excluded from the denominator; including it would let a large spike partly
+inflate the very baseline it is being measured against. Log-transformed
 before z-scoring. Filter: RVOL < 1.2 scores `null` (no unusual activity to
 detect).
 
@@ -492,7 +494,7 @@ GrowthQuality = 0.55 × ramp(cagr3) + 0.45 × consistency
 ```
 NOPAT          = operating_income_TTM × (1 − effective_tax_rate)
 InvestedCapital = total_debt + total_equity − cash_and_equivalents
-ROIC           = NOPAT / average(InvestedCapital, 4 quarters)
+ROIC           = NOPAT / mean(InvestedCapital over the trailing 4 quarters)
 
 CapitalEfficiency = 0.7 × ramp(ROIC / 0.15) + 0.3 × z(ROIC − ROIC_3yr_ago)
 ```
@@ -602,13 +604,13 @@ observable durability, whatever their story).
 gm_pct    = percentile of 5-yr median gross margin within sector
 gm_stab   = 1 − (SD(gross_margin, 5yr) / mean(gross_margin, 5yr))     # 1 = perfectly stable
 gm_trend  = sign of the 5-yr gross-margin slope
-roic_pers = share of last 10 years with ROIC > 12%
+roic_pers = share of AVAILABLE annual history with ROIC > 12%   (min 5 years)
 
 MoatStrength = 0.30·gm_pct + 0.25·gm_stab + 0.15·gm_trend + 0.30·roic_pers
 ```
 
-`roic_pers` carries the most weight of any single term here. Persistent
-high returns on capital across a full decade is the closest observable proxy for
+`roic_pers` carries the joint-largest weight here, tied with `gm_pct` at 0.30.
+Persistent high returns on capital across a long history is the closest observable proxy for
 a moat that exists in reported data — it is the *outcome* a moat produces, and
 unlike margin it is not sector-idiosyncratic.
 
@@ -626,6 +628,12 @@ CashFlowDurability = 0.45·years_positive + 0.35·ramp(fcf_cagr / 0.08) + 0.20·
 
 ```
 reinvestment_rate = (capex + R&D + acquisitions − D&A) / NOPAT
+
+D&A is not reliably tagged quarterly across filers, so it is approximated from
+the operating-cash-flow-to-net-income wedge. When that wedge cannot be computed
+the whole EBITDA-dependent term is nulled rather than defaulted — an earlier
+version substituted a flat 15% of EBIT, which invents the same depreciation rate
+for a software firm and a steel mill and then feeds it into a leverage ratio.
 implied_growth    = reinvestment_rate × ROIC
 
 ReinvestmentRunway = 0.6·z(implied_growth) + 0.4·z(revenue_per_share_10yr_CAGR)
@@ -792,6 +800,50 @@ Published on the site, not buried here.
 7. **No short side.** Every list is long-only. In a bear market the correct
    answer is often "nothing", and the regime multiplier is the only mechanism
    expressing that.
+
+---
+
+## 10a. Where the implementation departs from the text above
+
+Written down rather than quietly tolerated, because a methodology page that does
+not match the code is worse than no methodology page.
+
+**Composite factors are blended before normalization, not after.** §4.3, §5.3 and
+§6.3 write terms like `0.6·z(FCF_yield) + 0.4·z(conversion)`. The code blends the
+raw sub-terms first and z-scores the composite once. The two are not identical:
+blending first means the sub-terms' natural scales set their effective weights,
+so the rescaling constants in the code (dividing `conversion` by 2, multiplying
+`FCF_yield` by 10) are load-bearing rather than cosmetic. The ordering was chosen
+because z-scoring each sub-term separately over a universe where many are null
+produces composites built from different factor subsets per stock, which is not
+comparable across the board. The constants are documented at each call site.
+
+**Piotroski is computed quarter-over-year-ago-quarter, not fiscal-year over
+fiscal-year.** Piotroski (2000) is an annual test. Comparing Q2 to the prior Q2
+keeps the score responsive within a year and avoids penalising seasonal
+businesses for their off quarter, but it means this F-score will not match one
+computed from annual statements elsewhere. Two further deviations: the leverage
+test uses `<=` rather than a strict decrease, and the dilution test allows up to
+2% annual share growth rather than requiring zero issuance. All three are
+deliberate; none is the textbook definition.
+
+**Gross-margin percentile emerges downstream.** §6.3 writes `gm_pct = percentile
+of 5-yr median gross margin within sector`. The factor actually emits the raw
+5-year mean margin, and the within-sector comparison happens in the shared
+sector-neutral normalization step (§2). The ranking effect is the same; the
+intermediate value is not a percentile.
+
+**A single missing XBRL tag nulls every TTM-derived factor for that company.**
+`ttm()` requires all four quarters of a field. Combined with revenue-tag
+fragmentation across filers, real-world completeness on the long-horizon boards
+will be lower than the factor list suggests. This is strict by choice — summing
+three quarters and calling it a year would be worse — but it means the long
+boards rank a smaller universe than the liquidity filters alone imply.
+
+**The regime multiplier fails optimistically.** When the benchmark or breadth
+cannot be computed, `state` is `unknown` and the multiplier is 1.0 rather than a
+defensive value. On a cold start this means the first boards are published
+without regime scaling. Visible on the site as an `unknown` regime state.
 
 ---
 

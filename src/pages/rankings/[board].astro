@@ -1,0 +1,18 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { HORIZONS, MARKETS } from '../../config';
+import { HORIZON_SLUG, MARKET_SLUG, parseBoardSlug } from '../../i18n/horizon-pages';
+import HorizonBoardView from '../../views/pages/HorizonBoardView.astro';
+
+export const getStaticPaths = (async () =>
+  MARKETS.flatMap((m) =>
+    HORIZONS.map((h) => ({
+      params: { board: `${MARKET_SLUG[m.id]}-${HORIZON_SLUG[h.id]}` },
+      props: { market: m.id, horizon: h.id },
+    })),
+  )) satisfies GetStaticPaths;
+
+const { market, horizon } = Astro.props;
+---
+
+<HorizonBoardView lang="en" market={market} horizon={horizon} />

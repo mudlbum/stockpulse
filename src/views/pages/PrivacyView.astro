@@ -1,0 +1,71 @@
+---
+/**
+ * /privacy — the one page Google explicitly requires before an AdSense
+ * application is approved.
+ *
+ * Two things about this page are deliberate and should survive edits:
+ *
+ * 1. The advertising section reproduces Google's own supplied wording almost
+ *    verbatim ("Third party vendors, including Google, use cookies…"). Reviewers
+ *    look for it. Paraphrasing is a common rejection reason. It does NOT use the
+ *    "DoubleClick DART cookie" phrasing that circulates in 2012-era templates —
+ *    Google retired that language and it now reads as a copy-pasted policy.
+ *
+ * 2. EN and KO are not translations of each other. They share this component and
+ *    nothing else: the English page is written to GDPR/AdSense expectations, the
+ *    Korean page is a 개인정보처리방침 written to PIPA's disclosure list, which
+ *    asks for things (제3자 제공 vs 처리위탁, 국외 이전, 행태정보, 권익침해
+ *    구제방법) that have no English counterpart. Both live in src/i18n/ui.ts.
+ */
+import { ADS_ENABLED, SITE, type Locale } from '../../config';
+import { UI } from '../../i18n/ui';
+import { pageHref } from '../../lib/paths';
+import Base from '../../layouts/Base.astro';
+import LegalSections from '../../components/LegalSections.astro';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+---
+
+<Base lang={lang} page="privacy" title={t.seo.privacy.title} description={t.seo.privacy.description}>
+  <div class="wrap wrap-narrow">
+    <div class="page-head">
+      <h1>{t.privacy.title}</h1>
+      <p class="lede">{t.privacy.lead}</p>
+      <p class="small muted">
+        {t.privacy.effectiveLabel}{' '}
+        <time datetime={SITE.legalEffectiveDate} class="mono">{SITE.legalEffectiveDate}</time>
+      </p>
+    </div>
+
+    {/* States the site's ACTUAL advertising status rather than describing a
+        practice it does not yet have. Flips automatically with ADSENSE_CLIENT,
+        so the page cannot drift out of date when ads are switched on. */}
+    <div class={`notice ${ADS_ENABLED ? '' : 'notice-ok'}`} role="note">
+      <p>{ADS_ENABLED ? t.privacy.adsStatusOn : t.privacy.adsStatusOff}</p>
+    </div>
+
+    <div class="prose">
+      <LegalSections sections={t.privacy.sections} idPrefix="pv" />
+
+      <hr />
+
+      <h2>{t.privacy.contactHeading}</h2>
+      <p>
+        {t.privacy.contactNote} <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+      </p>
+      <p class="small muted">
+        <a href={pageHref(lang, 'terms')}>{t.nav.terms}</a>
+        {' · '}
+        <a href={pageHref(lang, 'disclaimer')}>{t.nav.disclaimer}</a>
+        {' · '}
+        <a href={pageHref(lang, 'editorial-policy')}>{t.nav.editorial}</a>
+        {' · '}
+        <a href={pageHref(lang, 'contact')}>{t.nav.contact}</a>
+      </p>
+    </div>
+  </div>
+</Base>

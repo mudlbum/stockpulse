@@ -1,0 +1,28 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BlogIndexView from '../../../../views/pages/BlogIndexView.astro';
+import { postsFor, PAGE_SIZE } from '../../../../lib/blog';
+
+export const getStaticPaths = (async () => {
+  const all = await postsFor('ko');
+  const totalPages = Math.max(1, Math.ceil(all.length / PAGE_SIZE));
+  /* Page 1 lives at /blog/, so only 2..n are generated here. */
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => {
+    const n = i + 2;
+    return {
+      params: { page: String(n) },
+      props: { posts: all.slice((n - 1) * PAGE_SIZE, n * PAGE_SIZE), pageNum: n, totalPages },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { posts, pageNum, totalPages } = Astro.props;
+---
+
+<BlogIndexView
+  lang="ko"
+  posts={posts}
+  pageNum={pageNum}
+  totalPages={totalPages}
+  slug={`blog/page/${pageNum}`}
+/>
