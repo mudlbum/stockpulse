@@ -23,7 +23,7 @@ import { cp, rm, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { makeAnnual, makeBalance, makeBars, makeQuarters } from '../tests/fixtures/generate.mjs';
-import { ROOT, STORE, SRC_DATA, writeJson, readJson } from './lib/store.mjs';
+import { ROOT, STORE, SRC_DATA, PUBLIC_DATA, writeJson, readJson } from './lib/store.mjs';
 
 const LIVE = process.argv.includes('--live');
 const KEEP = process.argv.includes('--keep');
@@ -407,9 +407,15 @@ async function liveProbe() {
 }
 
 async function main() {
-  if (!KEEP && existsSync(STORE)) {
-    await rm(BACKUP, { recursive: true, force: true });
-    await cp(STORE, BACKUP, { recursive: true });
+  // Back up BOTH the store and the published data. The published files matter
+  // just as much: a smoke run writes real-shaped output derived from synthetic
+  // fixtures into src/data + public/data, and leaving that behind is how test
+  // tickers end up committed and deployed.
+  if (!KEEP) {
+    for (const [dir, dest] of [[STORE, BACKUP], [SRC_DATA, `${BACKUP}-src`], [PUBLIC_DATA, `${BACKUP}-pub`]]) {
+      await rm(dest, { recursive: true, force: true });
+      if (existsSync(dir)) await cp(dir, dest, { recursive: true });
+    }
   }
   await mkdir(STORE, { recursive: true });
 
@@ -420,11 +426,16 @@ async function main() {
   await checkIdempotence();
   if (LIVE) await liveProbe();
 
-  if (!KEEP && existsSync(BACKUP)) {
-    await rm(STORE, { recursive: true, force: true });
-    await cp(BACKUP, STORE, { recursive: true });
-    await rm(BACKUP, { recursive: true, force: true });
-    console.log('[smoke] restored the previous data-store');
+  if (!KEEP) {
+    for (const [dir, dest] of [[STORE, BACKUP], [SRC_DATA, `${BACKUP}-src`], [PUBLIC_DATA, `${BACKUP}-pub`]]) {
+      if (!existsSync(dest)) continue;
+      await rm(dir, { recursive: true, force: true });
+      await cp(dest, dir, { recursive: true });
+      await rm(dest, { recursive: true, force: true });
+    }
+    console.log('[smoke] restored data-store, src/data and public/data');
+  } else {
+    console.warn('[smoke] --keep: src/data and public/data now hold FIXTURE-DERIVED output. Run `node tools/make-placeholder-data.mjs` before committing.');
   }
 
   console.log(`\n[smoke] ${pass.length} checks passed, ${fail.length} failed`);

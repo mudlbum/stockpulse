@@ -145,16 +145,49 @@ async function main() {
     }
   }
 
-  // Published data must not be the committed placeholder.
+  // Published data must be neither the committed placeholder nor test fixtures.
   const rankingsPath = path.join(DIST, 'data', 'rankings.json');
   if (existsSync(rankingsPath)) {
     const r = JSON.parse(await readFile(rankingsPath, 'utf8'));
+
     if (r.placeholder && process.env.ALLOW_PLACEHOLDER !== '1') {
       problems.push({
         file: 'data/rankings.json',
         kind: 'data',
         detail: 'shipping PLACEHOLDER rankings — run the refresh pipeline before deploying, or set ALLOW_PLACEHOLDER=1 for a preview build',
       });
+    }
+
+    // Fixture detection, independent of the placeholder flag.
+    //
+    // `smoke-test.mjs --keep` writes REAL pipeline output derived from synthetic
+    // fixtures straight into src/data. That output carries no placeholder flag,
+    // so the flag check above waves it through — and the deploy's bootstrap step
+    // would see "real data already present" and skip fetching. The result would
+    // be a live site publishing "US Test Company 43" as a buy candidate.
+    // Shape-based detection cannot be defeated by a stale flag.
+    const tickers = [];
+    for (const market of Object.values(r.boards ?? {})) {
+      for (const board of Object.values(market ?? {})) {
+        for (const row of board?.rows ?? []) tickers.push(String(row.ticker ?? ''));
+      }
+    }
+    const fixtureLike = tickers.filter((t) => /^US\d{2}$/.test(t) || /^KRTEST/i.test(t));
+    if (fixtureLike.length > 0) {
+      problems.push({
+        file: 'data/rankings.json',
+        kind: 'data',
+        detail: `shipping TEST FIXTURE data — ${fixtureLike.length} synthetic tickers (${fixtureLike.slice(0, 4).join(', ')}). Run: node tools/make-placeholder-data.mjs, or run the real pipeline`,
+      });
+    }
+    const names = [];
+    for (const market of Object.values(r.boards ?? {})) {
+      for (const board of Object.values(market ?? {})) {
+        for (const row of board?.rows ?? []) names.push(String(row.name ?? ''));
+      }
+    }
+    if (names.some((n) => /Test Company|테스트/i.test(n))) {
+      problems.push({ file: 'data/rankings.json', kind: 'data', detail: 'company names contain test-fixture strings' });
     }
   }
 
