@@ -139,7 +139,10 @@ jobs:
         run: |
           git config user.name 'stockpulse-bot'
           git config user.email 'stockpulse-bot@users.noreply.github.com'
-          git add data-store public/data src/data
+          # -f because data-store/ is gitignored: it must never be committed
+          # from a developer machine (a local smoke run fills it with fixture
+          # data), but this workflow is exactly the thing that should write it.
+          git add -f data-store public/data src/data
           if git diff --staged --quiet; then
             echo "nothing changed"
             exit 0

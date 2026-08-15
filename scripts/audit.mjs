@@ -191,6 +191,26 @@ async function main() {
     }
   }
 
+  // The ledger is the input to the public performance audit, so fixture entries
+  // there are worse than fixture rankings: they are permanent, they are
+  // append-only, and they would silently inflate or deflate every published
+  // statistic. Checked separately from dist/ because the ledger lives in the
+  // repo, not in the build output.
+  const ledgerPath = path.join(ROOT, 'data-store', 'ledger.json');
+  if (existsSync(ledgerPath)) {
+    const l = JSON.parse(await readFile(ledgerPath, 'utf8'));
+    const bad = (l.entries ?? []).filter(
+      (e) => /^US\d{2}$/.test(String(e.ticker ?? '')) || /Test Company|테스트/i.test(String(e.name ?? '')),
+    );
+    if (bad.length) {
+      problems.push({
+        file: 'data-store/ledger.json',
+        kind: 'data',
+        detail: `ledger contains ${bad.length} TEST FIXTURE entries (e.g. ${bad[0].ticker}) — these would pollute the public performance audit permanently`,
+      });
+    }
+  }
+
   const byKind = new Map();
   for (const p of problems) byKind.set(p.kind, (byKind.get(p.kind) ?? 0) + 1);
 
