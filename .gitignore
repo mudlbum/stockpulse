@@ -5,3 +5,12 @@ dist/
 shot.mjs
 *.log
 .DS_Store
+
+# The data-store is the production database and IS committed by the refresh
+# workflow — but never from a developer machine, because a local `npm run smoke`
+# writes fixture-derived boards, prices and a ledger full of synthetic trades
+# into it. Committing those would seed hysteresis with fake incumbents and pour
+# 300+ invented trades into the public performance audit.
+# The workflow force-adds the paths it owns; see .github/workflows/refresh.yml.
+data-store/*
+!data-store/.gitkeep
