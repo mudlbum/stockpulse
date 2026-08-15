@@ -1,0 +1,91 @@
+---
+import { SITE, type Locale } from '../config';
+import { pageHref } from '../lib/paths';
+import { UI } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+  page: string;
+}
+const { lang, page } = Astro.props;
+const t = UI[lang];
+const other: Locale = lang === 'en' ? 'ko' : 'en';
+
+const items = [
+  { slug: '', label: t.nav.home },
+  { slug: 'performance', label: t.nav.performance },
+  { slug: 'news', label: t.nav.news },
+  { slug: 'sectors', label: t.nav.sectors },
+  { slug: 'simulator', label: t.nav.simulator },
+  { slug: 'methodology', label: t.nav.methodology },
+  { slug: 'alerts', label: t.nav.alerts },
+  { slug: 'about', label: t.nav.about },
+];
+
+const themeLabels = { system: t.theme.system, light: t.theme.light, dark: t.theme.dark };
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href={pageHref(lang, '')}>
+      <span class="mark" aria-hidden="true"></span>
+      {SITE.name}
+      <span class="tag">{SITE.tagline[lang]}</span>
+    </a>
+
+    <nav class="site-nav" aria-label={t.menu}>
+      {
+        items.map((it) => (
+          <a href={pageHref(lang, it.slug)} aria-current={it.slug === page ? 'page' : undefined}>
+            {it.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="header-tools">
+      <a class="btn btn-sm" href={pageHref(other, page)} hreflang={other} lang={other} rel="alternate">
+        {t.langSwitchShort}
+      </a>
+      <button
+        id="theme-toggle"
+        class="btn btn-sm"
+        type="button"
+        data-title={t.theme.toggle}
+        data-labels={JSON.stringify(themeLabels)}
+        aria-label={t.theme.toggle}
+      >
+        <span aria-hidden="true">◐</span>
+        <span class="theme-name">{t.theme.system}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header .tag {
+    display: none;
+  }
+  @media (min-width: 1180px) {
+    .site-header .tag {
+      display: inline;
+      max-width: 22ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  @media (max-width: 820px) {
+    .site-nav {
+      order: 3;
+      width: 100%;
+      margin-inline-start: 0;
+      padding-bottom: 0.4rem;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+    .header-tools {
+      margin-inline-start: auto;
+    }
+  }
+</style>

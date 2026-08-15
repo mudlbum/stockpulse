@@ -1,0 +1,33 @@
+---
+/**
+ * A horizontally scrollable region with a visible affordance.
+ *
+ * Wide tables must never be silently clipped. Overlay scrollbars are invisible
+ * until you scroll, so a table that overflows looks identical to one that has
+ * been cut off — which is how "AVG HOL…" shipped. The hint below is revealed by
+ * the global scroll-affordance script in Base.astro, which measures
+ * scrollWidth vs clientWidth: the container is narrower than the viewport, so
+ * no media query can answer that question.
+ */
+import type { Locale } from '../config';
+import { UI } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+  /** Class for the scrolling element itself. */
+  class?: string;
+  /** Accessible name for the scrollable region. */
+  label?: string;
+}
+const { lang, class: cls = 'data-table-wrap', label } = Astro.props;
+const t = UI[lang];
+---
+
+<div class="scroll-area">
+  <p class="scroll-hint" hidden>
+    <span aria-hidden="true">⇄</span> {t.home.scrollHint}
+  </p>
+  <div class={`scroll-wrap ${cls}`} role="region" aria-label={label ?? t.home.scrollRegionTable}>
+    <slot />
+  </div>
+</div>

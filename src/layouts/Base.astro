@@ -1,0 +1,288 @@
+---
+/**
+ * The one HTML shell. Both languages render through it; nothing else emits
+ * <head>. Every crawler-facing URL below goes through absolute() and every
+ * in-page URL through href() — see src/lib/paths.ts for why that matters.
+ */
+import { SITE, type Locale } from '../config';
+import { absolute, href, pageAbsolute } from '../lib/paths';
+import { UI } from '../i18n/ui';
+import { dataGeneratedAt, isPlaceholder, REFRESH_MS } from '../lib/data';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/global.css';
+
+interface Props {
+  lang: Locale;
+  /** Canonical English slug, '' for home. Used for hreflang + nav highlighting. */
+  page?: string;
+  title: string;
+  description?: string;
+  /** Datasets this page wants re-polled from public/data every 120s. */
+  live?: string[];
+}
+
+const { lang, page = '', title, description, live = [] } = Astro.props;
+const t = UI[lang];
+
+const canonical = pageAbsolute(lang, page);
+const altEn = pageAbsolute('en', page);
+const altKo = pageAbsolute('ko', page);
+const desc = description || SITE.description[lang];
+const fullTitle = page === '' ? `${SITE.name} — ${SITE.tagline[lang]}` : `${title} · ${SITE.name}`;
+const ogLocale = lang === 'ko' ? 'ko_KR' : 'en_US';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${absolute('')}#website`,
+      url: absolute(''),
+      name: SITE.name,
+      description: SITE.description[lang],
+      inLanguage: lang === 'ko' ? 'ko-KR' : 'en-US',
+      publisher: { '@id': `${absolute('')}#publisher` },
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${absolute('')}#publisher`,
+      name: SITE.name,
+      url: absolute(''),
+      description: SITE.description.en,
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonical}#page`,
+      url: canonical,
+      name: fullTitle,
+      description: desc,
+      inLanguage: lang === 'ko' ? 'ko-KR' : 'en-US',
+      isPartOf: { '@id': `${absolute('')}#website` },
+      dateModified: dataGeneratedAt,
+      license: absolute('disclaimer'),
+    },
+  ],
+};
+
+/** Datasets the client may re-poll. Keys map to public/data/<key>.json. */
+const liveUrls = Object.fromEntries(live.map((name) => [name, href(`data/${name}.json`)]));
+---
+
+<!doctype html>
+<html lang={lang === 'ko' ? 'ko' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="alternate" hreflang="en" href={altEn} />
+    <link rel="alternate" hreflang="ko" href={altKo} />
+    <link rel="alternate" hreflang="x-default" href={altEn} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={lang === 'ko' ? 'en_US' : 'ko_KR'} />
+    <meta property="og:image" content={absolute('og.svg')} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={absolute('og.svg')} />
+
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="sp:data-generated-at" content={dataGeneratedAt} />
+
+    <link rel="icon" href={href('favicon.svg')} type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} rankings`} href={absolute('rss.xml')} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <noscript>
+      <style>
+        /* Without JS nothing can toggle, so reveal what a control would have
+           revealed. Each selector restores that element's real display value —
+           `display:block` on .regime would flatten its two-column grid. */
+        .board-panel[hidden] {
+          display: block !important;
+        }
+        .regime[hidden] {
+          display: grid !important;
+        }
+        tr.row-detail[hidden] {
+          display: table-row !important;
+        }
+        @media (max-width: 760px) {
+          tr.row-detail[hidden] {
+            display: block !important;
+          }
+        }
+        .js-only {
+          display: none !important;
+        }
+      </style>
+    </noscript>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">{t.skipToContent}</a>
+    <SiteHeader lang={lang} page={page} />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <SiteFooter lang={lang} />
+
+    {
+      isPlaceholder && (
+        <span
+          class="visually-hidden"
+          data-placeholder="true"
+          aria-hidden="true"
+        />
+      )
+    }
+
+    {/* ---- theme toggle -------------------------------------------------
+        No localStorage / sessionStorage anywhere on this site: they throw or
+        silently no-op in some embedding contexts (sandboxed iframes, strict
+        privacy modes). The choice therefore lives in this page's memory only
+        and resets on navigation, which is the deliberate trade. Absent an
+        explicit choice, prefers-color-scheme decides. */}
+    <script>
+      (() => {
+        const root = document.documentElement;
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        const nameEl = btn.querySelector('.theme-name');
+        const labels: Record<string, string> = JSON.parse(btn.getAttribute('data-labels') || '{}');
+        const title = btn.getAttribute('data-title') || 'Theme';
+        const order = ['system', 'light', 'dark'];
+        let mode = 'system';
+
+        function apply() {
+          if (mode === 'system') root.removeAttribute('data-theme');
+          else root.setAttribute('data-theme', mode);
+          const label = labels[mode] || mode;
+          btn!.setAttribute('data-mode', mode);
+          btn!.setAttribute('aria-label', `${title}: ${label}`);
+          if (nameEl) nameEl.textContent = label;
+        }
+
+        btn.addEventListener('click', () => {
+          mode = order[(order.indexOf(mode) + 1) % order.length];
+          apply();
+        });
+        apply();
+      })();
+    </script>
+
+    {/* ---- horizontal scroll affordance -------------------------------
+        Every wide table on the site is wrapped in .scroll-area. A container
+        can be narrower than the viewport, so no media query can tell whether
+        its table overflows — measure scrollWidth against clientWidth instead.
+        Overlay scrollbars are invisible until you scroll, so without this a
+        table that scrolls looks exactly like one that has been cut off. */}
+    <script>
+      (() => {
+        const areas = document.querySelectorAll('.scroll-area');
+        if (!areas.length) return;
+
+        function paint() {
+          areas.forEach((area) => {
+            const wrap = area.querySelector('.scroll-wrap') as HTMLElement | null;
+            const hint = area.querySelector('.scroll-hint') as HTMLElement | null;
+            if (!wrap || !hint) return;
+            /* a hidden ancestor reports zero for everything — leave it alone */
+            if (wrap.clientWidth === 0) return;
+            const overflows = wrap.scrollWidth - wrap.clientWidth > 1;
+            hint.hidden = !overflows;
+            wrap.classList.toggle('is-scrollable', overflows);
+            /* only a genuinely scrollable region belongs in the tab order */
+            if (overflows) wrap.setAttribute('tabindex', '0');
+            else wrap.removeAttribute('tabindex');
+          });
+        }
+
+        let timer = 0;
+        const schedule = () => {
+          window.clearTimeout(timer);
+          timer = window.setTimeout(paint, 100);
+        };
+
+        paint();
+        window.addEventListener('resize', schedule);
+        /* pages that show/hide panels re-fire this after the swap */
+        document.addEventListener('sp:relayout', paint);
+        if ('fonts' in document) (document as any).fonts.ready.then(paint).catch(() => {});
+      })();
+    </script>
+
+    {/* ---- relative timestamps ---------------------------------------- */}
+    <script>
+      (() => {
+        const nodes = document.querySelectorAll('time[data-rel]');
+        if (!nodes.length) return;
+        const locale = document.documentElement.lang === 'ko' ? 'ko-KR' : 'en-US';
+        const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+        function paint() {
+          const now = Date.now();
+          nodes.forEach((n) => {
+            const t = Date.parse(n.getAttribute('datetime') || '');
+            if (Number.isNaN(t)) return;
+            const mins = Math.round((now - t) / 60000);
+            let out;
+            if (Math.abs(mins) < 60) out = rtf.format(-mins, 'minute');
+            else if (Math.abs(mins) < 1440) out = rtf.format(-Math.round(mins / 60), 'hour');
+            else out = rtf.format(-Math.round(mins / 1440), 'day');
+            n.textContent = out;
+          });
+        }
+        paint();
+        setInterval(paint, 60000);
+      })();
+    </script>
+
+    {/* ---- background data refresh ------------------------------------
+        Static build + a polled JSON file is the whole "live" story. Pages
+        listen for the sp:data event and patch what they can. */}
+    {
+      live.length > 0 && (
+        <script is:inline define:vars={{ liveUrls, refreshMs: REFRESH_MS }}>
+          {`
+        (() => {
+          const seen = {};
+          async function poll(name, url) {
+            try {
+              const res = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
+              if (!res.ok) return;
+              const payload = await res.json();
+              if (seen[name] === payload.generatedAt) return;
+              const first = seen[name] === undefined;
+              seen[name] = payload.generatedAt;
+              document.dispatchEvent(
+                new CustomEvent('sp:data', { detail: { name, payload, first } }),
+              );
+            } catch (_) {
+              /* offline or the file is not published yet — try again next tick */
+            }
+          }
+          function tick() {
+            for (const [name, url] of Object.entries(liveUrls)) poll(name, url);
+          }
+          tick();
+          setInterval(tick, refreshMs);
+        })();
+      `}
+        </script>
+      )
+    }
+  </body>
+</html>

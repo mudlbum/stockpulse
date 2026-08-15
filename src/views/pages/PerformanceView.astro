@@ -1,0 +1,380 @@
+---
+/**
+ * The public audit. Two rules govern this page:
+ *   - a win rate never appears without its random-pick control beside it
+ *   - a mean return never appears without its benchmark beside it
+ * A bare win rate is the single most misleading number a site like this can
+ * publish, so the layout makes the comparison structural rather than optional.
+ */
+import { HORIZONS, MARKETS, type Locale } from '../../config';
+import { UI, fill } from '../../i18n/ui';
+import { performance as perf } from '../../lib/data';
+import { fmtDate, fmtNum, fmtPct, fmtRatioPct } from '../../lib/format';
+import { pageHref } from '../../lib/paths';
+import Base from '../../layouts/Base.astro';
+import ComplianceNotice from '../../components/ComplianceNotice.astro';
+import PlaceholderNotice from '../../components/PlaceholderNotice.astro';
+import EquityChart from '../../components/EquityChart.astro';
+import ScrollArea from '../../components/ScrollArea.astro';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+
+const o = perf.summary.overall;
+const trades = [...perf.closed, ...perf.open].sort((a, b) => (a.date < b.date ? 1 : -1));
+
+const horizonLabel = Object.fromEntries(HORIZONS.map((h) => [h.id, h.label[lang]]));
+const warnedHorizons = HORIZONS.filter((h) => perf.summary.byHorizon[h.id]?.sampleWarning);
+---
+
+<Base lang={lang} page="performance" title={t.perf.title} description={t.perf.intro} live={['performance']}>
+  <div class="wrap">
+    <PlaceholderNotice lang={lang} datasets={['performance']} />
+
+    <div class="page-head">
+      <h1>{t.perf.title}</h1>
+      <p class="lede">{t.perf.intro}</p>
+    </div>
+
+    <ComplianceNotice lang={lang} />
+
+    {/* One explanation, horizons named once. Repeating the same two sentences
+        per horizon made the banner read like a stutter and buried the part
+        that actually varies — which horizon, and how many closed positions. */}
+    {
+      warnedHorizons.length > 0 && (
+        <div class="notice notice-warn" role="status">
+          <h2>{t.perf.sampleWarnTitle}</h2>
+          <p class="chip-row" style="margin-bottom:.5rem;">
+            <span class="notice-k">{t.perf.sampleWarnAffected}</span>
+            {warnedHorizons.map((h) => (
+              <span class="chip chip-onwarn">
+                {h.label[lang]}
+                <b>{fill(t.perf.sampleWarnCount, { n: perf.summary.byHorizon[h.id].closedCount })}</b>
+              </span>
+            ))}
+          </p>
+          <p>{t.perf.sampleWarnBody}</p>
+        </div>
+      )
+    }
+
+    <section aria-labelledby="overall-h">
+      <div class="section-head">
+        <h2 id="overall-h">{t.perf.byHorizon} — {t.perf.all}</h2>
+      </div>
+
+      <div class="tiles">
+        <div class="tile">
+          <span class="k">{t.perf.winRate}</span>
+          <span class="v">{fmtRatioPct(o.winRate, 1, lang)}</span>
+          <span class="cmp">
+            {t.perf.controlWinRate}: <b>{fmtRatioPct(o.controlWinRate, 1, lang)}</b>
+            <span class={o.winRate > o.controlWinRate ? 'up' : 'down'}>
+              <span aria-hidden="true">{o.winRate > o.controlWinRate ? '▲' : '▼'}</span>
+              {fmtPct((o.winRate - o.controlWinRate) * 100, 1, lang)}
+            </span>
+          </span>
+          <p class="note">{t.perf.controlHelp}</p>
+        </div>
+
+        <div class="tile">
+          <span class="k">{t.perf.meanReturn}</span>
+          <span class={`v ${o.meanReturn >= 0 ? 'up' : 'down'}`}>
+            <span aria-hidden="true">{o.meanReturn >= 0 ? '▲' : '▼'}</span>
+            {fmtPct(o.meanReturn, 2, lang)}
+          </span>
+          <span class="cmp">
+            {t.perf.benchmarkReturn}: <b>{fmtPct(o.benchmarkReturn, 2, lang)}</b>
+          </span>
+          <p class="note">{t.perf.benchmarkHelp}</p>
+        </div>
+
+        <div class="tile">
+          <span class="k">{t.perf.excessReturn}</span>
+          <span class={`v ${o.excessReturn >= 0 ? 'up' : 'down'}`}>
+            <span aria-hidden="true">{o.excessReturn >= 0 ? '▲' : '▼'}</span>
+            {fmtPct(o.excessReturn, 2, lang)}
+          </span>
+          <span class="cmp">
+            {t.perf.medianReturn}: <b>{fmtPct(o.medianReturn, 2, lang)}</b>
+          </span>
+        </div>
+
+        <div class="tile">
+          <span class="k">{t.perf.maxDrawdown}</span>
+          <span class="v down">
+            <span aria-hidden="true">▼</span>{fmtPct(Math.abs(o.maxDrawdown), 2, lang, false)}
+          </span>
+          <span class="cmp">
+            {t.perf.avgHold}: <b>{fmtNum(o.avgHoldDays, 1, lang)} {t.perf.days}</b>
+          </span>
+        </div>
+
+        <div class="tile">
+          <span class="k">{t.perf.noFill}</span>
+          <span class="v">{fmtNum(o.noFill, 0, lang)}</span>
+          <span class="cmp">
+            {t.perf.picks}: <b>{fmtNum(o.picks, 0, lang)}</b> · {t.perf.filled}: <b>{fmtNum(o.filled, 0, lang)}</b>
+          </span>
+          <p class="note">{t.perf.noFillHelp}</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="equity-h">
+      <div class="section-head">
+        <h2 id="equity-h">{t.perf.equityCurve}</h2>
+      </div>
+      <EquityChart lang={lang} points={perf.equityCurve} />
+    </section>
+
+    <section aria-labelledby="horizon-h">
+      <div class="section-head">
+        <h2 id="horizon-h">{t.perf.byHorizon}</h2>
+      </div>
+      <ScrollArea lang={lang}>
+        <table class="data">
+          <thead>
+            <tr>
+              <th scope="col">{t.perf.cols.horizon}</th>
+              <th scope="col" class="num-cell">{t.perf.picks}</th>
+              <th scope="col" class="num-cell">{t.perf.filled}</th>
+              <th scope="col" class="num-cell">{t.perf.noFill}</th>
+              <th scope="col" class="num-cell">{t.perf.winRate}</th>
+              <th scope="col" class="num-cell">{t.perf.controlWinRate}</th>
+              <th scope="col" class="num-cell">{t.perf.meanReturn}</th>
+              <th scope="col" class="num-cell">{t.perf.benchmarkReturn}</th>
+              <th scope="col" class="num-cell">{t.perf.excessReturn}</th>
+              <th scope="col" class="num-cell">{t.perf.maxDrawdown}</th>
+              <th scope="col" class="num-cell">{t.perf.avgHold}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              HORIZONS.map((h) => {
+                const s = perf.summary.byHorizon[h.id];
+                if (!s) return null;
+                return (
+                  <tr>
+                    <th scope="row" style="text-align:start;font-weight:600;">
+                      {h.label[lang]}
+                      {/* block, so it sits under the label on every row rather
+                          than inline on the short ones and wrapped on the long */}
+                      {s.sampleWarning && <span class="badge badge-warn badge-block">n={s.closedCount}</span>}
+                    </th>
+                    <td class="num-cell">{fmtNum(s.picks, 0, lang)}</td>
+                    <td class="num-cell">{fmtNum(s.filled, 0, lang)}</td>
+                    <td class="num-cell">{fmtNum(s.noFill, 0, lang)}</td>
+                    <td class="num-cell">
+                      <b>{fmtRatioPct(s.winRate, 1, lang)}</b>
+                    </td>
+                    <td class="num-cell muted">{fmtRatioPct(s.controlWinRate, 1, lang)}</td>
+                    <td class={`num-cell ${s.meanReturn >= 0 ? 'up' : 'down'}`}>{fmtPct(s.meanReturn, 2, lang)}</td>
+                    <td class="num-cell muted">{fmtPct(s.benchmarkReturn, 2, lang)}</td>
+                    <td class={`num-cell ${s.excessReturn >= 0 ? 'up' : 'down'}`}>{fmtPct(s.excessReturn, 2, lang)}</td>
+                    <td class="num-cell down">{fmtPct(s.maxDrawdown, 2, lang)}</td>
+                    <td class="num-cell">{fmtNum(s.avgHoldDays, 1, lang)}</td>
+                  </tr>
+                );
+              })
+            }
+          </tbody>
+        </table>
+      </ScrollArea>
+    </section>
+
+    <section aria-labelledby="ledger-h">
+      <div class="section-head">
+        <h2 id="ledger-h">{t.perf.ledger}</h2>
+        <p>{t.perf.ledgerIntro}</p>
+      </div>
+
+      <div class="field-row" style="margin-bottom:.8rem;">
+        <div class="field">
+          <label for="f-market">{t.perf.filterMarket}</label>
+          <select id="f-market">
+            <option value="">{t.perf.all}</option>
+            {MARKETS.map((m) => <option value={m.id}>{t.common.market[m.id]}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-horizon">{t.perf.filterHorizon}</label>
+          <select id="f-horizon">
+            <option value="">{t.perf.all}</option>
+            {HORIZONS.map((h) => <option value={h.id}>{h.label[lang]}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-status">{t.perf.filterStatus}</label>
+          <select id="f-status">
+            <option value="">{t.perf.all}</option>
+            <option value="closed">{t.perf.status.closed}</option>
+            <option value="open">{t.perf.status.open}</option>
+            <option value="no_fill">{t.perf.status.no_fill}</option>
+            <option value="void">{t.perf.status.void}</option>
+          </select>
+        </div>
+        <p class="small muted" id="ledger-count" style="margin:0 0 .4rem;">
+          {fill(t.perf.showing, { n: trades.length, total: trades.length })}
+        </p>
+      </div>
+
+      <ScrollArea lang={lang}>
+        <table class="data" id="ledger">
+          <thead>
+            <tr>
+              <th scope="col" data-sort="date" aria-sort="descending"><button type="button">{t.perf.cols.date}</button></th>
+              <th scope="col">{t.perf.cols.market}</th>
+              <th scope="col">{t.perf.cols.horizon}</th>
+              <th scope="col" data-sort="ticker"><button type="button">{t.perf.cols.ticker}</button></th>
+              <th scope="col" class="num-cell" data-sort="rank"><button type="button">{t.perf.cols.rank}</button></th>
+              <th scope="col" class="num-cell">{t.perf.cols.entry}</th>
+              <th scope="col" class="num-cell">{t.perf.cols.exit}</th>
+              <th scope="col">{t.perf.cols.exitDate}</th>
+              <th scope="col">{t.perf.cols.reason}</th>
+              <th scope="col" class="num-cell" data-sort="net"><button type="button">{t.perf.cols.net}</button></th>
+              <th scope="col" class="num-cell" data-sort="bench"><button type="button">{t.perf.cols.bench}</button></th>
+              <th scope="col" class="num-cell" data-sort="hold"><button type="button">{t.perf.cols.hold}</button></th>
+              <th scope="col">{t.perf.cols.status}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              trades.map((tr) => (
+                <tr
+                  data-market={tr.market}
+                  data-horizon={tr.horizon}
+                  data-status={tr.status}
+                  data-date={tr.date}
+                  data-ticker={tr.ticker}
+                  data-rank={tr.rank}
+                  data-net={tr.netReturnPct ?? ''}
+                  data-bench={tr.benchmarkReturnPct ?? ''}
+                  data-hold={tr.holdDays}
+                >
+                  <td class="mono">{fmtDate(tr.date, lang)}</td>
+                  <td>{t.common.marketShort[tr.market]}</td>
+                  <td>{horizonLabel[tr.horizon]}</td>
+                  <td>
+                    <b class="mono">{tr.ticker}</b>
+                    <span class="muted"> {tr.name}</span>
+                  </td>
+                  <td class="num-cell">{tr.rank}</td>
+                  <td class="num-cell">{tr.entryPrice === null ? '—' : fmtNum(tr.entryPrice, tr.market === 'KR' ? 0 : 2, lang)}</td>
+                  <td class="num-cell">{tr.exitPrice === null ? '—' : fmtNum(tr.exitPrice, tr.market === 'KR' ? 0 : 2, lang)}</td>
+                  <td class="mono">{tr.exitDate ? fmtDate(tr.exitDate, lang) : '—'}</td>
+                  <td>{t.perf.exitReason[tr.exitReason]}</td>
+                  <td class={`num-cell ${tr.netReturnPct === null ? '' : tr.netReturnPct >= 0 ? 'up' : 'down'}`}>
+                    {tr.netReturnPct === null ? (
+                      '—'
+                    ) : (
+                      <>
+                        <span aria-hidden="true">{tr.netReturnPct >= 0 ? '▲' : '▼'}</span>
+                        {fmtPct(tr.netReturnPct, 2, lang)}
+                      </>
+                    )}
+                  </td>
+                  <td class="num-cell muted">{tr.benchmarkReturnPct === null ? '—' : fmtPct(tr.benchmarkReturnPct, 2, lang)}</td>
+                  <td class="num-cell">{tr.holdDays}</td>
+                  <td>
+                    <span
+                      class={`badge ${tr.status === 'void' ? 'badge-danger' : tr.status === 'no_fill' ? 'badge-warn' : ''}`}
+                      title={tr.voidReason || undefined}
+                    >
+                      {t.perf.status[tr.status]}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </ScrollArea>
+      <p class="small muted" id="ledger-empty" hidden>{t.perf.noResults}</p>
+    </section>
+
+    <section aria-labelledby="anti-h">
+      <div class="section-head">
+        <h2 id="anti-h">{t.perf.antiGaming}</h2>
+      </div>
+      <ul class="stack" style="--gap:.4rem; padding-inline-start:1.2rem; max-width:80ch;">
+        {t.perf.antiGamingItems.map((item) => <li>{item}</li>)}
+      </ul>
+      <p style="margin-top:1rem;">
+        <a href={pageHref(lang, 'methodology')}>{t.common.readMethodology} →</a>
+      </p>
+    </section>
+  </div>
+</Base>
+
+<script is:inline define:vars={{ showingTpl: t.perf.showing }}>
+  (() => {
+    const table = document.getElementById('ledger');
+    if (!table) return;
+    const tbody = table.querySelector('tbody');
+    const rows = [...tbody.querySelectorAll('tr')];
+    const total = rows.length;
+    const countEl = document.getElementById('ledger-count');
+    const emptyEl = document.getElementById('ledger-empty');
+    const selects = {
+      market: document.getElementById('f-market'),
+      horizon: document.getElementById('f-horizon'),
+      status: document.getElementById('f-status'),
+    };
+    let sortKey = 'date';
+    let sortDir = -1;
+
+    function value(row, key) {
+      const raw = row.dataset[key];
+      if (key === 'date' || key === 'ticker') return raw || '';
+      const n = parseFloat(raw);
+      return Number.isFinite(n) ? n : -Infinity;
+    }
+
+    function render() {
+      const f = {
+        market: selects.market.value,
+        horizon: selects.horizon.value,
+        status: selects.status.value,
+      };
+      const visible = rows.filter(
+        (r) =>
+          (!f.market || r.dataset.market === f.market) &&
+          (!f.horizon || r.dataset.horizon === f.horizon) &&
+          (!f.status || r.dataset.status === f.status),
+      );
+      visible.sort((a, b) => {
+        const va = value(a, sortKey);
+        const vb = value(b, sortKey);
+        if (va < vb) return -1 * sortDir;
+        if (va > vb) return 1 * sortDir;
+        return 0;
+      });
+      tbody.replaceChildren(...visible);
+      countEl.textContent = showingTpl.replace('{n}', visible.length).replace('{total}', total);
+      emptyEl.hidden = visible.length > 0;
+    }
+
+    Object.values(selects).forEach((s) => s.addEventListener('change', render));
+
+    table.querySelectorAll('th[data-sort]').forEach((th) => {
+      th.querySelector('button').addEventListener('click', () => {
+        const key = th.dataset.sort;
+        if (sortKey === key) sortDir *= -1;
+        else {
+          sortKey = key;
+          sortDir = key === 'ticker' ? 1 : -1;
+        }
+        table.querySelectorAll('th[data-sort]').forEach((o) => o.removeAttribute('aria-sort'));
+        th.setAttribute('aria-sort', sortDir === 1 ? 'ascending' : 'descending');
+        render();
+      });
+    });
+
+    render();
+  })();
+</script>

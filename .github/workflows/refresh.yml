@@ -1,0 +1,163 @@
+name: Refresh data and rank
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SCHEDULE — and why it is not the one in the original spec.
+#
+# The original plan (04:00 / 08:00 / 08:30 / 16:30 EST) assumes pre-market and
+# intraday data. There is no keyless, license-clean source for either, so the
+# pipeline is end-of-day, and the honest cadence is POST-CLOSE: score the
+# session that just finished and publish for the next one. Every board states
+# its as-of date and says the earliest actionable point is the next open.
+#
+# GitHub Actions cron is UTC-only and free-tier runs are routinely delayed
+# 10–60 minutes at popular times, so nothing here depends on firing at an exact
+# minute. Times are offset off the hour to sit outside the worst congestion.
+#
+#   21:35 UTC  = 17:35 ET  → US post-close (16:00 ET + settle buffer)
+#   07:10 UTC  = 16:10 KST → KR post-close (15:30 KST + settle buffer)
+#   Both are followed by rank + evaluate in the same job so the store is
+#   internally consistent when it is committed.
+#
+# US DST NOTE: 21:35 UTC is 17:35 EDT in summer and 16:35 EST in winter. The
+# winter time is still 35 minutes after the 16:00 EST close, so a single cron
+# is correct year-round. This is deliberate — a DST-tracking pair of crons
+# would double-run for one week each year.
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  schedule:
+    - cron: '35 21 * * 1-5'   # US post-close
+    - cron: '10 7 * * 1-5'    # KR post-close
+    - cron: '0 */4 * * *'     # news only
+  workflow_dispatch:
+    inputs:
+      market:
+        description: 'Which refresh to run'
+        type: choice
+        options: [both, us, kr, news]
+        default: both
+      bootstrap:
+        description: 'Tickers to backfill history for this run'
+        default: '120'
+
+concurrency:
+  # Never let two refreshes race on the committed store — a lost update there
+  # is a silently corrupted price series, not a failed build.
+  group: refresh-data
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL || 'hello@example.com' }}
+      US_BOOTSTRAP: ${{ github.event.inputs.bootstrap || '120' }}
+      KR_BOOTSTRAP: '90'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: Decide what to run
+        id: plan
+        run: |
+          MODE="${{ github.event.inputs.market }}"
+          if [ -z "$MODE" ]; then
+            case "${{ github.event.schedule }}" in
+              '35 21 * * 1-5') MODE=us ;;
+              '10 7 * * 1-5')  MODE=kr ;;
+              *)               MODE=news ;;
+            esac
+          fi
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          echo "Running mode: $MODE"
+
+      - name: Refresh US
+        if: steps.plan.outputs.mode == 'us' || steps.plan.outputs.mode == 'both'
+        run: npm run refresh:us
+
+      - name: Refresh KR
+        if: steps.plan.outputs.mode == 'kr' || steps.plan.outputs.mode == 'both'
+        run: npm run refresh:kr
+
+      - name: Refresh news
+        run: npm run refresh:news
+
+      # Ranking and evaluation are pure functions of the store, so they run on
+      # every mode — including news-only, which changes the sentiment factor.
+      - name: Rank
+        run: npm run rank
+
+      - name: Evaluate performance
+        run: npm run evaluate
+
+      - name: Summarize
+        if: always()
+        run: |
+          {
+            echo "## Refresh summary (${{ steps.plan.outputs.mode }})"
+            echo
+            if [ -f public/data/health.json ]; then
+              echo '### Source health'
+              node -e "
+                const h=require('./public/data/health.json');
+                for (const s of h.sources ?? []) console.log('- ' + s.host + ': ' + s.ok + ' ok / ' + s.fail + ' fail' + (s.notes?.length ? ' (' + s.notes.join(', ') + ')' : ''));
+              " || true
+            fi
+            if [ -f public/data/news.json ]; then
+              echo
+              echo '### Feed health'
+              node -e "
+                const n=require('./public/data/news.json');
+                for (const f of n.feedHealth ?? []) console.log('- ' + f.status.padEnd(6) + ' ' + f.name + (f.error ? ' — ' + f.error : '') + (f.newestAgeHours != null ? ' (newest ' + f.newestAgeHours + 'h)' : ''));
+              " || true
+            fi
+            if [ -f public/data/rankings.json ]; then
+              echo
+              echo '### Boards'
+              node -e "
+                const r=require('./public/data/rankings.json');
+                for (const m of ['US','KR']) for (const h of Object.keys(r.boards[m] ?? {})) {
+                  const b=r.boards[m][h];
+                  console.log('- ' + m + '/' + h + ': ' + b.rows.length + ' rows' + (b.emptyReason ? ' — ' + b.emptyReason.code : ''));
+                }
+                for (const m of ['US','KR']) if (r.regime[m]) console.log('- regime ' + m + ': ' + r.regime[m].state);
+              " || true
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit
+        run: |
+          git config user.name 'stockpulse-bot'
+          git config user.email 'stockpulse-bot@users.noreply.github.com'
+          git add data-store public/data src/data
+          if git diff --staged --quiet; then
+            echo "nothing changed"
+            exit 0
+          fi
+          git commit -m "data: refresh ${{ steps.plan.outputs.mode }} $(date -u +%Y-%m-%dT%H:%MZ)"
+          # The store is committed by other runs too; rebase rather than fail.
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
+            echo "push attempt $i failed, retrying"
+            sleep 5
+          done
+          exit 1
+
+      # GITHUB_TOKEN pushes do not trigger other workflows, so the deploy is
+      # dispatched explicitly. With a PAT_TOKEN secret the commit would trigger
+      # deploy.yml directly and this step becomes unnecessary.
+      - name: Trigger deploy
+        if: success()
+        run: gh workflow run deploy.yml --ref "${GITHUB_REF_NAME}" || true
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN || github.token }}

@@ -1,0 +1,169 @@
+---
+/**
+ * Renders docs/METHODOLOGY.md verbatim at build time.
+ *
+ * `marked` runs in the Astro build (Node), so no markdown parser reaches the
+ * browser. Heading ids are injected afterwards with a regex rather than a
+ * custom renderer, because marked's renderer signature has changed twice in
+ * recent majors and a regex over emitted HTML will not.
+ */
+import { marked } from 'marked';
+
+/* Imported through Vite's ?raw loader rather than fs.readFileSync: the built
+   page module runs from dist/chunks/, so import.meta.url no longer points at
+   src/ and a relative fs read resolves outside the project. ?raw inlines the
+   file contents at bundle time and cannot drift. */
+import raw from '../../../docs/METHODOLOGY.md?raw';
+
+import { SITE, type Locale } from '../../config';
+import { UI } from '../../i18n/ui';
+import { KO_LIMITATIONS, KO_NOTES, KO_PRINCIPLES, KO_SECTION_TITLES } from '../../i18n/methodology-ko';
+import { pageHref } from '../../lib/paths';
+import Base from '../../layouts/Base.astro';
+import ScrollArea from '../../components/ScrollArea.astro';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+
+function slug(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s가-힣.-]/g, '')
+    .trim()
+    .replace(/[\s.]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+let html = await marked.parse(raw, { gfm: true, breaks: false });
+
+/* Demote every heading one level before embedding.
+ *
+ * METHODOLOGY.md is a standalone document, so it opens with an <h1>. The page
+ * already has its own <h1>, and shipping two puts the document outline in an
+ * invalid state — bad for screen readers and for SERP heading extraction.
+ * Demoting h1..h5 -> h2..h6 keeps the source file readable on its own while
+ * nesting correctly here. Processed high-to-low so a demoted h1 is not caught
+ * again as an h2. */
+html = html.replace(/<(\/?)h([1-5])(\s[^>]*)?>/g, (_m, close, level, attrs) =>
+  `<${close}h${Number(level) + 1}${attrs ?? ''}>`);
+
+/* inject stable ids so the table of contents can link into the document */
+html = html.replace(/<h([3-5])>([\s\S]*?)<\/h\1>/g, (_m, level, inner) => {
+  const text = String(inner).replace(/<[^>]+>/g, '');
+  return `<h${level} id="${slug(text)}">${inner}</h${level}>`;
+});
+
+/* top-level sections for the contents box */
+const toc = [...raw.matchAll(/^##\s+(.+)$/gm)].map((m) => ({
+  title: m[1].trim(),
+  id: slug(m[1].trim()),
+}));
+
+const versionMatch = raw.match(/\*\*Version\s+([^*]+)\*\*/);
+const version = versionMatch ? versionMatch[1].trim() : SITE.methodologyVersion;
+---
+
+<Base lang={lang} page="methodology" title={t.methodology.title} description={t.methodology.intro}>
+  <div class="wrap wrap-narrow">
+    <div class="page-head">
+      <h1>{t.methodology.title}</h1>
+      <p class="lede">{t.methodology.intro}</p>
+      <p class="small muted">
+        {t.methodology.version}: <span class="mono">{version}</span> ·
+        <a href={pageHref(lang, 'performance')}>{t.common.seePerformance}</a>
+      </p>
+    </div>
+
+    {
+      lang === 'ko' && (
+        <section aria-labelledby="ko-summary">
+          <h2 id="ko-summary">{t.methodology.summaryHeading}</h2>
+          <p class="muted">{KO_NOTES.fullDocNote}</p>
+
+          <h3>{KO_NOTES.sectionsHeading}</h3>
+          <ScrollArea lang={lang}>
+            <table class="data" style="min-width:0;">
+              <thead>
+                <tr>
+                  <th scope="col">§</th>
+                  <th scope="col">한국어</th>
+                  <th scope="col">English</th>
+                </tr>
+              </thead>
+              <tbody>
+                {KO_SECTION_TITLES.map((s) => (
+                  <tr>
+                    <td class="mono">{s.n}</td>
+                    <td class="wrap-cell">{s.ko}</td>
+                    <td class="wrap-cell muted">{s.en}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </ScrollArea>
+
+          <h3 style="margin-top:1.6rem;">{KO_NOTES.principlesHeading}</h3>
+          <dl class="ko-principles">
+            {KO_PRINCIPLES.map((p) => (
+              <>
+                <dt>
+                  <span class="badge">{p.id}</span> {p.h}
+                </dt>
+                <dd>{p.p}</dd>
+              </>
+            ))}
+          </dl>
+
+          <h3 style="margin-top:1.6rem;">{KO_NOTES.limitationsHeading}</h3>
+          <ol class="ko-limits">
+            {KO_LIMITATIONS.map((l) => (
+              <li>{l}</li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
+
+    <section aria-labelledby="toc-h">
+      <h2 id="toc-h">{t.methodology.tocHeading}</h2>
+      <nav class="toc" aria-labelledby="toc-h">
+        <ol>
+          {toc.map((s) => (
+            <li>
+              <a href={`#${s.id}`}>{s.title}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </section>
+
+    <section aria-labelledby="doc-h">
+      <h2 id="doc-h">{lang === 'ko' ? KO_NOTES.fullHeading : t.methodology.title}</h2>
+      <article class="prose" lang="en" set:html={html} />
+    </section>
+  </div>
+</Base>
+
+<style>
+  .ko-principles dt {
+    font-weight: 650;
+    margin-top: 0.9rem;
+    line-height: 1.5;
+  }
+  .ko-principles dd {
+    margin: 0.3rem 0 0;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .ko-limits li {
+    margin-bottom: 0.6rem;
+    line-height: 1.7;
+  }
+  .prose :global(h1) {
+    display: none; /* the page already has an <h1> */
+  }
+</style>

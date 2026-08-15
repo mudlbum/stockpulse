@@ -1,0 +1,38 @@
+{
+  "name": "stockpulse",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bilingual multi-horizon equity ranking site for US and Korean markets",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "refresh:us": "node scripts/refresh-us.mjs",
+    "refresh:kr": "node scripts/refresh-kr.mjs",
+    "refresh:news": "node scripts/refresh-news.mjs",
+    "rank": "node scripts/build-rankings.mjs",
+    "evaluate": "node scripts/evaluate.mjs",
+    "smoke": "node scripts/smoke-test.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "audit": "node scripts/audit.mjs",
+    "check": "astro check",
+    "contrast": "node tools/contrast.mjs",
+    "data:placeholder": "node tools/make-placeholder-data.mjs",
+    "check:layout": "node tools/check-table-layout.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.2.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^26.2.0",
+    "linkedom": "^0.18.5",
+    "marked": "^18.0.9",
+    "playwright": "^1.62.1",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20.11"
+  }
+}

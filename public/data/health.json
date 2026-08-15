@@ -1,0 +1,117 @@
+{
+  "placeholder": true,
+  "generatedAt": "2026-08-15T21:40:00.000Z",
+  "sources": [
+    {
+      "host": "data.sec.gov",
+      "ok": 1284,
+      "fail": 6,
+      "total": 1290,
+      "successRate": 0.995,
+      "notes": "XBRL companyfacts, 10 req/s cap respected"
+    },
+    {
+      "host": "query1.finance.yahoo.com",
+      "ok": 2410,
+      "fail": 61,
+      "total": 2471,
+      "successRate": 0.975,
+      "notes": "Occasional 429; exponential backoff applied"
+    },
+    {
+      "host": "ecos.bok.or.kr",
+      "ok": 118,
+      "fail": 2,
+      "total": 120,
+      "successRate": 0.983,
+      "notes": "KRW reference rates"
+    },
+    {
+      "host": "opendart.fss.or.kr",
+      "ok": 0,
+      "fail": 0,
+      "total": 0,
+      "successRate": null,
+      "notes": "No API key configured — Korean ultra-long board disabled (METHODOLOGY §10.4)"
+    },
+    {
+      "host": "www.krx.co.kr",
+      "ok": 396,
+      "fail": 21,
+      "total": 417,
+      "successRate": 0.95,
+      "notes": "Mirror used for administrative-issue flags"
+    }
+  ],
+  "feeds": [
+    {
+      "id": "reuters",
+      "name": "Reuters Business",
+      "status": "ok",
+      "items": 48,
+      "newestAgeHours": 0.8,
+      "error": null
+    },
+    {
+      "id": "bloomberg",
+      "name": "Bloomberg Markets",
+      "status": "ok",
+      "items": 36,
+      "newestAgeHours": 1.4,
+      "error": null
+    },
+    {
+      "id": "cnbc",
+      "name": "CNBC Top News",
+      "status": "ok",
+      "items": 41,
+      "newestAgeHours": 0.6,
+      "error": null
+    },
+    {
+      "id": "ap",
+      "name": "AP Business",
+      "status": "degraded",
+      "items": 9,
+      "newestAgeHours": 11.2,
+      "error": "HTTP 429 on 3 of 5 attempts"
+    },
+    {
+      "id": "yonhap",
+      "name": "연합뉴스 경제",
+      "status": "ok",
+      "items": 52,
+      "newestAgeHours": 1.1,
+      "error": null
+    },
+    {
+      "id": "hankyung",
+      "name": "한국경제",
+      "status": "ok",
+      "items": 44,
+      "newestAgeHours": 2,
+      "error": null
+    },
+    {
+      "id": "mk",
+      "name": "매일경제",
+      "status": "ok",
+      "items": 39,
+      "newestAgeHours": 1.7,
+      "error": null
+    },
+    {
+      "id": "ft",
+      "name": "Financial Times",
+      "status": "failing",
+      "items": 0,
+      "newestAgeHours": null,
+      "error": "TLS handshake timeout"
+    }
+  ],
+  "notes": [
+    "This file is placeholder data. The refresh scripts overwrite it on every pipeline run.",
+    "A source below 0.9 success rate for two consecutive days suppresses the affected factor rather than imputing it (METHODOLOGY P4).",
+    "The Korean ultra-long board is intentionally empty until a DART key is configured."
+  ]
+}

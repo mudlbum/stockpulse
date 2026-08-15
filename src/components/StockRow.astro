@@ -1,0 +1,364 @@
+---
+/**
+ * One leaderboard entry: a main <tr> plus a collapsed detail <tr>.
+ *
+ * Renders every field of ROW. On narrow viewports CSS turns the same markup
+ * into a stacked card (see the max-width:760px block in global.css) — the
+ * markup is not duplicated, because two copies of a 10-field row would drift
+ * apart within a week.
+ */
+import { HORIZONS, type HorizonId, type Locale } from '../config';
+import { UI, fill } from '../i18n/ui';
+import { dirArrow, dirClass, fmtLevel, fmtNum, fmtPct, fmtPrice, monogram, tickerHue } from '../lib/format';
+import type { Row } from '../lib/types';
+import Sparkline from './Sparkline.astro';
+import FactorBars from './FactorBars.astro';
+
+interface Props {
+  lang: Locale;
+  row: Row;
+  horizon: HorizonId;
+  boardId: string;
+}
+const { lang, row, horizon, boardId } = Astro.props;
+const t = UI[lang];
+const h = HORIZONS.find((x) => x.id === horizon)!;
+
+const detailId = `d-${boardId}-${row.ticker}`;
+const rowKey = `${row.market}|${horizon}|${row.ticker}`;
+
+/* movement badge */
+const isNew = row.movement === 'NEW';
+const mv = typeof row.movement === 'number' ? row.movement : 0;
+const moveClass = isNew ? 'move-new' : mv > 0 ? 'move-up' : mv < 0 ? 'move-down' : 'move-flat';
+const moveText = isNew ? t.home.movementNew : mv === 0 ? '±0' : `${mv > 0 ? '+' : '−'}${Math.abs(mv)}`;
+const moveArrow = isNew ? '★' : mv > 0 ? '▲' : mv < 0 ? '▼' : '–';
+const moveLabel = isNew
+  ? t.home.movementNewLabel
+  : mv === 0
+    ? t.home.movementFlat
+    : fill(mv > 0 ? t.home.movementUp : t.home.movementDown, { n: Math.abs(mv) });
+
+/* target band geometry: price at 0%, bull at 100% */
+const tg = row.targets;
+const bandLo = row.price;
+const bandHi = tg ? Math.max(tg.bull, row.price * 1.0001) : row.price;
+const bandSpan = bandHi - bandLo || 1;
+const pos = (v: number) => `${Math.max(0, Math.min(100, ((v - bandLo) / bandSpan) * 100)).toFixed(1)}%`;
+
+/* risk meter: never colour-only — the "n / 5" text always accompanies it */
+const riskColor = row.riskGauge <= 2 ? 'var(--flat)' : row.riskGauge === 3 ? 'var(--warn-edge)' : 'var(--danger-edge)';
+
+const chgDir = dirClass(row.changePct);
+const hue = tickerHue(row.ticker);
+
+/* The three tiers are three numbers on every horizon but not three of the same
+   kind of number: ATR multiples, a discounted fair-value range, or a 5–10 year
+   compounding scenario. The band is labelled so it cannot read as one thing. */
+type BasisKey = keyof typeof t.home.targetBasisLabel;
+const basis = (row.targetBasis in t.home.targetBasisLabel ? row.targetBasis : 'atr') as BasisKey;
+const basisLabel = t.home.targetBasisLabel[basis];
+const basisShort = t.home.targetBasisShort[basis];
+const basisHelp = t.home.targetBasisHelp[basis];
+const isScenario = basis === 'compounding_scenarios';
+
+/* Known flags get a label and an explanation; an unknown code still renders,
+   as its raw string, rather than disappearing. */
+type FlagKey = keyof typeof t.home.flagLabel;
+const flags = row.flags.map((f) => ({
+  code: f,
+  label: (t.home.flagLabel as Record<string, string>)[f] ?? f,
+  help: (t.home.flagHelp as Record<string, string>)[f] ?? '',
+  tone: f === 'stopped_out' ? 'badge-danger' : 'badge-warn',
+}));
+
+const evidence = Array.isArray(row.evidence) ? row.evidence.filter((e) => typeof e === 'string') : [];
+
+/* "80%" next to a 0–100 score reads like a second score. Report the actual
+   count instead — 4 of 5 factors is unambiguous and needs no decoding. */
+const factorTotal = Object.keys(row.factors || {}).filter((k) => !k.startsWith('_')).length;
+const factorsUsed = Math.round(row.completeness * factorTotal);
+const sentimentLabel =
+  row.sentiment === null ? 'unknown' : row.sentiment > 0.15 ? 'bullish' : row.sentiment < -0.15 ? 'bearish' : 'neutral';
+---
+
+<tr class="row" data-key={rowKey} data-ticker={row.ticker}>
+  <td class="c-rank">
+    <span class="rank-no">{row.rank}</span>
+    <span class={`move ${moveClass}`} title={moveLabel}>
+      <span aria-hidden="true">{moveArrow}</span>
+      <span>{moveText}</span>
+      <span class="visually-hidden">{moveLabel}</span>
+    </span>
+  </td>
+
+  <td class="c-stock">
+    <span class="stock">
+      <span class="monogram" style={`--hue:${hue}`} aria-hidden="true">{monogram(row.ticker)}</span>
+      <span class="stock-id">
+        <button
+          type="button"
+          class="ticker-btn"
+          data-filter-ticker={row.ticker}
+          title={t.home.filterHint}
+        >
+          {row.ticker}
+        </button>
+        <span class="co-name">{row.name}</span>
+        <span class="sector-line">{row.sector}</span>
+        {
+          flags.length > 0 && (
+            <span class="flag-row">
+              {flags.map((f) => (
+                <span class={`badge ${f.tone}`} title={f.help}>
+                  {f.label}
+                </span>
+              ))}
+            </span>
+          )
+        }
+      </span>
+    </span>
+  </td>
+
+  <td class="c-price">
+    <span class="m-label">{t.home.columns.price}</span>
+    <span class="price-main" data-live="price">{fmtPrice(row.price, row.currency, lang)}</span>
+    <span class={`chg ${chgDir}`} data-live="changePct">
+      <span aria-hidden="true">{dirArrow(row.changePct)}</span>
+      {fmtPct(row.changePct, 2, lang)}
+    </span>
+  </td>
+
+  <td class="c-spark">
+    <Sparkline values={row.sparkline} label={`${row.ticker} 30d`} />
+    <span class="spark-cap">30d</span>
+  </td>
+
+  <td class="c-score">
+    <span class="m-label">{t.home.columns.score}</span>
+    <span class="score-val" data-live="score">{fmtNum(row.score, 1, lang)}</span>
+    <span class="score-bar" aria-hidden="true"><i style={`width:${Math.max(0, Math.min(100, row.score))}%`}></i></span>
+    {
+      row.completeness < 1 && (
+        <span class="badge badge-warn badge-block" title={t.home.completenessHelp}>
+          {factorTotal > 0
+            ? fill(t.home.completenessBadge, { used: factorsUsed, total: factorTotal })
+            : `${Math.round(row.completeness * 100)}%`}
+        </span>
+      )
+    }
+  </td>
+
+  <td class="c-levels">
+    <span class="m-label">{t.home.columns.levels}</span>
+    <span class="lvl">
+      <span class="k">{t.home.entryZone}</span><br />
+      {fmtLevel(row.entry.low, row.currency, lang)}–{fmtLevel(row.entry.high, row.currency, lang)}
+    </span>
+    {
+      row.stop !== null ? (
+        <span class="lvl">
+          <span class="k">{t.home.stop}</span> <b class="down">{fmtLevel(row.stop, row.currency, lang)}</b>
+        </span>
+      ) : (
+        <span class="nostop-block">
+          <span class="no-stop" title={t.home.noStopExplain}>
+            {t.home.noStop}
+          </span>
+          <span class="k">→ {t.home.invalidation}</span>
+          {
+            row.thesisInvalidation && row.thesisInvalidation.length > 0 && (
+              <>
+                <ul class="invalidation-mini">
+                  {row.thesisInvalidation.slice(0, 2).map((r) => (
+                    <li>{r}</li>
+                  ))}
+                </ul>
+                {row.thesisInvalidation.length > 2 && (
+                  <span class="k">+{row.thesisInvalidation.length - 2}</span>
+                )}
+              </>
+            )
+          }
+        </span>
+      )
+    }
+  </td>
+
+  <td class="c-targets">
+    <span class="m-label">{t.home.columns.targets}</span>
+    {
+      tg ? (
+        <>
+          <span
+            class="band"
+            role="img"
+            aria-label={`${basisLabel}: ${fmtLevel(tg.conservative, row.currency, lang)} / ${fmtLevel(tg.base, row.currency, lang)} / ${fmtLevel(tg.bull, row.currency, lang)}`}
+          >
+            <i style={`left:${pos(tg.conservative)}`} />
+            <i class="b-base" style={`left:${pos(tg.base)}`} />
+            <i style={`left:${pos(tg.bull)}`} />
+          </span>
+          <span class="band-nums">
+            <span title={t.home.targetConservative}>{fmtLevel(tg.conservative, row.currency, lang)}</span>
+            <b title={t.home.targetBase}>{fmtLevel(tg.base, row.currency, lang)}</b>
+            <span title={t.home.targetBull}>{fmtLevel(tg.bull, row.currency, lang)}</span>
+          </span>
+          <span class={`basis-cap${isScenario ? ' basis-scenario' : ''}`} title={basisHelp}>
+            {basisShort}
+          </span>
+        </>
+      ) : (
+        <span class="no-targets">{t.home.noTargets}</span>
+      )
+    }
+  </td>
+
+  <td class="c-risk">
+    <span class="m-label">{t.home.columns.risk}</span>
+    <span class="meter" style={`--meter-color:${riskColor}`} role="img" aria-label={`${t.home.riskGauge} ${row.riskGauge} / 5`}>
+      {[1, 2, 3, 4, 5].map((i) => <span class={i <= row.riskGauge ? 'on' : ''} />)}
+    </span>
+    <span class="meter-label" title={t.home.riskGaugeHelp}>{row.riskGauge} / 5</span>
+  </td>
+
+  <td class="c-cat">
+    <span class="catalyst">{row.catalyst}</span>
+    <span class="cat-meta">
+      {row.newsCount > 0 && <span class="badge">{row.newsCount} {t.home.newsCount}</span>}
+      {
+        row.sentiment !== null && (
+          <span class={`badge ${sentimentLabel === 'bullish' ? 'badge-ok' : sentimentLabel === 'bearish' ? 'badge-danger' : ''}`}>
+            {t.news.sentimentLabel[sentimentLabel as 'bullish' | 'neutral' | 'bearish']} {fmtNum(row.sentiment, 2, lang)}
+          </span>
+        )
+      }
+    </span>
+  </td>
+
+  <td class="c-more">
+    {/* Visible label is short so it cannot overflow its column; the full
+        show/hide phrasing stays available to screen readers, and the state is
+        already carried by aria-expanded. */}
+    <button type="button" class="detail-toggle" aria-expanded="false" aria-controls={detailId} data-detail-toggle={detailId}>
+      <span aria-hidden="true">{t.home.factorsShort}</span>
+      <span class="dt-chev" aria-hidden="true">▾</span>
+      <span class="visually-hidden dt-open">{t.home.showFactors}</span>
+      <span class="visually-hidden dt-close" hidden>{t.home.hideFactors}</span>
+    </button>
+  </td>
+</tr>
+
+<tr class="row-detail" id={detailId} hidden>
+  <td colspan="10">
+    <div class="detail-grid">
+      <div>
+        <FactorBars lang={lang} factors={row.factors} />
+      </div>
+
+      <div>
+        <p class="detail-h">{h.label[lang]} · {h.window[lang]}</p>
+        <dl class="kv">
+          <dt>{t.home.maxHold}</dt>
+          <dd>{fmtNum(row.maxHoldSessions, 0, lang)} {t.home.sessions}</dd>
+
+          <dt>{t.home.columns.score}</dt>
+          <dd>{fmtNum(row.score, 1, lang)} <span class="muted">(raw z {fmtNum(row.rawZ, 3, lang)})</span></dd>
+
+          <dt>{t.home.riskGauge}</dt>
+          <dd>{row.riskGauge} / 5</dd>
+
+          <dt>{t.home.completeness}</dt>
+          <dd>
+            {factorTotal > 0 ? fill(t.home.completenessBadge, { used: factorsUsed, total: factorTotal }) : '—'}
+            <span class="muted"> ({fmtNum(row.completeness * 100, 0, lang)}%)</span>
+          </dd>
+
+          <dt>{t.home.newsCount}</dt>
+          <dd>{fmtNum(row.newsCount, 0, lang)}</dd>
+
+          <dt>{t.home.sentiment}</dt>
+          <dd>{row.sentiment === null ? t.news.sentimentLabel.unknown : fmtNum(row.sentiment, 2, lang)}</dd>
+
+          {
+            evidence.length > 0 && (
+              <>
+                <dt title={t.home.evidenceHelp}>{t.home.evidenceLabel}</dt>
+                <dd>
+                  <span class="chip-row">
+                    {evidence.map((e) => (
+                      <span class="chip">{e}</span>
+                    ))}
+                  </span>
+                </dd>
+              </>
+            )
+          }
+
+          <dt>{t.home.cluster}</dt>
+          <dd>{row.catalystCluster ? <code>{row.catalystCluster}</code> : <span class="muted">{t.common.none}</span>}</dd>
+
+          <dt>{t.home.flags}</dt>
+          <dd>
+            {
+              flags.length ? (
+                <span class="chip-row">
+                  {flags.map((f) => (
+                    <span class={`chip ${f.tone === 'badge-danger' ? 'chip-danger' : 'chip-warn'}`} title={f.help}>
+                      {f.label}
+                    </span>
+                  ))}
+                </span>
+              ) : (
+                <span class="muted">{t.common.none}</span>
+              )
+            }
+          </dd>
+        </dl>
+
+        {
+          flags.length > 0 && (
+            <ul class="flag-notes">
+              {flags
+                .filter((f) => f.help)
+                .map((f) => (
+                  <li>
+                    <b>{f.label}</b> — {f.help}
+                  </li>
+                ))}
+            </ul>
+          )
+        }
+
+        {
+          tg && (
+            <>
+              <p class="detail-h" style="margin-top:.9rem;">
+                {t.home.targetBasisWhat} — {basisLabel}
+              </p>
+              <p style="margin:0; font-size:.82rem;">{basisHelp}</p>
+            </>
+          )
+        }
+
+        <p class="detail-h" style="margin-top:.9rem;">{t.home.columns.catalyst}</p>
+        <p style="margin:0; font-size:.82rem;">{row.catalyst}</p>
+
+        {
+          row.thesisInvalidation && row.thesisInvalidation.length > 0 && (
+            <>
+              <p class="detail-h" style="margin-top:.9rem;">{t.home.invalidation}</p>
+              <p class="small muted" style="margin:0 0 .2rem;">{t.home.noStopExplain}</p>
+              <ul class="invalidation">
+                {row.thesisInvalidation.map((r) => (
+                  <li>{r}</li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </td>
+</tr>

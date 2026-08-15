@@ -1,0 +1,49 @@
+---
+import { SITE, type Locale } from '../../config';
+import { UI } from '../../i18n/ui';
+import { pageHref } from '../../lib/paths';
+import Base from '../../layouts/Base.astro';
+import ComplianceNotice from '../../components/ComplianceNotice.astro';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+---
+
+<Base lang={lang} page="disclaimer" title={t.disclaimer.title} description={t.disclaimer.lead}>
+  <div class="wrap wrap-narrow">
+    <div class="page-head">
+      <h1>{t.disclaimer.title}</h1>
+      <p class="lede">{t.disclaimer.lead}</p>
+    </div>
+
+    <ComplianceNotice lang={lang} />
+
+    <div class="prose">
+      {
+        t.disclaimer.sections.map((s, i) => (
+          <section aria-labelledby={`dc-${i}`}>
+            <h2 id={`dc-${i}`}>{s.h}</h2>
+            {s.p.map((para) => (
+              <p>{para}</p>
+            ))}
+          </section>
+        ))
+      }
+
+      <hr />
+      <p>
+        {t.disclaimer.contactNote} <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+      </p>
+      <p class="small muted">
+        <a href={pageHref(lang, 'methodology')}>{t.nav.methodology}</a>
+        {' · '}
+        <a href={pageHref(lang, 'performance')}>{t.nav.performance}</a>
+        {' · '}
+        <a href={pageHref(lang, 'about')}>{t.nav.about}</a>
+      </p>
+    </div>
+  </div>
+</Base>

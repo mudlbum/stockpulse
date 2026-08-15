@@ -1,0 +1,6798 @@
+{
+  "placeholder": true,
+  "generatedAt": "2026-08-15T21:40:00.000Z",
+  "methodologyVersion": "1.0.0",
+  "asOf": {
+    "US": "2026-08-14",
+    "KR": "2026-08-14"
+  },
+  "regime": {
+    "US": {
+      "multiplier": 0.85,
+      "state": "narrowing",
+      "indexAboveMA200": true,
+      "breadth": 0.436
+    },
+    "KR": {
+      "multiplier": 0.7,
+      "state": "caution",
+      "indexAboveMA200": false,
+      "breadth": 0.412
+    }
+  },
+  "boards": {
+    "US": {
+      "ultra_short": {
+        "market": "US",
+        "horizon": "ultra_short",
+        "asOf": "2026-08-14",
+        "turnover30d": 0.896,
+        "sampleWarning": false,
+        "rows": [
+          {
+            "rank": 1,
+            "movement": -3,
+            "ticker": "XOM",
+            "name": "Exxon Mobil Corporation",
+            "market": "US",
+            "sector": "Energy",
+            "currency": "USD",
+            "price": 116.24,
+            "changePct": 0.53,
+            "score": 84.3,
+            "rawZ": 1.435,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 115.7,
+              "high": 117.11
+            },
+            "stop": 112.98,
+            "targets": {
+              "conservative": 118.42,
+              "base": 120.16,
+              "bull": 122.77
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Sector-wide policy announcement lifted the whole sub-industry; this name has the highest operating leverage to it.",
+            "catalystCluster": "gpu-export-policy",
+            "factors": {
+              "relativeVolume": {
+                "raw": 2.617,
+                "z": 1.18
+              },
+              "gapQuality": {
+                "raw": 0.761,
+                "z": 0.24
+              },
+              "newsSentiment": {
+                "raw": 3.888,
+                "z": 0.63
+              },
+              "volatilityExpansion": {
+                "raw": 1.694,
+                "z": -1.53
+              },
+              "trendPosition": {
+                "raw": 1.92,
+                "z": 2.15
+              }
+            },
+            "sparkline": [
+              107.31,
+              107.52,
+              109.15,
+              106.82,
+              108.78,
+              111.48,
+              111.06,
+              110.27,
+              108.99,
+              111.39,
+              111.22,
+              109.69,
+              109.46,
+              112.15,
+              114.42,
+              113.51,
+              111.26,
+              110.23,
+              111.49,
+              111.96,
+              112.42,
+              114.45,
+              115.13,
+              115.17,
+              113.21,
+              116.38,
+              118.04,
+              120.42,
+              119.32,
+              116.24
+            ],
+            "newsCount": 6,
+            "sentiment": -0.41,
+            "evidence": [
+              "breakout",
+              "accumulation",
+              "above average volume"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 2,
+            "movement": 4,
+            "ticker": "CEG",
+            "name": "Constellation Energy Corporation",
+            "market": "US",
+            "sector": "Utilities",
+            "currency": "USD",
+            "price": 288.91,
+            "changePct": 1.14,
+            "score": 81.2,
+            "rawZ": 2.161,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 287.4,
+              "high": 291.33
+            },
+            "stop": 279.83,
+            "targets": {
+              "conservative": 294.96,
+              "base": 299.81,
+              "bull": 307.07
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Large supply agreement disclosed in an 8-K, extending contracted revenue visibility to 2029.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 0.252,
+                "z": 1.81
+              },
+              "gapQuality": {
+                "raw": 0.251,
+                "z": -0.99
+              },
+              "newsSentiment": {
+                "raw": 3.3,
+                "z": 0.45
+              },
+              "volatilityExpansion": {
+                "raw": 2.661,
+                "z": 0.26
+              },
+              "trendPosition": {
+                "raw": 3.653,
+                "z": -0.18
+              }
+            },
+            "sparkline": [
+              277.09,
+              280.38,
+              274.23,
+              270.9,
+              269.88,
+              264.25,
+              262.37,
+              262.69,
+              256.97,
+              259.52,
+              257.5,
+              261.89,
+              262.83,
+              269.18,
+              261.7,
+              257.33,
+              262.88,
+              261.93,
+              256.34,
+              261.3,
+              257.21,
+              255.53,
+              252.21,
+              252.92,
+              260.1,
+              263.52,
+              260.76,
+              264.29,
+              262.23,
+              288.91
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "evidence": [],
+            "flags": []
+          },
+          {
+            "rank": 3,
+            "movement": "NEW",
+            "ticker": "UNH",
+            "name": "UnitedHealth Group Incorporated",
+            "market": "US",
+            "sector": "Health Care",
+            "currency": "USD",
+            "price": 309.72,
+            "changePct": -1.21,
+            "score": 80.3,
+            "rawZ": 0.094,
+            "completeness": 0.92,
+            "riskGauge": 4,
+            "entry": {
+              "low": 306.44,
+              "high": 314.96
+            },
+            "stop": 290.06,
+            "targets": {
+              "conservative": 322.83,
+              "base": 333.32,
+              "bull": 349.05
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Cost programme ahead of schedule; management guided margins to the top of the stated range.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "relativeVolume": {
+                "raw": 0.405,
+                "z": -1.31
+              },
+              "gapQuality": {
+                "raw": 3.487,
+                "z": -0.45
+              },
+              "newsSentiment": {
+                "raw": 0.349,
+                "z": 1.73
+              },
+              "volatilityExpansion": {
+                "raw": 1.554,
+                "z": 2.33
+              },
+              "trendPosition": {
+                "raw": 2.558,
+                "z": -0.95
+              }
+            },
+            "sparkline": [
+              297.08,
+              295.14,
+              301.59,
+              306.47,
+              308.57,
+              311.26,
+              307.82,
+              305.59,
+              302.74,
+              297.08,
+              290.99,
+              295.44,
+              303.28,
+              297.18,
+              289.48,
+              281.46,
+              289.53,
+              287.85,
+              285.69,
+              277.79,
+              280.21,
+              273.87,
+              273.64,
+              268.64,
+              274.3,
+              277.16,
+              282.94,
+              275.35,
+              276.28,
+              309.72
+            ],
+            "newsCount": 12,
+            "sentiment": 0.25,
+            "evidence": [
+              "probe",
+              "delay",
+              "recall"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 4,
+            "movement": 4,
+            "ticker": "PG",
+            "name": "Procter & Gamble Company",
+            "market": "US",
+            "sector": "Consumer Staples",
+            "currency": "USD",
+            "price": 160.05,
+            "changePct": 0.26,
+            "score": 78,
+            "rawZ": 1.412,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 158.49,
+              "high": 162.54
+            },
+            "stop": 150.69,
+            "targets": {
+              "conservative": 166.29,
+              "base": 171.28,
+              "bull": 178.76
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Regulatory approval cleared the final gate for its lead product; launch expected next quarter.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 0.921,
+                "z": 1.06
+              },
+              "gapQuality": {
+                "raw": 2.38,
+                "z": 0.38
+              },
+              "newsSentiment": {
+                "raw": 3.057,
+                "z": -1.1
+              },
+              "volatilityExpansion": {
+                "raw": 0.218,
+                "z": -0.79
+              },
+              "trendPosition": {
+                "raw": 1.341,
+                "z": -1.06
+              }
+            },
+            "sparkline": [
+              151.41,
+              154.05,
+              149.89,
+              153.79,
+              156.57,
+              153.58,
+              154.37,
+              157.69,
+              158.64,
+              156.49,
+              160.03,
+              157.84,
+              156.96,
+              153.12,
+              153.39,
+              157.72,
+              153.63,
+              153.68,
+              150.67,
+              153.65,
+              155.46,
+              152.63,
+              157.05,
+              158.31,
+              160.99,
+              162.24,
+              163.68,
+              167.51,
+              166.57,
+              160.05
+            ],
+            "newsCount": 11,
+            "sentiment": null,
+            "evidence": [],
+            "flags": []
+          },
+          {
+            "rank": 5,
+            "movement": 1,
+            "ticker": "ISRG",
+            "name": "Intuitive Surgical Inc.",
+            "market": "US",
+            "sector": "Health Care",
+            "currency": "USD",
+            "price": 496.94,
+            "changePct": 2.11,
+            "score": 76.6,
+            "rawZ": 0.902,
+            "completeness": 0.7,
+            "riskGauge": 2,
+            "entry": {
+              "low": 494.43,
+              "high": 500.96
+            },
+            "stop": 481.86,
+            "targets": {
+              "conservative": 506.99,
+              "base": 515.04,
+              "bull": 527.1
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Q2 revenue beat with raised full-year guidance; data-centre segment up 42% year on year.",
+            "catalystCluster": "gpu-export-policy",
+            "factors": {
+              "relativeVolume": {
+                "raw": 4.386,
+                "z": 1.69
+              },
+              "gapQuality": {
+                "raw": 2.649,
+                "z": 0.5
+              },
+              "newsSentiment": {
+                "raw": 0.284,
+                "z": 2.11
+              },
+              "volatilityExpansion": {
+                "raw": 3.66,
+                "z": -0.24
+              },
+              "trendPosition": {
+                "raw": 2.498,
+                "z": 1.79
+              }
+            },
+            "sparkline": [
+              469.92,
+              480.42,
+              468.3,
+              470.95,
+              481.34,
+              487.79,
+              490.07,
+              479.81,
+              473.46,
+              481.98,
+              469.94,
+              462.41,
+              458.16,
+              460.09,
+              448.43,
+              443.43,
+              447.23,
+              461.21,
+              458,
+              471.82,
+              469.09,
+              471.92,
+              465.22,
+              465.21,
+              468.42,
+              460.2,
+              454.84,
+              465.03,
+              458.72,
+              496.94
+            ],
+            "newsCount": 10,
+            "sentiment": null,
+            "evidence": [],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 6,
+            "movement": "NEW",
+            "ticker": "ADBE",
+            "name": "Adobe Inc.",
+            "market": "US",
+            "sector": "Information Technology",
+            "currency": "USD",
+            "price": 377.12,
+            "changePct": 1.47,
+            "score": 74.6,
+            "rawZ": -0.34,
+            "completeness": 1,
+            "riskGauge": 5,
+            "entry": {
+              "low": 374.64,
+              "high": 381.08
+            },
+            "stop": 362.27,
+            "targets": {
+              "conservative": 387.02,
+              "base": 394.94,
+              "bull": 406.83
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Sector-wide policy announcement lifted the whole sub-industry; this name has the highest operating leverage to it.",
+            "catalystCluster": "grid-buildout",
+            "factors": {
+              "relativeVolume": {
+                "raw": 1.516,
+                "z": 0.23
+              },
+              "gapQuality": {
+                "raw": 2.944,
+                "z": 1.69
+              },
+              "newsSentiment": {
+                "raw": 1.265,
+                "z": 2.33
+              },
+              "volatilityExpansion": {
+                "raw": 3.436,
+                "z": -1.18
+              },
+              "trendPosition": {
+                "raw": 4.5,
+                "z": 1.32
+              }
+            },
+            "sparkline": [
+              343.51,
+              334.19,
+              338.44,
+              337.35,
+              329.8,
+              334.03,
+              340.99,
+              349.15,
+              360.12,
+              370.65,
+              379.2,
+              376.88,
+              377.22,
+              373.54,
+              368.82,
+              365.33,
+              356.39,
+              356.1,
+              351.39,
+              359.97,
+              358.06,
+              352.77,
+              356.86,
+              350.7,
+              351.79,
+              359.17,
+              350.63,
+              361.45,
+              363.34,
+              377.12
+            ],
+            "newsCount": 5,
+            "sentiment": -0.13,
+            "evidence": [
+              "upgrade",
+              "price target raised",
+              "expansion"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 7,
+            "movement": 2,
+            "ticker": "NVDA",
+            "name": "NVIDIA Corporation",
+            "market": "US",
+            "sector": "Information Technology",
+            "currency": "USD",
+            "price": 164.09,
+            "changePct": -0.72,
+            "score": 71.6,
+            "rawZ": 1.973,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 163.28,
+              "high": 165.39
+            },
+            "stop": 159.23,
+            "targets": {
+              "conservative": 167.33,
+              "base": 169.92,
+              "bull": 173.81
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Cost programme ahead of schedule; management guided margins to the top of the stated range.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "relativeVolume": {
+                "raw": 3.84,
+                "z": -0.68
+              },
+              "gapQuality": {
+                "raw": 3.381,
+                "z": 1.97
+              },
+              "newsSentiment": {
+                "raw": 0.569,
+                "z": -1.53
+              },
+              "volatilityExpansion": {
+                "raw": 3.205,
+                "z": 1
+              },
+              "trendPosition": {
+                "raw": 4.459,
+                "z": -1.03
+              }
+            },
+            "sparkline": [
+              157.42,
+              158.08,
+              155.32,
+              156.98,
+              156.52,
+              159.62,
+              163.75,
+              160.55,
+              157.22,
+              158.6,
+              154.96,
+              150.87,
+              149.77,
+              150.87,
+              153.97,
+              156.73,
+              152.45,
+              156.22,
+              161.13,
+              159.11,
+              156.99,
+              153.53,
+              149.41,
+              150.94,
+              152.65,
+              157.09,
+              153.84,
+              157.7,
+              155.21,
+              164.09
+            ],
+            "newsCount": 7,
+            "sentiment": -0.47,
+            "evidence": [
+              "upgrade",
+              "price target raised",
+              "expansion"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 8,
+            "movement": 0,
+            "ticker": "LLY",
+            "name": "Eli Lilly and Company",
+            "market": "US",
+            "sector": "Health Care",
+            "currency": "USD",
+            "price": 866.01,
+            "changePct": -2.15,
+            "score": 70,
+            "rawZ": 0.895,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 856.83,
+              "high": 880.7
+            },
+            "stop": 810.93,
+            "targets": {
+              "conservative": 902.73,
+              "base": 932.1,
+              "bull": 976.16
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Large supply agreement disclosed in an 8-K, extending contracted revenue visibility to 2029.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "relativeVolume": {
+                "raw": 2.323,
+                "z": 0.26
+              },
+              "gapQuality": {
+                "raw": 2.579,
+                "z": 1.97
+              },
+              "newsSentiment": {
+                "raw": 4.315,
+                "z": 2.36
+              },
+              "volatilityExpansion": {
+                "raw": 2.793,
+                "z": -0.91
+              },
+              "trendPosition": {
+                "raw": 4.098,
+                "z": 1.96
+              }
+            },
+            "sparkline": [
+              782.43,
+              795.16,
+              791.82,
+              769.87,
+              760.58,
+              751.89,
+              742.88,
+              760.55,
+              784.14,
+              782.96,
+              761.92,
+              781.06,
+              768.3,
+              758.79,
+              738.61,
+              758.4,
+              740.35,
+              741.52,
+              730.89,
+              751.42,
+              756.53,
+              755.59,
+              752.01,
+              746.09,
+              727.02,
+              724.14,
+              719.16,
+              708.43,
+              694.14,
+              866.01
+            ],
+            "newsCount": 12,
+            "sentiment": null,
+            "evidence": [],
+            "flags": []
+          },
+          {
+            "rank": 9,
+            "movement": 5,
+            "ticker": "JPM",
+            "name": "JPMorgan Chase & Co.",
+            "market": "US",
+            "sector": "Financials",
+            "currency": "USD",
+            "price": 239.54,
+            "changePct": 4.2,
+            "score": 66.8,
+            "rawZ": 1.997,
+            "completeness": 0.6,
+            "riskGauge": 4,
+            "entry": {
+              "low": 237.73,
+              "high": 242.44
+            },
+            "stop": 228.67,
+            "targets": {
+              "conservative": 246.79,
+              "base": 252.58,
+              "bull": 261.28
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Institutional accumulation visible in on-balance volume while price consolidated sideways for six weeks.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 4.305,
+                "z": 0.88
+              },
+              "gapQuality": {
+                "raw": 3.52,
+                "z": 0.2
+              },
+              "newsSentiment": {
+                "raw": 4.154,
+                "z": 1.46
+              },
+              "volatilityExpansion": {
+                "raw": 4.37,
+                "z": 0.76
+              },
+              "trendPosition": {
+                "raw": 3.889,
+                "z": -0.55
+              }
+            },
+            "sparkline": [
+              210.03,
+              204.62,
+              207.18,
+              207.94,
+              203.66,
+              200.25,
+              203.36,
+              198.99,
+              198.19,
+              195.62,
+              190.44,
+              188.37,
+              190.27,
+              189.88,
+              187.73,
+              187.88,
+              188.9,
+              189.92,
+              184.72,
+              181.11,
+              181.75,
+              183.43,
+              185.09,
+              181.67,
+              185.85,
+              185.24,
+              188.69,
+              188.53,
+              187.68,
+              239.54
+            ],
+            "newsCount": 2,
+            "sentiment": -0.34,
+            "evidence": [
+              "probe",
+              "delay",
+              "recall"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 10,
+            "movement": -2,
+            "ticker": "ANET",
+            "name": "Arista Networks Inc.",
+            "market": "US",
+            "sector": "Information Technology",
+            "currency": "USD",
+            "price": 134.61,
+            "changePct": 0.07,
+            "score": 64,
+            "rawZ": 0.023,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 133.35,
+              "high": 136.62
+            },
+            "stop": 127.08,
+            "targets": {
+              "conservative": 139.63,
+              "base": 143.65,
+              "bull": 149.67
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Announced a $12bn capacity expansion; three brokerages lifted price targets within 24 hours.",
+            "catalystCluster": "grid-buildout",
+            "factors": {
+              "relativeVolume": {
+                "raw": 4.121,
+                "z": 0.61
+              },
+              "gapQuality": {
+                "raw": 0.488,
+                "z": 1.7
+              },
+              "newsSentiment": {
+                "raw": 2.55,
+                "z": 0.48
+              },
+              "volatilityExpansion": {
+                "raw": 1.238,
+                "z": -1.3
+              },
+              "trendPosition": {
+                "raw": 0.459,
+                "z": 0.11
+              }
+            },
+            "sparkline": [
+              117.04,
+              118.19,
+              120.28,
+              117.87,
+              114.82,
+              116.47,
+              118.08,
+              120.5,
+              123.08,
+              121.38,
+              121.27,
+              119.97,
+              118.06,
+              116.13,
+              114.84,
+              113.14,
+              116.49,
+              118.94,
+              120.5,
+              124.16,
+              124.41,
+              126.41,
+              123.8,
+              125.78,
+              126.02,
+              124.34,
+              123.24,
+              122.15,
+              119.77,
+              134.61
+            ],
+            "newsCount": 4,
+            "sentiment": -0.35,
+            "evidence": [
+              "upgrade",
+              "price target raised",
+              "expansion"
+            ],
+            "flags": []
+          }
+        ],
+        "justMissed": [
+          {
+            "ticker": "V",
+            "name": "Visa Inc.",
+            "score": 62.2,
+            "displacedBy": "sector_cap"
+          },
+          {
+            "ticker": "NEE",
+            "name": "NextEra Energy Inc.",
+            "score": 59.3,
+            "displacedBy": "correlation_cap"
+          },
+          {
+            "ticker": "MPC",
+            "name": "Marathon Petroleum Corporation",
+            "score": 57.5,
+            "displacedBy": "catalyst_cluster_cap"
+          }
+        ],
+        "emptyReason": null
+      },
+      "mid_term": {
+        "market": "US",
+        "horizon": "mid_term",
+        "asOf": "2026-08-14",
+        "turnover30d": 0.241,
+        "sampleWarning": false,
+        "rows": [
+          {
+            "rank": 1,
+            "movement": 4,
+            "ticker": "LLY",
+            "name": "Eli Lilly and Company",
+            "market": "US",
+            "sector": "Health Care",
+            "currency": "USD",
+            "price": 843.87,
+            "changePct": 3.13,
+            "score": 89.8,
+            "rawZ": 0.03,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 835.78,
+              "high": 856.81
+            },
+            "stop": 795.35,
+            "targets": {
+              "conservative": 876.22,
+              "base": 902.1,
+              "bull": 940.92
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "Sector-wide policy announcement lifted the whole sub-industry; this name has the highest operating leverage to it.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 0.572,
+                "z": -1.41
+              },
+              "fundamentalMomentum": {
+                "raw": 2.501,
+                "z": -0.57
+              },
+              "earningsDrift": {
+                "raw": 1.439,
+                "z": 1.32
+              },
+              "moneyFlow": {
+                "raw": 3.197,
+                "z": -1.37
+              },
+              "sectorStrength": {
+                "raw": 1.44,
+                "z": 1.36
+              }
+            },
+            "sparkline": [
+              764.56,
+              782.26,
+              799.44,
+              820.26,
+              808.66,
+              825.62,
+              850.39,
+              866.06,
+              858.6,
+              874.26,
+              864.17,
+              859.26,
+              842.97,
+              833.21,
+              833.61,
+              828.58,
+              822.83,
+              835.43,
+              836.8,
+              844.94,
+              831.3,
+              813.73,
+              799.46,
+              817.17,
+              832.05,
+              837.08,
+              847.4,
+              830.76,
+              845.74,
+              843.87
+            ],
+            "newsCount": 10,
+            "sentiment": 0.49,
+            "evidence": [
+              "beat",
+              "raised guidance",
+              "record backlog"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 2,
+            "movement": -5,
+            "ticker": "JPM",
+            "name": "JPMorgan Chase & Co.",
+            "market": "US",
+            "sector": "Financials",
+            "currency": "USD",
+            "price": 247.95,
+            "changePct": 3.58,
+            "score": 88.4,
+            "rawZ": 0.235,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 246.61,
+              "high": 250.1
+            },
+            "stop": 239.89,
+            "targets": {
+              "conservative": 253.32,
+              "base": 257.62,
+              "bull": 264.07
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "Announced a $12bn capacity expansion; three brokerages lifted price targets within 24 hours.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 1.257,
+                "z": 0.32
+              },
+              "fundamentalMomentum": {
+                "raw": 2.509,
+                "z": -0.56
+              },
+              "earningsDrift": {
+                "raw": 4.068,
+                "z": 0.96
+              },
+              "moneyFlow": {
+                "raw": 4.182,
+                "z": 1.16
+              },
+              "sectorStrength": {
+                "raw": 0.25,
+                "z": -0.18
+              }
+            },
+            "sparkline": [
+              221.48,
+              221.02,
+              221.54,
+              223.75,
+              220.83,
+              216.87,
+              217.86,
+              220.01,
+              226.91,
+              220.87,
+              227.9,
+              226.76,
+              233.25,
+              239.65,
+              243.6,
+              240.28,
+              236.21,
+              241.91,
+              242.36,
+              237.76,
+              231.52,
+              233.28,
+              238.31,
+              241.5,
+              246.77,
+              249.61,
+              248.9,
+              252.99,
+              246.8,
+              247.95
+            ],
+            "newsCount": 13,
+            "sentiment": -0.31,
+            "evidence": [
+              "approval",
+              "launch",
+              "cleared"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 3,
+            "movement": 0,
+            "ticker": "ANET",
+            "name": "Arista Networks Inc.",
+            "market": "US",
+            "sector": "Information Technology",
+            "currency": "USD",
+            "price": 133.94,
+            "changePct": 5.03,
+            "score": 87.7,
+            "rawZ": 0.798,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 132.85,
+              "high": 135.69
+            },
+            "stop": 127.38,
+            "targets": {
+              "conservative": 138.31,
+              "base": 141.81,
+              "bull": 147.05
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "Twelve-month order backlog reached a record; management flagged pricing power holding into next year.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "trendAlignment": {
+                "raw": 1.157,
+                "z": -0.49
+              },
+              "fundamentalMomentum": {
+                "raw": 1.858,
+                "z": 1.31
+              },
+              "earningsDrift": {
+                "raw": 3.939,
+                "z": 0.33
+              },
+              "moneyFlow": {
+                "raw": 0.556,
+                "z": -0.31
+              },
+              "sectorStrength": {
+                "raw": 1.071,
+                "z": -0.62
+              }
+            },
+            "sparkline": [
+              118.96,
+              116.09,
+              117.06,
+              114.5,
+              112.02,
+              115.52,
+              115.6,
+              113.59,
+              113.87,
+              112.18,
+              113.92,
+              113.6,
+              112.25,
+              109.34,
+              108.44,
+              108.7,
+              107.03,
+              105.35,
+              102.55,
+              102.17,
+              101.76,
+              99.84,
+              100.97,
+              103.92,
+              101.78,
+              103.77,
+              100.95,
+              100.68,
+              100.87,
+              133.94
+            ],
+            "newsCount": 2,
+            "sentiment": -0.29,
+            "evidence": [
+              "probe",
+              "delay",
+              "recall"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 4,
+            "movement": 5,
+            "ticker": "V",
+            "name": "Visa Inc.",
+            "market": "US",
+            "sector": "Financials",
+            "currency": "USD",
+            "price": 366.55,
+            "changePct": 1.46,
+            "score": 86.1,
+            "rawZ": 1.117,
+            "completeness": 1,
+            "riskGauge": 2,
+            "entry": {
+              "low": 364.45,
+              "high": 369.92
+            },
+            "stop": 353.92,
+            "targets": {
+              "conservative": 374.97,
+              "base": 381.7,
+              "bull": 391.8
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "Institutional accumulation visible in on-balance volume while price consolidated sideways for six weeks.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "trendAlignment": {
+                "raw": 1.748,
+                "z": -1.41
+              },
+              "fundamentalMomentum": {
+                "raw": 3.569,
+                "z": -0.08
+              },
+              "earningsDrift": {
+                "raw": 1.64,
+                "z": 1.11
+              },
+              "moneyFlow": {
+                "raw": 4.144,
+                "z": 1.53
+              },
+              "sectorStrength": {
+                "raw": 2.595,
+                "z": 0.12
+              }
+            },
+            "sparkline": [
+              350.54,
+              342.01,
+              351.33,
+              352.63,
+              349.85,
+              343.61,
+              340.21,
+              343.7,
+              350.2,
+              353.47,
+              346.06,
+              350.45,
+              341.33,
+              348.13,
+              356.65,
+              358.78,
+              350.65,
+              358.7,
+              356.9,
+              361.93,
+              366.57,
+              376.5,
+              383.19,
+              377.34,
+              385.41,
+              380.67,
+              388.65,
+              384.31,
+              391.41,
+              366.55
+            ],
+            "newsCount": 1,
+            "sentiment": -0.1,
+            "evidence": [
+              "upgrade",
+              "price target raised",
+              "expansion"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 5,
+            "movement": 0,
+            "ticker": "NEE",
+            "name": "NextEra Energy Inc.",
+            "market": "US",
+            "sector": "Utilities",
+            "currency": "USD",
+            "price": 77.25,
+            "changePct": 4.26,
+            "score": 84.5,
+            "rawZ": 0.849,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 76.87,
+              "high": 77.86
+            },
+            "stop": 74.95,
+            "targets": {
+              "conservative": 78.78,
+              "base": 80.01,
+              "bull": 81.85
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "Volume expansion on a base breakout, closing above the 50-day average for the fourth session.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 3.384,
+                "z": -1.01
+              },
+              "fundamentalMomentum": {
+                "raw": 2.859,
+                "z": 0.66
+              },
+              "earningsDrift": {
+                "raw": 2.04,
+                "z": -0.72
+              },
+              "moneyFlow": {
+                "raw": 0.305,
+                "z": 1.89
+              },
+              "sectorStrength": {
+                "raw": 3.043,
+                "z": -1.53
+              }
+            },
+            "sparkline": [
+              69.73,
+              69.94,
+              68.36,
+              69.93,
+              71.25,
+              71.5,
+              71.31,
+              70.54,
+              69.27,
+              69.54,
+              69.61,
+              68.49,
+              68.47,
+              67.93,
+              66.04,
+              67.87,
+              69.23,
+              67.65,
+              69.26,
+              70.29,
+              70.3,
+              70.33,
+              69.96,
+              69.76,
+              70.23,
+              70.35,
+              71.95,
+              70.68,
+              70.03,
+              77.25
+            ],
+            "newsCount": 5,
+            "sentiment": -0.36,
+            "evidence": [
+              "downgrade",
+              "cut",
+              "margin pressure"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 6,
+            "movement": "NEW",
+            "ticker": "MPC",
+            "name": "Marathon Petroleum Corporation",
+            "market": "US",
+            "sector": "Energy",
+            "currency": "USD",
+            "price": 181.37,
+            "changePct": 1.6,
+            "score": 81.2,
+            "rawZ": 1.856,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 180.29,
+              "high": 183.09
+            },
+            "stop": 174.91,
+            "targets": {
+              "conservative": 185.68,
+              "base": 189.12,
+              "bull": 194.29
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "Announced a $12bn capacity expansion; three brokerages lifted price targets within 24 hours.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 2.191,
+                "z": -1.27
+              },
+              "fundamentalMomentum": {
+                "raw": 0.633,
+                "z": -0.01
+              },
+              "earningsDrift": {
+                "raw": 0.268,
+                "z": -0.32
+              },
+              "moneyFlow": {
+                "raw": 2.027,
+                "z": 1.49
+              },
+              "sectorStrength": {
+                "raw": 2.351,
+                "z": 1.32
+              }
+            },
+            "sparkline": [
+              171.3,
+              168.03,
+              172.42,
+              174.03,
+              178.24,
+              181.74,
+              185.92,
+              180.85,
+              178.41,
+              178.74,
+              174.01,
+              170.74,
+              173.72,
+              177.45,
+              181.31,
+              179.29,
+              177.53,
+              176.33,
+              177.95,
+              174.96,
+              170.82,
+              166.26,
+              162.06,
+              158.39,
+              154.92,
+              151.54,
+              153.97,
+              157.56,
+              162.49,
+              181.37
+            ],
+            "newsCount": 1,
+            "sentiment": 0.36,
+            "evidence": [
+              "beat",
+              "raised guidance",
+              "record backlog"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 7,
+            "movement": 2,
+            "ticker": "MCK",
+            "name": "McKesson Corporation",
+            "market": "US",
+            "sector": "Health Care",
+            "currency": "USD",
+            "price": 693.4,
+            "changePct": 0.2,
+            "score": 79.2,
+            "rawZ": 0.141,
+            "completeness": 1,
+            "riskGauge": 5,
+            "entry": {
+              "low": 686.76,
+              "high": 704.02
+            },
+            "stop": 653.57,
+            "targets": {
+              "conservative": 719.95,
+              "base": 741.19,
+              "bull": 773.06
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "Institutional accumulation visible in on-balance volume while price consolidated sideways for six weeks.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 4.154,
+                "z": 0.02
+              },
+              "fundamentalMomentum": {
+                "raw": 0.282,
+                "z": 1.82
+              },
+              "earningsDrift": {
+                "raw": 3.529,
+                "z": 2.1
+              },
+              "moneyFlow": {
+                "raw": 0.841,
+                "z": -1.45
+              },
+              "sectorStrength": {
+                "raw": 3.491,
+                "z": -0.39
+              }
+            },
+            "sparkline": [
+              644.81,
+              633.07,
+              636.15,
+              648.68,
+              660.11,
+              676.89,
+              679.33,
+              699.69,
+              708.59,
+              726.3,
+              716.98,
+              722.29,
+              705.19,
+              721.36,
+              729.73,
+              752.43,
+              743.82,
+              745.53,
+              766.68,
+              759.66,
+              776.69,
+              765.95,
+              766.57,
+              769.19,
+              793.51,
+              799.16,
+              807.88,
+              807.13,
+              785.97,
+              693.4
+            ],
+            "newsCount": 0,
+            "sentiment": -0.17,
+            "evidence": [
+              "upgrade",
+              "price target raised",
+              "expansion"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 8,
+            "movement": "NEW",
+            "ticker": "MSFT",
+            "name": "Microsoft Corporation",
+            "market": "US",
+            "sector": "Information Technology",
+            "currency": "USD",
+            "price": 519.26,
+            "changePct": 3.85,
+            "score": 76,
+            "rawZ": 0.031,
+            "completeness": 0.82,
+            "riskGauge": 4,
+            "entry": {
+              "low": 516.64,
+              "high": 523.45
+            },
+            "stop": 503.56,
+            "targets": {
+              "conservative": 529.73,
+              "base": 538.1,
+              "bull": 550.66
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "Cost programme ahead of schedule; management guided margins to the top of the stated range.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 4.488,
+                "z": 0.12
+              },
+              "fundamentalMomentum": {
+                "raw": 1.526,
+                "z": 1.23
+              },
+              "earningsDrift": {
+                "raw": 3.894,
+                "z": 0.88
+              },
+              "moneyFlow": {
+                "raw": 0.982,
+                "z": 1.09
+              },
+              "sectorStrength": {
+                "raw": 2.84,
+                "z": 0.47
+              }
+            },
+            "sparkline": [
+              494.21,
+              507.9,
+              497.3,
+              512.08,
+              527.44,
+              540.06,
+              526.25,
+              521.44,
+              506.91,
+              494.29,
+              501.91,
+              517.84,
+              506.32,
+              518.93,
+              526.84,
+              541.36,
+              541,
+              531.58,
+              540.6,
+              539.34,
+              543.45,
+              558.32,
+              542.88,
+              552.87,
+              555.38,
+              562.64,
+              552.96,
+              554.81,
+              570.48,
+              519.26
+            ],
+            "newsCount": 9,
+            "sentiment": 0.04,
+            "evidence": [
+              "approval",
+              "launch",
+              "cleared"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 9,
+            "movement": 3,
+            "ticker": "COST",
+            "name": "Costco Wholesale Corporation",
+            "market": "US",
+            "sector": "Consumer Staples",
+            "currency": "USD",
+            "price": 990.95,
+            "changePct": -3.18,
+            "score": 75,
+            "rawZ": 0.251,
+            "completeness": 1,
+            "riskGauge": 1,
+            "entry": {
+              "low": 985.39,
+              "high": 999.84
+            },
+            "stop": 957.62,
+            "targets": {
+              "conservative": 1013.17,
+              "base": 1030.95,
+              "bull": 1057.62
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "Volume expansion on a base breakout, closing above the 50-day average for the fourth session.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 0.591,
+                "z": 1.62
+              },
+              "fundamentalMomentum": {
+                "raw": 2.55,
+                "z": 2.15
+              },
+              "earningsDrift": {
+                "raw": 1.018,
+                "z": 2.25
+              },
+              "moneyFlow": {
+                "raw": 3.426,
+                "z": -1.18
+              },
+              "sectorStrength": {
+                "raw": 3.794,
+                "z": -0.93
+              }
+            },
+            "sparkline": [
+              855.77,
+              854.05,
+              877.71,
+              870.9,
+              891.5,
+              911.38,
+              933.46,
+              943.6,
+              970.86,
+              997.43,
+              1001.05,
+              976.88,
+              984.03,
+              983.91,
+              961.56,
+              942.13,
+              946.54,
+              942.54,
+              965.45,
+              987.29,
+              971.84,
+              967.11,
+              957.72,
+              969.15,
+              959.12,
+              970.55,
+              990.1,
+              963.69,
+              947.48,
+              990.95
+            ],
+            "newsCount": 5,
+            "sentiment": -0.33,
+            "evidence": [
+              "beat",
+              "raised guidance",
+              "record backlog"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 10,
+            "movement": "NEW",
+            "ticker": "VST",
+            "name": "Vistra Corp.",
+            "market": "US",
+            "sector": "Utilities",
+            "currency": "USD",
+            "price": 178.58,
+            "changePct": 2.95,
+            "score": 72.2,
+            "rawZ": 1.274,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 177.03,
+              "high": 181.06
+            },
+            "stop": 169.28,
+            "targets": {
+              "conservative": 184.78,
+              "base": 189.74,
+              "bull": 197.18
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "Cost programme ahead of schedule; management guided margins to the top of the stated range.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 0.847,
+                "z": -0.14
+              },
+              "fundamentalMomentum": {
+                "raw": 3.143,
+                "z": 2.06
+              },
+              "earningsDrift": {
+                "raw": 2.541,
+                "z": 0.43
+              },
+              "moneyFlow": {
+                "raw": 2.955,
+                "z": 0.3
+              },
+              "sectorStrength": {
+                "raw": 1.381,
+                "z": 0.12
+              }
+            },
+            "sparkline": [
+              159.51,
+              155.22,
+              151.21,
+              151.92,
+              155.7,
+              151.49,
+              147.93,
+              146.68,
+              147.56,
+              144.72,
+              146.91,
+              148.71,
+              147.49,
+              151.52,
+              147.33,
+              147.24,
+              144.72,
+              142.8,
+              146.85,
+              148.94,
+              146.23,
+              145.47,
+              143.36,
+              140.05,
+              142.13,
+              145.57,
+              146.43,
+              150.96,
+              153.36,
+              178.58
+            ],
+            "newsCount": 5,
+            "sentiment": 0.42,
+            "evidence": [
+              "upgrade",
+              "price target raised",
+              "expansion"
+            ],
+            "flags": []
+          }
+        ],
+        "justMissed": [
+          {
+            "ticker": "CAT",
+            "name": "Caterpillar Inc.",
+            "score": 69,
+            "displacedBy": "sector_cap"
+          },
+          {
+            "ticker": "GEV",
+            "name": "GE Vernova Inc.",
+            "score": 67.4,
+            "displacedBy": "correlation_cap"
+          },
+          {
+            "ticker": "LIN",
+            "name": "Linde plc",
+            "score": 65.4,
+            "displacedBy": "catalyst_cluster_cap"
+          }
+        ],
+        "emptyReason": null
+      },
+      "long_term": {
+        "market": "US",
+        "horizon": "long_term",
+        "asOf": "2026-08-14",
+        "turnover30d": 0.093,
+        "sampleWarning": true,
+        "rows": [
+          {
+            "rank": 1,
+            "movement": 6,
+            "ticker": "JPM",
+            "name": "JPMorgan Chase & Co.",
+            "market": "US",
+            "sector": "Financials",
+            "currency": "USD",
+            "price": 246.51,
+            "changePct": -2.29,
+            "score": 89.3,
+            "rawZ": 0.317,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 239.02,
+              "high": 249.01
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 290.88,
+              "base": 350.04,
+              "bull": 456.04
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "Volume expansion on a base breakout, closing above the 50-day average for the fourth session.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "growthQuality": {
+                "raw": 2.81,
+                "z": 1.58
+              },
+              "capitalEfficiency": {
+                "raw": 2.273,
+                "z": -0.74
+              },
+              "cashGeneration": {
+                "raw": 2.075,
+                "z": 0.55
+              },
+              "valuation": {
+                "raw": 1.815,
+                "z": 0.9
+              },
+              "fScore": {
+                "raw": 4.332,
+                "z": -0.82
+              }
+            },
+            "sparkline": [
+              229.29,
+              229.45,
+              233.34,
+              231.42,
+              227.95,
+              228.95,
+              235.09,
+              228.52,
+              223.47,
+              225.92,
+              227.5,
+              228.53,
+              228.09,
+              232.75,
+              234.2,
+              240.45,
+              234.42,
+              233.07,
+              236.1,
+              235.14,
+              230.08,
+              223.89,
+              224.15,
+              219.44,
+              223.55,
+              227.9,
+              231.89,
+              237.69,
+              242.57,
+              246.51
+            ],
+            "newsCount": 12,
+            "sentiment": 0.36,
+            "evidence": [
+              "breakout",
+              "accumulation",
+              "above average volume"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 2,
+            "movement": -1,
+            "ticker": "ANET",
+            "name": "Arista Networks Inc.",
+            "market": "US",
+            "sector": "Information Technology",
+            "currency": "USD",
+            "price": 132.97,
+            "changePct": 0.86,
+            "score": 86.8,
+            "rawZ": 1.468,
+            "completeness": 0.84,
+            "riskGauge": 2,
+            "entry": {
+              "low": 127.89,
+              "high": 134.66
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 156.9,
+              "base": 188.82,
+              "bull": 245.99
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Free cash flow conversion drops below 60% of net income for four quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "Institutional accumulation visible in on-balance volume while price consolidated sideways for six weeks.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 1.787,
+                "z": 0.43
+              },
+              "capitalEfficiency": {
+                "raw": 2.01,
+                "z": -0.55
+              },
+              "cashGeneration": {
+                "raw": 2.757,
+                "z": -1
+              },
+              "valuation": {
+                "raw": 1.055,
+                "z": -1.09
+              },
+              "fScore": {
+                "raw": 3.761,
+                "z": 0.53
+              }
+            },
+            "sparkline": [
+              130.6,
+              132.9,
+              134.06,
+              135.8,
+              134.67,
+              137.67,
+              135.49,
+              132.06,
+              129.08,
+              132.03,
+              128.97,
+              130.67,
+              133.1,
+              135.08,
+              134.79,
+              133.51,
+              136.82,
+              133.49,
+              136.39,
+              135.73,
+              136.07,
+              137.6,
+              139.33,
+              135.96,
+              138.4,
+              139.99,
+              136.99,
+              140.02,
+              141.18,
+              132.97
+            ],
+            "newsCount": 9,
+            "sentiment": null,
+            "evidence": [],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 3,
+            "movement": -3,
+            "ticker": "V",
+            "name": "Visa Inc.",
+            "market": "US",
+            "sector": "Financials",
+            "currency": "USD",
+            "price": 358.57,
+            "changePct": 2.23,
+            "score": 84.6,
+            "rawZ": 1.158,
+            "completeness": 0.66,
+            "riskGauge": 5,
+            "entry": {
+              "low": 342.94,
+              "high": 363.78
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 423.11,
+              "base": 509.17,
+              "bull": 663.35
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "Institutional accumulation visible in on-balance volume while price consolidated sideways for six weeks.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "growthQuality": {
+                "raw": 0.879,
+                "z": -0.35
+              },
+              "capitalEfficiency": {
+                "raw": 1.708,
+                "z": 1.12
+              },
+              "cashGeneration": {
+                "raw": 2.683,
+                "z": 1.33
+              },
+              "valuation": {
+                "raw": 1.034,
+                "z": 0.14
+              },
+              "fScore": {
+                "raw": 0.779,
+                "z": 2.07
+              }
+            },
+            "sparkline": [
+              351.39,
+              348.23,
+              358.93,
+              361.32,
+              352.72,
+              362.84,
+              371.98,
+              370.79,
+              362.01,
+              370.51,
+              375.17,
+              365.85,
+              367.9,
+              377.74,
+              384.01,
+              378.81,
+              373.54,
+              372.24,
+              362.23,
+              353.97,
+              346.44,
+              352,
+              362.22,
+              372.72,
+              373.82,
+              368.61,
+              362.58,
+              354.99,
+              363.47,
+              358.57
+            ],
+            "newsCount": 0,
+            "sentiment": 0.22,
+            "evidence": [
+              "upgrade",
+              "price target raised",
+              "expansion"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 4,
+            "movement": "NEW",
+            "ticker": "NEE",
+            "name": "NextEra Energy Inc.",
+            "market": "US",
+            "sector": "Utilities",
+            "currency": "USD",
+            "price": 80.57,
+            "changePct": 3.12,
+            "score": 82.1,
+            "rawZ": 1.181,
+            "completeness": 1,
+            "riskGauge": 2,
+            "entry": {
+              "low": 77.68,
+              "high": 81.53
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 95.07,
+              "base": 114.41,
+              "bull": 149.05
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Free cash flow conversion drops below 60% of net income for four quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "Large supply agreement disclosed in an 8-K, extending contracted revenue visibility to 2029.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 1.25,
+                "z": 2.32
+              },
+              "capitalEfficiency": {
+                "raw": 0.491,
+                "z": 0.88
+              },
+              "cashGeneration": {
+                "raw": 2.243,
+                "z": 0.32
+              },
+              "valuation": {
+                "raw": 2.245,
+                "z": 0
+              },
+              "fScore": {
+                "raw": 3.646,
+                "z": 1.62
+              }
+            },
+            "sparkline": [
+              77.08,
+              78.73,
+              79,
+              81,
+              81.16,
+              83.5,
+              84.18,
+              82.83,
+              84.03,
+              85.47,
+              85.96,
+              86,
+              86.17,
+              84.96,
+              86.39,
+              87.96,
+              85.78,
+              87.21,
+              86.21,
+              85.85,
+              87.49,
+              88.51,
+              87.99,
+              87.71,
+              87.68,
+              89.57,
+              91.79,
+              91.83,
+              93.57,
+              80.57
+            ],
+            "newsCount": 2,
+            "sentiment": 0.42,
+            "evidence": [
+              "upgrade",
+              "price target raised",
+              "expansion"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 5,
+            "movement": -4,
+            "ticker": "MPC",
+            "name": "Marathon Petroleum Corporation",
+            "market": "US",
+            "sector": "Energy",
+            "currency": "USD",
+            "price": 184.77,
+            "changePct": 3.49,
+            "score": 81.1,
+            "rawZ": 0.395,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 177.95,
+              "high": 187.04
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 218.03,
+              "base": 262.37,
+              "bull": 341.82
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "Q2 revenue beat with raised full-year guidance; data-centre segment up 42% year on year.",
+            "catalystCluster": "gpu-export-policy",
+            "factors": {
+              "growthQuality": {
+                "raw": 2.764,
+                "z": 0.14
+              },
+              "capitalEfficiency": {
+                "raw": 2.834,
+                "z": -1.33
+              },
+              "cashGeneration": {
+                "raw": 3.764,
+                "z": -0.69
+              },
+              "valuation": {
+                "raw": 4.465,
+                "z": 1.93
+              },
+              "fScore": {
+                "raw": 4.258,
+                "z": -1.01
+              }
+            },
+            "sparkline": [
+              164.62,
+              164.27,
+              161.02,
+              160.82,
+              159.54,
+              158.05,
+              159.65,
+              156.07,
+              156.06,
+              159.31,
+              155.8,
+              157.35,
+              158.96,
+              162.75,
+              159.37,
+              161.33,
+              163.64,
+              168.85,
+              171.5,
+              168.41,
+              166.31,
+              166.53,
+              168.53,
+              172.9,
+              172.12,
+              173.65,
+              171.43,
+              174.94,
+              173.86,
+              184.77
+            ],
+            "newsCount": 12,
+            "sentiment": 0.38,
+            "evidence": [
+              "downgrade",
+              "cut",
+              "margin pressure"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 6,
+            "movement": 4,
+            "ticker": "MCK",
+            "name": "McKesson Corporation",
+            "market": "US",
+            "sector": "Health Care",
+            "currency": "USD",
+            "price": 689.33,
+            "changePct": 3.05,
+            "score": 79.9,
+            "rawZ": 0.717,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 656.88,
+              "high": 700.15
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 813.41,
+              "base": 978.85,
+              "bull": 1275.26
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "Cost programme ahead of schedule; management guided margins to the top of the stated range.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 2.13,
+                "z": -0.03
+              },
+              "capitalEfficiency": {
+                "raw": 2.642,
+                "z": -0.68
+              },
+              "cashGeneration": {
+                "raw": 3.991,
+                "z": 0.29
+              },
+              "valuation": {
+                "raw": 1.045,
+                "z": 0.75
+              },
+              "fScore": {
+                "raw": 0.687,
+                "z": -1.19
+              }
+            },
+            "sparkline": [
+              654.45,
+              653.79,
+              670,
+              658.73,
+              645.92,
+              663.53,
+              665.1,
+              669.86,
+              658.7,
+              651.15,
+              644.53,
+              649.88,
+              638.3,
+              638.92,
+              623.76,
+              643.44,
+              662.08,
+              646.15,
+              645.89,
+              663.17,
+              672.99,
+              668.84,
+              679.57,
+              694.66,
+              699.05,
+              682.23,
+              663.38,
+              658.18,
+              669.63,
+              689.33
+            ],
+            "newsCount": 6,
+            "sentiment": null,
+            "evidence": [],
+            "flags": []
+          },
+          {
+            "rank": 7,
+            "movement": -3,
+            "ticker": "MSFT",
+            "name": "Microsoft Corporation",
+            "market": "US",
+            "sector": "Information Technology",
+            "currency": "USD",
+            "price": 499.81,
+            "changePct": 0.04,
+            "score": 77,
+            "rawZ": 1.983,
+            "completeness": 1,
+            "riskGauge": 2,
+            "entry": {
+              "low": 481.06,
+              "high": 506.06
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 589.78,
+              "base": 709.73,
+              "bull": 924.65
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "Twelve-month order backlog reached a record; management flagged pricing power holding into next year.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 1.142,
+                "z": -1.01
+              },
+              "capitalEfficiency": {
+                "raw": 0.813,
+                "z": 1.77
+              },
+              "cashGeneration": {
+                "raw": 1.41,
+                "z": 1.17
+              },
+              "valuation": {
+                "raw": 3.923,
+                "z": 2.19
+              },
+              "fScore": {
+                "raw": 1.965,
+                "z": 0.76
+              }
+            },
+            "sparkline": [
+              451.81,
+              457.32,
+              465.26,
+              480.01,
+              487.02,
+              479.84,
+              482.37,
+              478.96,
+              478.79,
+              486.5,
+              483.92,
+              476.85,
+              466.36,
+              466.22,
+              471.85,
+              467.29,
+              465.13,
+              468.99,
+              472.53,
+              464.73,
+              479.55,
+              477.79,
+              468.47,
+              466.2,
+              469.1,
+              476.51,
+              473.09,
+              478.21,
+              472.39,
+              499.81
+            ],
+            "newsCount": 8,
+            "sentiment": 0.34,
+            "evidence": [
+              "breakout",
+              "accumulation",
+              "above average volume"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 8,
+            "movement": 2,
+            "ticker": "COST",
+            "name": "Costco Wholesale Corporation",
+            "market": "US",
+            "sector": "Consumer Staples",
+            "currency": "USD",
+            "price": 934.1,
+            "changePct": -1.5,
+            "score": 76.2,
+            "rawZ": 0.577,
+            "completeness": 1,
+            "riskGauge": 5,
+            "entry": {
+              "low": 883.8,
+              "high": 950.87
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 1102.24,
+              "base": 1326.42,
+              "bull": 1728.09
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "Twelve-month order backlog reached a record; management flagged pricing power holding into next year.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 4.055,
+                "z": 1.26
+              },
+              "capitalEfficiency": {
+                "raw": 2.29,
+                "z": 1.47
+              },
+              "cashGeneration": {
+                "raw": 1.855,
+                "z": 1.87
+              },
+              "valuation": {
+                "raw": 1.853,
+                "z": -0.73
+              },
+              "fScore": {
+                "raw": 0.65,
+                "z": -1.31
+              }
+            },
+            "sparkline": [
+              907.16,
+              904.9,
+              920.06,
+              904.32,
+              916.45,
+              921.02,
+              907.85,
+              893.26,
+              875.44,
+              881.61,
+              904.93,
+              880.11,
+              878.13,
+              866.19,
+              893.24,
+              880.42,
+              895.61,
+              899.71,
+              917.51,
+              937.03,
+              920.8,
+              935.27,
+              939.22,
+              949.11,
+              933.64,
+              962.19,
+              985.19,
+              986.45,
+              972.59,
+              934.1
+            ],
+            "newsCount": 3,
+            "sentiment": 0.09,
+            "evidence": [
+              "upgrade",
+              "price target raised",
+              "expansion"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 9,
+            "movement": 6,
+            "ticker": "VST",
+            "name": "Vistra Corp.",
+            "market": "US",
+            "sector": "Utilities",
+            "currency": "USD",
+            "price": 170.8,
+            "changePct": 4.33,
+            "score": 75.1,
+            "rawZ": 0.404,
+            "completeness": 1,
+            "riskGauge": 2,
+            "entry": {
+              "low": 163.38,
+              "high": 173.27
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 201.54,
+              "base": 242.54,
+              "bull": 315.98
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "Volume expansion on a base breakout, closing above the 50-day average for the fourth session.",
+            "catalystCluster": "grid-buildout",
+            "factors": {
+              "growthQuality": {
+                "raw": 3.072,
+                "z": 0.56
+              },
+              "capitalEfficiency": {
+                "raw": 2.154,
+                "z": 0.82
+              },
+              "cashGeneration": {
+                "raw": 2.265,
+                "z": -0.62
+              },
+              "valuation": {
+                "raw": 0.339,
+                "z": 0.77
+              },
+              "fScore": {
+                "raw": 2.634,
+                "z": -0.05
+              }
+            },
+            "sparkline": [
+              160.2,
+              163.23,
+              163.01,
+              161.73,
+              166.47,
+              167.44,
+              167.31,
+              164.96,
+              166.48,
+              168.46,
+              172.09,
+              167.39,
+              166.83,
+              168.19,
+              164.65,
+              163.45,
+              168.17,
+              163.68,
+              161.86,
+              158.95,
+              159.75,
+              156.27,
+              157.95,
+              159.25,
+              158.22,
+              162.18,
+              162.46,
+              166.66,
+              169.81,
+              170.8
+            ],
+            "newsCount": 2,
+            "sentiment": -0.08,
+            "evidence": [
+              "beat",
+              "raised guidance",
+              "record backlog"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 10,
+            "movement": 3,
+            "ticker": "CAT",
+            "name": "Caterpillar Inc.",
+            "market": "US",
+            "sector": "Industrials",
+            "currency": "USD",
+            "price": 405.26,
+            "changePct": -1.56,
+            "score": 72.5,
+            "rawZ": 0.859,
+            "completeness": 1,
+            "riskGauge": 2,
+            "entry": {
+              "low": 385.7,
+              "high": 411.78
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 478.21,
+              "base": 575.47,
+              "bull": 749.73
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "Twelve-month order backlog reached a record; management flagged pricing power holding into next year.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 1.277,
+                "z": 1.4
+              },
+              "capitalEfficiency": {
+                "raw": 3.67,
+                "z": 2.38
+              },
+              "cashGeneration": {
+                "raw": 0.591,
+                "z": -0.91
+              },
+              "valuation": {
+                "raw": 2.119,
+                "z": 0.56
+              },
+              "fScore": {
+                "raw": 1.529,
+                "z": -0.78
+              }
+            },
+            "sparkline": [
+              350.68,
+              361.3,
+              351.2,
+              341.73,
+              333.78,
+              337.18,
+              339.9,
+              330.43,
+              338.19,
+              340.65,
+              342.64,
+              352.83,
+              355.05,
+              355.43,
+              348.86,
+              356.47,
+              351.58,
+              343.23,
+              343.79,
+              336.12,
+              331.87,
+              332.83,
+              329.11,
+              329.33,
+              335.76,
+              339.23,
+              349.05,
+              348.82,
+              342.63,
+              405.26
+            ],
+            "newsCount": 11,
+            "sentiment": null,
+            "evidence": [],
+            "flags": []
+          }
+        ],
+        "justMissed": [
+          {
+            "ticker": "GEV",
+            "name": "GE Vernova Inc.",
+            "score": 71.6,
+            "displacedBy": "sector_cap"
+          },
+          {
+            "ticker": "LIN",
+            "name": "Linde plc",
+            "score": 69.1,
+            "displacedBy": "correlation_cap"
+          },
+          {
+            "ticker": "TT",
+            "name": "Trane Technologies plc",
+            "score": 66.2,
+            "displacedBy": "catalyst_cluster_cap"
+          }
+        ],
+        "emptyReason": null
+      },
+      "ultra_long": {
+        "market": "US",
+        "horizon": "ultra_long",
+        "asOf": "2026-08-14",
+        "turnover30d": 0.076,
+        "sampleWarning": true,
+        "rows": [
+          {
+            "rank": 1,
+            "movement": 0,
+            "ticker": "COST",
+            "name": "Costco Wholesale Corporation",
+            "market": "US",
+            "sector": "Consumer Staples",
+            "currency": "USD",
+            "price": 961.59,
+            "changePct": -2.26,
+            "score": 88.3,
+            "rawZ": 0.783,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 921.19,
+              "high": 975.06
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 2038.93,
+              "base": 3582.74,
+              "bull": 5708.37
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Free cash flow conversion drops below 60% of net income for four quarters"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "Cost programme ahead of schedule; management guided margins to the top of the stated range.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 2.064,
+                "z": 2.03
+              },
+              "cashFlowDurability": {
+                "raw": 3.135,
+                "z": -0.71
+              },
+              "reinvestmentRunway": {
+                "raw": 3.272,
+                "z": -1.45
+              },
+              "balanceSheetStrength": {
+                "raw": 2.361,
+                "z": 2.07
+              },
+              "shareholderYield": {
+                "raw": 1.274,
+                "z": 1.1
+              }
+            },
+            "sparkline": [
+              958.49,
+              948.52,
+              971.44,
+              971.23,
+              994.1,
+              1013.11,
+              985.05,
+              1006.7,
+              1021.49,
+              1045.21,
+              1056.34,
+              1046.4,
+              1064.78,
+              1084.72,
+              1075.51,
+              1093.51,
+              1106.16,
+              1099.71,
+              1096.52,
+              1120.82,
+              1125.72,
+              1153.28,
+              1170.19,
+              1188,
+              1178.51,
+              1202.86,
+              1182.7,
+              1219.15,
+              1251.4,
+              961.59
+            ],
+            "newsCount": 5,
+            "sentiment": null,
+            "evidence": [],
+            "flags": []
+          },
+          {
+            "rank": 2,
+            "movement": 6,
+            "ticker": "VST",
+            "name": "Vistra Corp.",
+            "market": "US",
+            "sector": "Utilities",
+            "currency": "USD",
+            "price": 173.78,
+            "changePct": 0.16,
+            "score": 86.1,
+            "rawZ": -0.33,
+            "completeness": 0.75,
+            "riskGauge": 4,
+            "entry": {
+              "low": 162.09,
+              "high": 177.68
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 339.78,
+              "base": 619.32,
+              "bull": 930.57
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "Announced a $12bn capacity expansion; three brokerages lifted price targets within 24 hours.",
+            "catalystCluster": "grid-buildout",
+            "factors": {
+              "moatStrength": {
+                "raw": 1.558,
+                "z": -1.44
+              },
+              "cashFlowDurability": {
+                "raw": 0.78,
+                "z": -0.84
+              },
+              "reinvestmentRunway": {
+                "raw": 3.007,
+                "z": -0.74
+              },
+              "balanceSheetStrength": {
+                "raw": 3.365,
+                "z": -1.41
+              },
+              "shareholderYield": {
+                "raw": 4.18,
+                "z": 0.02
+              }
+            },
+            "sparkline": [
+              157.71,
+              162.62,
+              164.57,
+              166.61,
+              165.46,
+              168.79,
+              170.79,
+              167.33,
+              166.47,
+              170.54,
+              175.72,
+              172.28,
+              175.92,
+              177.4,
+              183.07,
+              182.68,
+              182.33,
+              180.86,
+              183.36,
+              180.88,
+              182.87,
+              183.05,
+              185.14,
+              188.8,
+              189.87,
+              193.07,
+              193.13,
+              193.94,
+              199.57,
+              173.78
+            ],
+            "newsCount": 0,
+            "sentiment": 0.5,
+            "evidence": [
+              "breakout",
+              "accumulation",
+              "above average volume"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 3,
+            "movement": 4,
+            "ticker": "CAT",
+            "name": "Caterpillar Inc.",
+            "market": "US",
+            "sector": "Industrials",
+            "currency": "USD",
+            "price": 405.56,
+            "changePct": 4.29,
+            "score": 84.2,
+            "rawZ": 0.105,
+            "completeness": 0.6,
+            "riskGauge": 3,
+            "entry": {
+              "low": 383.36,
+              "high": 412.96
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 780.39,
+              "base": 1458.32,
+              "bull": 2032.09
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "Volume expansion on a base breakout, closing above the 50-day average for the fourth session.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 2.893,
+                "z": 0.9
+              },
+              "cashFlowDurability": {
+                "raw": 2.625,
+                "z": -1.02
+              },
+              "reinvestmentRunway": {
+                "raw": 3.671,
+                "z": -1.16
+              },
+              "balanceSheetStrength": {
+                "raw": 0.855,
+                "z": 1.61
+              },
+              "shareholderYield": {
+                "raw": 2.022,
+                "z": 0.26
+              }
+            },
+            "sparkline": [
+              349.91,
+              341.64,
+              332.75,
+              332.24,
+              332.63,
+              326.67,
+              328.23,
+              331.4,
+              333.6,
+              344.19,
+              352.44,
+              354.01,
+              362.53,
+              361.73,
+              371.28,
+              370.99,
+              377.91,
+              378.95,
+              374.87,
+              370.1,
+              360.16,
+              370.34,
+              365.77,
+              376.57,
+              378.16,
+              378.48,
+              375.78,
+              384.95,
+              392.84,
+              405.56
+            ],
+            "newsCount": 0,
+            "sentiment": 0.15,
+            "evidence": [
+              "beat",
+              "raised guidance",
+              "record backlog"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 4,
+            "movement": 0,
+            "ticker": "GEV",
+            "name": "GE Vernova Inc.",
+            "market": "US",
+            "sector": "Industrials",
+            "currency": "USD",
+            "price": 505.94,
+            "changePct": 4.17,
+            "score": 83.3,
+            "rawZ": 0.758,
+            "completeness": 1,
+            "riskGauge": 1,
+            "entry": {
+              "low": 478.91,
+              "high": 514.95
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 1068.53,
+              "base": 1780.57,
+              "bull": 3110.07
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "Cost programme ahead of schedule; management guided margins to the top of the stated range.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 2.869,
+                "z": 0.97
+              },
+              "cashFlowDurability": {
+                "raw": 3.9,
+                "z": 2.12
+              },
+              "reinvestmentRunway": {
+                "raw": 0.203,
+                "z": 1.78
+              },
+              "balanceSheetStrength": {
+                "raw": 4.28,
+                "z": 1.77
+              },
+              "shareholderYield": {
+                "raw": 2.51,
+                "z": 1.53
+              }
+            },
+            "sparkline": [
+              464.52,
+              467.2,
+              470.26,
+              484.9,
+              482.83,
+              490.61,
+              503.92,
+              496.8,
+              496.44,
+              486.24,
+              485.14,
+              476.46,
+              481.76,
+              482.14,
+              469.57,
+              462.83,
+              458.52,
+              453.89,
+              464.57,
+              477.39,
+              476.67,
+              470.99,
+              474.39,
+              476.58,
+              488.45,
+              502.21,
+              501.63,
+              513.68,
+              504.76,
+              505.94
+            ],
+            "newsCount": 10,
+            "sentiment": null,
+            "evidence": [],
+            "flags": []
+          },
+          {
+            "rank": 5,
+            "movement": 3,
+            "ticker": "LIN",
+            "name": "Linde plc",
+            "market": "US",
+            "sector": "Materials",
+            "currency": "USD",
+            "price": 470.79,
+            "changePct": -2.99,
+            "score": 81.4,
+            "rawZ": 0.642,
+            "completeness": 0.75,
+            "riskGauge": 5,
+            "entry": {
+              "low": 449.04,
+              "high": 478.04
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 924.37,
+              "base": 1707.14,
+              "bull": 2657.47
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Free cash flow conversion drops below 60% of net income for four quarters"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "Announced a $12bn capacity expansion; three brokerages lifted price targets within 24 hours.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "moatStrength": {
+                "raw": 2.22,
+                "z": -0.92
+              },
+              "cashFlowDurability": {
+                "raw": 1.294,
+                "z": 2.13
+              },
+              "reinvestmentRunway": {
+                "raw": 2.585,
+                "z": -0.38
+              },
+              "balanceSheetStrength": {
+                "raw": 3.357,
+                "z": -0.83
+              },
+              "shareholderYield": {
+                "raw": 4.45,
+                "z": 0.16
+              }
+            },
+            "sparkline": [
+              414.75,
+              418.86,
+              412.57,
+              425.07,
+              416.47,
+              422.16,
+              412.82,
+              418.11,
+              424.42,
+              427.21,
+              436.53,
+              440.89,
+              436.55,
+              445.02,
+              459.04,
+              452.16,
+              440.86,
+              431.46,
+              423.96,
+              432.46,
+              433.45,
+              440.27,
+              430.57,
+              435.17,
+              424.54,
+              432.32,
+              445.92,
+              457.71,
+              448.13,
+              470.79
+            ],
+            "newsCount": 1,
+            "sentiment": 0.67,
+            "evidence": [
+              "upgrade",
+              "price target raised",
+              "expansion"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 6,
+            "movement": 5,
+            "ticker": "TT",
+            "name": "Trane Technologies plc",
+            "market": "US",
+            "sector": "Industrials",
+            "currency": "USD",
+            "price": 422.35,
+            "changePct": -2.05,
+            "score": 79.7,
+            "rawZ": 0.239,
+            "completeness": 1,
+            "riskGauge": 1,
+            "entry": {
+              "low": 404.4,
+              "high": 428.33
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 881.81,
+              "base": 1533.84,
+              "bull": 2542.96
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "Volume expansion on a base breakout, closing above the 50-day average for the fourth session.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "moatStrength": {
+                "raw": 2.405,
+                "z": 1.5
+              },
+              "cashFlowDurability": {
+                "raw": 0.482,
+                "z": 2.34
+              },
+              "reinvestmentRunway": {
+                "raw": 3.299,
+                "z": 0.89
+              },
+              "balanceSheetStrength": {
+                "raw": 0.66,
+                "z": 0.86
+              },
+              "shareholderYield": {
+                "raw": 3.357,
+                "z": -0.53
+              }
+            },
+            "sparkline": [
+              371.96,
+              382.22,
+              385.08,
+              380.52,
+              387.09,
+              380.06,
+              388.1,
+              387.35,
+              381.05,
+              389.18,
+              397.11,
+              400.24,
+              400.82,
+              405.19,
+              417.14,
+              412.28,
+              418.19,
+              416.11,
+              416.97,
+              420.92,
+              418.67,
+              408.35,
+              405.81,
+              400.23,
+              389.85,
+              392.6,
+              387.39,
+              392.72,
+              383.38,
+              422.35
+            ],
+            "newsCount": 13,
+            "sentiment": -0.42,
+            "evidence": [
+              "breakout",
+              "accumulation",
+              "above average volume"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 7,
+            "movement": -4,
+            "ticker": "AVGO",
+            "name": "Broadcom Inc.",
+            "market": "US",
+            "sector": "Information Technology",
+            "currency": "USD",
+            "price": 298.17,
+            "changePct": -3.07,
+            "score": 78,
+            "rawZ": 0.154,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 286.99,
+              "high": 301.9
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 597.08,
+              "base": 977.85,
+              "bull": 1746.96
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "Q2 revenue beat with raised full-year guidance; data-centre segment up 42% year on year.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 2.624,
+                "z": -0.92
+              },
+              "cashFlowDurability": {
+                "raw": 3.32,
+                "z": 0.73
+              },
+              "reinvestmentRunway": {
+                "raw": 1.565,
+                "z": 0.16
+              },
+              "balanceSheetStrength": {
+                "raw": 3.777,
+                "z": 0.39
+              },
+              "shareholderYield": {
+                "raw": 0.354,
+                "z": -0.24
+              }
+            },
+            "sparkline": [
+              266.29,
+              269.53,
+              264.46,
+              261.58,
+              256.12,
+              259.02,
+              267.23,
+              266.92,
+              265.09,
+              261.27,
+              266.09,
+              265.22,
+              271.19,
+              275.11,
+              274.02,
+              278.24,
+              285.56,
+              285.88,
+              292.9,
+              290.43,
+              298.07,
+              306.33,
+              315.68,
+              320.8,
+              316.55,
+              315.84,
+              316.92,
+              320.33,
+              324.47,
+              298.17
+            ],
+            "newsCount": 6,
+            "sentiment": 0.35,
+            "evidence": [
+              "breakout",
+              "accumulation",
+              "above average volume"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 8,
+            "movement": 1,
+            "ticker": "XOM",
+            "name": "Exxon Mobil Corporation",
+            "market": "US",
+            "sector": "Energy",
+            "currency": "USD",
+            "price": 118.51,
+            "changePct": -0.08,
+            "score": 77.2,
+            "rawZ": 0.284,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 112.18,
+              "high": 120.62
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 265.59,
+              "base": 441.08,
+              "bull": 663.88
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "Twelve-month order backlog reached a record; management flagged pricing power holding into next year.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 3.063,
+                "z": -0.15
+              },
+              "cashFlowDurability": {
+                "raw": 2.468,
+                "z": 1.71
+              },
+              "reinvestmentRunway": {
+                "raw": 1.434,
+                "z": -1.55
+              },
+              "balanceSheetStrength": {
+                "raw": 3.422,
+                "z": 0.55
+              },
+              "shareholderYield": {
+                "raw": 2.46,
+                "z": 2.39
+              }
+            },
+            "sparkline": [
+              118.1,
+              119.55,
+              123.26,
+              121.92,
+              121.34,
+              123.3,
+              120.71,
+              118.71,
+              119.09,
+              116.19,
+              114.81,
+              114.53,
+              112.29,
+              110.79,
+              112.78,
+              115.01,
+              114.86,
+              116.82,
+              114.57,
+              115.46,
+              118.52,
+              119.29,
+              122.92,
+              121.48,
+              120.42,
+              120.12,
+              120.68,
+              123.85,
+              124.56,
+              118.51
+            ],
+            "newsCount": 13,
+            "sentiment": 0.54,
+            "evidence": [
+              "upgrade",
+              "price target raised",
+              "expansion"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 9,
+            "movement": "NEW",
+            "ticker": "CEG",
+            "name": "Constellation Energy Corporation",
+            "market": "US",
+            "sector": "Utilities",
+            "currency": "USD",
+            "price": 281.47,
+            "changePct": -0.53,
+            "score": 76.3,
+            "rawZ": 0.013,
+            "completeness": 0.89,
+            "riskGauge": 2,
+            "entry": {
+              "low": 270.91,
+              "high": 284.99
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 626.52,
+              "base": 926.83,
+              "bull": 1416.4
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "Cost programme ahead of schedule; management guided margins to the top of the stated range.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 1.57,
+                "z": 1.24
+              },
+              "cashFlowDurability": {
+                "raw": 1.571,
+                "z": -1.16
+              },
+              "reinvestmentRunway": {
+                "raw": 1.06,
+                "z": -0.87
+              },
+              "balanceSheetStrength": {
+                "raw": 2.715,
+                "z": 1.87
+              },
+              "shareholderYield": {
+                "raw": 3.483,
+                "z": 1.23
+              }
+            },
+            "sparkline": [
+              245.33,
+              245.39,
+              252.62,
+              257.63,
+              259.04,
+              263.23,
+              260.06,
+              264.3,
+              266.58,
+              273.46,
+              274.19,
+              274.92,
+              267.34,
+              260.77,
+              265.47,
+              259.18,
+              255.68,
+              255.27,
+              261.67,
+              269.54,
+              273.88,
+              277.9,
+              275.19,
+              274.68,
+              273.65,
+              270.64,
+              267.81,
+              261.68,
+              261.26,
+              281.47
+            ],
+            "newsCount": 7,
+            "sentiment": -0.18,
+            "evidence": [
+              "approval",
+              "launch",
+              "cleared"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 10,
+            "movement": "NEW",
+            "ticker": "UNH",
+            "name": "UnitedHealth Group Incorporated",
+            "market": "US",
+            "sector": "Health Care",
+            "currency": "USD",
+            "price": 298.7,
+            "changePct": 2.9,
+            "score": 74,
+            "rawZ": 0.415,
+            "completeness": 0.7,
+            "riskGauge": 4,
+            "entry": {
+              "low": 290.49,
+              "high": 301.44
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 605.63,
+              "base": 967.29,
+              "bull": 1560.54
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "Sector-wide policy announcement lifted the whole sub-industry; this name has the highest operating leverage to it.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "moatStrength": {
+                "raw": 4.193,
+                "z": -1.41
+              },
+              "cashFlowDurability": {
+                "raw": 2.019,
+                "z": 0.96
+              },
+              "reinvestmentRunway": {
+                "raw": 2.409,
+                "z": -1.03
+              },
+              "balanceSheetStrength": {
+                "raw": 3.557,
+                "z": 0.72
+              },
+              "shareholderYield": {
+                "raw": 0.589,
+                "z": 2.19
+              }
+            },
+            "sparkline": [
+              256.69,
+              259.98,
+              255.29,
+              250.15,
+              254.73,
+              260.42,
+              264.13,
+              257.15,
+              261.35,
+              266.61,
+              272.51,
+              265.45,
+              259.3,
+              262.37,
+              260.32,
+              265.33,
+              259.38,
+              254.82,
+              262.39,
+              256.98,
+              252.92,
+              260.61,
+              268.49,
+              266.06,
+              266.24,
+              271.92,
+              275.08,
+              282.5,
+              276.61,
+              298.7
+            ],
+            "newsCount": 1,
+            "sentiment": 0.26,
+            "evidence": [
+              "downgrade",
+              "cut",
+              "margin pressure"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          }
+        ],
+        "justMissed": [
+          {
+            "ticker": "PG",
+            "name": "Procter & Gamble Company",
+            "score": 71.3,
+            "displacedBy": "sector_cap"
+          },
+          {
+            "ticker": "ISRG",
+            "name": "Intuitive Surgical Inc.",
+            "score": 68.3,
+            "displacedBy": "correlation_cap"
+          },
+          {
+            "ticker": "ADBE",
+            "name": "Adobe Inc.",
+            "score": 65.1,
+            "displacedBy": "catalyst_cluster_cap"
+          }
+        ],
+        "emptyReason": null
+      }
+    },
+    "KR": {
+      "ultra_short": {
+        "market": "KR",
+        "horizon": "ultra_short",
+        "asOf": "2026-08-14",
+        "turnover30d": 0.799,
+        "sampleWarning": false,
+        "rows": [
+          {
+            "rank": 1,
+            "movement": -3,
+            "ticker": "207940",
+            "name": "삼성바이오로직스",
+            "market": "KR",
+            "sector": "Health Care",
+            "currency": "KRW",
+            "price": 1028674,
+            "changePct": 3.87,
+            "score": 92.6,
+            "rawZ": 1.264,
+            "completeness": 1,
+            "riskGauge": 5,
+            "entry": {
+              "low": 1020065,
+              "high": 1042448
+            },
+            "stop": 977023,
+            "targets": {
+              "conservative": 1063108,
+              "base": 1090655,
+              "bull": 1131976
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "거래량 확대와 함께 박스권을 상향 돌파했고 4거래일 연속 50일 이동평균선 위에서 마감했습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 0.848,
+                "z": -0.58
+              },
+              "gapQuality": {
+                "raw": 4.494,
+                "z": -0.26
+              },
+              "newsSentiment": {
+                "raw": 3.145,
+                "z": 2.18
+              },
+              "volatilityExpansion": {
+                "raw": 1.518,
+                "z": -1.37
+              },
+              "trendPosition": {
+                "raw": 3.192,
+                "z": 1.81
+              }
+            },
+            "sparkline": [
+              901385.31,
+              912809.84,
+              899925.82,
+              884565.3,
+              912391.49,
+              902130.44,
+              879914.62,
+              895982.54,
+              884255.69,
+              896577.23,
+              898549.73,
+              904100.63,
+              883816.81,
+              890596.69,
+              885537.3,
+              876648.77,
+              882738.85,
+              910355.43,
+              904871.57,
+              929723.4,
+              953352.82,
+              940203.66,
+              966402.42,
+              957784.55,
+              977087.75,
+              987863.27,
+              978917.94,
+              966167.22,
+              978307.03,
+              1028674
+            ],
+            "newsCount": 2,
+            "sentiment": 0,
+            "evidence": [
+              "조사",
+              "지연",
+              "리콜"
+            ],
+            "flags": [
+              "price_limit",
+              "stopped_out"
+            ]
+          },
+          {
+            "rank": 2,
+            "movement": 0,
+            "ticker": "006400",
+            "name": "삼성SDI",
+            "market": "KR",
+            "sector": "Industrials",
+            "currency": "KRW",
+            "price": 285822,
+            "changePct": 4.99,
+            "score": 89.3,
+            "rawZ": 1.862,
+            "completeness": 0.67,
+            "riskGauge": 2,
+            "entry": {
+              "low": 283518,
+              "high": 289509
+            },
+            "stop": 271997,
+            "targets": {
+              "conservative": 295039,
+              "base": 302412,
+              "bull": 313472
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "거래량 확대와 함께 박스권을 상향 돌파했고 4거래일 연속 50일 이동평균선 위에서 마감했습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 4.265,
+                "z": -1.4
+              },
+              "gapQuality": {
+                "raw": 0.517,
+                "z": -1.45
+              },
+              "newsSentiment": {
+                "raw": 2.72,
+                "z": 2.37
+              },
+              "volatilityExpansion": {
+                "raw": 3.905,
+                "z": 0.76
+              },
+              "trendPosition": {
+                "raw": 3.179,
+                "z": 2.05
+              }
+            },
+            "sparkline": [
+              266127.01,
+              272051.53,
+              272508.25,
+              271564.85,
+              273164.7,
+              270103.47,
+              278671.34,
+              287068.74,
+              294313.34,
+              296152.84,
+              293163.34,
+              291035.05,
+              297284.52,
+              295278.14,
+              291566.91,
+              287866.81,
+              283119.48,
+              284912.16,
+              285057.44,
+              277475.55,
+              281200.27,
+              286205.56,
+              286118.35,
+              279696.47,
+              275894.05,
+              281002.98,
+              275819.42,
+              280042.84,
+              281237.01,
+              285822
+            ],
+            "newsCount": 9,
+            "sentiment": null,
+            "evidence": [],
+            "flags": [
+              "partial_data",
+              "price_limit"
+            ]
+          },
+          {
+            "rank": 3,
+            "movement": "NEW",
+            "ticker": "105560",
+            "name": "KB금융",
+            "market": "KR",
+            "sector": "Financials",
+            "currency": "KRW",
+            "price": 91521,
+            "changePct": -0.39,
+            "score": 87.3,
+            "rawZ": 0.084,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 90723,
+              "high": 92798
+            },
+            "stop": 86732,
+            "targets": {
+              "conservative": 94713,
+              "base": 97267,
+              "bull": 101098
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "거래량 확대와 함께 박스권을 상향 돌파했고 4거래일 연속 50일 이동평균선 위에서 마감했습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 0.358,
+                "z": 2.03
+              },
+              "gapQuality": {
+                "raw": 4.046,
+                "z": 0.85
+              },
+              "newsSentiment": {
+                "raw": 3.977,
+                "z": 1.97
+              },
+              "volatilityExpansion": {
+                "raw": 2.542,
+                "z": -0.68
+              },
+              "trendPosition": {
+                "raw": 1.514,
+                "z": -0.18
+              }
+            },
+            "sparkline": [
+              90074.57,
+              91226.14,
+              89081.61,
+              91352.6,
+              89283.5,
+              91487.83,
+              92172.84,
+              90699.82,
+              91657.76,
+              94059.42,
+              96286.25,
+              98176.12,
+              97199.08,
+              98728.51,
+              99010.39,
+              98516.82,
+              97280.72,
+              95568.59,
+              94087.06,
+              95947.21,
+              96575.88,
+              97122.47,
+              97663.12,
+              100202.28,
+              103125.55,
+              105101.5,
+              105252.07,
+              107173.73,
+              106563.26,
+              91521
+            ],
+            "newsCount": 0,
+            "sentiment": 0.54,
+            "evidence": [
+              "하향",
+              "감익",
+              "마진 압박"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 4,
+            "movement": -5,
+            "ticker": "068270",
+            "name": "셀트리온",
+            "market": "KR",
+            "sector": "Health Care",
+            "currency": "KRW",
+            "price": 192744,
+            "changePct": -0.52,
+            "score": 86.3,
+            "rawZ": 0.828,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 190704,
+              "high": 196008
+            },
+            "stop": 180505,
+            "targets": {
+              "conservative": 200904,
+              "base": 207431,
+              "bull": 217223
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "업종 전반에 영향을 주는 정책 발표가 있었으며, 해당 종목의 영업 레버리지가 가장 높습니다.",
+            "catalystCluster": "grid-buildout",
+            "factors": {
+              "relativeVolume": {
+                "raw": 1.151,
+                "z": -0.95
+              },
+              "gapQuality": {
+                "raw": 2.07,
+                "z": -0.1
+              },
+              "newsSentiment": {
+                "raw": 3.353,
+                "z": 1.85
+              },
+              "volatilityExpansion": {
+                "raw": 2.612,
+                "z": -1.05
+              },
+              "trendPosition": {
+                "raw": 2.774,
+                "z": 1.51
+              }
+            },
+            "sparkline": [
+              182416.3,
+              185714.01,
+              184362.67,
+              187079.05,
+              188832.38,
+              193116.74,
+              193651.62,
+              190348.27,
+              190185.83,
+              184863.3,
+              189996.78,
+              187331.76,
+              191500.52,
+              193150.93,
+              193837.64,
+              192759.34,
+              195027.43,
+              198931.63,
+              199770.44,
+              204461.4,
+              206004.28,
+              206441.7,
+              210976.51,
+              208417.71,
+              211127.72,
+              212241.63,
+              212929.58,
+              215755.39,
+              222584.95,
+              192744
+            ],
+            "newsCount": 6,
+            "sentiment": 0.57,
+            "evidence": [
+              "목표주가 상향",
+              "증설",
+              "수주"
+            ],
+            "flags": [
+              "stopped_out"
+            ]
+          },
+          {
+            "rank": 5,
+            "movement": -3,
+            "ticker": "015760",
+            "name": "한국전력",
+            "market": "KR",
+            "sector": "Utilities",
+            "currency": "KRW",
+            "price": 23976,
+            "changePct": 4.34,
+            "score": 84.5,
+            "rawZ": 1.464,
+            "completeness": 1,
+            "riskGauge": 5,
+            "entry": {
+              "low": 23797,
+              "high": 24263
+            },
+            "stop": 22900,
+            "targets": {
+              "conservative": 24693,
+              "base": 25267,
+              "bull": 26128
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "12개월 수주 잔고가 사상 최대치를 기록했고 경영진은 가격 결정력이 내년까지 유지된다고 밝혔습니다.",
+            "catalystCluster": "grid-buildout",
+            "factors": {
+              "relativeVolume": {
+                "raw": 3.18,
+                "z": -1.07
+              },
+              "gapQuality": {
+                "raw": 1.729,
+                "z": -0.33
+              },
+              "newsSentiment": {
+                "raw": 3.147,
+                "z": 0.02
+              },
+              "volatilityExpansion": {
+                "raw": 3.901,
+                "z": 2.1
+              },
+              "trendPosition": {
+                "raw": 1.552,
+                "z": 2.3
+              }
+            },
+            "sparkline": [
+              21321.65,
+              21735.17,
+              21545.25,
+              22025.11,
+              21445.03,
+              21473.77,
+              21786.47,
+              22193.12,
+              22207.87,
+              22190.2,
+              21696.68,
+              21826.54,
+              22271.94,
+              22312.36,
+              22201.04,
+              22641.45,
+              22524.57,
+              22490.94,
+              22162.2,
+              22649.28,
+              22055.78,
+              21858.04,
+              21676,
+              22224.66,
+              22882.99,
+              22793.55,
+              22670.15,
+              22438.14,
+              22004.09,
+              23976
+            ],
+            "newsCount": 13,
+            "sentiment": 0.21,
+            "evidence": [
+              "조사",
+              "지연",
+              "리콜"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 6,
+            "movement": 1,
+            "ticker": "017670",
+            "name": "SK텔레콤",
+            "market": "KR",
+            "sector": "Communication Services",
+            "currency": "KRW",
+            "price": 57844,
+            "changePct": -1.03,
+            "score": 83.4,
+            "rawZ": 0.24,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 57426,
+              "high": 58512
+            },
+            "stop": 55337,
+            "targets": {
+              "conservative": 59515,
+              "base": 60852,
+              "bull": 62857
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "업종 전반에 영향을 주는 정책 발표가 있었으며, 해당 종목의 영업 레버리지가 가장 높습니다.",
+            "catalystCluster": "grid-buildout",
+            "factors": {
+              "relativeVolume": {
+                "raw": 4.25,
+                "z": -1.29
+              },
+              "gapQuality": {
+                "raw": 3.155,
+                "z": 0.45
+              },
+              "newsSentiment": {
+                "raw": 3.182,
+                "z": -0.85
+              },
+              "volatilityExpansion": {
+                "raw": 4.085,
+                "z": 0.52
+              },
+              "trendPosition": {
+                "raw": 1.639,
+                "z": -0.66
+              }
+            },
+            "sparkline": [
+              51983.12,
+              51067.14,
+              52649.09,
+              53753.8,
+              53490.57,
+              53854.96,
+              54773.02,
+              53949.59,
+              53741.7,
+              53351.4,
+              53566.55,
+              52961.64,
+              52819.66,
+              52755.4,
+              53884.62,
+              53920.91,
+              53981.92,
+              55689.91,
+              55911.72,
+              56536.53,
+              58049.92,
+              57382.04,
+              58090.74,
+              56786.63,
+              56141.32,
+              54867.58,
+              56297.08,
+              54858.38,
+              55191.43,
+              57844
+            ],
+            "newsCount": 6,
+            "sentiment": 0.38,
+            "evidence": [
+              "목표주가 상향",
+              "증설",
+              "수주"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 7,
+            "movement": 5,
+            "ticker": "011200",
+            "name": "HMM",
+            "market": "KR",
+            "sector": "Industrials",
+            "currency": "KRW",
+            "price": 19788,
+            "changePct": -0.66,
+            "score": 81.6,
+            "rawZ": 0.868,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 19606,
+              "high": 20079
+            },
+            "stop": 18698,
+            "targets": {
+              "conservative": 20514,
+              "base": 21095,
+              "bull": 21967
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "12개월 수주 잔고가 사상 최대치를 기록했고 경영진은 가격 결정력이 내년까지 유지된다고 밝혔습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 4.005,
+                "z": 0.32
+              },
+              "gapQuality": {
+                "raw": 1.006,
+                "z": 1.82
+              },
+              "newsSentiment": {
+                "raw": 3.798,
+                "z": 2.38
+              },
+              "volatilityExpansion": {
+                "raw": 0.997,
+                "z": 0.26
+              },
+              "trendPosition": {
+                "raw": 1.312,
+                "z": 2.33
+              }
+            },
+            "sparkline": [
+              18119.79,
+              18479.97,
+              18783.4,
+              18614.19,
+              18712.39,
+              18339.42,
+              18694.94,
+              18815.05,
+              18434.87,
+              18149.74,
+              17951.66,
+              18321.84,
+              18631.79,
+              18963.84,
+              18909.49,
+              18489.98,
+              18167.43,
+              18596.53,
+              18323.96,
+              18429.84,
+              18219.91,
+              17985.21,
+              18365.85,
+              18690,
+              18490.79,
+              18802.88,
+              19384.02,
+              19851.06,
+              19549.13,
+              19788
+            ],
+            "newsCount": 1,
+            "sentiment": 0.37,
+            "evidence": [
+              "조사",
+              "지연",
+              "리콜"
+            ],
+            "flags": [
+              "price_limit"
+            ]
+          },
+          {
+            "rank": 8,
+            "movement": 0,
+            "ticker": "373220",
+            "name": "LG에너지솔루션",
+            "market": "KR",
+            "sector": "Industrials",
+            "currency": "KRW",
+            "price": 350773,
+            "changePct": 1.3,
+            "score": 78.9,
+            "rawZ": 1.472,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 347796,
+              "high": 355537
+            },
+            "stop": 332908,
+            "targets": {
+              "conservative": 362683,
+              "base": 372211,
+              "bull": 386503
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "2분기 매출이 시장 기대치를 상회했고 연간 가이던스를 상향했습니다. 데이터센터 부문이 전년 대비 42% 성장했습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 1.169,
+                "z": 1.35
+              },
+              "gapQuality": {
+                "raw": 1.164,
+                "z": -0.09
+              },
+              "newsSentiment": {
+                "raw": 3.336,
+                "z": -1.15
+              },
+              "volatilityExpansion": {
+                "raw": 3.516,
+                "z": -1.01
+              },
+              "trendPosition": {
+                "raw": 3.605,
+                "z": -0.9
+              }
+            },
+            "sparkline": [
+              336762.81,
+              345350.51,
+              335840.12,
+              335495.54,
+              332056.24,
+              341378.05,
+              334032.85,
+              331322.44,
+              336213.4,
+              328263.77,
+              330626.9,
+              324144.49,
+              318620.9,
+              323617.45,
+              319956.6,
+              324650.22,
+              316896.95,
+              314283.4,
+              309210.19,
+              309412.09,
+              305400.83,
+              308649.38,
+              312234.81,
+              321369.48,
+              319052.69,
+              323648.72,
+              318609.73,
+              325974.69,
+              318647.13,
+              350773
+            ],
+            "newsCount": 9,
+            "sentiment": null,
+            "evidence": [],
+            "flags": [
+              "price_limit"
+            ]
+          },
+          {
+            "rank": 9,
+            "movement": 0,
+            "ticker": "051910",
+            "name": "LG화학",
+            "market": "KR",
+            "sector": "Materials",
+            "currency": "KRW",
+            "price": 320057,
+            "changePct": -1.19,
+            "score": 77.7,
+            "rawZ": -0.052,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 317474,
+              "high": 324190
+            },
+            "stop": 304557,
+            "targets": {
+              "conservative": 330391,
+              "base": 338658,
+              "bull": 351058
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "12억 달러 규모 증설 계획을 발표한 뒤 24시간 내 3개 증권사가 목표주가를 상향했습니다.",
+            "catalystCluster": "grid-buildout",
+            "factors": {
+              "relativeVolume": {
+                "raw": 3.499,
+                "z": 1.59
+              },
+              "gapQuality": {
+                "raw": 2.119,
+                "z": 1.49
+              },
+              "newsSentiment": {
+                "raw": 1.518,
+                "z": 1.9
+              },
+              "volatilityExpansion": {
+                "raw": 3.086,
+                "z": -0.86
+              },
+              "trendPosition": {
+                "raw": 1.576,
+                "z": 0.7
+              }
+            },
+            "sparkline": [
+              293412.7,
+              291903.93,
+              301155.34,
+              295057.83,
+              287738.62,
+              293489.6,
+              301081.16,
+              305949.49,
+              305660.37,
+              310785.59,
+              307251.51,
+              306035.38,
+              301900.34,
+              299123.11,
+              305858.86,
+              304851.2,
+              297544.65,
+              296109.73,
+              296558.25,
+              292134.8,
+              299129.32,
+              293922.66,
+              297694.85,
+              289900.78,
+              286233.08,
+              286104.73,
+              292903.06,
+              298108.38,
+              295483.49,
+              320057
+            ],
+            "newsCount": 6,
+            "sentiment": null,
+            "evidence": [],
+            "flags": []
+          },
+          {
+            "rank": 10,
+            "movement": "NEW",
+            "ticker": "035720",
+            "name": "카카오",
+            "market": "KR",
+            "sector": "Communication Services",
+            "currency": "KRW",
+            "price": 41774,
+            "changePct": -1.28,
+            "score": 76.2,
+            "rawZ": 0.081,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 41355,
+              "high": 42445
+            },
+            "stop": 39257,
+            "targets": {
+              "conservative": 43452,
+              "base": 44794,
+              "bull": 46808
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "업종 전반에 영향을 주는 정책 발표가 있었으며, 해당 종목의 영업 레버리지가 가장 높습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 0.815,
+                "z": -0.26
+              },
+              "gapQuality": {
+                "raw": 4.045,
+                "z": 2.12
+              },
+              "newsSentiment": {
+                "raw": 3.409,
+                "z": 1.52
+              },
+              "volatilityExpansion": {
+                "raw": 0.273,
+                "z": -0.9
+              },
+              "trendPosition": {
+                "raw": 4.361,
+                "z": -0.87
+              }
+            },
+            "sparkline": [
+              38446.1,
+              37859.29,
+              36847.73,
+              36433.01,
+              36581.61,
+              35701.58,
+              36728.97,
+              37284.55,
+              36970.37,
+              37595.69,
+              37059.96,
+              37529.3,
+              38082.11,
+              37284.52,
+              37868.85,
+              39064.68,
+              39615.77,
+              39003.42,
+              40162.09,
+              39939.1,
+              40756.93,
+              41502.95,
+              41069.97,
+              40063.49,
+              40739.52,
+              39864.44,
+              39976.79,
+              40689.91,
+              40339.04,
+              41774
+            ],
+            "newsCount": 11,
+            "sentiment": -0.2,
+            "evidence": [
+              "하향",
+              "감익",
+              "마진 압박"
+            ],
+            "flags": []
+          }
+        ],
+        "justMissed": [
+          {
+            "ticker": "012330",
+            "name": "현대모비스",
+            "score": 73.9,
+            "displacedBy": "sector_cap"
+          },
+          {
+            "ticker": "009150",
+            "name": "삼성전기",
+            "score": 72.2,
+            "displacedBy": "correlation_cap"
+          },
+          {
+            "ticker": "003670",
+            "name": "포스코퓨처엠",
+            "score": 70.7,
+            "displacedBy": "catalyst_cluster_cap"
+          }
+        ],
+        "emptyReason": null
+      },
+      "mid_term": {
+        "market": "KR",
+        "horizon": "mid_term",
+        "asOf": "2026-08-14",
+        "turnover30d": 0.335,
+        "sampleWarning": false,
+        "rows": [
+          {
+            "rank": 1,
+            "movement": 2,
+            "ticker": "051910",
+            "name": "LG화학",
+            "market": "KR",
+            "sector": "Materials",
+            "currency": "KRW",
+            "price": 322827,
+            "changePct": 2.54,
+            "score": 87.4,
+            "rawZ": 1.858,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 320223,
+              "high": 326993
+            },
+            "stop": 307206,
+            "targets": {
+              "conservative": 333241,
+              "base": 341572,
+              "bull": 354069
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "거래량 확대와 함께 박스권을 상향 돌파했고 4거래일 연속 50일 이동평균선 위에서 마감했습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 4.442,
+                "z": 0.48
+              },
+              "fundamentalMomentum": {
+                "raw": 1.178,
+                "z": 1.28
+              },
+              "earningsDrift": {
+                "raw": 0.593,
+                "z": -1.36
+              },
+              "moneyFlow": {
+                "raw": 0.224,
+                "z": 0.89
+              },
+              "sectorStrength": {
+                "raw": 0.434,
+                "z": 2.2
+              }
+            },
+            "sparkline": [
+              274268.42,
+              273965.32,
+              273242.45,
+              270576.52,
+              278178.13,
+              277815.5,
+              277698.17,
+              273472.69,
+              267446.56,
+              259963.49,
+              264952.74,
+              265057.33,
+              265655.58,
+              266443.4,
+              265153.33,
+              258004.4,
+              264899.28,
+              263460.74,
+              257635.33,
+              264170.58,
+              261760.32,
+              260507.34,
+              257346.98,
+              261835.19,
+              266739.26,
+              269936.1,
+              265039.89,
+              263017.24,
+              259346.63,
+              322827
+            ],
+            "newsCount": 7,
+            "sentiment": null,
+            "evidence": [],
+            "flags": []
+          },
+          {
+            "rank": 2,
+            "movement": -3,
+            "ticker": "035720",
+            "name": "카카오",
+            "market": "KR",
+            "sector": "Communication Services",
+            "currency": "KRW",
+            "price": 40165,
+            "changePct": 3.88,
+            "score": 86,
+            "rawZ": 0.911,
+            "completeness": 0.91,
+            "riskGauge": 3,
+            "entry": {
+              "low": 39819,
+              "high": 40719
+            },
+            "stop": 38087,
+            "targets": {
+              "conservative": 41551,
+              "base": 42659,
+              "bull": 44322
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "대규모 공급 계약이 공시되면서 계약 기준 매출 가시성이 2029년까지 확보되었습니다.",
+            "catalystCluster": "gpu-export-policy",
+            "factors": {
+              "trendAlignment": {
+                "raw": 1.561,
+                "z": 1.96
+              },
+              "fundamentalMomentum": {
+                "raw": 1.43,
+                "z": -0.92
+              },
+              "earningsDrift": {
+                "raw": 2.006,
+                "z": -1.1
+              },
+              "moneyFlow": {
+                "raw": 4.067,
+                "z": -1.44
+              },
+              "sectorStrength": {
+                "raw": 3.569,
+                "z": 1.68
+              }
+            },
+            "sparkline": [
+              38386.45,
+              39613.86,
+              39345.22,
+              40266.5,
+              39147.67,
+              39273.26,
+              40035.64,
+              39905.48,
+              41149.73,
+              40900.77,
+              40357.15,
+              39716.03,
+              38726.15,
+              39302.81,
+              39109.51,
+              39503.35,
+              39360.89,
+              40174.57,
+              39917.96,
+              40825.13,
+              40044.4,
+              40857.1,
+              42133.61,
+              43092.93,
+              42563.81,
+              42669.96,
+              41826.68,
+              42326.96,
+              43377.9,
+              40165
+            ],
+            "newsCount": 6,
+            "sentiment": -0.22,
+            "evidence": [
+              "상향",
+              "사상 최대",
+              "흑자 전환"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 3,
+            "movement": 4,
+            "ticker": "012330",
+            "name": "현대모비스",
+            "market": "KR",
+            "sector": "Consumer Discretionary",
+            "currency": "KRW",
+            "price": 258646,
+            "changePct": 1.04,
+            "score": 84.8,
+            "rawZ": 0.668,
+            "completeness": 1,
+            "riskGauge": 2,
+            "entry": {
+              "low": 256213,
+              "high": 262539
+            },
+            "stop": 244048,
+            "targets": {
+              "conservative": 268378,
+              "base": 276164,
+              "bull": 287842
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "원가 절감 프로그램이 계획보다 앞서 진행 중이며 경영진은 마진을 제시 범위 상단으로 안내했습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 4.175,
+                "z": -1.53
+              },
+              "fundamentalMomentum": {
+                "raw": 1.554,
+                "z": 1.51
+              },
+              "earningsDrift": {
+                "raw": 2.022,
+                "z": 2.02
+              },
+              "moneyFlow": {
+                "raw": 4.391,
+                "z": 0.38
+              },
+              "sectorStrength": {
+                "raw": 0.324,
+                "z": -0.96
+              }
+            },
+            "sparkline": [
+              252518.84,
+              259583.32,
+              257897.81,
+              261447.46,
+              262544.61,
+              263352.76,
+              258978.92,
+              256412.24,
+              263781.56,
+              256833.27,
+              250573.74,
+              247723.07,
+              251898.37,
+              255231.15,
+              255609.97,
+              259124.92,
+              263637.09,
+              258121.24,
+              260271.29,
+              255735.77,
+              252547.64,
+              260061.94,
+              263988.71,
+              270029.74,
+              277505.96,
+              272554.38,
+              270450.75,
+              267097.63,
+              275566.3,
+              258646
+            ],
+            "newsCount": 7,
+            "sentiment": -0.23,
+            "evidence": [
+              "하향",
+              "감익",
+              "마진 압박"
+            ],
+            "flags": [
+              "price_limit"
+            ]
+          },
+          {
+            "rank": 4,
+            "movement": -5,
+            "ticker": "009150",
+            "name": "삼성전기",
+            "market": "KR",
+            "sector": "Information Technology",
+            "currency": "KRW",
+            "price": 148915,
+            "changePct": 3.77,
+            "score": 82,
+            "rawZ": 2.171,
+            "completeness": 1,
+            "riskGauge": 1,
+            "entry": {
+              "low": 147833,
+              "high": 150647
+            },
+            "stop": 142420,
+            "targets": {
+              "conservative": 153245,
+              "base": 156709,
+              "bull": 161905
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "거래량 확대와 함께 박스권을 상향 돌파했고 4거래일 연속 50일 이동평균선 위에서 마감했습니다.",
+            "catalystCluster": "gpu-export-policy",
+            "factors": {
+              "trendAlignment": {
+                "raw": 1.551,
+                "z": 2.36
+              },
+              "fundamentalMomentum": {
+                "raw": 0.682,
+                "z": 0.63
+              },
+              "earningsDrift": {
+                "raw": 0.353,
+                "z": -0.71
+              },
+              "moneyFlow": {
+                "raw": 2.691,
+                "z": 1.35
+              },
+              "sectorStrength": {
+                "raw": 3.479,
+                "z": 2.09
+              }
+            },
+            "sparkline": [
+              136658.68,
+              133331.95,
+              137165.21,
+              140235.02,
+              137578.2,
+              136995.84,
+              138594.92,
+              140126,
+              142876.88,
+              147316.57,
+              148435.33,
+              148586.69,
+              150473.84,
+              153211.95,
+              150108.44,
+              147376.57,
+              143596.42,
+              145316.82,
+              142819.73,
+              142705.56,
+              140752.32,
+              144248.31,
+              141292.36,
+              138230.88,
+              136960.55,
+              134389.72,
+              133671.71,
+              137100.87,
+              136394.67,
+              148915
+            ],
+            "newsCount": 2,
+            "sentiment": -0.33,
+            "evidence": [
+              "조사",
+              "지연",
+              "리콜"
+            ],
+            "flags": [
+              "price_limit"
+            ]
+          },
+          {
+            "rank": 5,
+            "movement": "NEW",
+            "ticker": "003670",
+            "name": "포스코퓨처엠",
+            "market": "KR",
+            "sector": "Materials",
+            "currency": "KRW",
+            "price": 218003,
+            "changePct": 3.75,
+            "score": 79.1,
+            "rawZ": 0.673,
+            "completeness": 1,
+            "riskGauge": 1,
+            "entry": {
+              "low": 215908,
+              "high": 221356
+            },
+            "stop": 205430,
+            "targets": {
+              "conservative": 226385,
+              "base": 233090,
+              "bull": 243149
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "업종 전반에 영향을 주는 정책 발표가 있었으며, 해당 종목의 영업 레버리지가 가장 높습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 1.367,
+                "z": -1.33
+              },
+              "fundamentalMomentum": {
+                "raw": 2.098,
+                "z": 1.1
+              },
+              "earningsDrift": {
+                "raw": 0.875,
+                "z": -0.62
+              },
+              "moneyFlow": {
+                "raw": 2.406,
+                "z": 2.34
+              },
+              "sectorStrength": {
+                "raw": 3.387,
+                "z": 0.43
+              }
+            },
+            "sparkline": [
+              214319.8,
+              212909.13,
+              215151.79,
+              217549.64,
+              222342.15,
+              218735.21,
+              220848.4,
+              227398.53,
+              228432.93,
+              222612.96,
+              229291.55,
+              234156.79,
+              234784.48,
+              232315.12,
+              228363.84,
+              223775.98,
+              224095.41,
+              227759.24,
+              222847.68,
+              216935.78,
+              216687.68,
+              218287.41,
+              221129.05,
+              218904.65,
+              224708.58,
+              227704.46,
+              222603.23,
+              221475.01,
+              224645.65,
+              218003
+            ],
+            "newsCount": 12,
+            "sentiment": 0.24,
+            "evidence": [
+              "조사",
+              "지연",
+              "리콜"
+            ],
+            "flags": [
+              "price_limit"
+            ]
+          },
+          {
+            "rank": 6,
+            "movement": 0,
+            "ticker": "259960",
+            "name": "크래프톤",
+            "market": "KR",
+            "sector": "Communication Services",
+            "currency": "KRW",
+            "price": 333239,
+            "changePct": -0.65,
+            "score": 77.7,
+            "rawZ": -0.016,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 329896,
+              "high": 338588
+            },
+            "stop": 313179,
+            "targets": {
+              "conservative": 346612,
+              "base": 357311,
+              "bull": 373359
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "주력 제품의 최종 규제 승인이 완료되어 다음 분기 출시가 예상됩니다.",
+            "catalystCluster": "gpu-export-policy",
+            "factors": {
+              "trendAlignment": {
+                "raw": 1.016,
+                "z": -0.54
+              },
+              "fundamentalMomentum": {
+                "raw": 2.199,
+                "z": -0.29
+              },
+              "earningsDrift": {
+                "raw": 1.366,
+                "z": 0.81
+              },
+              "moneyFlow": {
+                "raw": 1.232,
+                "z": -0.23
+              },
+              "sectorStrength": {
+                "raw": 0.725,
+                "z": -0.21
+              }
+            },
+            "sparkline": [
+              284878,
+              280435.96,
+              282445.34,
+              279325.2,
+              279591.01,
+              278761.56,
+              276810.49,
+              276659.78,
+              283249.52,
+              286523.74,
+              282139.01,
+              290960.2,
+              297300.98,
+              299269.47,
+              293514.22,
+              289477.42,
+              287306.5,
+              291588.76,
+              299090.92,
+              294753.72,
+              289297.8,
+              290402.03,
+              287286.88,
+              291209.8,
+              291722.42,
+              289660.13,
+              285773.76,
+              289183.83,
+              293431.82,
+              333239
+            ],
+            "newsCount": 6,
+            "sentiment": 0.04,
+            "evidence": [
+              "목표주가 상향",
+              "증설",
+              "수주"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 7,
+            "movement": "NEW",
+            "ticker": "000660",
+            "name": "SK하이닉스",
+            "market": "KR",
+            "sector": "Information Technology",
+            "currency": "KRW",
+            "price": 239834,
+            "changePct": 2.53,
+            "score": 75.7,
+            "rawZ": 1.527,
+            "completeness": 0.8,
+            "riskGauge": 1,
+            "entry": {
+              "low": 238707,
+              "high": 241637
+            },
+            "stop": 233072,
+            "targets": {
+              "conservative": 244342,
+              "base": 247948,
+              "bull": 253358
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "12개월 수주 잔고가 사상 최대치를 기록했고 경영진은 가격 결정력이 내년까지 유지된다고 밝혔습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 1.81,
+                "z": -1.51
+              },
+              "fundamentalMomentum": {
+                "raw": 1.364,
+                "z": -0.21
+              },
+              "earningsDrift": {
+                "raw": 2.395,
+                "z": -0.41
+              },
+              "moneyFlow": {
+                "raw": 2.367,
+                "z": -0.49
+              },
+              "sectorStrength": {
+                "raw": 1.012,
+                "z": 1.37
+              }
+            },
+            "sparkline": [
+              218252.35,
+              219345.17,
+              225184.56,
+              231641.29,
+              234840.46,
+              229030.04,
+              229722.21,
+              226117.75,
+              226755.32,
+              222324.7,
+              226032.76,
+              223102.43,
+              229545.07,
+              223320.61,
+              223750.18,
+              228281.74,
+              233261.97,
+              236927.97,
+              242408.3,
+              236348.23,
+              240418.47,
+              242074.08,
+              245041.72,
+              247314.18,
+              243189.76,
+              239821.61,
+              233714.91,
+              240826.48,
+              237786.79,
+              239834
+            ],
+            "newsCount": 6,
+            "sentiment": -0.19,
+            "evidence": [
+              "돌파",
+              "순매수",
+              "거래량 급증"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 8,
+            "movement": 2,
+            "ticker": "005380",
+            "name": "현대차",
+            "market": "KR",
+            "sector": "Consumer Discretionary",
+            "currency": "KRW",
+            "price": 266207,
+            "changePct": 4.21,
+            "score": 73.1,
+            "rawZ": -0.329,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 264282,
+              "high": 269287
+            },
+            "stop": 254656,
+            "targets": {
+              "conservative": 273908,
+              "base": 280069,
+              "bull": 289310
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "12개월 수주 잔고가 사상 최대치를 기록했고 경영진은 가격 결정력이 내년까지 유지된다고 밝혔습니다.",
+            "catalystCluster": "grid-buildout",
+            "factors": {
+              "trendAlignment": {
+                "raw": 1.227,
+                "z": 0.68
+              },
+              "fundamentalMomentum": {
+                "raw": 3.307,
+                "z": 0.89
+              },
+              "earningsDrift": {
+                "raw": 1.994,
+                "z": -0.65
+              },
+              "moneyFlow": {
+                "raw": 2.932,
+                "z": 1.02
+              },
+              "sectorStrength": {
+                "raw": 0.606,
+                "z": -1.24
+              }
+            },
+            "sparkline": [
+              236979.19,
+              244409.22,
+              240600.08,
+              238580.46,
+              241492.54,
+              238695.51,
+              240935.87,
+              243509.99,
+              243006.13,
+              243134.24,
+              239320.19,
+              239973.94,
+              238737.19,
+              238446.1,
+              234581.17,
+              241561.85,
+              237849.23,
+              235282,
+              234098.81,
+              237289.46,
+              233164.79,
+              237638.05,
+              239231.88,
+              236361.42,
+              230171.59,
+              236331.26,
+              233206.59,
+              238324.7,
+              240188.5,
+              266207
+            ],
+            "newsCount": 13,
+            "sentiment": -0.39,
+            "evidence": [
+              "상향",
+              "사상 최대",
+              "흑자 전환"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 9,
+            "movement": 4,
+            "ticker": "035420",
+            "name": "NAVER",
+            "market": "KR",
+            "sector": "Communication Services",
+            "currency": "KRW",
+            "price": 192396,
+            "changePct": 4.03,
+            "score": 71.2,
+            "rawZ": 0.004,
+            "completeness": 0.62,
+            "riskGauge": 4,
+            "entry": {
+              "low": 190857,
+              "high": 194858
+            },
+            "stop": 183163,
+            "targets": {
+              "conservative": 198551,
+              "base": 203475,
+              "bull": 210861
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "12억 달러 규모 증설 계획을 발표한 뒤 24시간 내 3개 증권사가 목표주가를 상향했습니다.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "trendAlignment": {
+                "raw": 3.078,
+                "z": 0.5
+              },
+              "fundamentalMomentum": {
+                "raw": 3.755,
+                "z": 0.86
+              },
+              "earningsDrift": {
+                "raw": 2.395,
+                "z": 0.23
+              },
+              "moneyFlow": {
+                "raw": 1.782,
+                "z": 0.32
+              },
+              "sectorStrength": {
+                "raw": 1.187,
+                "z": 2.39
+              }
+            },
+            "sparkline": [
+              176933.19,
+              177026.14,
+              174193.88,
+              170642.31,
+              175514.57,
+              174530.58,
+              173445.8,
+              174485.4,
+              173523.62,
+              173125.21,
+              170395.69,
+              169210.77,
+              164621.91,
+              167292.99,
+              165931.14,
+              165109.78,
+              168009.12,
+              173135.93,
+              175312.76,
+              178726.06,
+              183396.92,
+              181268.94,
+              176828.71,
+              178024.7,
+              177228.83,
+              182896.9,
+              186266.63,
+              189028.92,
+              194182,
+              192396
+            ],
+            "newsCount": 7,
+            "sentiment": 0.53,
+            "evidence": [
+              "돌파",
+              "순매수",
+              "거래량 급증"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 10,
+            "movement": 2,
+            "ticker": "055550",
+            "name": "신한지주",
+            "market": "KR",
+            "sector": "Financials",
+            "currency": "KRW",
+            "price": 62016,
+            "changePct": 1.15,
+            "score": 69,
+            "rawZ": 0.332,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 61374,
+              "high": 63043
+            },
+            "stop": 58165,
+            "targets": {
+              "conservative": 64584,
+              "base": 66638,
+              "bull": 69719
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "2분기 매출이 시장 기대치를 상회했고 연간 가이던스를 상향했습니다. 데이터센터 부문이 전년 대비 42% 성장했습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 3.845,
+                "z": 1.18
+              },
+              "fundamentalMomentum": {
+                "raw": 4.31,
+                "z": 0.33
+              },
+              "earningsDrift": {
+                "raw": 4.411,
+                "z": -0.96
+              },
+              "moneyFlow": {
+                "raw": 2.916,
+                "z": 0
+              },
+              "sectorStrength": {
+                "raw": 2.663,
+                "z": 1.21
+              }
+            },
+            "sparkline": [
+              53602.12,
+              53779.92,
+              53427.79,
+              54478.51,
+              54033.19,
+              54736.8,
+              55397.26,
+              56539.91,
+              57745.47,
+              57864.26,
+              58993.38,
+              59033.1,
+              59005.69,
+              60499.09,
+              58817.19,
+              60562.54,
+              60698.28,
+              60004.41,
+              60205.58,
+              61156.43,
+              63087.31,
+              63932.18,
+              63752.59,
+              62747.95,
+              63832.64,
+              62517.82,
+              61735.65,
+              63157.98,
+              62761.03,
+              62016
+            ],
+            "newsCount": 12,
+            "sentiment": -0.07,
+            "evidence": [
+              "목표주가 상향",
+              "증설",
+              "수주"
+            ],
+            "flags": []
+          }
+        ],
+        "justMissed": [
+          {
+            "ticker": "028260",
+            "name": "삼성물산",
+            "score": 66.6,
+            "displacedBy": "sector_cap"
+          },
+          {
+            "ticker": "066570",
+            "name": "LG전자",
+            "score": 64.1,
+            "displacedBy": "correlation_cap"
+          },
+          {
+            "ticker": "086790",
+            "name": "하나금융지주",
+            "score": 60.9,
+            "displacedBy": "catalyst_cluster_cap"
+          }
+        ],
+        "emptyReason": null
+      },
+      "long_term": {
+        "market": "KR",
+        "horizon": "long_term",
+        "asOf": "2026-08-14",
+        "turnover30d": 0.062,
+        "sampleWarning": true,
+        "rows": [
+          {
+            "rank": 1,
+            "movement": 2,
+            "ticker": "373220",
+            "name": "LG에너지솔루션",
+            "market": "KR",
+            "sector": "Industrials",
+            "currency": "KRW",
+            "price": 349174,
+            "changePct": 1.33,
+            "score": 91,
+            "rawZ": 0.602,
+            "completeness": 1,
+            "riskGauge": 5,
+            "entry": {
+              "low": 337601,
+              "high": 353032
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 412025,
+              "base": 495827,
+              "bull": 645972
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Free cash flow conversion drops below 60% of net income for four quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "12억 달러 규모 증설 계획을 발표한 뒤 24시간 내 3개 증권사가 목표주가를 상향했습니다.",
+            "catalystCluster": "ai-datacentre-capex",
+            "factors": {
+              "growthQuality": {
+                "raw": 0.916,
+                "z": 0.1
+              },
+              "capitalEfficiency": {
+                "raw": 0.942,
+                "z": 1.46
+              },
+              "cashGeneration": {
+                "raw": 2.628,
+                "z": -0.2
+              },
+              "valuation": {
+                "raw": 1.204,
+                "z": -0.55
+              },
+              "fScore": {
+                "raw": 0.843,
+                "z": -0.65
+              }
+            },
+            "sparkline": [
+              319209.75,
+              311182.33,
+              306701.91,
+              309168.32,
+              317246.5,
+              326333.34,
+              335517.6,
+              339036.63,
+              344139.15,
+              335542.78,
+              345267.26,
+              351306.9,
+              352529.58,
+              356360.56,
+              354308.52,
+              349431.15,
+              358615.95,
+              354058.49,
+              346888.83,
+              350977.74,
+              346205.69,
+              350868.3,
+              346483.36,
+              341296.89,
+              340233.95,
+              344069.84,
+              344642.62,
+              350133.96,
+              356298.55,
+              349174
+            ],
+            "newsCount": 0,
+            "sentiment": -0.49,
+            "evidence": [
+              "상향",
+              "사상 최대",
+              "흑자 전환"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 2,
+            "movement": 6,
+            "ticker": "051910",
+            "name": "LG화학",
+            "market": "KR",
+            "sector": "Materials",
+            "currency": "KRW",
+            "price": 316999,
+            "changePct": 4.98,
+            "score": 90.3,
+            "rawZ": 1.999,
+            "completeness": 0.92,
+            "riskGauge": 4,
+            "entry": {
+              "low": 306020,
+              "high": 320659
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 374059,
+              "base": 450139,
+              "bull": 586448
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Free cash flow conversion drops below 60% of net income for four quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "9개 분기 만에 잉여현금흐름이 흑자 전환했고 자사주 매입 한도를 두 배로 늘렸습니다.",
+            "catalystCluster": "gpu-export-policy",
+            "factors": {
+              "growthQuality": {
+                "raw": 2.197,
+                "z": 1.11
+              },
+              "capitalEfficiency": {
+                "raw": 2.242,
+                "z": 0.83
+              },
+              "cashGeneration": {
+                "raw": 0.594,
+                "z": 2.17
+              },
+              "valuation": {
+                "raw": 2.849,
+                "z": 1.18
+              },
+              "fScore": {
+                "raw": 1.446,
+                "z": -0.99
+              }
+            },
+            "sparkline": [
+              289736.76,
+              296594.77,
+              298913.02,
+              308245.76,
+              303388.96,
+              312532.76,
+              315976.52,
+              319823.25,
+              317210.31,
+              317878.06,
+              319521.65,
+              310739.53,
+              310602.93,
+              317269.73,
+              326202.68,
+              320366.5,
+              324834.54,
+              326744.73,
+              323880.65,
+              330322.1,
+              336820.92,
+              333058.11,
+              332310.77,
+              326531.22,
+              326777.19,
+              335305.16,
+              338037.77,
+              345398.42,
+              340076.11,
+              316999
+            ],
+            "newsCount": 0,
+            "sentiment": -0.49,
+            "evidence": [
+              "상향",
+              "사상 최대",
+              "흑자 전환"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 3,
+            "movement": 6,
+            "ticker": "035720",
+            "name": "카카오",
+            "market": "KR",
+            "sector": "Communication Services",
+            "currency": "KRW",
+            "price": 41069,
+            "changePct": 3.91,
+            "score": 87.5,
+            "rawZ": 1.744,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 39877,
+              "high": 41466
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 48461,
+              "base": 58318,
+              "bull": 75978
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Free cash flow conversion drops below 60% of net income for four quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "주력 제품의 최종 규제 승인이 완료되어 다음 분기 출시가 예상됩니다.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 4.259,
+                "z": 2.11
+              },
+              "capitalEfficiency": {
+                "raw": 0.654,
+                "z": 1.4
+              },
+              "cashGeneration": {
+                "raw": 3.09,
+                "z": -0.92
+              },
+              "valuation": {
+                "raw": 2.432,
+                "z": 1.22
+              },
+              "fScore": {
+                "raw": 0.314,
+                "z": 0.2
+              }
+            },
+            "sparkline": [
+              36724.09,
+              35820.01,
+              36511.38,
+              35507.63,
+              35374,
+              36053.52,
+              36000.74,
+              35919.68,
+              35003.47,
+              35020.99,
+              35868.62,
+              36373.89,
+              36327.71,
+              37155.07,
+              37718.82,
+              36703.36,
+              36889.04,
+              37994.52,
+              39153.96,
+              39581.27,
+              39581.84,
+              39195.12,
+              39053.98,
+              39732.45,
+              38723.35,
+              37781.06,
+              37573.36,
+              38723.01,
+              39412.43,
+              41069
+            ],
+            "newsCount": 7,
+            "sentiment": 0.34,
+            "evidence": [
+              "돌파",
+              "순매수",
+              "거래량 급증"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 4,
+            "movement": -1,
+            "ticker": "012330",
+            "name": "현대모비스",
+            "market": "KR",
+            "sector": "Consumer Discretionary",
+            "currency": "KRW",
+            "price": 252104,
+            "changePct": 2.76,
+            "score": 84.5,
+            "rawZ": -0.055,
+            "completeness": 0.63,
+            "riskGauge": 3,
+            "entry": {
+              "low": 237820,
+              "high": 256865
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 297483,
+              "base": 357988,
+              "bull": 466392
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "거래량 확대와 함께 박스권을 상향 돌파했고 4거래일 연속 50일 이동평균선 위에서 마감했습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 3.581,
+                "z": 1.47
+              },
+              "capitalEfficiency": {
+                "raw": 2.591,
+                "z": 1.03
+              },
+              "cashGeneration": {
+                "raw": 2.111,
+                "z": 0.22
+              },
+              "valuation": {
+                "raw": 1.164,
+                "z": -0.43
+              },
+              "fScore": {
+                "raw": 2.315,
+                "z": 0.75
+              }
+            },
+            "sparkline": [
+              220122.19,
+              225578.97,
+              220029.84,
+              214702.24,
+              220628.62,
+              220278.92,
+              220120.2,
+              223594.87,
+              225812.06,
+              227434.94,
+              224593.19,
+              223723.56,
+              223561.88,
+              223404.2,
+              218546.79,
+              214210.45,
+              218325.95,
+              220979.29,
+              215146.78,
+              217364.51,
+              217978.46,
+              224098.09,
+              225069.83,
+              228336.73,
+              227554.19,
+              233908,
+              228053.05,
+              232826.89,
+              234982.39,
+              252104
+            ],
+            "newsCount": 10,
+            "sentiment": -0.13,
+            "evidence": [
+              "목표주가 상향",
+              "증설",
+              "수주"
+            ],
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 5,
+            "movement": "NEW",
+            "ticker": "009150",
+            "name": "삼성전기",
+            "market": "KR",
+            "sector": "Information Technology",
+            "currency": "KRW",
+            "price": 151111,
+            "changePct": -3.18,
+            "score": 83.3,
+            "rawZ": 1.636,
+            "completeness": 1,
+            "riskGauge": 5,
+            "entry": {
+              "low": 144396,
+              "high": 153349
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 178311,
+              "base": 214578,
+              "bull": 279555
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "거래량 확대와 함께 박스권을 상향 돌파했고 4거래일 연속 50일 이동평균선 위에서 마감했습니다.",
+            "catalystCluster": "grid-buildout",
+            "factors": {
+              "growthQuality": {
+                "raw": 1.911,
+                "z": 1.65
+              },
+              "capitalEfficiency": {
+                "raw": 4.487,
+                "z": -0.94
+              },
+              "cashGeneration": {
+                "raw": 0.962,
+                "z": -0.01
+              },
+              "valuation": {
+                "raw": 2.813,
+                "z": 1.92
+              },
+              "fScore": {
+                "raw": 1.213,
+                "z": 1.18
+              }
+            },
+            "sparkline": [
+              130586.84,
+              132690.18,
+              133712.22,
+              136264.19,
+              139710.11,
+              135989,
+              132792.49,
+              133240.73,
+              134309.14,
+              138554.44,
+              136579.49,
+              135365.97,
+              136248.53,
+              135262.16,
+              138553.38,
+              140025.06,
+              136202.71,
+              139220.51,
+              137515.31,
+              138856.53,
+              136180.25,
+              140501.79,
+              138972.76,
+              136208.61,
+              139999.82,
+              137191.55,
+              135626.19,
+              132487.9,
+              128910.05,
+              151111
+            ],
+            "newsCount": 13,
+            "sentiment": null,
+            "evidence": [],
+            "flags": []
+          },
+          {
+            "rank": 6,
+            "movement": 0,
+            "ticker": "003670",
+            "name": "포스코퓨처엠",
+            "market": "KR",
+            "sector": "Materials",
+            "currency": "KRW",
+            "price": 216650,
+            "changePct": -3.01,
+            "score": 79.9,
+            "rawZ": -0.297,
+            "completeness": 1,
+            "riskGauge": 1,
+            "entry": {
+              "low": 202280,
+              "high": 221440
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 255647,
+              "base": 307643,
+              "bull": 400803
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "원가 절감 프로그램이 계획보다 앞서 진행 중이며 경영진은 마진을 제시 범위 상단으로 안내했습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 2.129,
+                "z": -1.19
+              },
+              "capitalEfficiency": {
+                "raw": 3.261,
+                "z": 0.68
+              },
+              "cashGeneration": {
+                "raw": 2.85,
+                "z": -0.99
+              },
+              "valuation": {
+                "raw": 2.704,
+                "z": 0.46
+              },
+              "fScore": {
+                "raw": 1.638,
+                "z": 1.16
+              }
+            },
+            "sparkline": [
+              189763.17,
+              189055.74,
+              183766.44,
+              179483.65,
+              183985.77,
+              184441.86,
+              190158.29,
+              186453.57,
+              183955.88,
+              182911.66,
+              179854.04,
+              175975.3,
+              173280.59,
+              170235.49,
+              175271.23,
+              172786.53,
+              173657.09,
+              170467.23,
+              169429.85,
+              167580.06,
+              166459.15,
+              165750.08,
+              169428.14,
+              172928.56,
+              171471.17,
+              174196.39,
+              172791.25,
+              168530.53,
+              173560.67,
+              216650
+            ],
+            "newsCount": 10,
+            "sentiment": 0.21,
+            "evidence": [
+              "하향",
+              "감익",
+              "마진 압박"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 7,
+            "movement": -4,
+            "ticker": "259960",
+            "name": "크래프톤",
+            "market": "KR",
+            "sector": "Communication Services",
+            "currency": "KRW",
+            "price": 326638,
+            "changePct": -0.6,
+            "score": 78.1,
+            "rawZ": 0.516,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 311233,
+              "high": 331773
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 385433,
+              "base": 463826,
+              "bull": 604280
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "2분기 매출이 시장 기대치를 상회했고 연간 가이던스를 상향했습니다. 데이터센터 부문이 전년 대비 42% 성장했습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 0.874,
+                "z": 1.62
+              },
+              "capitalEfficiency": {
+                "raw": 3.996,
+                "z": 0.32
+              },
+              "cashGeneration": {
+                "raw": 2.582,
+                "z": 0.18
+              },
+              "valuation": {
+                "raw": 1.909,
+                "z": 2.03
+              },
+              "fScore": {
+                "raw": 3.636,
+                "z": 1.83
+              }
+            },
+            "sparkline": [
+              317736.25,
+              314177.37,
+              320761.29,
+              320984.7,
+              327622.63,
+              337375.15,
+              331764.17,
+              330327.12,
+              329633.18,
+              323878.58,
+              323369.02,
+              327866.27,
+              331993.01,
+              340830.06,
+              343712.99,
+              346777.57,
+              341921.09,
+              351918.25,
+              344155.74,
+              343598.58,
+              338414.92,
+              336020.94,
+              341422.03,
+              337095.88,
+              346780.91,
+              348048.72,
+              352003.58,
+              360994.97,
+              368082.94,
+              326638
+            ],
+            "newsCount": 9,
+            "sentiment": -0.49,
+            "evidence": [
+              "조사",
+              "지연",
+              "리콜"
+            ],
+            "flags": []
+          },
+          {
+            "rank": 8,
+            "movement": -4,
+            "ticker": "000660",
+            "name": "SK하이닉스",
+            "market": "KR",
+            "sector": "Information Technology",
+            "currency": "KRW",
+            "price": 237467,
+            "changePct": -3.01,
+            "score": 76.1,
+            "rawZ": -0.117,
+            "completeness": 1,
+            "riskGauge": 1,
+            "entry": {
+              "low": 224128,
+              "high": 241913
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 280211,
+              "base": 337203,
+              "bull": 439314
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Free cash flow conversion drops below 60% of net income for four quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "2분기 매출이 시장 기대치를 상회했고 연간 가이던스를 상향했습니다. 데이터센터 부문이 전년 대비 42% 성장했습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 1.381,
+                "z": 2.25
+              },
+              "capitalEfficiency": {
+                "raw": 0.609,
+                "z": 2.09
+              },
+              "cashGeneration": {
+                "raw": 2.875,
+                "z": 0.65
+              },
+              "valuation": {
+                "raw": 3.185,
+                "z": -1.39
+              },
+              "fScore": {
+                "raw": 0.527,
+                "z": -0.02
+              }
+            },
+            "sparkline": [
+              217696.83,
+              217813.99,
+              214879.96,
+              216725,
+              221797.75,
+              223734.21,
+              224373.44,
+              221130.9,
+              216738.24,
+              218612.26,
+              223155.12,
+              223161.78,
+              229212.46,
+              233748.82,
+              232895.28,
+              234194.88,
+              232096.46,
+              230624.02,
+              229651.19,
+              227102.02,
+              228171.36,
+              227409.27,
+              232544.8,
+              235638.3,
+              234920.76,
+              229496.32,
+              236746.21,
+              232091.37,
+              231958.79,
+              237467
+            ],
+            "newsCount": 13,
+            "sentiment": null,
+            "evidence": [],
+            "flags": []
+          },
+          {
+            "rank": 9,
+            "movement": 2,
+            "ticker": "005380",
+            "name": "현대차",
+            "market": "KR",
+            "sector": "Consumer Discretionary",
+            "currency": "KRW",
+            "price": 273994,
+            "changePct": 4.52,
+            "score": 75.4,
+            "rawZ": 0.405,
+            "completeness": 0.86,
+            "riskGauge": 2,
+            "entry": {
+              "low": 260896,
+              "high": 278360
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 323313,
+              "base": 389071,
+              "bull": 506889
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "주가가 6주간 횡보하는 동안 기관 순매수와 OBV 상승이 동시에 관찰되었습니다.",
+            "catalystCluster": "gpu-export-policy",
+            "factors": {
+              "growthQuality": {
+                "raw": 3.34,
+                "z": 1.85
+              },
+              "capitalEfficiency": {
+                "raw": 0.537,
+                "z": 0.94
+              },
+              "cashGeneration": {
+                "raw": 3.616,
+                "z": 1.52
+              },
+              "valuation": {
+                "raw": 3.516,
+                "z": -1.45
+              },
+              "fScore": {
+                "raw": 3.345,
+                "z": -1.05
+              }
+            },
+            "sparkline": [
+              268174.15,
+              264634.91,
+              271361.48,
+              264535.36,
+              259232.39,
+              264510.33,
+              266960.97,
+              272005.91,
+              265438.84,
+              261304.52,
+              262655.17,
+              268355.3,
+              262005.04,
+              264436.52,
+              264032.49,
+              260505.97,
+              261082.33,
+              263971.31,
+              258015.92,
+              252171.84,
+              247345.7,
+              254342.07,
+              259813.4,
+              253835.2,
+              260118.42,
+              256821.75,
+              255127.41,
+              250278.86,
+              248359.89,
+              273994
+            ],
+            "newsCount": 3,
+            "sentiment": 0.57,
+            "evidence": [
+              "목표주가 상향",
+              "증설",
+              "수주"
+            ],
+            "flags": [
+              "partial_data",
+              "price_limit"
+            ]
+          },
+          {
+            "rank": 10,
+            "movement": 7,
+            "ticker": "035420",
+            "name": "NAVER",
+            "market": "KR",
+            "sector": "Communication Services",
+            "currency": "KRW",
+            "price": 201233,
+            "changePct": -0.27,
+            "score": 72.8,
+            "rawZ": 0.892,
+            "completeness": 1,
+            "riskGauge": 1,
+            "entry": {
+              "low": 188222,
+              "high": 205570
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 237455,
+              "base": 285751,
+              "bull": 372281
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "9개 분기 만에 잉여현금흐름이 흑자 전환했고 자사주 매입 한도를 두 배로 늘렸습니다.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 4.182,
+                "z": -1.29
+              },
+              "capitalEfficiency": {
+                "raw": 3.345,
+                "z": 0.98
+              },
+              "cashGeneration": {
+                "raw": 2.131,
+                "z": 1.99
+              },
+              "valuation": {
+                "raw": 1.702,
+                "z": 0.81
+              },
+              "fScore": {
+                "raw": 1.243,
+                "z": 0.77
+              }
+            },
+            "sparkline": [
+              186570.18,
+              189483.78,
+              186201.4,
+              188234.07,
+              193546.49,
+              194908.44,
+              189616.48,
+              185249.6,
+              189198.72,
+              191311.89,
+              185959.61,
+              189577.01,
+              187253.38,
+              185597,
+              189915.68,
+              191230.02,
+              195153.98,
+              194595.08,
+              192118.46,
+              188862.47,
+              190844.72,
+              193718.38,
+              193829,
+              189597.66,
+              192411.59,
+              196087.83,
+              191749.65,
+              186442.12,
+              183110.67,
+              201233
+            ],
+            "newsCount": 4,
+            "sentiment": -0.07,
+            "evidence": [
+              "돌파",
+              "순매수",
+              "거래량 급증"
+            ],
+            "flags": []
+          }
+        ],
+        "justMissed": [
+          {
+            "ticker": "055550",
+            "name": "신한지주",
+            "score": 71.3,
+            "displacedBy": "sector_cap"
+          },
+          {
+            "ticker": "028260",
+            "name": "삼성물산",
+            "score": 69.8,
+            "displacedBy": "correlation_cap"
+          },
+          {
+            "ticker": "066570",
+            "name": "LG전자",
+            "score": 68.3,
+            "displacedBy": "catalyst_cluster_cap"
+          }
+        ],
+        "emptyReason": null
+      },
+      "ultra_long": {
+        "market": "KR",
+        "horizon": "ultra_long",
+        "asOf": "2026-08-14",
+        "turnover30d": 0,
+        "sampleWarning": true,
+        "rows": [],
+        "justMissed": [],
+        "emptyReason": {
+          "code": "kr_no_decade_fundamentals",
+          "en": "The ultra-long model scores a business on ten years of tagged annual statements — return on invested capital, gross margin and free cash flow conversion, each measured across a full cycle. For US filers the SEC XBRL company-facts API supplies that history. No keyless Korean source does: the free mirrors give a cross-sectional snapshot and two or three years of history, which is not enough to tell a durable compounder from a good recent run. Publishing a 5–10 year list from that would be guessing with a confident face on it, so nothing is published here. A free OpenDART API key would supply the missing filings and turn this board on; until one is configured it stays empty on purpose.",
+          "ko": "초장기 모델은 10년치 태깅된 연간 재무제표로 기업을 평가합니다. 투하자본이익률, 매출총이익률, 잉여현금흐름 전환율을 한 사이클 전체에 걸쳐 측정합니다. 미국 상장사는 SEC XBRL company-facts API가 이 이력을 제공하지만, 키 없이 접근 가능한 한국 소스에는 이에 해당하는 것이 없습니다. 무료 미러는 단면 스냅샷과 2~3년치 이력만 제공하며, 이것으로는 지속 가능한 복리 성장 기업과 최근 실적이 좋았을 뿐인 기업을 구분할 수 없습니다. 그 데이터로 5~10년 목록을 발행하는 것은 확신에 찬 표정의 추측일 뿐이므로 아무것도 발행하지 않습니다. 무료 OpenDART API 키를 설정하면 누락된 공시를 확보해 이 순위표를 활성화할 수 있으며, 그 전까지는 의도적으로 비워 둡니다."
+        }
+      }
+    }
+  }
+}

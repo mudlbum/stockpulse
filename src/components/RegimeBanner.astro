@@ -1,0 +1,58 @@
+---
+/**
+ * Safety feature, not decoration. In `caution` and `risk_off` the reader is
+ * told plainly that the board is being published into a hostile tape and that
+ * the indicated response is smaller size or none at all — loud enough not to
+ * be missed, calm enough not to read as a trading signal of its own.
+ */
+import type { Locale, MarketId } from '../config';
+import { UI } from '../i18n/ui';
+import { fmtNum, fmtRatioPct } from '../lib/format';
+import type { Regime } from '../lib/types';
+
+interface Props {
+  lang: Locale;
+  market: MarketId;
+  regime: Regime;
+  selected: boolean;
+}
+const { lang, market, regime, selected } = Astro.props;
+const t = UI[lang];
+const state = (regime?.state ?? 'unknown') as keyof typeof t.regime.state;
+const loud = state === 'caution' || state === 'risk_off';
+---
+
+<div
+  class={`regime regime-${state} js-panel`}
+  data-regime-market={market}
+  hidden={!selected}
+  role={loud ? 'alert' : 'status'}
+>
+  <div>
+    <div class="regime-head">
+      <span class="regime-label">{t.regime.heading} · {t.common.market[market]}</span>
+      <span class="regime-state">
+        <span aria-hidden="true">{loud ? '⚠ ' : ''}</span>{t.regime.state[state]}
+      </span>
+      <span class="badge">{t.regime.sizing}: {t.regime.sizingValue[state]}</span>
+    </div>
+    <p>{t.regime.body[state]}</p>
+  </div>
+
+  <dl class="regime-facts">
+    <dt>{t.regime.breadth}</dt>
+    <dd>{regime?.breadth === null || regime?.breadth === undefined ? '—' : fmtRatioPct(regime.breadth, 1, lang)}</dd>
+
+    <dt>{t.regime.indexAbove}</dt>
+    <dd>
+      {regime?.indexAboveMA200 === null || regime?.indexAboveMA200 === undefined
+        ? t.regime.unknown
+        : regime.indexAboveMA200
+          ? `▲ ${t.regime.yes}`
+          : `▼ ${t.regime.no}`}
+    </dd>
+
+    <dt>{t.regime.multiplier}</dt>
+    <dd>×{fmtNum(regime?.multiplier ?? 1, 2, lang)}</dd>
+  </dl>
+</div>

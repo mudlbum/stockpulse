@@ -1,0 +1,279 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import {
+  applyDiversification, applyHysteresis, regimeMultiplier, riskGauge,
+  scoreUniverse, tradeParameters, WEIGHTS,
+} from '../scripts/lib/score.mjs';
+import {
+  crowdingPenalty, distressGate, gapTent, gapQuality, piotroski, ttm,
+} from '../scripts/lib/factors.mjs';
+import { makeBars, makeQuarters } from './fixtures/generate.mjs';
+
+// ── factor shapes ──────────────────────────────────────────────────────────
+
+test('gapTent peaks at +4% and penalizes exhaustion gaps', () => {
+  assert.equal(gapTent(0), 0);
+  assert.ok(Math.abs(gapTent(0.04) - 1) < 1e-9);
+  assert.ok(gapTent(0.02) < gapTent(0.04));
+  assert.ok(gapTent(0.08) < gapTent(0.04));
+  assert.equal(gapTent(0.12), 0);
+  // The substantive change from the original flat 2-8% band: a very large
+  // unexplained gap is a reversal signal, so it must score NEGATIVE, not 0.
+  assert.ok(gapTent(0.20) < 0, 'a +20% gap must be penalized');
+  assert.equal(gapTent(-0.03), 0);
+});
+
+test('gapQuality separates a gap that held from one that was sold', () => {
+  const base = { date: 'a', open: 100, high: 100, low: 100, close: 100, volume: 1 };
+  const held = [base, { date: 'b', open: 104, high: 105, low: 103, close: 105, volume: 1 }];
+  const sold = [base, { date: 'b', open: 104, high: 105, low: 103, close: 103, volume: 1 }];
+  assert.ok(gapQuality(held) > gapQuality(sold));
+});
+
+test('crowdingPenalty fires only when price is extended beyond 2.5 ATR', () => {
+  const calm = makeBars({ n: 120, drift: 0.0001, vol: 0.01, seed: 3 });
+  assert.ok(crowdingPenalty(calm) >= 0);
+
+  const extended = makeBars({ n: 120, drift: 0.0001, vol: 0.01, seed: 3 });
+  const last = extended[extended.length - 1];
+  const spike = last.close * 1.45;
+  extended.push({ date: '2026-09-01', open: spike, high: spike, low: spike, close: spike, volume: 1 });
+  assert.ok(crowdingPenalty(extended) > 0.2, 'a 45% spike above trend must be penalized');
+});
+
+test('piotroski returns null when too few tests are computable', () => {
+  assert.equal(piotroski(null, null), null);
+  assert.equal(piotroski({ netIncome: 1 }, { netIncome: 1 }), null);
+});
+
+test('piotroski scores an improving company above a deteriorating one', () => {
+  const prev = {
+    netIncome: 100, totalAssets: 1000, operatingCashFlow: 120, longTermDebt: 300,
+    currentAssets: 400, currentLiabilities: 200, sharesOutstanding: 1000,
+    grossProfit: 400, revenue: 1000,
+  };
+  const better = {
+    netIncome: 150, totalAssets: 1000, operatingCashFlow: 200, longTermDebt: 250,
+    currentAssets: 500, currentLiabilities: 200, sharesOutstanding: 990,
+    grossProfit: 470, revenue: 1100,
+  };
+  const worse = {
+    netIncome: 20, totalAssets: 1200, operatingCashFlow: -30, longTermDebt: 500,
+    currentAssets: 300, currentLiabilities: 300, sharesOutstanding: 1200,
+    grossProfit: 300, revenue: 900,
+  };
+  assert.ok(piotroski(better, prev).score > piotroski(worse, prev).score);
+  assert.ok(piotroski(better, prev).score >= 7);
+});
+
+test('distressGate catches sustained negative operating cash flow', () => {
+  const bad = { quarters: makeQuarters({ n: 8 }).map((q) => ({ ...q, operatingCashFlow: -1000 })) };
+  assert.equal(distressGate(bad), 'negative_operating_cash_flow');
+  const good = { quarters: makeQuarters({ n: 8 }) };
+  assert.equal(distressGate(good), null);
+});
+
+test('ttm requires four complete quarters', () => {
+  const q = makeQuarters({ n: 8 });
+  assert.ok(ttm(q, 'revenue') > 0);
+  assert.equal(ttm(q.slice(-2), 'revenue'), null);
+  assert.equal(ttm([...q.slice(-3), { revenue: null }], 'revenue'), null);
+});
+
+// ── cross-sectional scoring ────────────────────────────────────────────────
+
+function universe(n = 40, seed = 1) {
+  return Array.from({ length: n }, (_, i) => ({
+    ticker: `T${i}`,
+    name: `Test ${i}`,
+    sector: ['Tech', 'Health', 'Energy', 'Financials'][i % 4],
+    bars: makeBars({ n: 300, seed: seed + i, drift: 0.0002 + i * 0.00002 }),
+    factors: {
+      relativeVolume: 1 + i * 0.1,
+      gapQuality: (i % 7) / 7,
+      newsSentiment: ((i % 5) - 2) / 2,
+      volatilityExpansion: (i % 3) * 0.4,
+      trendPosition: (i % 11) / 11,
+      _crowding: 0,
+    },
+  }));
+}
+
+test('scoreUniverse ranks, assigns ranks, and drops gated rows', () => {
+  const rows = universe(40);
+  rows[0].gate = 'price_limit_censored';
+  const ranked = scoreUniverse(rows, 'ultra_short');
+  assert.ok(ranked.length === 39, `expected 39, got ${ranked.length}`);
+  assert.equal(ranked[0].rank, 1);
+  for (let i = 1; i < ranked.length; i++) assert.ok(ranked[i - 1].score >= ranked[i].score);
+  assert.ok(!ranked.some((r) => r.ticker === 'T0'));
+});
+
+test('scoreUniverse drops rows below the completeness gate', () => {
+  const rows = universe(20);
+  rows[5].factors = { relativeVolume: 2, gapQuality: null, newsSentiment: null, volatilityExpansion: null, trendPosition: null, _crowding: 0 };
+  const ranked = scoreUniverse(rows, 'ultra_short');
+  assert.ok(!ranked.some((r) => r.ticker === 'T5'), 'a row with 1 of 5 factors must not be ranked');
+});
+
+test('every weight set sums to 1', () => {
+  for (const [h, w] of Object.entries(WEIGHTS)) {
+    const sum = Object.values(w).reduce((a, b) => a + b, 0);
+    assert.ok(Math.abs(sum - 1) < 1e-9, `${h} weights sum to ${sum}`);
+  }
+});
+
+test('regime multiplier scales down in a hostile tape without reordering', () => {
+  const down = Array.from({ length: 260 }, (_, i) => {
+    const p = 200 - i * 0.3;
+    return { date: `d${i}`, open: p, high: p, low: p, close: p, volume: 1 };
+  });
+  const weak = Array.from({ length: 30 }, () => down);
+  const r = regimeMultiplier({ benchmarkBars: down, universeBars: weak });
+  assert.equal(r.state, 'risk_off');
+  assert.equal(r.multiplier, 0.5);
+
+  const up = Array.from({ length: 260 }, (_, i) => {
+    const p = 100 + i * 0.3;
+    return { date: `d${i}`, open: p, high: p, low: p, close: p, volume: 1 };
+  });
+  const strong = regimeMultiplier({ benchmarkBars: up, universeBars: Array.from({ length: 30 }, () => up) });
+  assert.equal(strong.state, 'risk_on');
+  assert.equal(strong.multiplier, 1);
+
+  // Ordering must be identical either way — the multiplier is a size signal.
+  const rows = universe(30);
+  const a = scoreUniverse(rows, 'ultra_short', { multiplier: 1, state: 'risk_on' }).map((x) => x.ticker);
+  const b = scoreUniverse(rows, 'ultra_short', { multiplier: 0.5, state: 'risk_off' }).map((x) => x.ticker);
+  assert.deepEqual(a, b);
+});
+
+test('regime returns unknown rather than guessing when history is short', () => {
+  const r = regimeMultiplier({ benchmarkBars: [], universeBars: [] });
+  assert.equal(r.state, 'unknown');
+  assert.equal(r.multiplier, 1);
+});
+
+// ── diversification ────────────────────────────────────────────────────────
+
+test('diversification caps names per sector and records why', () => {
+  const ranked = Array.from({ length: 20 }, (_, i) => ({
+    ticker: `S${i}`, name: `S${i}`, sector: i < 8 ? 'Tech' : 'Health',
+    score: 10 - i * 0.1, bars: makeBars({ n: 80, seed: 100 + i }),
+  }));
+  const { selected, displaced } = applyDiversification(ranked, { topN: 10, maxPerSector: 3 });
+  const techCount = selected.filter((r) => r.sector === 'Tech').length;
+  assert.ok(techCount <= 4, `expected <=4 tech (cap relaxes with few sectors), got ${techCount}`);
+  assert.ok(displaced.some((d) => d.displacedBy === 'sector_cap'));
+});
+
+test('diversification caps highly correlated names', () => {
+  // Ten copies of the same series is one position, not ten.
+  const shared = makeBars({ n: 120, seed: 5 });
+  const ranked = Array.from({ length: 12 }, (_, i) => ({
+    ticker: `C${i}`, name: `C${i}`, sector: `Sec${i}`, score: 10 - i * 0.1, bars: shared,
+  }));
+  const { selected, displaced } = applyDiversification(ranked, { topN: 10, maxCorrelation: 0.85 });
+  assert.ok(selected.length < 10, `expected correlation cap to bite, selected ${selected.length}`);
+  assert.ok(displaced.some((d) => d.displacedBy === 'correlation_cap'));
+});
+
+// ── hysteresis ─────────────────────────────────────────────────────────────
+
+const mkRanked = (tickers) =>
+  tickers.map((t, i) => ({ ticker: t, name: t, score: 10 - i, rank: i + 1, sector: 'X' }));
+
+test('first run marks everything NEW', () => {
+  const { board, turnover } = applyHysteresis(mkRanked(['A', 'B', 'C']), [], { exitRank: 12, minHold: 1, topN: 3 });
+  assert.equal(turnover, 1);
+  assert.ok(board.every((r) => r.movement === 'NEW'));
+});
+
+test('an incumbent inside the exit rank keeps its seat', () => {
+  // B has slipped to rank 11 but the exit rank is 16, so it stays. This is the
+  // original spec's stability rule, scaled by horizon.
+  const today = mkRanked(['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'B']);
+  const previous = [
+    { ticker: 'B', rank: 2, heldSessions: 10 },
+    { ticker: 'A', rank: 1, heldSessions: 10 },
+  ];
+  const { board } = applyHysteresis(today, previous, { exitRank: 16, minHold: 5, topN: 10 });
+  assert.ok(board.some((r) => r.ticker === 'B'), 'B must be retained at rank 11 under a 16 exit rank');
+});
+
+test('an incumbent past the exit rank and past min hold is dropped', () => {
+  const today = mkRanked(Array.from({ length: 30 }, (_, i) => `T${i}`).concat(['B']));
+  const previous = [{ ticker: 'B', rank: 2, heldSessions: 40 }];
+  const { board } = applyHysteresis(today, previous, { exitRank: 12, minHold: 1, topN: 10 });
+  assert.ok(!board.some((r) => r.ticker === 'B'));
+});
+
+test('a stopped-out incumbent leaves immediately regardless of rank', () => {
+  const today = mkRanked(['B', 'A', 'C']);
+  today[0].stoppedOut = true;
+  const previous = [{ ticker: 'B', rank: 1, heldSessions: 1 }];
+  const { board } = applyHysteresis(today, previous, { exitRank: 12, minHold: 1, topN: 3 });
+  assert.ok(!board.some((r) => r.ticker === 'B'), 'stop-out must override hysteresis');
+});
+
+test('a gated incumbent leaves immediately', () => {
+  const today = mkRanked(['B', 'A', 'C']);
+  today[0].gate = 'delisted';
+  const previous = [{ ticker: 'B', rank: 1, heldSessions: 99 }];
+  const { board } = applyHysteresis(today, previous, { exitRank: 25, minHold: 63, topN: 3 });
+  assert.ok(!board.some((r) => r.ticker === 'B'));
+});
+
+test('movement badge is positive when a name moves up', () => {
+  const today = mkRanked(['B', 'A']);
+  const previous = [{ ticker: 'B', rank: 2, heldSessions: 3 }, { ticker: 'A', rank: 1, heldSessions: 3 }];
+  const { board } = applyHysteresis(today, previous, { exitRank: 12, minHold: 1, topN: 2 });
+  const b = board.find((r) => r.ticker === 'B');
+  assert.equal(b.rank, 1);
+  assert.equal(b.movement, 1, 'moved from 2 to 1 => +1');
+});
+
+// ── trade parameters ───────────────────────────────────────────────────────
+
+test('ultra short publishes a stop below the entry zone', () => {
+  const row = { bars: makeBars({ n: 200, seed: 11 }) };
+  const t = tradeParameters(row, 'ultra_short');
+  assert.ok(t.stop < t.entry.low, 'stop must sit below the entry zone');
+  assert.ok(t.targets.conservative < t.targets.base);
+  assert.ok(t.targets.base < t.targets.bull);
+  assert.equal(t.maxHoldSessions, 5);
+});
+
+test('long and ultra-long publish NO price stop, only thesis invalidation', () => {
+  // METHODOLOGY §5.4 — a price stop on a 1-2 year thesis converts it into a coin
+  // flip on volatility. This is a deliberate divergence from the original spec.
+  const row = { bars: makeBars({ n: 300, seed: 12 }), factors: { _growthRate: 0.12, _evEbit: 18 } };
+  for (const h of ['long_term', 'ultra_long']) {
+    const t = tradeParameters(row, h);
+    assert.equal(t.stop, null, `${h} must not publish a price stop`);
+    assert.ok(Array.isArray(t.thesisInvalidation) && t.thesisInvalidation.length > 0);
+  }
+});
+
+test('trade parameters scale with the stock own volatility', () => {
+  const calm = { bars: makeBars({ n: 200, vol: 0.006, seed: 21 }) };
+  const wild = { bars: makeBars({ n: 200, vol: 0.05, seed: 21 }) };
+  const c = tradeParameters(calm, 'ultra_short');
+  const w = tradeParameters(wild, 'ultra_short');
+  const cWidth = (c.entry.high - c.entry.low) / c.entry.low;
+  const wWidth = (w.entry.high - w.entry.low) / w.entry.low;
+  assert.ok(wWidth > cWidth * 2, 'a volatile name must get a wider zone');
+});
+
+test('KRW prices round to whole won, USD to cents', () => {
+  const krw = { bars: makeBars({ n: 100, start: 74000, seed: 4 }).map((b) => ({ ...b, open: b.open * 1000, high: b.high * 1000, low: b.low * 1000, close: b.close * 1000 })) };
+  const t = tradeParameters(krw, 'ultra_short');
+  assert.equal(t.stop, Math.round(t.stop), 'KRW levels must be integers');
+});
+
+test('riskGauge spreads across quintiles', () => {
+  const rows = Array.from({ length: 25 }, (_, i) => ({ bars: makeBars({ n: 80, vol: 0.004 + i * 0.004, seed: 30 + i }) }));
+  const g = riskGauge(rows);
+  assert.ok(new Set(g).size >= 4, `expected spread across quintiles, got ${[...new Set(g)]}`);
+  assert.ok(Math.min(...g) >= 1 && Math.max(...g) <= 5);
+});

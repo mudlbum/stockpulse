@@ -1,0 +1,72 @@
+---
+/**
+ * Diverging bar per factor z-score. Zero sits at the centre line, so a name
+ * that ranks on one strong factor looks different from one that ranks on five
+ * mediocre ones — which is the whole point of showing this.
+ */
+import type { Locale } from '../config';
+import { UI } from '../i18n/ui';
+import { fmtNum } from '../lib/format';
+import type { FactorValue } from '../lib/types';
+
+interface Props {
+  lang: Locale;
+  factors: Record<string, FactorValue>;
+}
+const { lang, factors } = Astro.props;
+const t = UI[lang];
+
+/** z of ±3 fills the half-bar; beyond that it clamps. */
+const CLAMP = 3;
+
+/** camelCase factor keys are pipeline identifiers — make them readable. */
+function humanize(key: string): string {
+  return key
+    .replace(/^_/, '')
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, (c) => c.toUpperCase())
+    .trim();
+}
+
+const entries = Object.entries(factors || {}).filter(([k]) => !k.startsWith('_'));
+---
+
+<div class="factors">
+  <div class="factor factor-head">
+    <span class="fname muted small">{t.home.factorBreakdown}</span>
+    <span class="muted small" style="text-align:center;">− 0 +</span>
+    <span class="fz muted small">{t.home.factorZ}</span>
+  </div>
+  {
+    entries.map(([key, val]) => {
+      const z = Number(val?.z ?? 0);
+      const pct = Math.min(Math.abs(z) / CLAMP, 1) * 50;
+      return (
+        <div class="factor">
+          <span class="fname" title={`${t.home.factorRaw}: ${fmtNum(val?.raw, 3, lang)}`}>
+            {humanize(key)}
+          </span>
+          <span class="fbar" role="img" aria-label={`${humanize(key)} ${t.home.factorZ} ${fmtNum(z, 2, lang)}`}>
+            {z >= 0 ? (
+              <i class="pos" style={`width:${pct}%`} />
+            ) : (
+              <i class="neg" style={`width:${pct}%`} />
+            )}
+          </span>
+          <span class={`fz ${z > 0 ? 'up' : z < 0 ? 'down' : 'flat'}`}>
+            {z > 0 ? '+' : z < 0 ? '−' : ''}
+            {fmtNum(Math.abs(z), 2, lang)}
+          </span>
+        </div>
+      );
+    })
+  }
+</div>
+
+<style>
+  .factor-head {
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.15rem;
+  }
+</style>

@@ -1,0 +1,128 @@
+---
+import { MARKETS, type Locale } from '../../config';
+import { UI } from '../../i18n/ui';
+import { sectors as sectorData } from '../../lib/data';
+import { fmtCap, fmtDate, fmtNum, fmtPct, fmtRatioPct } from '../../lib/format';
+import Base from '../../layouts/Base.astro';
+import Treemap from '../../components/Treemap.astro';
+import PlaceholderNotice from '../../components/PlaceholderNotice.astro';
+import ScrollArea from '../../components/ScrollArea.astro';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+
+const windows = [
+  { key: 'return1d', label: t.sectors.w1d },
+  { key: 'return5d', label: t.sectors.w5d },
+  { key: 'return20d', label: t.sectors.w20d },
+] as const;
+---
+
+<Base lang={lang} page="sectors" title={t.sectors.title} description={t.sectors.intro} live={['sectors']}>
+  <div class="wrap">
+    <PlaceholderNotice lang={lang} datasets={['sectors']} />
+
+    <div class="page-head">
+      <h1>{t.sectors.title}</h1>
+      <p class="lede">{t.sectors.intro}</p>
+    </div>
+
+    <div class="control-bar">
+      <div class="control-group">
+        <div class="control-label" id="win-label">{t.sectors.window}</div>
+        <div class="seg" role="group" aria-labelledby="win-label">
+          {
+            windows.map((w, i) => (
+              <button type="button" data-window-btn={w.key} aria-selected={i === 0 ? 'true' : 'false'}>
+                {w.label}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    {
+      MARKETS.map((m) => {
+        const data = sectorData.markets[m.id];
+        return (
+          <section aria-labelledby={`sec-${m.id}`}>
+            <div class="section-head">
+              <h2 id={`sec-${m.id}`}>
+                {t.common.market[m.id]}
+                <span class="muted small" style="font-weight:400; margin-inline-start:.5rem;">
+                  {fmtDate(data.asOf, lang)}
+                </span>
+              </h2>
+            </div>
+
+            <Treemap lang={lang} market={m.id} sectors={data.sectors} currency={m.currency} />
+
+            <h3 style="margin-top:1.2rem;">{t.sectors.tableFallback}</h3>
+            <p class="small muted" style="margin-top:-.3rem;">{t.sectors.tableHelp}</p>
+            <ScrollArea lang={lang}>
+              <table class="data">
+                <thead>
+                  <tr>
+                    <th scope="col">{t.sectors.cols.sector}</th>
+                    <th scope="col" class="num-cell">{t.sectors.cols.cap}</th>
+                    <th scope="col" class="num-cell">{t.sectors.cols.weight}</th>
+                    <th scope="col" class="num-cell">{t.sectors.cols.r1d}</th>
+                    <th scope="col" class="num-cell">{t.sectors.cols.r5d}</th>
+                    <th scope="col" class="num-cell">{t.sectors.cols.r20d}</th>
+                    <th scope="col" class="num-cell">{t.sectors.cols.breadth}</th>
+                    <th scope="col" class="num-cell">{t.sectors.cols.adv}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.sectors.map((s) => (
+                    <tr>
+                      <th scope="row" style="text-align:start;font-weight:600;">
+                        {lang === 'ko' ? s.nameKo : s.name}
+                      </th>
+                      <td class="num-cell">{fmtCap(s.marketCap, m.currency, lang)}</td>
+                      <td class="num-cell">{fmtRatioPct(s.weight, 1, lang)}</td>
+                      {(['return1d', 'return5d', 'return20d'] as const).map((k) => (
+                        <td class={`num-cell ${s[k] >= 0 ? 'up' : 'down'}`}>
+                          <span aria-hidden="true">{s[k] >= 0 ? '▲' : '▼'}</span>
+                          {fmtPct(s[k], 2, lang)}
+                        </td>
+                      ))}
+                      <td class="num-cell" title={t.sectors.breadthHelp}>{fmtRatioPct(s.breadth, 0, lang)}</td>
+                      <td class="num-cell muted">
+                        {fmtNum(s.advancers, 0, lang)} / {fmtNum(s.decliners, 0, lang)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </ScrollArea>
+          </section>
+        );
+      })
+    }
+  </div>
+</Base>
+
+<script is:inline>
+  (() => {
+    const buttons = document.querySelectorAll('[data-window-btn]');
+    if (!buttons.length) return;
+    buttons.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.windowBtn;
+        buttons.forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
+        document.querySelectorAll('[data-window]').forEach((g) => {
+          /* SVG <g> ignores the `hidden` IDL property — set display directly */
+          g.style.display = g.dataset.window === key ? '' : 'none';
+        });
+        document.querySelectorAll('[data-legend]').forEach((l) => {
+          l.hidden = l.dataset.legend !== key;
+        });
+      }),
+    );
+  })();
+</script>

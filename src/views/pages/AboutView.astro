@@ -1,0 +1,121 @@
+---
+import { SITE, type Locale } from '../../config';
+import { UI } from '../../i18n/ui';
+import { health } from '../../lib/data';
+import { KO_LIMITATIONS } from '../../i18n/methodology-ko';
+import { fmtRatioPct } from '../../lib/format';
+import { pageHref } from '../../lib/paths';
+import Base from '../../layouts/Base.astro';
+import PlaceholderNotice from '../../components/PlaceholderNotice.astro';
+import ScrollArea from '../../components/ScrollArea.astro';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+
+const LIMITS_EN = [
+  'No intraday or pre-market data. Everything is end-of-day, so a 1–5 day ranking published after the close is actionable at the next open at the earliest.',
+  'Headline sentiment is a lexicon, not a language model, and even a language model would be weakly predictive at this horizon.',
+  'No analyst estimates. Mid-term substitutes realized earnings drift for revision momentum, which is a real downgrade from the ideal specification.',
+  'Korean fundamentals are shallower than US. Korean long-horizon scores carry a lower-confidence badge, and the ultra-long board is US-only until a DART key is configured.',
+  'Multiple testing. Four horizons across dozens of factors and two markets is a large search space. The weights are reasoned from published literature rather than optimized on this data — which avoids overfitting but means they are not tuned.',
+  'The universe is large-cap biased by construction of the liquidity filters. Small-cap opportunities are systematically out of scope.',
+  'No short side. Every list is long-only. In a bear market the correct answer is often "nothing", and the regime multiplier is the only mechanism expressing that.',
+];
+const limits = lang === 'ko' ? KO_LIMITATIONS : LIMITS_EN;
+---
+
+<Base lang={lang} page="about" title={t.about.title} description={t.about.whatBody}>
+  <div class="wrap wrap-narrow">
+    <PlaceholderNotice lang={lang} datasets={['health']} />
+
+    <div class="page-head">
+      <h1>{t.about.title}</h1>
+    </div>
+
+    <div class="prose">
+      <h2>{t.about.whatHeading}</h2>
+      <p>{t.about.whatBody}</p>
+
+      <h2>{t.about.whatNotHeading}</h2>
+      <p>{t.about.whatNotBody}</p>
+      <p>
+        <a href={pageHref(lang, 'disclaimer')}>{t.nav.disclaimer} →</a>
+      </p>
+
+      <h2>{t.about.howHeading}</h2>
+      <p>{t.about.howBody}</p>
+      <p>
+        <a href={pageHref(lang, 'methodology')}>{t.common.readMethodology} →</a>
+        {' · '}
+        <a href={pageHref(lang, 'performance')}>{t.common.seePerformance} →</a>
+      </p>
+
+      <h2>{t.about.limitsHeading}</h2>
+      <ol>
+        {limits.map((l) => <li>{l}</li>)}
+      </ol>
+
+      <h2>{t.about.dataHeading}</h2>
+      <p>{t.about.dataBody}</p>
+    </div>
+
+    <h3>{t.about.sourceHealth}</h3>
+    <ScrollArea lang={lang}>
+      <table class="data" style="min-width:560px;">
+        <thead>
+          <tr>
+            <th scope="col">{t.common.source}</th>
+            <th scope="col" class="num-cell">{t.about.successRate}</th>
+            <th scope="col" class="num-cell">OK / {t.perf.filterStatus}</th>
+            <th scope="col">{t.about.notes}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            health.sources.map((s) => (
+              <tr>
+                <th scope="row" style="text-align:start;" class="mono">
+                  {s.host}
+                </th>
+                <td class="num-cell">
+                  {s.successRate === null ? (
+                    <span class="badge badge-warn">—</span>
+                  ) : (
+                    <span class={s.successRate >= 0.95 ? 'up' : 'down'}>{fmtRatioPct(s.successRate, 1, lang)}</span>
+                  )}
+                </td>
+                <td class="num-cell muted">
+                  {s.ok} / {s.total}
+                </td>
+                <td class="wrap-cell muted">{s.notes}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </ScrollArea>
+
+    {
+      health.notes.length > 0 && (
+        <ul class="small muted" style="margin-top:.8rem;">
+          {health.notes.map((n) => (
+            <li>{n}</li>
+          ))}
+        </ul>
+      )
+    }
+
+    <div class="prose" style="margin-top:2rem;">
+      <h2>{t.about.openHeading}</h2>
+      <p>{t.about.openBody}</p>
+
+      <h2>{t.about.contactHeading}</h2>
+      <p>
+        <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+      </p>
+    </div>
+  </div>
+</Base>

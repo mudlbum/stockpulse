@@ -1,0 +1,43 @@
+---
+/**
+ * Names which datasets on THIS page are placeholder and which are real.
+ *
+ * Pipeline stages succeed independently, so "every number on this page is
+ * synthetic" stops being true as soon as one stage runs for real. An
+ * inaccurate warning is worse than none: it trains people to skip warnings.
+ * Renders nothing when none of the page's datasets are placeholder.
+ */
+import type { Locale } from '../config';
+import { UI } from '../i18n/ui';
+import { splitPlaceholder, type DatasetName } from '../lib/data';
+
+interface Props {
+  lang: Locale;
+  /** Datasets this page actually reads. */
+  datasets?: DatasetName[];
+}
+const { lang, datasets = ['rankings', 'news', 'performance', 'sectors', 'health'] } = Astro.props;
+const t = UI[lang];
+
+const { placeholder, real } = splitPlaceholder(datasets);
+const name = (d: DatasetName) => t.datasetName[d];
+---
+
+{
+  placeholder.length > 0 && (
+    <div class="notice notice-warn" role="status" style="margin-bottom:1rem;">
+      <h2>{t.placeholderTitle}</h2>
+      <p>
+        {t.placeholderSome}{' '}
+        <b>{placeholder.map(name).join(', ')}</b>
+      </p>
+      {real.length > 0 && (
+        <p>
+          {t.placeholderReal}{' '}
+          <b>{real.map(name).join(', ')}</b>
+        </p>
+      )}
+      <p class="small">{t.placeholderFlagNote}</p>
+    </div>
+  )
+}

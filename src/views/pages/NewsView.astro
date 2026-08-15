@@ -1,0 +1,208 @@
+---
+import type { Locale } from '../../config';
+import { UI, fill } from '../../i18n/ui';
+import { news } from '../../lib/data';
+import { fmtNum } from '../../lib/format';
+import Base from '../../layouts/Base.astro';
+import NewsItemCard from '../../components/NewsItem.astro';
+import PlaceholderNotice from '../../components/PlaceholderNotice.astro';
+import ScrollArea from '../../components/ScrollArea.astro';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+const now = Date.now();
+
+const clusters = news.clusters.filter((c) => c.outlets >= 2).sort((a, b) => b.outlets - a.outlets);
+const tickers = [...new Set(news.items.flatMap((i) => i.tickers))].sort();
+const statusClass: Record<string, string> = { ok: 'chip-ok', degraded: 'chip-warn', failing: 'chip-danger' };
+---
+
+<Base lang={lang} page="news" title={t.news.title} description={t.news.intro} live={['news']}>
+  <div class="wrap">
+    <PlaceholderNotice lang={lang} datasets={['news']} />
+
+    <div class="page-head">
+      <h1>{t.news.title}</h1>
+      <p class="lede">{t.news.intro}</p>
+    </div>
+
+    {
+      clusters.length > 0 && (
+        <section aria-labelledby="clusters-h">
+          <div class="section-head">
+            <h2 id="clusters-h">{t.news.topStories}</h2>
+            <p>{t.news.topStoriesHelp}</p>
+          </div>
+          <div class="cluster-grid">
+            {clusters.map((c) => {
+              const label = c.sentiment === null ? 'unknown' : c.sentiment > 0.15 ? 'bullish' : c.sentiment < -0.15 ? 'bearish' : 'neutral';
+              return (
+                <article class="cluster-card">
+                  <h3>
+                    <a href={c.url} rel="noopener nofollow" target="_blank">
+                      {c.headline}
+                    </a>
+                  </h3>
+                  <div class="chip-row">
+                    <span class="chip">
+                      {c.outlets} {t.news.outlets}
+                    </span>
+                    <span class="chip">
+                      {c.size} {t.news.stories}
+                    </span>
+                    <span
+                      class={`chip ${label === 'bullish' ? 'chip-ok' : label === 'bearish' ? 'chip-danger' : ''}`}
+                    >
+                      <span aria-hidden="true">{label === 'bullish' ? '▲' : label === 'bearish' ? '▼' : '–'}</span>
+                      {t.news.sentimentLabel[label]}
+                      {c.sentiment !== null && <span class="mono">{fmtNum(c.sentiment, 2, lang)}</span>}
+                    </span>
+                    {c.tickers.map((tk) => (
+                      <button type="button" class="chip" data-filter-ticker={tk}>
+                        {tk}
+                      </button>
+                    ))}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      )
+    }
+
+    <section aria-labelledby="feed-h">
+      <div class="section-head">
+        <h2 id="feed-h">{t.news.title}</h2>
+      </div>
+
+      <div class="field-row" style="margin-bottom:.9rem;">
+        <div class="field">
+          <label for="n-ticker">{t.news.filterTicker}</label>
+          <select id="n-ticker">
+            <option value="">{t.news.all}</option>
+            {tickers.map((tk) => <option value={tk}>{tk}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for="n-lang">{t.news.filterLang}</label>
+          <select id="n-lang">
+            <option value="">{t.news.all}</option>
+            <option value="en">{t.news.english}</option>
+            <option value="ko">{t.news.korean}</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="n-sent">{t.news.filterSentiment}</label>
+          <select id="n-sent">
+            <option value="">{t.news.all}</option>
+            <option value="bullish">{t.news.sentimentLabel.bullish}</option>
+            <option value="neutral">{t.news.sentimentLabel.neutral}</option>
+            <option value="bearish">{t.news.sentimentLabel.bearish}</option>
+            <option value="unknown">{t.news.sentimentLabel.unknown}</option>
+          </select>
+        </div>
+        <div class="field" style="flex:0 0 auto;">
+          <button type="button" class="btn" id="n-clear">{t.news.clear}</button>
+        </div>
+      </div>
+
+      <p class="small muted" id="news-count">{fill(t.news.showing, { n: news.items.length, total: news.items.length })}</p>
+
+      <ul class="news-list" id="news-feed">
+        {news.items.map((item) => <NewsItemCard lang={lang} item={item} now={now} />)}
+      </ul>
+      <p class="muted small" id="news-none" hidden>{t.news.noResults}</p>
+    </section>
+
+    <section aria-labelledby="health-h">
+      <details class="panel js-panel">
+        <summary id="health-h">{t.news.feedHealth}</summary>
+        <p class="small muted">{t.news.feedHealthHelp}</p>
+        <ScrollArea lang={lang}>
+          <table class="data" style="min-width:520px;">
+            <thead>
+              <tr>
+                <th scope="col">{t.common.source}</th>
+                <th scope="col">{t.perf.filterStatus}</th>
+                <th scope="col" class="num-cell">{t.news.items}</th>
+                <th scope="col" class="num-cell">{t.news.newest}</th>
+                <th scope="col">{t.about.notes}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                news.feedHealth.map((f) => (
+                  <tr>
+                    <th scope="row" style="text-align:start;">
+                      {f.name}
+                    </th>
+                    <td>
+                      <span class={`chip ${statusClass[f.status] || ''}`}>
+                        {t.news.feedStatus[f.status as 'ok' | 'degraded' | 'failing'] ?? f.status}
+                      </span>
+                    </td>
+                    <td class="num-cell">{fmtNum(f.items, 0, lang)}</td>
+                    <td class="num-cell">
+                      {f.newestAgeHours === null ? '—' : `${fmtNum(f.newestAgeHours, 1, lang)}${t.news.hoursAgo}`}
+                    </td>
+                    <td class="wrap-cell muted">{f.error || '—'}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </ScrollArea>
+      </details>
+    </section>
+  </div>
+</Base>
+
+<script is:inline define:vars={{ showingTpl: t.news.showing }}>
+  (() => {
+    const list = document.getElementById('news-feed');
+    if (!list) return;
+    const items = [...list.querySelectorAll('.news-item')];
+    const count = document.getElementById('news-count');
+    const none = document.getElementById('news-none');
+    const sel = {
+      ticker: document.getElementById('n-ticker'),
+      lang: document.getElementById('n-lang'),
+      sent: document.getElementById('n-sent'),
+    };
+
+    function render() {
+      let shown = 0;
+      items.forEach((li) => {
+        const tickers = (li.dataset.tickers || '').split(',').filter(Boolean);
+        const ok =
+          (!sel.ticker.value || tickers.includes(sel.ticker.value)) &&
+          (!sel.lang.value || li.dataset.lang === sel.lang.value) &&
+          (!sel.sent.value || li.dataset.sentiment === sel.sent.value);
+        li.hidden = !ok;
+        if (ok) shown++;
+      });
+      count.textContent = showingTpl.replace('{n}', shown).replace('{total}', items.length);
+      none.hidden = shown > 0;
+    }
+
+    Object.values(sel).forEach((s) => s.addEventListener('change', render));
+    document.getElementById('n-clear').addEventListener('click', () => {
+      Object.values(sel).forEach((s) => (s.value = ''));
+      render();
+    });
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-filter-ticker]');
+      if (!btn) return;
+      const tk = btn.dataset.filterTicker;
+      sel.ticker.value = sel.ticker.value === tk ? '' : tk;
+      render();
+      list.scrollIntoView({ block: 'nearest' });
+    });
+
+    render();
+  })();
+</script>

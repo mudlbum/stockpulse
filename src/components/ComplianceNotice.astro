@@ -1,0 +1,20 @@
+---
+/**
+ * Required on every page that displays a ranking table, positioned so a reader
+ * meets it without having to scroll past the table. The wording is fixed —
+ * do not paraphrase it, in either language.
+ */
+import type { Locale } from '../config';
+import { UI } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+---
+
+<aside class="compliance" role="note" aria-label={t.complianceHeading}>
+  <strong>{t.complianceHeading}</strong>
+  {t.compliance}
+</aside>

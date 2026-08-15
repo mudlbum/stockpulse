@@ -1,0 +1,48 @@
+---
+import type { Locale } from '../config';
+import { UI } from '../i18n/ui';
+import { fmtNum, relativeTime } from '../lib/format';
+import type { NewsItem } from '../lib/types';
+
+interface Props {
+  lang: Locale;
+  item: NewsItem;
+  now?: number;
+}
+const { lang, item, now = Date.now() } = Astro.props;
+const t = UI[lang];
+
+const chipClass =
+  item.sentimentLabel === 'bullish' ? 'chip-ok' : item.sentimentLabel === 'bearish' ? 'chip-danger' : '';
+const arrow = item.sentimentLabel === 'bullish' ? '▲' : item.sentimentLabel === 'bearish' ? '▼' : '–';
+---
+
+<li
+  class="news-item"
+  data-tickers={item.tickers.join(',')}
+  data-lang={item.lang}
+  data-sentiment={item.sentimentLabel}
+>
+  <h3>
+    <a href={item.url} rel="noopener nofollow" target="_blank">{item.title}</a>
+  </h3>
+  <div class="news-meta">
+    <span class={`chip ${chipClass}`}>
+      <span aria-hidden="true">{arrow}</span>
+      {t.news.sentimentLabel[item.sentimentLabel]}
+      {item.sentiment !== null && <span class="mono">{fmtNum(item.sentiment, 2, lang)}</span>}
+    </span>
+    <span>{item.source}</span>
+    <span aria-hidden="true">·</span>
+    <time datetime={item.publishedAt} data-rel>{relativeTime(item.publishedAt, lang, now)}</time>
+    <span aria-hidden="true">·</span>
+    <span class="badge">{item.lang.toUpperCase()}</span>
+    {
+      item.tickers.map((tk) => (
+        <button type="button" class="chip" data-filter-ticker={tk}>
+          {tk}
+        </button>
+      ))
+    }
+  </div>
+</li>

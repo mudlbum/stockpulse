@@ -1,0 +1,114 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  # `contents: write` so the first deploy can commit the data it bootstrapped;
+  # without it the cold start would re-fetch a year of history on every deploy.
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: Verify pipeline before publishing
+        # A broken scorer must not reach the site. These are offline and fast.
+        run: |
+          npm test
+          npm run smoke
+
+      # The repo ships with placeholder rankings so the site builds before any
+      # data exists, and the post-build audit REFUSES to publish them — shipping
+      # invented stock rankings behind a banner is still shipping invented stock
+      # rankings. So the first deploy bootstraps itself by running the real
+      # pipeline. Subsequent deploys skip this; refresh.yml owns the schedule.
+      - name: Bootstrap real data on first deploy
+        id: bootstrap
+        run: |
+          if node -e "process.exit(require('./src/data/rankings.json').placeholder ? 0 : 1)"; then
+            echo "placeholder data detected — running the real pipeline"
+            npm run refresh:us
+            npm run refresh:kr
+            npm run refresh:news
+            npm run rank
+            npm run evaluate
+            echo "bootstrapped=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "real data already present"
+            echo "bootstrapped=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL || 'hello@example.com' }}
+          # A cold start needs a lot of history; a larger budget is acceptable
+          # once, and the store is committed below so it never repeats.
+          US_BOOTSTRAP: '250'
+          KR_BOOTSTRAP: '150'
+        continue-on-error: true
+
+      - name: Commit bootstrapped data
+        if: steps.bootstrap.outputs.bootstrapped == 'true'
+        continue-on-error: true
+        run: |
+          git config user.name 'stockpulse-bot'
+          git config user.email 'stockpulse-bot@users.noreply.github.com'
+          git add data-store public/data src/data
+          git diff --staged --quiet || git commit -m "data: bootstrap initial pipeline run"
+          git push || echo "push skipped (deploy job has read-only contents; refresh.yml will persist the store on its next run)"
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+        with:
+          # configure-pages does NOT enable Pages by default — it only reads the
+          # existing config, and the first run fails with
+          # "Get Pages site failed … Not Found" without this.
+          enablement: true
+
+      - name: Build
+        run: npm run build
+        env:
+          # base_path from configure-pages already accounts for user-site vs
+          # project-site, so the same source builds correctly either way.
+          SITE_URL: ${{ steps.pages.outputs.origin || vars.SITE_URL }}
+          BASE_PATH: ${{ steps.pages.outputs.base_path || vars.BASE_PATH || '/' }}
+          CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL || 'hello@example.com' }}
+
+      - name: Post-build audit
+        run: npm run audit
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path || vars.BASE_PATH || '/' }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

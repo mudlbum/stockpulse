@@ -1,0 +1,46 @@
+---
+import { SITE, type Locale } from '../config';
+import { absolute, href, pageHref } from '../lib/paths';
+import { UI } from '../i18n/ui';
+import { dataGeneratedAt, rankings } from '../lib/data';
+import { fmtDateTime } from '../lib/format';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = UI[lang];
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <p class="footer-disclaimer">
+      {t.footerDisclaimer}
+      {' '}
+      <a href={pageHref(lang, 'disclaimer')}>{t.nav.disclaimer}</a>
+      {' · '}
+      <a href={pageHref(lang, 'methodology')}>{t.nav.methodology}</a>
+    </p>
+
+    <p class="nowrap">
+      {t.dataAsOf}{' '}
+      <time datetime={dataGeneratedAt} class="mono">{fmtDateTime(dataGeneratedAt, lang)}</time>
+    </p>
+
+    <p class="nowrap">
+      {t.builtOn} <span class="mono">{rankings.methodologyVersion}</span>
+    </p>
+
+    <p class="nowrap">
+      <a href={href('data/rankings.json')}>rankings.json</a>
+      {' · '}
+      <a href={absolute('rss.xml')}>RSS</a>
+      {' · '}
+      <a href={absolute('llms.txt')}>llms.txt</a>
+    </p>
+
+    <p style="flex:1 1 100%; margin:0; opacity:.85;">
+      © {new Date(dataGeneratedAt).getUTCFullYear()} {SITE.name}. {SITE.contactEmail}
+    </p>
+  </div>
+</footer>

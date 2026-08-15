@@ -1,0 +1,63 @@
+---
+import type { Locale } from '../config';
+import { UI } from '../i18n/ui';
+import { equityChart } from '../lib/viz';
+
+interface Props {
+  lang: Locale;
+  points: { date: string; value: number; benchmark: number }[];
+}
+const { lang, points } = Astro.props;
+const t = UI[lang];
+const c = equityChart(points);
+const last = points[points.length - 1];
+---
+
+{
+  c && (
+    <div class="chart-frame">
+      <figure class="chart" style="margin:0;">
+        <svg
+          viewBox={`0 0 ${c.width} ${c.height}`}
+          preserveAspectRatio="xMidYMid meet"
+          role="img"
+          aria-label={`${t.perf.equityCurve}. ${t.perf.strategy} ${last.value}, ${t.perf.benchmark} ${last.benchmark}, ${points.length} sessions.`}
+        >
+          <g class="axis">
+            {c.yTicks.map((tick) => (
+              <>
+                <line x1={c.plot.x} x2={c.plot.x + c.plot.w} y1={tick.y} y2={tick.y} />
+                <text x={c.plot.x - 8} y={tick.y + 3} text-anchor="end">
+                  {tick.label}
+                </text>
+              </>
+            ))}
+            {c.xTicks.map((tick) => (
+              <text x={tick.x} y={c.height - 10} text-anchor="middle">
+                {tick.label}
+              </text>
+            ))}
+            <line x1={c.plot.x} x2={c.plot.x + c.plot.w} y1={c.plot.y + c.plot.h} y2={c.plot.y + c.plot.h} />
+          </g>
+          <path class="series-benchmark" d={c.benchmark} />
+          <path class="series-strategy" d={c.strategy} />
+        </svg>
+        <figcaption class="legend">
+          <span>
+            <span class="sw" style="background:var(--up)" aria-hidden="true" />
+            {t.perf.strategy}
+          </span>
+          <span>
+            <span
+              class="sw"
+              style="background:repeating-linear-gradient(90deg,var(--muted) 0 5px,transparent 5px 8px)"
+              aria-hidden="true"
+            />
+            {t.perf.benchmark}
+          </span>
+          <span class="muted">{t.perf.equityHelp}</span>
+        </figcaption>
+      </figure>
+    </div>
+  )
+}
