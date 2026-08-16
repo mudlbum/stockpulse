@@ -48,6 +48,12 @@ concurrency:
 
 permissions:
   contents: write
+  # `actions: write` is what lets this job dispatch deploy.yml. Without it the
+  # dispatch returns 403 "Resource not accessible by integration", the refresh
+  # goes green having committed fresh rankings, and the published site never
+  # rebuilds. The pipeline looks healthy and the site quietly stops updating —
+  # which is the failure mode this whole workflow exists to prevent.
+  actions: write
 
 jobs:
   refresh:
@@ -159,8 +165,24 @@ jobs:
       # GITHUB_TOKEN pushes do not trigger other workflows, so the deploy is
       # dispatched explicitly. With a PAT_TOKEN secret the commit would trigger
       # deploy.yml directly and this step becomes unnecessary.
+      # GITHUB_TOKEN pushes deliberately do not trigger other workflows, so the
+      # deploy that actually republishes the site has to be dispatched here.
+      #
+      # This step used to end in `|| true`. That is the wrong place for a
+      # swallow: the data is already committed by the time we get here, so a
+      # failed dispatch loses nothing but leaves the site stale, and hiding it
+      # means nobody finds out until they notice the numbers have not moved for
+      # a week. Fail loudly instead — the refresh has done its job either way.
       - name: Trigger deploy
         if: success()
-        run: gh workflow run deploy.yml --ref "${GITHUB_REF_NAME}" || true
+        run: |
+          if gh workflow run deploy.yml --ref "${GITHUB_REF_NAME}"; then
+            echo "deploy dispatched"
+          else
+            echo "::error::Data was committed but deploy.yml could not be dispatched." \
+                 "The site will keep serving the previous build until this is fixed." \
+                 "Check that this workflow has 'actions: write' permission."
+            exit 1
+          fi
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN || github.token }}

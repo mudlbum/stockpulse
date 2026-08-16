@@ -185,6 +185,12 @@ Recorded here because each cost real debugging time and none is obvious:
 - **A single stale headline must shrink toward neutral.** The weighted mean is
   scale-invariant, so without an evidence shrink one 36-hour-old story scores
   identically to a fresh primary filing.
+- **A workflow that dispatches another workflow needs `actions: write`.**
+  `contents: write` is not enough; the dispatch returns 403 "Resource not
+  accessible by integration". Ours ended in `|| true`, so the refresh committed
+  fresh rankings, went green, and never rebuilt the site. A green pipeline and a
+  frozen site is worse than a red one — never swallow the failure of the step
+  whose whole job is making the update visible.
 - **`new URL('/x', origin)` discards the base path** — use `absolute()` from
   `src/lib/paths.ts` for anything crawler-facing.
 - **Viewport media queries cannot see a narrow container**, which is how a

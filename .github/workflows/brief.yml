@@ -54,6 +54,9 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  # Required to dispatch deploy.yml below. Without it the brief is committed
+  # but never published, so the blog silently stops updating. See refresh.yml.
+  actions: write
 
 concurrency:
   group: market-brief
@@ -147,7 +150,14 @@ jobs:
       # actually puts the post on the site has to be dispatched explicitly.
       - name: Deploy
         if: steps.gen.outputs.changed == 'true' && steps.mode.outputs.mode == 'publish'
-        run: gh workflow run deploy.yml --ref "${GITHUB_REF_NAME}" || true
+        run: |
+          if gh workflow run deploy.yml --ref "${GITHUB_REF_NAME}"; then
+            echo "deploy dispatched"
+          else
+            echo "::error::The brief was committed but deploy.yml could not be" \
+                 "dispatched, so it is not on the site. Check 'actions: write'."
+            exit 1
+          fi
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN || github.token }}
 
