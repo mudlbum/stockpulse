@@ -14,7 +14,22 @@ import path from 'node:path';
 import { ROOT } from './lib/store.mjs';
 
 const DIST = path.join(ROOT, 'dist');
-const BASE = (process.env.BASE_PATH || '/').replace(/\/+$/, '/') || '/';
+
+/**
+ * BASE always ends in exactly one '/', matching `BASE_PATH` in src/config.ts.
+ *
+ * This normalization is load-bearing, not tidiness. `actions/configure-pages`
+ * emits `base_path` WITHOUT a trailing slash ('/stockpulse'), while every local
+ * invocation in the README passes '/stockpulse/'. The link checker below strips
+ * the prefix with `slice(BASE.length - 1)`, which is only correct when BASE ends
+ * in a slash — given '/stockpulse' it removes one character too few and turns
+ * '/stockpulse/about/' into 'e/about/'. The result is that EVERY internal link
+ * on EVERY page reports broken, in CI only, where nobody had ever run it with
+ * the un-slashed form. Normalizing at the single point of entry is the fix;
+ * the alternative is remembering the slash at three call sites forever.
+ */
+const BASE = `/${(process.env.BASE_PATH || '/').replace(/^\/+/, '').replace(/\/+$/, '')}/`
+  .replace(/^\/{2,}/, '/');
 const isProjectSite = BASE !== '/';
 
 const problems = [];
@@ -157,7 +172,10 @@ async function main() {
       if (!clean) continue;
       const rel = clean.startsWith('/') ? clean : `/${clean}`;
       const candidates = [rel, `${rel.replace(/\/$/, '')}/index.html`, `${rel}index.html`, `${rel}.html`];
-      const stripped = candidates.map((c) => (isProjectSite && c.startsWith(BASE) ? c.slice(BASE.length - 1) : c));
+      // BASE ends in '/', so slicing it off and re-adding the leading slash
+      // yields a dist-relative path. Written this way rather than
+      // `slice(BASE.length - 1)` because the off-by-one there is invisible.
+      const stripped = candidates.map((c) => (isProjectSite && c.startsWith(BASE) ? `/${c.slice(BASE.length)}` : c));
       const ok = stripped.some((c) => pathsInDist.has(c) || pathsInDist.has(`${c.replace(/\/$/, '')}/index.html`));
       if (!ok) problem(file, 'link', `broken internal link: ${href}`);
     }
