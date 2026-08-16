@@ -11,6 +11,7 @@ import {
 import { atr, ema } from '../scripts/lib/indicators.mjs';
 import { makeBars, makeQuarters } from './fixtures/generate.mjs';
 import { sectorForSic, SECTORS } from '../scripts/lib/sic.mjs';
+import { maxDrawdown, buildEquityCurve, BOOK_SLOTS } from '../scripts/evaluate.mjs';
 
 // ── factor shapes ──────────────────────────────────────────────────────────
 
@@ -479,4 +480,68 @@ test('mixing classified and unclassified names caps only the classified ones', (
   const { selected } = applyDiversification(ranked, { topN: 10, maxPerSector: 3 });
   assert.ok(selected.filter((r) => r.sector === 'Information Technology').length <= 4);
   assert.equal(selected.length, 10, 'unclassified names should fill the remaining seats');
+});
+
+// ── performance audit arithmetic ───────────────────────────────────────────
+
+const closedTrade = (exitDate, netReturnPct) => ({
+  status: 'closed', exitDate, netReturnPct, benchmarkReturnPct: 0,
+});
+
+test('maxDrawdown does not depend on how many trades have been published', () => {
+  // The bug: sizing was `1 / max(1, trades.length / 20)`, so one slot was 100%
+  // of the book at 20 trades and 5.5% at 364. The published drawdown therefore
+  // improved as the ledger grew, with no change in the strategy — on the one
+  // page whose whole purpose is honest accounting.
+  //
+  // Same drawdown shape, three ledger sizes. The answer must not move.
+  const shape = [10, -20, -20, 15];
+  const sizes = [20, 60, 400];
+  const results = sizes.map((n) => {
+    const trades = [];
+    for (let i = 0; i < n; i++) {
+      // Pad with flat trades so only the count changes, not the path.
+      trades.push(closedTrade(`2026-01-${String((i % 28) + 1).padStart(2, '0')}`, 0));
+    }
+    shape.forEach((r, k) => { trades.push(closedTrade(`2026-02-${String(k + 1).padStart(2, '0')}`, r)); });
+    return maxDrawdown(trades);
+  });
+  for (const r of results) {
+    assert.ok(Math.abs(r - results[0]) < 1e-9,
+      `drawdown moved with ledger size: ${JSON.stringify(results)}`);
+  }
+  assert.ok(results[0] > 0, 'the fixture should actually draw down');
+});
+
+test('maxDrawdown agrees with the equity curve drawn beneath it', () => {
+  // Two numbers describing one portfolio must come from one sizing. They were
+  // computed with different ones.
+  const trades = [
+    closedTrade('2026-03-02', 12),
+    closedTrade('2026-03-03', -18),
+    closedTrade('2026-03-04', -25),
+    closedTrade('2026-03-05', 6),
+    closedTrade('2026-03-06', -9),
+  ];
+  const curve = buildEquityCurve(trades);
+  let peak = -Infinity;
+  let ddFromCurve = 0;
+  for (const pt of curve) {
+    peak = Math.max(peak, pt.value);
+    ddFromCurve = Math.max(ddFromCurve, (peak - pt.value) / peak);
+  }
+  // buildEquityCurve rounds each published point to 2dp, so allow that much.
+  assert.ok(Math.abs(maxDrawdown(trades) - ddFromCurve * 100) < 0.05,
+    `curve says ${(ddFromCurve * 100).toFixed(3)}%, summary says ${maxDrawdown(trades).toFixed(3)}%`);
+  assert.equal(BOOK_SLOTS, 20);
+});
+
+test('maxDrawdown ignores trades with no return rather than scoring them flat', () => {
+  const withNulls = [
+    closedTrade('2026-04-01', -30),
+    { status: 'closed', exitDate: '2026-04-02', netReturnPct: null },
+    closedTrade('2026-04-03', 5),
+  ];
+  const without = [closedTrade('2026-04-01', -30), closedTrade('2026-04-03', 5)];
+  assert.equal(maxDrawdown(withNulls), maxDrawdown(without));
 });

@@ -30,6 +30,12 @@ import { isNum, median, quantile } from './lib/stats.mjs';
 const COMMISSION_BPS = 10;            // round trip, each side
 const SLIPPAGE_ATR_FRACTION = 0.05;
 const KR_SALES_TAX = 0.0018;          // 증권거래세, sell side only
+/**
+ * Positions in the notional equal-weight book. Used by BOTH the equity curve
+ * and the drawdown, deliberately: two different sizings would publish a
+ * drawdown that does not belong to the curve drawn underneath it.
+ */
+const BOOK_SLOTS = 20;
 const BENCHMARK = { US: 'SPY', KR: 'KS11' };
 const CONTROL_SEED = 20260815;        // fixed so the control is reproducible
 
@@ -105,7 +111,12 @@ async function main() {
       slippageAtrFraction: SLIPPAGE_ATR_FRACTION,
       krSalesTax: KR_SALES_TAX,
       intrabarAmbiguity: 'always resolved as the stop',
-      control: 'random pick from the same universe on the same dates, fixed seed',
+      control:
+        'random pick from the same universe on the same dates, fixed seed, ' +
+        'held to the same maximum horizon and charged the same slippage, ' +
+        'commission and transaction tax as a real pick. It is NOT stopped out ' +
+        'and has no entry zone, so it measures the base rate of buying and ' +
+        'holding a random liquid name for the same period.',
     },
   });
 
@@ -276,9 +287,23 @@ function computeControl(entries, prices) {
       if (i0 < 0) continue;
       const exitIdx = Math.min(bars.length - 1, i0 + maxHold - 1);
       if (exitIdx <= i0) continue;
-      const entry = (bars[i0].open + bars[i0].close) / 2;
-      if (!(entry > 0)) continue;
-      const ret = bars[exitIdx].close / entry - 1;
+      const mid = (bars[i0].open + bars[i0].close) / 2;
+      if (!(mid > 0)) continue;
+
+      // The control must pay what the picks pay.
+      //
+      // Real trades report `netReturnPct` — after entry slippage, commission on
+      // both sides and Korea's sell-side transaction tax. The control used to
+      // report a raw close/entry gross return, so the site was comparing a
+      // cost-laden strategy against a cost-free random draw and publishing the
+      // difference as evidence. That bias runs AGAINST the site's own picks,
+      // which is exactly why it could sit here unnoticed: nobody audits a
+      // number that flatters them less than the truth. It is still wrong, and a
+      // reader cannot tell an underperforming strategy from a rigged yardstick.
+      const a = atr(bars.slice(0, i0 + 1), 14);
+      const slip = isNum(a) ? a * SLIPPAGE_ATR_FRACTION : mid * 0.0005;
+      const entry = mid + slip;
+      const ret = netOf(bars[exitIdx].close / entry - 1, market);
       overall.push(ret);
       (byHorizon[horizon] ??= []).push(ret);
     }
@@ -321,13 +346,29 @@ function statsFor(trades, controlReturns = []) {
   };
 }
 
+/**
+ * Max peak-to-trough drawdown of the equal-weight book, in percent.
+ *
+ * Position sizing is FIXED at one slot in a BOOK_SLOTS-position book — the same
+ * sizing buildEquityCurve uses, so the number and the chart on /performance
+ * describe the same portfolio.
+ *
+ * It used to divide by `Math.max(1, trades.length / 20)`, which made the slot a
+ * function of how many trades had been published: 100% of the book at 20
+ * trades, 50% at 40, 5.5% at 364. The published drawdown therefore shrank as
+ * the ledger grew, for no reason connected to the strategy — a headline risk
+ * number on a page whose entire purpose is honest accounting, improving with
+ * age. It also disagreed with the equity curve plotted directly beneath it.
+ */
 function maxDrawdown(trades) {
-  const sorted = [...trades].sort((a, b) => (a.exitDate ?? '') < (b.exitDate ?? '') ? -1 : 1);
+  const sorted = [...trades]
+    .filter((t) => isNum(t.netReturnPct))
+    .sort((a, b) => ((a.exitDate ?? '') < (b.exitDate ?? '') ? -1 : 1));
   let equity = 1;
   let peak = 1;
   let dd = 0;
   for (const t of sorted) {
-    equity *= 1 + (t.netReturnPct ?? 0) / 100 / Math.max(1, sorted.length / 20);
+    equity *= 1 + (t.netReturnPct / 100) / BOOK_SLOTS;
     peak = Math.max(peak, equity);
     dd = Math.max(dd, (peak - equity) / peak);
   }
@@ -351,9 +392,9 @@ function buildEquityCurve(trades) {
   let benchmark = 100;
   const out = [];
   for (const [date, group] of [...byDate.entries()].sort()) {
-    // Each closed trade is one equal-weight slot in a 20-position book, which
-    // is the sizing the site's simulator defaults to.
-    const slot = 1 / 20;
+    // Each closed trade is one equal-weight slot in a BOOK_SLOTS-position book,
+    // which is the sizing the site's simulator defaults to.
+    const slot = 1 / BOOK_SLOTS;
     for (const t of group) {
       value *= 1 + (t.netReturnPct / 100) * slot;
       benchmark *= 1 + ((t.benchmarkReturnPct ?? 0) / 100) * slot;
@@ -386,7 +427,7 @@ async function publishEmpty() {
 
 const r2 = (x) => (isNum(x) ? Math.round(x * 100) / 100 : null);
 
-export { simulate, statsFor, netOf, mulberry32 };
+export { simulate, statsFor, netOf, mulberry32, maxDrawdown, buildEquityCurve, BOOK_SLOTS };
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch((err) => {

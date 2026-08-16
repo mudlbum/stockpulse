@@ -285,7 +285,13 @@ function buildQuarterly(series, asOf) {
   }
   // Balance-sheet items are attached at their own instant so Piotroski can
   // compare like periods.
-  for (const key of durationKeys.length ? [...INSTANTANEOUS] : []) {
+  // Plain iteration. This was `durationKeys.length ? [...INSTANTANEOUS] : []`,
+  // a guard that can never be false: durationKeys is CONCEPTS minus the
+  // instantaneous ones and CONCEPTS always contains duration concepts. A
+  // condition that cannot fail reads as a safety check and hides that there
+  // isn't one — the real guard is `if (row)` two lines down, which skips an
+  // instant with no matching quarter.
+  for (const key of INSTANTANEOUS) {
     for (const e of series[key] ?? []) {
       if (e.start) continue;
       const row = byEnd.get(e.end);
