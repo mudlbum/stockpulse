@@ -829,11 +829,32 @@ Published on the site, not buried here.
    even a language model would be weakly predictive at this horizon.
 3. **No analyst estimates.** Mid-term therefore substitutes realized earnings
    drift for revision momentum. This is a real downgrade from the ideal spec.
-4. **Korean fundamentals are shallower than US.** SEC XBRL gives 10+ years of
-   tagged, audited statements. The keyless Korean equivalents give a
-   cross-sectional snapshot and a few years of history. Korean long-horizon
-   scores carry a lower-confidence badge for this reason, and the ultra-long
-   board is US-only until a DART key is configured.
+4. **Korea has no keyless source of financial statements at all.** This is
+   stated more bluntly than it was, because the earlier wording ("shallower than
+   US") understated it and the site drew a false conclusion from it.
+
+   SEC XBRL gives 10+ years of tagged, audited statements for US filers. The
+   keyless Korean path gives a daily snapshot of market cap, share count and
+   close — and nothing else. No income statement, no balance sheet, no cash flow.
+
+   The consequence is not a lower-confidence score; it is that **three of the
+   four Korean boards cannot be produced at all**:
+
+   | Board | Korea without DART | Why |
+   | --- | --- | --- |
+   | Ultra Short | **Works** | Price, volume and news only |
+   | Mid Term | Empty | 2 of 5 factors need quarterly statements; only 3 are reachable, below the completeness floor of 4 |
+   | Long Term | Empty | All 5 factors are statement-derived |
+   | Ultra Long | Empty | Requires ten years of annual statements |
+
+   Each empty board says which of these applies, in both languages, and names
+   the free DART OpenAPI key that would open it. The distinction the code now
+   enforces is between *"the store is still filling"* — true of a US cold start,
+   and it does resolve — and *"no source exists"*, which does not resolve and
+   must never be described as if it will. The check is keyed on measured
+   statement availability, not on the market code, so configuring DART retires
+   the message automatically instead of leaving the site explaining an absence
+   that has already been fixed.
 5. **Multiple testing.** Four horizons × dozens of factors × two markets is a
    large search space. These weights are reasoned from published literature
    rather than optimized on this data — which avoids overfitting but means they

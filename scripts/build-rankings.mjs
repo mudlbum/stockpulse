@@ -13,7 +13,7 @@ import path from 'node:path';
 import { HORIZONS_META, publishSectors } from './lib/sectors.mjs';
 import {
   applyHysteresis, makeDiversificationChecker, regimeMultiplier, riskGauge,
-  scoreUniverse, tradeParameters,
+  scoreUniverse, tradeParameters, WEIGHTS, MIN_PRESENT,
 } from './lib/score.mjs';
 import {
   longTermFactors, midTermFactors, ultraLongFactors, ultraShortFactors,
@@ -30,6 +30,8 @@ import {
 } from './lib/store.mjs';
 
 const HORIZONS = ['ultra_short', 'mid_term', 'long_term', 'ultra_long'];
+
+export { structurallyUnavailable, STATEMENT_FACTORS };
 const METHODOLOGY_VERSION = '1.0.0';
 const TOP_N = 10;
 /** Sessions a stopped-out entry must sit out. METHODOLOGY §7. */
@@ -166,7 +168,16 @@ async function buildMarket(market, newsIndex, sentimentNow) {
   });
   console.log(`[rank] ${market}: ${rows.length} scorable names, regime=${regime.state} (breadth ${regime.breadth !== null ? (regime.breadth * 100).toFixed(0) + '%' : 'n/a'})`);
 
-  return { market, asOf, rows, regime, benchBars, sectorBars, sectorStrength, prices };
+  // Measured, not assumed: does ANY company in this market have a financial
+  // statement series in the store? Drives the empty-board explanation, so that
+  // "no keyless source exists" and "the store is still filling" are never
+  // confused for one another. See emptyReasonFor.
+  const hasStatements = Object.values(fundamentals.companies ?? {})
+    .some((c) => (c.quarters?.length ?? 0) > 0 || (c.annual?.length ?? 0) > 0);
+
+  return {
+    market, asOf, rows, regime, benchBars, sectorBars, sectorStrength, prices, hasStatements,
+  };
 }
 
 function latestBarDate(prices) {
@@ -380,7 +391,9 @@ async function buildBoard(market, horizon, ctx, gitSha) {
       // statements, which SEC XBRL provides for US filers and no keyless Korean
       // source provides at all. Publishing an unexplained empty table would read
       // as breakage; publishing a fabricated one would be worse.
-      emptyReason: rows.length === 0 ? emptyReasonFor(market, horizon, graded) : null,
+      emptyReason: rows.length === 0
+        ? emptyReasonFor(market, horizon, graded, ctx.hasStatements)
+        : null,
       rows,
       justMissed: displaced.slice(0, 6).map((d) => ({
         ticker: d.ticker,
@@ -394,10 +407,107 @@ async function buildBoard(market, horizon, ctx, gitSha) {
 }
 
 /**
+ * Factors that can only be computed from a company's financial statements.
+ *
+ * Korea has none. refresh-kr.mjs stores a daily snapshot of market cap, share
+ * count and close — a cross-sectional snapshot, not a statement time series —
+ * and nothing in the keyless KR path ever writes `quarters` or `annual`. So for
+ * a Korean board, a horizon whose weight set cannot reach MIN_PRESENT without
+ * these is not waiting on data accumulation. It is waiting on a DART key that
+ * may never be configured.
+ */
+const STATEMENT_FACTORS = new Set([
+  'fundamentalMomentum', 'earningsDrift',
+  'growthQuality', 'capitalEfficiency', 'cashGeneration', 'valuation', 'fScore',
+  'moatStrength', 'cashFlowDurability', 'reinvestmentRunway',
+  'balanceSheetStrength', 'shareholderYield',
+]);
+
+/**
+ * True when this market/horizon pair can never fill, no matter how long the
+ * pipeline runs — because too many of its factors need financial statements the
+ * market has no keyless source for.
+ */
+function structurallyUnavailable(market, horizon, hasStatements = false) {
+  // `hasStatements` is measured from the store, not assumed from the market.
+  // The day a DART key is configured, KR gains statements and this check must
+  // stop claiming the board can never fill — otherwise the site would keep
+  // explaining an absence that had already been fixed. A hard-coded
+  // `market !== 'KR'` would have been the easy version and the wrong one.
+  if (hasStatements) return false;
+  const keys = Object.keys(WEIGHTS[horizon] ?? {});
+  if (!keys.length) return false;
+  const reachable = keys.filter((k) => !STATEMENT_FACTORS.has(k)).length;
+  return reachable < (MIN_PRESENT[horizon] ?? 4);
+}
+
+const KR_DART_NOTICE = {
+  ultra_short: null,
+  mid_term: {
+    en:
+      'This board scores earnings revision drift and fundamental momentum, which ' +
+      'need quarterly financial statements. SEC XBRL provides those for US filers; ' +
+      'no keyless Korean source does, so only three of the five factors can ever be ' +
+      'computed for Korea — below the completeness floor the methodology requires. ' +
+      'Configuring a free DART OpenAPI key opens this board. Until then it stays ' +
+      'empty rather than ranked on price action alone and presented as a ' +
+      'fundamentals-aware screen.',
+    ko:
+      '이 순위표는 실적 전망 변화와 기초체력 개선 속도를 평가하는데, 둘 다 분기 재무제표가 ' +
+      '있어야 계산됩니다. 미국은 SEC XBRL이 이를 제공하지만 한국에는 인증 없이 받아 쓸 수 ' +
+      '있는 공개 소스가 없어, 다섯 개 지표 중 셋까지만 계산됩니다. 방법론이 요구하는 최소 ' +
+      '지표 수에 못 미칩니다. DART 오픈API 키(무료)를 설정하면 이 순위표가 열립니다. 그 ' +
+      '전까지는 주가 흐름만 보고 매긴 순위를 재무 기반 스크리너인 것처럼 내놓지 않고 ' +
+      '비워 둡니다.',
+  },
+  long_term: {
+    en:
+      'Every factor on this board — growth quality, return on invested capital, ' +
+      'cash generation, valuation, the Piotroski F-score — is computed from audited ' +
+      'financial statements. SEC XBRL provides them for US filers; no keyless Korean ' +
+      'source does. Configuring a free DART OpenAPI key opens this board. Until then ' +
+      'it is deliberately empty: there is no honest way to rank long-term quality ' +
+      'without the statements that define it.',
+    ko:
+      '이 순위표의 모든 지표 — 성장의 질, 투하자본이익률, 현금창출력, 밸류에이션, ' +
+      '피오트로스키 F-스코어 — 는 감사받은 재무제표에서 나옵니다. 미국은 SEC XBRL이 ' +
+      '제공하지만 한국에는 인증 없이 받아 쓸 수 있는 공개 소스가 없습니다. DART 오픈API ' +
+      '키(무료)를 설정하면 이 순위표가 열립니다. 그 전까지는 일부러 비워 둡니다. ' +
+      '재무제표 없이 장기 우량주를 가려낸다고 말할 방법은 없기 때문입니다.',
+  },
+  ultra_long: {
+    en:
+      'The ultra-long model requires ten years of tagged annual statements. SEC XBRL ' +
+      'provides these for US filers; no keyless Korean source does. This board ' +
+      'activates for Korea once a DART OpenAPI key is configured (free, optional). ' +
+      'Until then it is deliberately empty rather than ranked on thinner data.',
+    ko:
+      '초장기 모델은 10년치 표준화된 연간 재무제표가 있어야 돌아갑니다. 미국은 SEC XBRL이 ' +
+      '이를 제공하지만, 한국에는 인증 없이 받아 쓸 수 있는 공개 소스가 없습니다. DART ' +
+      '오픈API 키(무료)를 설정하면 이 순위표가 열립니다. 그 전까지는 얕은 데이터로 억지로 ' +
+      '순위를 매기지 않고 일부러 비워 둡니다.',
+  },
+};
+
+/**
  * Explain an empty board from the gate distribution, so the page can say what
  * happened instead of showing a blank table.
  */
-function emptyReasonFor(market, horizon, graded) {
+function emptyReasonFor(market, horizon, graded, hasStatements = false) {
+  // Checked FIRST, and deliberately so.
+  //
+  // The generic fallback below tells the reader "this resolves as the data store
+  // fills." For KR mid-term and long-term that sentence is not merely vague —
+  // it is false, and it can never become true: those boards need financial
+  // statements that no keyless Korean source publishes, so no amount of waiting
+  // fills them. The site was making a promise the pipeline cannot keep, in two
+  // languages, on a finance page. A structural limit has to read as a structural
+  // limit.
+  if (market === 'KR' && structurallyUnavailable(market, horizon, hasStatements)) {
+    const notice = KR_DART_NOTICE[horizon];
+    if (notice) return { code: 'kr_no_statements', ...notice };
+  }
+
   const gates = new Map();
   for (const c of graded) {
     if (c.gate) gates.set(c.gate, (gates.get(c.gate) ?? 0) + 1);
@@ -405,26 +515,14 @@ function emptyReasonFor(market, horizon, graded) {
   const dominant = [...gates.entries()].sort((a, b) => b[1] - a[1])[0];
 
   if (dominant?.[0] === 'insufficient_filing_history') {
-    return market === 'KR'
-      ? {
-        code: 'kr_no_decade_fundamentals',
-        en:
-          'The ultra-long model requires ten years of tagged annual statements. ' +
-          'SEC XBRL provides these for US filers; no keyless Korean source does. ' +
-          'This board activates for Korea once a DART OpenDART key is configured ' +
-          '(free, optional). Until then it is deliberately empty rather than ' +
-          'ranked on thinner data.',
-        ko:
-          '초장기 모델은 10년치 표준화된 연간 재무제표가 있어야 돌아갑니다. 미국은 ' +
-          'SEC XBRL이 이를 제공하지만, 한국에는 인증 없이 받아 쓸 수 있는 공개 소스가 ' +
-          '없습니다. DART 오픈API 키(무료)를 설정하면 이 순위표가 열립니다. 그 전까지는 ' +
-          '얕은 데이터로 억지로 순위를 매기지 않고 일부러 비워 둡니다.',
-      }
-      : {
-        code: 'insufficient_filing_history',
-        en: 'No company in the universe has the ten years of filing history this horizon requires.',
-        ko: '이 투자 기간이 요구하는 10년치 재무 이력을 갖춘 종목이 유니버스에 없습니다.',
-      };
+    // Reached when statements EXIST but are too short — a genuine cold start,
+    // which does resolve with time. The no-statements-at-all case was handled
+    // above and says something different, because it is something different.
+    return {
+      code: 'insufficient_filing_history',
+      en: 'No company in the universe has the ten years of filing history this horizon requires.',
+      ko: '이 투자 기간이 요구하는 10년치 재무 이력을 갖춘 종목이 유니버스에 없습니다.',
+    };
   }
   if (dominant) {
     return {

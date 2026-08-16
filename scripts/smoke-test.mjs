@@ -241,8 +241,20 @@ async function validate() {
       const expectedEmpty = market === 'KR' && h === 'ultra_long';
       if (expectedEmpty && b.rows.length === 0) {
         check('KR/ultra_long explains why it is empty', !!b.emptyReason?.en && !!b.emptyReason?.ko);
-        check('KR/ultra_long names the right cause', b.emptyReason?.code === 'kr_no_decade_fundamentals',
+        // Two different honest answers, and which one is correct depends on the
+        // store rather than on the market:
+        //   kr_no_statements            — no statement series at all (live KR,
+        //                                 no DART key). Never fills; says so.
+        //   insufficient_filing_history — statements exist but are too short.
+        //                                 A cold start, which does resolve.
+        // This fixture gives KR quarters but no annuals, so it is the second.
+        // What must never appear here is the generic "resolves as the data
+        // store fills", which for the live KR pipeline is simply untrue.
+        check('KR/ultra_long names the right cause',
+          ['kr_no_statements', 'insufficient_filing_history'].includes(b.emptyReason?.code),
           b.emptyReason?.code);
+        check('KR/ultra_long does not promise a fill that cannot happen',
+          b.emptyReason?.code !== 'insufficient_data', b.emptyReason?.code);
         continue;
       }
       check(`${market}/${h} has rows`, b.rows.length > 0, `got ${b.rows.length}`);

@@ -44,7 +44,7 @@ npm install
 # Offline: seed fixtures, run the real pipeline, validate the output (~2s)
 npm run smoke
 
-# Unit tests (111)
+# Unit tests (114)
 npm test
 
 # Build (both base paths must pass)
@@ -196,8 +196,8 @@ Recorded here because each cost real debugging time and none is obvious:
 
 | Command | Covers |
 | --- | --- |
-| `npm test` | 111 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering, SIC→sector |
-| `npm run smoke` | 2,240 end-to-end checks against the real pipeline |
+| `npm test` | 114 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering, SIC→sector |
+| `npm run smoke` | 2,241 end-to-end checks against the real pipeline |
 | `npm run audit` | built output: base paths, SEO, a11y, links, compliance notices |
 | `npm run contrast` | WCAG AA on 88 colour pairs in both themes |
 | `npm run check:layout` | 112 table regions × 8 viewport widths, no clipping |
@@ -217,8 +217,10 @@ Published on the site too, not just here:
 2. **Headline sentiment is a lexicon**, and weakly predictive at best.
 3. **No analyst estimates**, so mid-term substitutes realized earnings drift for
    revision momentum.
-4. **Korean fundamentals are shallower than US.** The ultra-long board is US-only
-   until a DART key is configured.
+4. **Korea has no keyless statement source at all** — not merely a shallower
+   one. Only the ultra-short board can be produced for Korea; mid, long and
+   ultra-long stay empty and each says exactly why, in both languages, until a
+   free DART OpenAPI key is configured. See METHODOLOGY §10.4.
 5. **Weights are reasoned from published literature, not optimized** on this
    data. That avoids overfitting but means they are untuned.
 6. **Large-cap biased** by construction of the liquidity filters.

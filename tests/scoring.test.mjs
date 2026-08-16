@@ -12,6 +12,8 @@ import { atr, ema } from '../scripts/lib/indicators.mjs';
 import { makeBars, makeQuarters } from './fixtures/generate.mjs';
 import { sectorForSic, SECTORS } from '../scripts/lib/sic.mjs';
 import { maxDrawdown, buildEquityCurve, BOOK_SLOTS } from '../scripts/evaluate.mjs';
+import { structurallyUnavailable, STATEMENT_FACTORS } from '../scripts/build-rankings.mjs';
+import { MIN_PRESENT } from '../scripts/lib/score.mjs';
 
 // ── factor shapes ──────────────────────────────────────────────────────────
 
@@ -544,4 +546,51 @@ test('maxDrawdown ignores trades with no return rather than scoring them flat', 
   ];
   const without = [closedTrade('2026-04-01', -30), closedTrade('2026-04-03', 5)];
   assert.equal(maxDrawdown(withNulls), maxDrawdown(without));
+});
+
+// ── honest empty boards ────────────────────────────────────────────────────
+
+test('a KR board that can never fill says so, instead of promising it will', () => {
+  // mid_term weights fundamentalMomentum and earningsDrift; long_term is
+  // fundamental end to end. Korea has no keyless statement source — refresh-kr
+  // stores a market-cap snapshot and nothing else — so neither board can reach
+  // the completeness floor no matter how long the pipeline runs.
+  //
+  // The generic fallback told the reader "this resolves as the data store
+  // fills." On a finance page, in two languages, that is a promise the pipeline
+  // cannot keep.
+  for (const horizon of ['mid_term', 'long_term', 'ultra_long']) {
+    assert.equal(structurallyUnavailable('KR', horizon, false), true, `KR/${horizon}`);
+  }
+  // Ultra-short is pure price and volume: Korea can and does fill it.
+  assert.equal(structurallyUnavailable('KR', 'ultra_short', false), false);
+  // The US has SEC XBRL, so statements are present and nothing is structural.
+  for (const horizon of ['ultra_short', 'mid_term', 'long_term', 'ultra_long']) {
+    assert.equal(structurallyUnavailable('US', horizon, true), false, `US/${horizon}`);
+  }
+});
+
+test('configuring DART must retire the "never" message, not keep repeating it', () => {
+  // The check is keyed on measured statement availability, not on the string
+  // 'KR'. The day Korea has statements, an empty board is a cold start again
+  // and must be explained as one -- otherwise the site would go on explaining
+  // an absence that had already been fixed.
+  for (const horizon of ['mid_term', 'long_term', 'ultra_long']) {
+    assert.equal(structurallyUnavailable('KR', horizon, true), false,
+      `KR/${horizon} must stop reporting a structural limit once statements exist`);
+  }
+});
+
+test('the counting behind structurallyUnavailable matches the published weights', () => {
+  // Guard against the check silently going stale if weights are re-tuned: if a
+  // horizon ever drops below the floor on non-statement factors alone, that is
+  // a real change in what Korea can publish and must be a deliberate one.
+  const reachable = (h) =>
+    Object.keys(WEIGHTS[h]).filter((k) => !STATEMENT_FACTORS.has(k)).length;
+  assert.equal(reachable('ultra_short'), 5);   // all price/volume/news
+  assert.equal(reachable('mid_term'), 3);      // trend, money flow, sector strength
+  assert.equal(reachable('long_term'), 0);
+  assert.equal(reachable('ultra_long'), 0);
+  assert.ok(reachable('ultra_short') >= MIN_PRESENT.ultra_short);
+  assert.ok(reachable('mid_term') < MIN_PRESENT.mid_term);
 });
