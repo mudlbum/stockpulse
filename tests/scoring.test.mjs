@@ -10,6 +10,7 @@ import {
 } from '../scripts/lib/factors.mjs';
 import { atr, ema } from '../scripts/lib/indicators.mjs';
 import { makeBars, makeQuarters } from './fixtures/generate.mjs';
+import { sectorForSic, SECTORS } from '../scripts/lib/sic.mjs';
 
 // ── factor shapes ──────────────────────────────────────────────────────────
 
@@ -371,4 +372,111 @@ test('turnover ignores carrier rows', () => {
   const { turnover } = applyHysteresis(today, previous, { exitRank: 12, minHold: 1, topN: 2 });
   // B was never on the published board, so its arrival is real turnover.
   assert.ok(Math.abs(turnover - 0.5) < 1e-9, `expected 0.5, got ${turnover}`);
+});
+
+// ── sector classification and the missing-sector regression ────────────────
+
+test('sectorForSic maps representative codes to the SPDR sector names', () => {
+  // Ranges are evaluated in order, so each of these also pins the precedence of
+  // a narrow override over the broad range it sits inside.
+  const cases = [
+    [3674, 'Information Technology'],  // NVIDIA — semiconductors
+    [3571, 'Information Technology'],  // Apple — electronic computers
+    [7372, 'Information Technology'],  // Microsoft — prepackaged software
+    [2834, 'Health Care'],             // pharmaceutical preparations, inside 2800-2899 chemicals
+    [8731, 'Health Care'],             // commercial biological research, inside 8700s services
+    [3826, 'Health Care'],             // lab analytical instruments, inside the 3800s
+    [6022, 'Financials'],              // state commercial banks
+    [6798, 'Real Estate'],             // REIT, an island inside the 6700s
+    [6512, 'Real Estate'],             // operators of apartment buildings
+    [1311, 'Energy'],                  // crude petroleum and natural gas
+    [4610, 'Energy'],                  // pipelines, carved out of transportation
+    [4911, 'Utilities'],               // electric services
+    [4953, 'Industrials'],             // refuse systems — waste is NOT a utility
+    [3711, 'Consumer Discretionary'],  // motor vehicles — GICS, not SIC, wins
+    [3721, 'Industrials'],             // aircraft
+    [5812, 'Consumer Discretionary'],  // eating places
+    [5411, 'Consumer Staples'],        // grocery stores, carved out of retail
+    [5912, 'Consumer Staples'],        // drug stores, likewise
+    [2011, 'Consumer Staples'],        // meat packing
+    [4813, 'Communication Services'],  // telephone communications
+    [7812, 'Communication Services'],  // motion picture production
+    [2711, 'Communication Services'],  // newspapers
+    [1531, 'Consumer Discretionary'],  // operative builders — homebuilders
+    [3312, 'Materials'],               // steel works
+  ];
+  for (const [sic, want] of cases) {
+    assert.equal(sectorForSic(sic), want, `SIC ${sic}`);
+  }
+});
+
+test('sectorForSic returns null rather than a catch-all bucket', () => {
+  // 9995 is SEC's own "non-classifiable establishments". Returning a sector
+  // name here would be an invented fact, and every count-based rule downstream
+  // would treat the invention as a real peer group.
+  assert.equal(sectorForSic(9995), null);
+  assert.equal(sectorForSic(null), null);
+  assert.equal(sectorForSic(undefined), null);
+  assert.equal(sectorForSic(0), null);
+  assert.equal(sectorForSic('not a number'), null);
+  // Strings are accepted, because SEC returns the code as a string.
+  assert.equal(sectorForSic('3674'), 'Information Technology');
+});
+
+test('every mapped sector is one of the eleven composite buckets', () => {
+  // A typo in the mapping table would produce a sector name with no composite,
+  // so sectorStrength would be null for those names and nobody would notice.
+  for (let sic = 1; sic <= 9999; sic++) {
+    const s = sectorForSic(sic);
+    if (s !== null) assert.ok(SECTORS.includes(s), `SIC ${sic} produced unknown sector "${s}"`);
+  }
+});
+
+test('REGRESSION: a universe with no sector data still fills the whole board', () => {
+  // The bug this pins: US rows shipped with sector null, everything downstream
+  // coerced null to the string 'Unknown', the cap saw one enormous sector and
+  // allowed four of it — so every US board published 4 names instead of 10,
+  // silently, in production. Uncorrelated series so only the sector rule is
+  // under test.
+  const ranked = Array.from({ length: 20 }, (_, i) => ({
+    ticker: `N${i}`, name: `N${i}`, sector: null,
+    score: 10 - i * 0.1, bars: makeBars({ n: 120, seed: 900 + i * 7 }),
+  }));
+  const { selected } = applyDiversification(ranked, { topN: 10, maxPerSector: 3 });
+  assert.equal(selected.length, 10, 'an unclassified universe must not be capped by the sector rule');
+
+  // Undefined and empty string are the same absence, and must behave the same.
+  for (const missing of [undefined, '']) {
+    const rows = ranked.map((r) => ({ ...r, sector: missing }));
+    assert.equal(applyDiversification(rows, { topN: 10, maxPerSector: 3 }).selected.length, 10);
+  }
+});
+
+test('the sector cap still bites once sectors are known', () => {
+  // The complement of the regression above: exempting nulls must not have
+  // disabled the rule for rows that do carry a sector.
+  const ranked = Array.from({ length: 30 }, (_, i) => ({
+    ticker: `K${i}`, name: `K${i}`, sector: i < 12 ? 'Information Technology' : `Sec${i}`,
+    score: 10 - i * 0.1, bars: makeBars({ n: 120, seed: 400 + i * 3 }),
+  }));
+  const { selected, displaced } = applyDiversification(ranked, { topN: 10, maxPerSector: 3 });
+  const tech = selected.filter((r) => r.sector === 'Information Technology').length;
+  assert.ok(tech <= 4, `sector cap must still apply to known sectors, got ${tech}`);
+  assert.ok(displaced.some((d) => d.displacedBy === 'sector_cap'));
+});
+
+test('mixing classified and unclassified names caps only the classified ones', () => {
+  const ranked = [
+    ...Array.from({ length: 8 }, (_, i) => ({
+      ticker: `T${i}`, name: `T${i}`, sector: 'Information Technology',
+      score: 10 - i * 0.1, bars: makeBars({ n: 120, seed: 700 + i * 5 }),
+    })),
+    ...Array.from({ length: 10 }, (_, i) => ({
+      ticker: `U${i}`, name: `U${i}`, sector: null,
+      score: 5 - i * 0.1, bars: makeBars({ n: 120, seed: 800 + i * 5 }),
+    })),
+  ];
+  const { selected } = applyDiversification(ranked, { topN: 10, maxPerSector: 3 });
+  assert.ok(selected.filter((r) => r.sector === 'Information Technology').length <= 4);
+  assert.equal(selected.length, 10, 'unclassified names should fill the remaining seats');
 });

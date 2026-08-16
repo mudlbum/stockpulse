@@ -27,8 +27,18 @@ machine-readable, no key, no rate ceiling worth worrying about.
 | `https://www.sec.gov/files/company_tickers.json` | ticker ↔ CIK map |
 | `https://data.sec.gov/api/xbrl/companyfacts/CIK##########.json` | full fact history per company |
 | `https://data.sec.gov/api/xbrl/frames/{taxonomy}/{tag}/{unit}/{period}.json` | one fact per filer, market-wide |
+| `https://data.sec.gov/submissions/CIK##########.json` | SIC code, industry description, exchanges |
 
 **Rules that bite:**
+
+- **`companyfacts` does not contain the SIC code, the industry, or the
+  exchange.** It contains facts and nothing else. The only keyless source of a
+  filer's industry is the `submissions` endpoint — a different host path, a
+  different document. Missing this is how every US row on this site shipped with
+  no sector until it was caught in production; see METHODOLOGY §1.3.
+- **`submissions` is ~160KB per filer** because it embeds the recent filing
+  history, of which the pipeline wants four scalar fields. Fetch once, cache in
+  `data-store/profiles/us.json`, never refetch: a SIC code does not move.
 
 - **Send a descriptive `User-Agent` with a contact address.** SEC's stated cap is
   **10 requests/second**; the pipeline throttles well below it.

@@ -14,23 +14,35 @@
  */
 
 import {
-  fetchUsTickerMap, fetchYahooChart, fetchStooqDaily, fetchCompanyFacts,
+  fetchUsTickerMap, fetchYahooChart, fetchStooqDaily, fetchCompanyFacts, fetchSecProfile,
   extractConcept, CONCEPTS, INSTANTANEOUS,
 } from './lib/sources.mjs';
 import { healthReport, mapLimit } from './lib/http.mjs';
-import { loadPrices, savePrices, mergeBars, loadFundamentals, saveFundamentals, publish } from './lib/store.mjs';
+import {
+  loadPrices, savePrices, mergeBars, loadFundamentals, saveFundamentals,
+  loadProfiles, saveProfiles, publish,
+} from './lib/store.mjs';
 import { medianDollarVolume } from './lib/indicators.mjs';
+import { sectorForSic } from './lib/sic.mjs';
 import { isNum } from './lib/stats.mjs';
 
 const MARKET = 'US';
 const TARGET_UNIVERSE = Number(process.env.US_UNIVERSE ?? 600);
 const BOOTSTRAP_BUDGET = Number(process.env.US_BOOTSTRAP ?? 120);
 const FUNDAMENTAL_BUDGET = Number(process.env.US_FUNDAMENTALS ?? 60);
+/**
+ * Per-run cap on SEC submissions fetches. Generous relative to the fundamentals
+ * budget because a profile is fetched ONCE per company and then cached forever
+ * — the cost is a one-off cold start, not a daily bill. A universe of 600 fills
+ * in three runs; after that this number is almost always 0.
+ */
+const PROFILE_BUDGET = Number(process.env.US_PROFILES ?? 250);
 const BENCHMARKS = ['SPY', 'QQQ', 'IWM'];
 
-/** Sector proxies. SEC gives SIC codes, not GICS, and mapping SIC→GICS well is
- *  a project in itself; sector ETFs give a usable, free sector composite for
- *  the relative-strength factor and the treemap. */
+/** Sector composites. The eleven SPDR sector ETFs give a free, ready-made
+ *  return series per sector; per-stock membership comes from the filer's SIC
+ *  code via scripts/lib/sic.mjs, and the two use identical sector names on
+ *  purpose so a stock and its composite always refer to the same bucket. */
 const SECTOR_ETFS = {
   XLK: 'Information Technology', XLV: 'Health Care', XLF: 'Financials',
   XLY: 'Consumer Discretionary', XLP: 'Consumer Staples', XLE: 'Energy',
@@ -62,6 +74,7 @@ async function main() {
 
   const prices = await loadPrices(MARKET);
   const fundamentals = await loadFundamentals(MARKET);
+  const profiles = await loadProfiles(MARKET);
 
   // company_tickers.json is generated in market-cap order, which is the only
   // free large-cap proxy available before any prices are loaded.
@@ -119,6 +132,50 @@ async function main() {
   const selected = universe.slice(0, TARGET_UNIVERSE);
   console.log(`[us] universe after liquidity/price filters: ${selected.length}`);
 
+  // ── company profiles → sector (METHODOLOGY §1.3) ──────────────────────
+  // Fetched once per company and cached permanently; a SIC code does not move.
+  // Names whose SIC maps to nothing keep `sector: null` and are recorded so the
+  // next run does not retry them forever — null is a real answer here, and the
+  // diversification cap is built to treat it as an absence rather than as a
+  // bucket. See scripts/lib/sic.mjs.
+  const needProfile = selected.filter((s) => profiles.companies[s.ticker]?.fetchedAt == null);
+  const profileNow = needProfile.slice(0, PROFILE_BUDGET);
+  if (profileNow.length) {
+    console.log(`[us] fetching SEC profiles for ${profileNow.length} companies (${needProfile.length} missing)…`);
+  }
+  const prof = await mapLimit(profileNow, 4, async (s) => {
+    const p = await fetchSecProfile(s.cik);
+    return { ticker: s.ticker, profile: p };
+  });
+  for (const r of prof.results) {
+    if (!r?.profile) continue;
+    profiles.companies[r.ticker] = {
+      cik: r.profile.cik,
+      sic: r.profile.sic,
+      sicDescription: r.profile.sicDescription,
+      sector: sectorForSic(r.profile.sic),
+      exchanges: r.profile.exchanges,
+      fetchedAt: new Date().toISOString(),
+    };
+  }
+  if (profileNow.length) await saveProfiles(MARKET, profiles);
+
+  for (const s of selected) s.sector = profiles.companies[s.ticker]?.sector ?? null;
+  const withSector = selected.filter((s) => s.sector).length;
+  const distinctSectors = new Set(selected.map((s) => s.sector).filter(Boolean)).size;
+  console.log(
+    `[us] sector coverage: ${withSector}/${selected.length} names across ${distinctSectors} sectors`,
+  );
+  // Coverage this low means the diversification cap has nothing to work with
+  // and every board will truncate at the cap. Warn loudly; do not fail, because
+  // a partially-filled cold start is a legitimate state.
+  if (selected.length >= 50 && withSector / selected.length < 0.5) {
+    console.warn(
+      `[us] WARNING: fewer than half the universe has a sector. Boards will be ` +
+      `capped short until profiles fill in. Missing: ${needProfile.length - profileNow.length} still queued.`,
+    );
+  }
+
   // ── fundamentals (METHODOLOGY §5, §6) ─────────────────────────────────
   // companyfacts is a multi-megabyte document per filer, so it is refreshed on
   // a rotation rather than all at once: the least-recently-updated names are
@@ -148,15 +205,18 @@ async function main() {
     market: MARKET,
     asOf,
     count: selected.length,
-    tickers: selected.map((s) => ({ ticker: s.ticker, name: s.name, cik: s.cik })),
+    tickers: selected.map((s) => ({
+      ticker: s.ticker, name: s.name, cik: s.cik, sector: s.sector ?? null,
+    })),
     sectorEtfs: SECTOR_ETFS,
+    sectorCoverage: { withSector, total: selected.length, distinctSectors },
   });
 
   const health = healthReport();
   console.log(`[us] done in ${Math.round((Date.now() - started) / 1000)}s`);
   console.table(health);
 
-  const failures = [...upd.errors, ...boot.errors, ...fund.errors];
+  const failures = [...upd.errors, ...boot.errors, ...prof.errors, ...fund.errors];
   if (failures.length) {
     console.warn(`[us] ${failures.length} item-level failures; first 5:`);
     for (const f of failures.slice(0, 5)) console.warn('   ', f.item, '→', f.error);

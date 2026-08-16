@@ -88,6 +88,47 @@ not discovered. Any stock closing at or within 0.5% of the limit is **excluded
 from that day's ultra-short ranking** and flagged in the data. Ranking a
 limit-up stock as a buy is recommending an entry that cannot be filled.
 
+### 1.3 Sector classification
+
+Sector membership is not decorative: it drives sector-neutral normalization
+(§2), the `sectorStrength` factor (§4.3), the diversification cap (§8) and the
+capital-flow treemap. Getting it wrong degrades four things at once, quietly.
+
+| Market | Source | Method |
+| --- | --- | --- |
+| US | SEC `submissions` endpoint — `sic` | SIC code → sector via `scripts/lib/sic.mjs` |
+| KR | KRX listing snapshot — industry label | Mapped directly |
+
+**Why SIC and not GICS.** GICS is licensed; there is no keyless feed of it. SIC
+is the only industry code the SEC publishes, and it is published for every
+filer. The mapping in `scripts/lib/sic.mjs` targets the eleven SPDR sector
+buckets, deliberately, so that a stock's sector and the composite used for its
+sector-relative factors always name the same thing.
+
+The mapping is an approximation and is documented as one. Where SIC groups by
+*what is manufactured* and GICS groups by *who buys it*, the mapping follows
+GICS — SIC 3711 (motor vehicles) is Consumer Discretionary, not Industrials.
+
+**An unclassifiable filer gets `sector: null`, not a bucket named "Unknown".**
+This is the §0 P3 rule (a missing value is an absence, not a value) applied to
+metadata rather than to a factor, and it is load-bearing:
+
+- In §2, an unclassified name is normalized against the **whole universe**, never
+  against other unclassified names. "Cheap for a company of unknown industry" is
+  not a statement about anything.
+- In §8, an unclassified name is **exempt from the sector cap** and constrained
+  only by the correlation cap, which needs no metadata.
+
+The failure this rule prevents was live, not hypothetical. Before US sector data
+existed, every US row carried `sector: null`, every consumer coerced it to the
+string `Unknown`, the cap saw one enormous sector, and all four US boards
+published **four names instead of ten** — with no error raised anywhere, because
+from the cap's point of view it was correctly enforcing a concentration limit.
+
+Coverage is reported by the refresh job on every run and published in
+`universe-us.json` as `sectorCoverage`. Below 50%, the job warns: the boards are
+valid but the sector cap is doing almost nothing, which a reader should know.
+
 ---
 
 ## 2. Factor normalization — the shared machinery
@@ -710,8 +751,10 @@ Additional rules:
 
 Applied after scoring, before publication:
 
-1. **Max 3 names per GICS sector** (relaxed to 4 if the universe has fewer than
-   6 represented sectors).
+1. **Max 3 names per sector** (relaxed to 4 if the universe has fewer than 6
+   *represented* sectors — counted over classified names only). Names with no
+   sector are exempt rather than pooled; see §1.3 for why that distinction is
+   not pedantry.
 2. **Max 2 names with pairwise 60-day return correlation > 0.85.** A top 10 of
    ten correlated semiconductor names is one position, not ten, and presenting it
    as a diversified list is misleading.

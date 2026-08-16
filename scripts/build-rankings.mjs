@@ -122,7 +122,11 @@ async function buildMarket(market, newsIndex, sentimentNow) {
     if (!bars || bars.length < 60) continue;
 
     const co = fundamentals.companies?.[t.ticker] ?? {};
-    const sector = t.sector ?? co.sector ?? 'Unknown';
+    // null, not 'Unknown'. Coercing an unclassified name into a named bucket
+    // makes the diversification cap count it as a real sector and truncates the
+    // board; it also makes sector-neutral normalization silently non-neutral.
+    // Everything downstream is written to accept null.
+    const sector = t.sector || co.sector || null;
     const news = newsIndex.tickers?.[t.ticker] ?? [];
     // Anchored to the news snapshot's own timestamp, NOT wall-clock now.
     //
@@ -202,7 +206,8 @@ function buildSectorComposites(market, prices, universeFile) {
   for (const t of universeFile.tickers ?? []) {
     const bars = prices.bars[t.ticker];
     if (!bars || bars.length < 130) continue;
-    const s = t.sector ?? 'Unknown';
+    const s = t.sector || null;
+    if (!s) continue;   // no sector, no composite membership
     if (!bySector.has(s)) bySector.set(s, []);
     bySector.get(s).push(bars);
   }

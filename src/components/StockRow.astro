@@ -100,7 +100,17 @@ const SECTOR_KO: Record<string, string> = {
   Unknown: '기타',
 };
 
-const sectorLabel = (v: string): string => (lang === 'ko' && SECTOR_KO[v]) || v;
+/**
+ * A row whose sector the pipeline could not determine carries `null`, not the
+ * string 'Unknown' — see METHODOLOGY §1.3. Rendering it directly printed an
+ * empty line under the company name, so it degrades to an explicit label
+ * instead: the reader should be able to tell "we don't know" apart from a
+ * layout glitch.
+ */
+const sectorLabel = (v: string | null | undefined): string => {
+  if (!v) return lang === 'ko' ? '분류 미상' : 'Unclassified';
+  return (lang === 'ko' && SECTOR_KO[v]) || v;
+};
 
 /**
  * Korean renderings of the published thesis-invalidation triggers.

@@ -1,0 +1,20 @@
+# The build, the data pipeline and every CI run happen on Linux, and the
+# data-store is committed JSON that must diff cleanly across machines. Pin the
+# repository to LF so a Windows checkout cannot introduce a whole-file diff by
+# doing nothing but existing.
+#
+# Without this, GitHub Desktop's default core.autocrlf=true rewrites the working
+# tree to CRLF on checkout while the pipeline writes LF, so every store file
+# alternates line endings depending on which side touched it last.
+* text=auto eol=lf
+
+# Binary and generated assets must never be line-ending-normalized.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary

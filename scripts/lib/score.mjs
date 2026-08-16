@@ -125,7 +125,9 @@ export function regimeMultiplier({ benchmarkBars, universeBars }) {
 export function scoreUniverse(rows, horizon, regime = { multiplier: 1, state: 'unknown' }) {
   const weights = WEIGHTS[horizon];
   const keys = Object.keys(weights);
-  const sectors = rows.map((r) => r.sector ?? 'Unknown');
+  // null stays null: normalizeBySector scores unclassified names against the
+  // whole universe rather than against each other. See stats.mjs.
+  const sectors = rows.map((r) => r.sector || null);
 
   // Normalize each factor across the whole universe (or within sector).
   const zByFactor = {};
@@ -197,14 +199,26 @@ export function makeDiversificationChecker(ranked, {
     return retSeries.get(r.ticker);
   };
 
+  // A row with no sector is NOT a member of a sector called "Unknown".
+  //
+  // This distinction cost a live deploy. When US sector data was missing
+  // entirely, every row collapsed into one synthetic bucket, the cap allowed
+  // four of them, and all four US boards published four names instead of ten —
+  // with no error anywhere, because from the cap's point of view it was simply
+  // enforcing a legitimate concentration limit. The same principle the codebase
+  // applies to factors applies here: a missing value is an absence, not a
+  // value. An unclassified name is therefore exempt from the sector cap and is
+  // held in check by the correlation cap below, which needs no metadata.
+  const knownSectors = ranked.slice(0, 40).map((r) => r.sector).filter(Boolean);
+  const distinctSectors = new Set(knownSectors).size;
   // With few distinct sectors in the universe, a cap of 3 would make a top 10
-  // unfillable, so it relaxes by one.
-  const distinctSectors = new Set(ranked.slice(0, 40).map((r) => r.sector ?? 'Unknown')).size;
+  // unfillable, so it relaxes by one. Coverage this thin also means the cap is
+  // doing very little, which is what the refresh job warns about.
   const sectorCap = distinctSectors < 6 ? maxPerSector + 1 : maxPerSector;
 
   function reasonToReject(r) {
-    const sec = r.sector ?? 'Unknown';
-    if ((sectorCount.get(sec) ?? 0) >= sectorCap) return 'sector_cap';
+    const sec = r.sector || null;
+    if (sec && (sectorCount.get(sec) ?? 0) >= sectorCap) return 'sector_cap';
 
     const cluster = r.catalystCluster ?? null;
     if (cluster && (clusterCount.get(cluster) ?? 0) >= maxPerCluster) return 'catalyst_cluster_cap';
@@ -234,8 +248,8 @@ export function makeDiversificationChecker(ranked, {
         return false;
       }
       selected.push(r);
-      const sec = r.sector ?? 'Unknown';
-      sectorCount.set(sec, (sectorCount.get(sec) ?? 0) + 1);
+      const sec = r.sector || null;
+      if (sec) sectorCount.set(sec, (sectorCount.get(sec) ?? 0) + 1);
       if (r.catalystCluster) clusterCount.set(r.catalystCluster, (clusterCount.get(r.catalystCluster) ?? 0) + 1);
       return true;
     },

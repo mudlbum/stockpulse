@@ -160,12 +160,21 @@ export function normalizeFactor(values, { log = false, winsorP = 0.02, clipTo = 
 export function normalizeBySector(values, sectors, opts = {}) {
   const { minGroup = 8 } = opts;
   const counts = new Map();
-  for (const s of sectors) counts.set(s, (counts.get(s) ?? 0) + 1);
+  for (const s of sectors) { if (s) counts.set(s, (counts.get(s) ?? 0) + 1); }
 
   const groupOf = (s) => (counts.get(s) >= minGroup ? s : '__pooled__');
 
+  // Names with no sector are scored against the whole universe, never against
+  // each other. They are not a peer group — they are a group of names whose
+  // peer group is unknown, and z-scoring them together would invent a
+  // comparison ("cheap for an unclassified company") that means nothing. This
+  // matters most during a cold start, when the unclassified set is large enough
+  // to look like a legitimate sector to every count-based rule downstream.
+  const unsectored = [];
+
   const buckets = new Map();
   sectors.forEach((s, i) => {
+    if (!s) { unsectored.push(i); return; }
     const g = groupOf(s);
     if (!buckets.has(g)) buckets.set(g, []);
     buckets.get(g).push(i);
@@ -187,6 +196,7 @@ export function normalizeBySector(values, sectors, opts = {}) {
       out[i] = usable >= 3 ? z[k] : marketWide[i];
     });
   }
+  for (const i of unsectored) out[i] = marketWide[i];
   return out;
 }
 

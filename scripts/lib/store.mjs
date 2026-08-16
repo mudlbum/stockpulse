@@ -100,6 +100,30 @@ export async function saveFundamentals(market, store) {
   return writeJson(fundFile(market), store);
 }
 
+// ───────────────────────────────────────────────────────── company profile ──
+
+/**
+ * Slow-moving descriptive data — SIC code, derived sector, exchange — kept in
+ * its own file rather than folded into `fundamentals`.
+ *
+ * Two reasons it is separate. It has a different refresh cadence: fundamentals
+ * change every quarter, a SIC code effectively never, so merging them would
+ * either re-fetch profiles needlessly or pin fundamentals to a stale entry.
+ * And it has a different failure mode: fundamentals arriving late makes a board
+ * thin, whereas profiles arriving late makes the diversification cap collapse
+ * — a much louder failure that deserves its own diffable file.
+ */
+const profileFile = (market) => path.join(STORE, 'profiles', `${market.toLowerCase()}.json`);
+
+export async function loadProfiles(market) {
+  return (await readJson(profileFile(market), null)) ?? { market, updatedAt: null, companies: {} };
+}
+
+export async function saveProfiles(market, store) {
+  store.updatedAt = new Date().toISOString();
+  return writeJson(profileFile(market), store);
+}
+
 // ───────────────────────────────────────────────────────── published board ──
 
 const boardFile = (market, horizon) =>

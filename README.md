@@ -44,7 +44,7 @@ npm install
 # Offline: seed fixtures, run the real pipeline, validate the output (~2s)
 npm run smoke
 
-# Unit tests (88)
+# Unit tests (105)
 npm test
 
 # Build (both base paths must pass)
@@ -121,6 +121,7 @@ scripts/
     stats.mjs        cross-sectional normalization (winsorize → log → robust z)
     indicators.mjs   EMA, Wilder ATR, RSI, Bollinger, CMF, RVOL
     factors.mjs      per-stock raw factors for all four horizons
+    sic.mjs          SEC SIC code → sector, for the eleven SPDR buckets
     derive.mjs       multi-year series: ROIC/FCF history, buyback yield, …
     score.mjs        weighting, gates, regime, diversification, hysteresis
     sentiment.mjs    Loughran–McDonald financial lexicon, EN + KO
@@ -158,6 +159,16 @@ Recorded here because each cost real debugging time and none is obvious:
   would otherwise inflate the scale and squash the entire universe toward zero.
 - **Fundamental factors are sector-neutral.** A 42% gross margin is unremarkable
   for software and extraordinary for a grocer.
+- **A missing sector is `null`, and `null` is not a sector.** Coercing it to
+  `'Unknown'` puts the entire unclassified universe in one bucket, and every
+  count-based rule downstream then treats that bucket as a real peer group. It
+  cost a live deploy: with no US sector data, the diversification cap saw one
+  enormous sector, allowed four of it, and published **4 names per board instead
+  of 10** — no error, no warning, just a short list. Unclassified names are
+  exempt from the sector cap and normalized against the whole universe.
+- **`companyfacts` has no SIC code.** Only the SEC `submissions` endpoint does.
+  Getting a filer's industry costs a separate 160KB request, which is why
+  profiles are cached permanently in the store instead of refetched.
 - **Point-in-time filtering keys on the SEC `filed` date**, not the period end.
 - **Diversification must run *during* board assembly, not before it.** Applying
   it first and then running hysteresis over the full ranked list lets hysteresis
@@ -181,7 +192,7 @@ Recorded here because each cost real debugging time and none is obvious:
 
 | Command | Covers |
 | --- | --- |
-| `npm test` | 97 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering |
+| `npm test` | 105 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering, SIC→sector |
 | `npm run smoke` | 2,240 end-to-end checks against the real pipeline |
 | `npm run audit` | built output: base paths, SEO, a11y, links, compliance notices |
 | `npm run contrast` | WCAG AA on 88 colour pairs in both themes |

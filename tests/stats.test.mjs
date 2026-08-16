@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   correlation, mad, median, normalizeBySector, normalizeFactor, percentileRank,
-  quantile, ramp, robustZ, toDisplayScore, weightedScore, winsorize,
+  quantile, ramp, robustZ, toDisplayScore, weightedScore, winsorize, isNum,
 } from '../scripts/lib/stats.mjs';
 
 test('null survives every transform as null, never as 0', () => {
@@ -130,4 +130,48 @@ test('correlation returns null on insufficient overlap', () => {
   const a = Array.from({ length: 30 }, (_, i) => i);
   assert.ok(Math.abs(correlation(a, a) - 1) < 1e-9);
   assert.ok(Math.abs(correlation(a, a.map((x) => -x)) + 1) < 1e-9);
+});
+
+test('normalizeBySector scores unclassified names against the whole universe', () => {
+  // Two real sectors on very different scales, plus a block of names whose
+  // sector is unknown. The unknowns must NOT be z-scored against each other —
+  // that would invent a peer group ("cheap for an unclassified company") and,
+  // during a cold start when most names are unclassified, that fake group is
+  // the largest one in the market.
+  const sectors = [
+    ...Array(10).fill('Software'),
+    ...Array(10).fill('Utilities'),
+    ...Array(10).fill(null),
+  ];
+  const values = [
+    ...Array.from({ length: 10 }, (_, i) => 100 + i),   // Software: 100-109
+    ...Array.from({ length: 10 }, (_, i) => 10 + i),    // Utilities: 10-19
+    ...Array.from({ length: 10 }, (_, i) => 55 + i),    // unknown: 55-64
+  ];
+
+  const out = normalizeBySector(values, sectors);
+  const marketWide = normalizeFactor(values);
+
+  // Within-sector names are scored against their own sector, so a Software name
+  // at the low end of Software must score below the market-wide view of it.
+  assert.ok(out[0] < marketWide[0], 'sector-relative scoring should differ from market-wide');
+
+  for (let i = 20; i < 30; i++) {
+    assert.ok(Math.abs(out[i] - marketWide[i]) < 1e-12,
+      `unclassified index ${i} must take the market-wide z, got ${out[i]} vs ${marketWide[i]}`);
+  }
+
+  // And the unknowns must not have been spread across the real sectors either.
+  assert.ok(out.slice(20, 30).every(isNum));
+});
+
+test('normalizeBySector treats undefined and empty-string sectors as absent too', () => {
+  const values = Array.from({ length: 12 }, (_, i) => i + 1);
+  const marketWide = normalizeFactor(values);
+  for (const missing of [undefined, '', null]) {
+    const sectors = Array(12).fill(missing);
+    const out = normalizeBySector(values, sectors);
+    out.forEach((v, i) => assert.ok(Math.abs(v - marketWide[i]) < 1e-12,
+      `all-absent sectors must collapse to market-wide (${String(missing)})`));
+  }
 });

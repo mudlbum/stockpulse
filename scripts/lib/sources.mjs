@@ -122,6 +122,32 @@ export async function fetchCompanyFacts(cik) {
   return fetchJson(`https://data.sec.gov/api/xbrl/companyfacts/CIK${cik}.json`, { ua: UA_SEC });
 }
 
+/**
+ * [V] Company profile — the ONLY keyless source of a filer's industry code.
+ *
+ * `companyfacts` carries financial facts and nothing else: no SIC, no industry,
+ * no exchange. The submissions endpoint carries all three at the top level.
+ * That distinction is why every US row shipped with `sector: null` until this
+ * was added; see scripts/lib/sic.mjs for what that cost.
+ *
+ * The response is ~160KB because it embeds the filer's entire recent filing
+ * history, of which we want four scalar fields. That is why callers cache the
+ * result permanently in the store and top up under a budget rather than
+ * refetching: a company's SIC changes roughly never, and re-downloading 30MB a
+ * day to re-learn that NVIDIA is still SIC 3674 would be indefensible.
+ */
+export async function fetchSecProfile(cik) {
+  const j = await fetchJson(`https://data.sec.gov/submissions/CIK${cik}.json`, { ua: UA_SEC });
+  const sic = Number.parseInt(j?.sic, 10);
+  return {
+    cik,
+    name: j?.name ?? null,
+    sic: Number.isFinite(sic) && sic > 0 ? sic : null,
+    sicDescription: j?.sicDescription ?? null,
+    exchanges: Array.isArray(j?.exchanges) ? j.exchanges : [],
+  };
+}
+
 export function extractConcept(facts, conceptKey, { asOf, annualOnly = false } = {}) {
   const tags = CONCEPTS[conceptKey] ?? [];
   const cutoff = asOf ? new Date(asOf) : null;

@@ -55,7 +55,11 @@ function weightedReturn(members, n) {
 export function aggregateSectors(ctx) {
   const bySector = new Map();
   for (const r of ctx.rows) {
-    const s = r.sector ?? 'Unknown';
+    // An unclassified name gets no tile. A treemap cell labelled 'Unknown'
+    // carries no information about capital flow and, during a cold start, would
+    // be the largest cell on the chart purely because classification lags.
+    const s = r.sector || null;
+    if (!s) continue;
     if (!bySector.has(s)) bySector.set(s, []);
     bySector.get(s).push(r);
   }

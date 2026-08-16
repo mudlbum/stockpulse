@@ -84,7 +84,7 @@ async function main() {
       name: r.name,
       market: MARKET,
       exchange: r.market,
-      sector: desc?.sector ?? 'Unknown',
+      sector: desc?.sector || null,
       industry: desc?.industry ?? null,
       listingDate: desc?.listingDate ?? null,
       marketCap: r.marketCap,
