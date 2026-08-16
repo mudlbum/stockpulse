@@ -93,8 +93,17 @@ minutes, so nothing depends on an exact minute.
 | UTC | Local | Job |
 | --- | --- | --- |
 | 21:35 Mon–Fri | 17:35 ET | US post-close: refresh, rank, evaluate |
+| 22:20 Mon–Fri | 18:20 ET | Market brief — generated and **published** to the blog |
 | 07:10 Mon–Fri | 16:10 KST | KR post-close: refresh, rank, evaluate |
+| 07:55 Mon–Fri | 16:55 KST | Market brief — Korean |
 | every 4h | — | news only, then re-rank |
+
+The brief auto-publishes. It is capped at one per market per day, writes nothing
+on a day with fewer than six corroborated facts, carries
+`reviewStatus: auto-published` with **no** reviewer name, and is gated on the
+build and the output audit before it is committed. Set the repository variable
+`BRIEF_AUTOPUBLISH=false` to fall back to opening review PRs instead — no code
+change. See `docs/ADSENSE_READINESS.md` for why that switch exists.
 
 **Why post-close and not the pre-market schedule you might expect:** there is no
 keyless, license-clean source for pre-market or intraday data. The pipeline is
@@ -172,11 +181,12 @@ Recorded here because each cost real debugging time and none is obvious:
 
 | Command | Covers |
 | --- | --- |
-| `npm test` | 88 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering |
+| `npm test` | 97 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering |
 | `npm run smoke` | 2,240 end-to-end checks against the real pipeline |
 | `npm run audit` | built output: base paths, SEO, a11y, links, compliance notices |
 | `npm run contrast` | WCAG AA on 88 colour pairs in both themes |
-| `npm run check:layout` | 96 table regions × 8 viewport widths, no clipping |
+| `npm run check:layout` | 112 table regions × 8 viewport widths, no clipping |
+| `npm run simulate` | **25 sessions of the real pipeline**, replayed day by day — hysteresis, rank movement, turnover, stop-outs, cooldowns, ledger growth and idempotency |
 
 The smoke test is the important one. Because the development sandbox blocks
 every finance host, the network fetchers cannot be exercised locally — but

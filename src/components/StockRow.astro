@@ -9,7 +9,7 @@
  */
 import { HORIZONS, type HorizonId, type Locale } from '../config';
 import { UI, fill } from '../i18n/ui';
-import { dirArrow, dirClass, fmtLevel, fmtNum, fmtPct, fmtPrice, monogram, tickerHue } from '../lib/format';
+import { dirArrow, dirClass, fmtLevel, fmtNum, fmtPct, fmtPrice, monogram, tickerHue, withUnit } from '../lib/format';
 import type { Row } from '../lib/types';
 import Sparkline from './Sparkline.astro';
 import FactorBars from './FactorBars.astro';
@@ -52,6 +52,10 @@ const riskColor = row.riskGauge <= 2 ? 'var(--flat)' : row.riskGauge === 3 ? 'va
 const chgDir = dirClass(row.changePct);
 const hue = tickerHue(row.ticker);
 
+/* Older data files predate heldSessions; default to 1 rather than render NaN. */
+const held = Number.isFinite(row.heldSessions) ? Math.max(1, Math.round(row.heldSessions)) : 1;
+const heldHelp = fill(t.home.heldSessionsHelp, { n: held });
+
 /* The three tiers are three numbers on every horizon but not three of the same
    kind of number: ATR multiples, a discounted fair-value range, or a 5–10 year
    compounding scenario. The band is labelled so it cannot read as one thing. */
@@ -72,6 +76,68 @@ const flags = row.flags.map((f) => ({
   tone: f === 'stopped_out' ? 'badge-danger' : 'badge-warn',
 }));
 
+/**
+ * GICS sector names in Korean.
+ *
+ * `row.sector` is the English GICS name the pipeline stores per row, so the
+ * Korean leaderboard was labelling 삼성전자 "Information Technology". The
+ * wording mirrors SECTOR_KO in scripts/lib/sectors.mjs — the same map the
+ * sectors page already publishes as `nameKo` — so the two pages agree.
+ * Unmapped names pass through.
+ */
+const SECTOR_KO: Record<string, string> = {
+  'Information Technology': '정보기술',
+  'Health Care': '헬스케어',
+  Financials: '금융',
+  'Consumer Discretionary': '경기소비재',
+  'Consumer Staples': '필수소비재',
+  Energy: '에너지',
+  Industrials: '산업재',
+  Materials: '소재',
+  Utilities: '유틸리티',
+  'Real Estate': '부동산',
+  'Communication Services': '커뮤니케이션서비스',
+  Unknown: '기타',
+};
+
+const sectorLabel = (v: string): string => (lang === 'ko' && SECTOR_KO[v]) || v;
+
+/**
+ * Korean renderings of the published thesis-invalidation triggers.
+ *
+ * These strings arrive as plain English inside rankings.json — the pipeline
+ * emits one language, so the Korean board was printing the exit rule for its
+ * two long horizons entirely in English. That is the one piece of copy on the
+ * page a reader must be able to act on, so it is mapped here rather than left.
+ * Keyed on the exact published string with pass-through for anything unmapped,
+ * so a new trigger degrades to English instead of disappearing, and the English
+ * board is untouched. Move this into the data as {en, ko} the moment the
+ * pipeline emits both.
+ */
+const INVALIDATION_KO: Record<string, string> = {
+  'Return on invested capital declines for two consecutive quarters':
+    '투하자본이익률(ROIC)이 2개 분기 연속 하락',
+  'Free cash flow turns negative on a trailing-twelve-month basis':
+    '최근 12개월 기준 잉여현금흐름이 적자로 전환',
+  'Revenue growth falls below zero year-over-year for two quarters':
+    '매출이 2개 분기 연속 전년 동기 대비 역성장',
+  'Return on invested capital declines for three consecutive fiscal years':
+    '투하자본이익률(ROIC)이 3개 사업연도 연속 하락',
+  'Gross margin falls below its 10-year 20th percentile':
+    '매출총이익률이 10년 기준 하위 20% 아래로 하락',
+  'Net debt to EBITDA rises above 3.5x':
+    '순차입금 대비 EBITDA 배수가 3.5배 초과',
+  'Share count grows more than 2% per year for three consecutive years':
+    '발행주식수가 3년 연속 연 2% 넘게 증가',
+  'Free cash flow conversion drops below 60% of net income for four quarters':
+    '잉여현금흐름 전환율이 4개 분기 연속 순이익의 60% 아래로 하락',
+  'The reinvestment runway narrows: incremental ROIC falls below the cost of capital':
+    '재투자 여력 축소 — 신규 투자의 한계 ROIC가 자본비용을 밑돎',
+};
+
+const invalidationText = (v: string): string =>
+  (lang === 'ko' && INVALIDATION_KO[v]) || v;
+
 const evidence = Array.isArray(row.evidence) ? row.evidence.filter((e) => typeof e === 'string') : [];
 
 /* "80%" next to a 0–100 score reads like a second score. Report the actual
@@ -90,6 +156,18 @@ const sentimentLabel =
       <span>{moveText}</span>
       <span class="visually-hidden">{moveLabel}</span>
     </span>
+    {/* Tenure sits under the movement badge because they tell one story: how
+        this name is travelling through the board. It is most informative on the
+        long horizons, where a low number means churn in a list that is supposed
+        to be stable. */}
+    {
+      held > 1 && (
+        <span class="held" title={heldHelp}>
+          <span aria-hidden="true">{fill(t.home.heldShort, { n: held })}</span>
+          <span class="visually-hidden">{heldHelp}</span>
+        </span>
+      )
+    }
   </td>
 
   <td class="c-stock">
@@ -105,7 +183,7 @@ const sentimentLabel =
           {row.ticker}
         </button>
         <span class="co-name">{row.name}</span>
-        <span class="sector-line">{row.sector}</span>
+        <span class="sector-line">{sectorLabel(row.sector)}</span>
         {
           flags.length > 0 && (
             <span class="flag-row">
@@ -131,8 +209,8 @@ const sentimentLabel =
   </td>
 
   <td class="c-spark">
-    <Sparkline values={row.sparkline} label={`${row.ticker} 30d`} />
-    <span class="spark-cap">30d</span>
+    <Sparkline values={row.sparkline} label={`${row.ticker} ${t.home.columns.trend}`} />
+    <span class="spark-cap">{t.home.columns.trend}</span>
   </td>
 
   <td class="c-score">
@@ -172,7 +250,7 @@ const sentimentLabel =
               <>
                 <ul class="invalidation-mini">
                   {row.thesisInvalidation.slice(0, 2).map((r) => (
-                    <li>{r}</li>
+                    <li>{invalidationText(r)}</li>
                   ))}
                 </ul>
                 {row.thesisInvalidation.length > 2 && (
@@ -186,7 +264,7 @@ const sentimentLabel =
     }
   </td>
 
-  <td class="c-targets">
+  <td class={`c-targets${row.currency === 'KRW' ? ' cur-krw' : ''}`}>
     <span class="m-label">{t.home.columns.targets}</span>
     {
       tg ? (
@@ -226,7 +304,7 @@ const sentimentLabel =
   <td class="c-cat">
     <span class="catalyst">{row.catalyst}</span>
     <span class="cat-meta">
-      {row.newsCount > 0 && <span class="badge">{row.newsCount} {t.home.newsCount}</span>}
+      {row.newsCount > 0 && <span class="badge">{withUnit(row.newsCount, t.home.newsCount, lang)}</span>}
       {
         row.sentiment !== null && (
           <span class={`badge ${sentimentLabel === 'bullish' ? 'badge-ok' : sentimentLabel === 'bearish' ? 'badge-danger' : ''}`}>
@@ -260,11 +338,18 @@ const sentimentLabel =
       <div>
         <p class="detail-h">{h.label[lang]} · {h.window[lang]}</p>
         <dl class="kv">
+          <dt>{t.home.heldSessionsLabel}</dt>
+          <dd title={heldHelp}>{withUnit(fmtNum(held, 0, lang), t.home.sessions, lang)}</dd>
+
           <dt>{t.home.maxHold}</dt>
-          <dd>{fmtNum(row.maxHoldSessions, 0, lang)} {t.home.sessions}</dd>
+          <dd>{withUnit(fmtNum(row.maxHoldSessions, 0, lang), t.home.sessions, lang)}</dd>
 
           <dt>{t.home.columns.score}</dt>
-          <dd>{fmtNum(row.score, 1, lang)} <span class="muted">(raw z {fmtNum(row.rawZ, 3, lang)})</span></dd>
+          <dd>{fmtNum(row.score, 1, lang)} <span class="muted">
+            {/* Composed from the existing labels so the English reads exactly as
+                before ("raw z") while the Korean page stops showing bare English. */}
+            ({t.home.factorRaw} z {fmtNum(row.rawZ, 3, lang)})
+          </span></dd>
 
           <dt>{t.home.riskGauge}</dt>
           <dd>{row.riskGauge} / 5</dd>
@@ -352,7 +437,7 @@ const sentimentLabel =
               <p class="small muted" style="margin:0 0 .2rem;">{t.home.noStopExplain}</p>
               <ul class="invalidation">
                 {row.thesisInvalidation.map((r) => (
-                  <li>{r}</li>
+                  <li>{invalidationText(r)}</li>
                 ))}
               </ul>
             </>

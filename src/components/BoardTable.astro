@@ -1,7 +1,7 @@
 ---
 import { HORIZONS, type Locale } from '../config';
-import { UI } from '../i18n/ui';
-import { fmtDate, fmtNum, fmtRatioPct } from '../lib/format';
+import { UI, fill } from '../i18n/ui';
+import { fmtDate, fmtLevel, fmtNum, fmtRatioPct } from '../lib/format';
 import { HORIZON_INK } from '../lib/theme';
 import type { Board } from '../lib/types';
 import { boardSlug } from '../i18n/horizon-pages';
@@ -32,6 +32,11 @@ const styleVars = `--h-accent:${h.accent};--h-accent-dark:${h.accentDark};--h-in
 /* An empty board is expected, not broken. The pipeline states the reason in
    both languages; fall back to the generic line only if it is absent. */
 const emptyText = board.emptyReason?.[lang] ?? t.home.emptyBoard;
+
+/* Data files written before the stop-out fix have no `stoppedOut` key at all,
+   so this must tolerate undefined rather than assume an array. */
+const stoppedOut = board.stoppedOut ?? [];
+const currency = board.market === 'KR' ? 'KRW' : 'USD';
 ---
 
 <section
@@ -133,6 +138,70 @@ const emptyText = board.emptyReason?.[lang] ?? t.home.emptyBoard;
           </tbody>
         </table>
       </ScrollArea>
+    )
+  }
+
+  {/* Deliberately not a <details>, not a warning box, not below the fold of a
+      collapsed panel. "Just missed" is a name that never got on; this is a name
+      that got on, was published with a stop, and lost. Publishing that in the
+      open is the strongest trust signal the site has, so it reads as a plain
+      section of the board like any other. */}
+  {
+    stoppedOut.length > 0 && (
+      <div class="stopped-out">
+        <div class="section-head">
+          <h3>
+            <span class="so-rule" aria-hidden="true" />
+            {t.home.stoppedOut}
+          </h3>
+          <p>{t.home.stoppedOutIntro}</p>
+        </div>
+        <ul class="so-list">
+          {stoppedOut.map((s) => (
+            <li class="so-item">
+              <span class="so-id">
+                <span class="so-tic">{s.ticker}</span>
+                <span class="so-name">{s.name}</span>
+              </span>
+              <span class="so-facts">
+                {s.previousRank !== null && (
+                  <span class="so-fact">
+                    <span class="so-k">{t.home.stoppedOutFell}</span>
+                    <b>{fill(t.home.stoppedOutRank, { n: s.previousRank })}</b>
+                  </span>
+                )}
+                <span class="so-fact">
+                  <span class="so-k">{t.home.stoppedOutStopHit}</span>
+                  <b class="down">
+                    <span aria-hidden="true">▼</span> {fmtLevel(s.stop, currency, lang)}
+                  </b>
+                </span>
+                {s.lastPrice !== null && (
+                  <span class="so-fact">
+                    <span class="so-k">{t.home.stoppedOutLast}</span>
+                    <b>{fmtLevel(s.lastPrice, currency, lang)}</b>
+                  </span>
+                )}
+                {s.entryDate && (
+                  <span class="so-fact">
+                    <span class="so-k">{t.home.stoppedOutPublished}</span>
+                    <b>{fmtDate(s.entryDate, lang)}</b>
+                  </span>
+                )}
+              </span>
+              <span
+                class="chip so-cooldown"
+                title={fill(t.home.stoppedOutCooldownHelp, { n: s.cooldownSessions })}
+              >
+                {fill(t.home.stoppedOutCooldown, { n: s.cooldownSessions })}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <p class="so-foot">
+          <a href={pageHref(lang, 'performance')}>{t.home.stoppedOutLedger} →</a>
+        </p>
+      </div>
     )
   }
 

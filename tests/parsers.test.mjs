@@ -5,6 +5,7 @@ import {
   parseOhlcvCsv, splitCsvLine, extractConcept, INSTANTANEOUS, CONCEPTS,
 } from '../scripts/lib/sources.mjs';
 import { parseFeed, clusterNews, mapItemsToTickers } from '../scripts/lib/news.mjs';
+import { previousBoardFor } from '../scripts/lib/store.mjs';
 import { aggregateSentiment, scoreHeadline, sentimentLabel } from '../scripts/lib/sentiment.mjs';
 import {
   ATOM_FEED, KRX_DESC_CSV, KRX_LISTING_CSV, NAVER_SISE_JSON_BODY,
@@ -323,4 +324,27 @@ test('four-digit years are dropped but other numbers are kept', () => {
   assert.equal(gta.size, 2, '"6" must be a matching token');
   const year = clusters.find((c) => c.headline.includes('2026'));
   assert.equal(year.size, 1, 'a bare year must not be enough to cluster on');
+});
+
+// ── board persistence and replay ───────────────────────────────────────────
+
+test('previousBoardFor returns the prior session when replaying the same date', () => {
+  // Idempotency. Running the ranking twice for the same session must not let
+  // the second run treat the FIRST run's output as yesterday — that silently
+  // resets every movement badge to 0 and decays turnover toward zero without
+  // the market having moved. The README's "check out any commit and re-run it"
+  // claim depends on this.
+  const stored = {
+    current: [{ ticker: 'A', rank: 1 }],
+    currentAsOf: '2026-08-14',
+    prior: [{ ticker: 'B', rank: 1 }],
+    priorAsOf: '2026-08-13',
+  };
+  assert.deepEqual(previousBoardFor(stored, '2026-08-14'), stored.prior, 'replay -> prior');
+  assert.deepEqual(previousBoardFor(stored, '2026-08-15'), stored.current, 'new session -> current');
+});
+
+test('previousBoardFor is safe on a cold store', () => {
+  assert.deepEqual(previousBoardFor({}, '2026-08-15'), []);
+  assert.deepEqual(previousBoardFor({ current: [] }, null), []);
 });

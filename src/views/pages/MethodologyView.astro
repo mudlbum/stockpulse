@@ -57,11 +57,24 @@ html = html.replace(/<h([3-5])>([\s\S]*?)<\/h\1>/g, (_m, level, inner) => {
   return `<h${level} id="${slug(text)}">${inner}</h${level}>`;
 });
 
-/* top-level sections for the contents box */
-const toc = [...raw.matchAll(/^##\s+(.+)$/gm)].map((m) => ({
-  title: m[1].trim(),
-  id: slug(m[1].trim()),
-}));
+/* Top-level sections for the contents box.
+ *
+ * The document body is English by design (see the note below), but the contents
+ * list is navigation, not the document — leaving it in English made the Korean
+ * page's one interactive element unreadable to the reader it exists for. The
+ * Korean titles already exist in methodology-ko.ts, keyed by the same section
+ * number the heading opens with, so the list is relabelled from there and falls
+ * back to the English heading for anything unmapped. Anchors are untouched. */
+const KO_TITLE_BY_N = new Map(KO_SECTION_TITLES.map((s) => [s.n, s.ko]));
+const toc = [...raw.matchAll(/^##\s+(.+)$/gm)].map((m) => {
+  const title = m[1].trim();
+  const n = /^(\d+)\./.exec(title)?.[1];
+  const ko = n ? KO_TITLE_BY_N.get(n) : undefined;
+  return {
+    title: lang === 'ko' && ko ? `${n}. ${ko}` : title,
+    id: slug(title),
+  };
+});
 
 const versionMatch = raw.match(/\*\*Version\s+([^*]+)\*\*/);
 const version = versionMatch ? versionMatch[1].trim() : SITE.methodologyVersion;

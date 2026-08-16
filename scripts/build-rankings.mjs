@@ -25,13 +25,15 @@ import { catalystSummary } from './lib/news.mjs';
 import { returnOver } from './lib/indicators.mjs';
 import { isNum, toDisplayScore } from './lib/stats.mjs';
 import {
-  loadPrices, loadFundamentals, loadBoard, saveBoard, appendLedger,
+  loadPrices, loadFundamentals, loadBoard, previousBoardFor, saveBoard, appendLedger,
   publish, readJson, SRC_DATA, STORE,
 } from './lib/store.mjs';
 
 const HORIZONS = ['ultra_short', 'mid_term', 'long_term', 'ultra_long'];
 const METHODOLOGY_VERSION = '1.0.0';
 const TOP_N = 10;
+/** Sessions a stopped-out entry must sit out. METHODOLOGY §7. */
+const STOP_OUT_COOLDOWN = 5;
 
 const HYSTERESIS = {
   ultra_short: { exitRank: 12, minHold: 1 },
@@ -56,8 +58,11 @@ async function main() {
   const ledgerEntries = [];
   const sectorInput = {};
 
+  // Reproducibility anchor — see the note at the aggregateSentiment call.
+  const sentimentNow = newsIndex.updatedAt ? new Date(newsIndex.updatedAt) : new Date();
+
   for (const market of ['US', 'KR']) {
-    const built = await buildMarket(market, newsIndex);
+    const built = await buildMarket(market, newsIndex, sentimentNow);
     if (!built) {
       console.warn(`[rank] ${market}: no data, skipping`);
       out.boards[market] = emptyBoards(market);
@@ -97,7 +102,7 @@ function emptyBoards(market) {
 }
 
 /** Assemble everything the scorers need for one market. */
-async function buildMarket(market, newsIndex) {
+async function buildMarket(market, newsIndex, sentimentNow) {
   const prices = await loadPrices(market);
   const fundamentals = await loadFundamentals(market);
   const universeFile = await readJson(path.join(SRC_DATA, `universe-${market.toLowerCase()}.json`), null);
@@ -119,7 +124,15 @@ async function buildMarket(market, newsIndex) {
     const co = fundamentals.companies?.[t.ticker] ?? {};
     const sector = t.sector ?? co.sector ?? 'Unknown';
     const news = newsIndex.tickers?.[t.ticker] ?? [];
-    const sent = aggregateSentiment(news, new Date());
+    // Anchored to the news snapshot's own timestamp, NOT wall-clock now.
+    //
+    // Sentiment decays with headline age, so using `new Date()` made the score
+    // depend on when the script happened to run: replaying a commit an hour
+    // later produced different sentiment, different z-scores and a different
+    // board from identical committed inputs. The news index records when it was
+    // captured, and that is the honest reference point for "how old is this
+    // headline" — it is also what makes a replay reproduce.
+    const sent = aggregateSentiment(news, sentimentNow);
 
     rows.push(deriveMetrics({
       ticker: t.ticker,
@@ -257,8 +270,35 @@ async function buildBoard(market, horizon, ctx, gitSha) {
   const gauges = riskGauge(ranked);
   ranked.forEach((r, i) => { r.riskGauge = gauges[i]; });
 
-  const prev = await loadBoard(market, horizon);
-  const stopped = await detectStopOuts(prev.current ?? [], ctx);
+  const stored = await loadBoard(market, horizon);
+  // Not `stored.current` — on a same-day re-run that IS this run's own output.
+  // See previousBoardFor() for why treating it as yesterday breaks the board.
+  const prev = previousBoardFor(stored, asOf);
+  const stopped = await detectStopOuts(prev, ctx);
+
+  // Publish the names that left on their stops.
+  //
+  // Hysteresis correctly ejects a stopped-out entry, but that meant it simply
+  // vanished from the board with no explanation — a site that publishes stop
+  // levels and then quietly drops the names that hit them is hiding exactly
+  // the outcome it promises to show. These are surfaced on the board and are
+  // already carried through to the performance ledger.
+  const byTickerNow = new Map(ctx.rows.map((r) => [r.ticker, r]));
+  const stoppedOut = [...stopped].map((ticker) => {
+    const p = prev.find((x) => x.ticker === ticker);
+    const row = byTickerNow.get(ticker);
+    const bars = ctx.prices.bars[ticker] ?? [];
+    const last = bars.at(-1);
+    return {
+      ticker,
+      name: row?.name ?? ticker,
+      stop: p?.stop ?? null,
+      entryDate: p?.entryDate ?? null,
+      lastPrice: isNum(last?.close) ? round2(last.close) : null,
+      previousRank: p?.rank ?? null,
+      cooldownSessions: STOP_OUT_COOLDOWN,
+    };
+  }).sort((a, b) => (a.previousRank ?? 99) - (b.previousRank ?? 99));
 
   // Hysteresis sees the WHOLE ranked list, so an incumbent sitting at rank 11
   // is visible for the "has it fallen past the exit rank?" test. The
@@ -269,19 +309,37 @@ async function buildBoard(market, horizon, ctx, gitSha) {
 
   const { board, turnover, rejections } = applyHysteresis(
     withStops,
-    prev.current ?? [],
+    prev,
     { ...HYSTERESIS[horizon], topN: TOP_N, checker },
   );
   const displaced = rejections;
 
   const rows = board.map((r) => renderRow(r, horizon, market));
-  const turnover30d = computeTurnover30d(prev.history ?? [], board, asOf);
+  const turnover30d = computeTurnover30d(stored.history ?? [], board, asOf, prev);
 
-  await saveBoard(market, horizon, board.map((r) => ({
+  // Carry a decrementing cooldown for names that stopped out. METHODOLOGY §7
+  // says a stopped-out entry "cannot re-enter for 5 sessions"; applyHysteresis
+  // reads `cooldownUntilSession`, but until now nothing ever WROTE it, so the
+  // rule was a no-op and a stopped-out name could return the next session.
+  const priorCooldown = new Map((prev ?? []).map((p) => [p.ticker, p.cooldownUntilSession ?? 0]));
+  const cooldowns = new Map();
+  for (const [ticker, n] of priorCooldown) if (n > 1) cooldowns.set(ticker, n - 1);
+  for (const ticker of stopped) cooldowns.set(ticker, STOP_OUT_COOLDOWN);
+
+  const persisted = board.map((r) => ({
     ticker: r.ticker, rank: r.rank, score: r.score, heldSessions: r.heldSessions,
     entry: r.trade?.entry ?? null, stop: r.trade?.stop ?? null,
-    targets: r.trade?.targets ?? null, entryDate: asOf,
-  })), asOf);
+    targets: r.trade?.targets ?? null, entryDate: r.entryDate ?? asOf,
+    cooldownUntilSession: 0,
+  }));
+  // Names serving a cooldown are not on the board, so they are carried
+  // alongside it — otherwise the counter is lost the moment they drop off,
+  // which is exactly when it needs to survive.
+  for (const [ticker, n] of cooldowns) {
+    if (persisted.some((p) => p.ticker === ticker)) continue;
+    persisted.push({ ticker, rank: null, score: null, heldSessions: 0, cooldownUntilSession: n });
+  }
+  await saveBoard(market, horizon, persisted, asOf);
 
   const ledger = rows.map((r) => ({
     date: asOf,
@@ -311,6 +369,7 @@ async function buildBoard(market, horizon, ctx, gitSha) {
       asOf,
       turnover30d,
       sampleWarning: closedCount < 30,
+      stoppedOut,
       // An empty board must explain itself. The most common case is not a bug:
       // METHODOLOGY §10.4 — the ultra-long model needs a decade of tagged annual
       // statements, which SEC XBRL provides for US filers and no keyless Korean
@@ -351,28 +410,28 @@ function emptyReasonFor(market, horizon, graded) {
           '(free, optional). Until then it is deliberately empty rather than ' +
           'ranked on thinner data.',
         ko:
-          '초장기 모델은 10년치 표준화 연간 재무제표가 필요합니다. 미국은 SEC XBRL에서 ' +
-          '이를 제공하지만, 한국은 무인증 공개 소스에 해당 데이터가 없습니다. ' +
-          'DART 오픈API 키(무료)를 설정하면 이 보드가 활성화됩니다. 그 전까지는 ' +
-          '부실한 데이터로 순위를 매기는 대신 의도적으로 비워 둡니다.',
+          '초장기 모델은 10년치 표준화된 연간 재무제표가 있어야 돌아갑니다. 미국은 ' +
+          'SEC XBRL이 이를 제공하지만, 한국에는 인증 없이 받아 쓸 수 있는 공개 소스가 ' +
+          '없습니다. DART 오픈API 키(무료)를 설정하면 이 순위표가 열립니다. 그 전까지는 ' +
+          '얕은 데이터로 억지로 순위를 매기지 않고 일부러 비워 둡니다.',
       }
       : {
         code: 'insufficient_filing_history',
         en: 'No company in the universe has the ten years of filing history this horizon requires.',
-        ko: '이 기간에 필요한 10년 재무 이력을 갖춘 종목이 유니버스에 없습니다.',
+        ko: '이 투자 기간이 요구하는 10년치 재무 이력을 갖춘 종목이 유니버스에 없습니다.',
       };
   }
   if (dominant) {
     return {
       code: dominant[0],
       en: `Every candidate was excluded by a hard gate (most commonly: ${dominant[0].replace(/_/g, ' ')}).`,
-      ko: `모든 후보가 필수 조건에서 제외되었습니다 (주요 사유: ${dominant[0].replace(/_/g, ' ')}).`,
+      ko: `후보 종목이 모두 필수 조건을 통과하지 못했습니다(가장 많았던 사유: ${dominant[0].replace(/_/g, ' ')}).`,
     };
   }
   return {
     code: 'insufficient_data',
     en: 'Not enough complete factor data to rank this board today. This resolves as the data store fills.',
-    ko: '오늘은 순위를 산출할 만큼 충분한 데이터가 없습니다. 데이터가 축적되면 해소됩니다.',
+    ko: '오늘은 순위를 산출할 만큼 데이터가 갖춰지지 않았습니다. 데이터가 쌓이면 자연히 해소됩니다.',
   };
 }
 
@@ -456,9 +515,16 @@ async function detectStopOuts(previous, ctx) {
   return out;
 }
 
-function computeTurnover30d(history, board, asOf) {
-  const recent = history.slice(-30);
-  if (recent.length < 2) return board.length ? 1 : 0;
+function computeTurnover30d(history, board, asOf, prev) {
+  // Exclude any entry for today: on a replay it is this run's own output, and
+  // comparing the board against itself reports 0% turnover on every re-run.
+  const recent = history.filter((h) => h.date !== asOf).slice(-30);
+  if (recent.length < 1) return board.length ? 1 : 0;
+  if (recent.length === 1) {
+    const prevSet = new Set((prev ?? []).filter((p) => p.rank != null).map((p) => p.ticker));
+    if (prevSet.size === 0) return board.length ? 1 : 0;
+    return board.filter((r) => !prevSet.has(r.ticker)).length / Math.max(1, board.length);
+  }
   let changes = 0;
   for (let i = 1; i < recent.length; i++) {
     const prev = new Set(recent[i - 1].tickers);
@@ -491,6 +557,9 @@ function renderRow(r, horizon, market) {
   return {
     rank: r.rank,
     movement: r.movement,
+    // Computed by hysteresis and persisted, but previously dropped on the way
+    // to the published JSON — so "held for N sessions" could never be shown.
+    heldSessions: r.heldSessions ?? 1,
     ticker: r.ticker,
     name: r.name,
     market,

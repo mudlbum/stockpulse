@@ -38,9 +38,32 @@ const posts = defineCollection({
 
     /** Who is accountable for this page. */
     author: z.enum(AUTHOR_IDS),
-    /** Named human who checked it before publication. Required — an unreviewed
-     *  post does not get published. */
-    reviewedBy: z.string().min(2),
+
+    /**
+     * How this page reached publication. This field exists so the site can
+     * never imply a human read something a human did not read.
+     *
+     *   human-reviewed  a named person read it before publication
+     *   auto-published  generated and published by the pipeline on a schedule,
+     *                   with no individual review before it went live
+     *
+     * `auto-published` is only permitted for the deterministic market brief:
+     * text assembled from figures the pipeline computed, where every sentence
+     * is checkable against the committed data. It is NOT permitted for prose.
+     * See docs/EDITORIAL_POLICY notes and scripts/write-brief.mjs.
+     */
+    reviewStatus: z.enum(['human-reviewed', 'auto-published']).default('human-reviewed'),
+
+    /**
+     * Named human who checked it before publication.
+     *
+     * Required for human-reviewed posts and REFUSED for auto-published ones —
+     * putting a name on something nobody read is the "misrepresents ...
+     * information about the content creator" case in Google's publisher
+     * policy, and it is also just a lie. The refinement below enforces both
+     * directions so neither can drift.
+     */
+    reviewedBy: z.string().min(2).optional(),
 
     /**
      * Was a language model involved in drafting?
@@ -79,7 +102,23 @@ const posts = defineCollection({
     /** Surfaces the post on the home page and at the top of the index. */
     featured: z.boolean().default(false),
     /** Approximate reading time is computed at build time, not authored. */
-  }),
+  }).refine(
+    (d) => d.reviewStatus === 'auto-published' || (d.reviewedBy ?? '').length >= 2,
+    { message: 'human-reviewed posts must name their reviewer in `reviewedBy`', path: ['reviewedBy'] },
+  ).refine(
+    (d) => d.reviewStatus !== 'auto-published' || !d.reviewedBy,
+    {
+      message: 'auto-published posts must NOT name a reviewer — nobody reviewed it',
+      path: ['reviewedBy'],
+    },
+  ).refine(
+    (d) => d.reviewStatus !== 'auto-published' || d.category === 'market-brief',
+    {
+      message:
+        'only the deterministic market brief may be auto-published; prose requires human review',
+      path: ['reviewStatus'],
+    },
+  ),
 });
 
 export const collections = { posts };
@@ -113,15 +152,21 @@ export const AUTHORS = {
     id: 'pipeline',
     name: 'StockPulse Pipeline',
     isPlaceholder: false,
-    role: { en: 'Automated draft, human-reviewed', ko: '자동 초안 · 사람 검토' },
+    role: { en: 'Automated, published without individual review', ko: '자동 생성 · 개별 검토 없이 발행' },
     bio: {
       en:
-        'Market briefs are drafted automatically from the same computed data the ' +
-        'leaderboards use, then read and approved by a person before publication. ' +
-        'Drafts that cannot be corroborated against the underlying data are not published.',
+        'Market briefs are assembled automatically from the same computed figures the ' +
+        'leaderboards use — no language model writes them, and every number is ' +
+        'reproducible from the published data files. They go live on a schedule ' +
+        'without a person reading each one first. Nothing is asserted that the ' +
+        'pipeline did not compute, a brief is skipped entirely on days with too ' +
+        'little to report, and errors are corrected in public under the editorial policy.',
       ko:
-        '마켓 브리핑은 리더보드와 동일한 계산 데이터로부터 자동 초안이 작성된 뒤, ' +
-        '사람이 읽고 승인한 경우에만 발행됩니다. 근거 데이터로 확인되지 않는 초안은 발행하지 않습니다.',
+        '마켓 브리핑은 순위표와 동일한 계산 결과로 자동 작성됩니다. 생성형 언어 모델은 ' +
+        '사용하지 않으며, 모든 수치는 공개된 데이터 파일로 재현할 수 있습니다. 사람이 ' +
+        '개별 원고를 읽지 않은 상태로 정해진 시각에 발행되며, 파이프라인이 계산하지 않은 ' +
+        '내용은 서술하지 않습니다. 보고할 내용이 부족한 날에는 아예 발행하지 않고, ' +
+        '오류는 편집 방침에 따라 공개적으로 정정합니다.',
     },
   },
 } as const;

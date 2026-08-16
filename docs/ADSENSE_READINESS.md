@@ -105,15 +105,43 @@ Fact-checking them against the code surfaced **14 doc↔code mismatches**, four 
 which were real bugs (see the commit log). That is the strongest argument that
 the review was real.
 
-### Automation is capped, deliberately
+### Automation is capped and disclosed — and it now publishes without review
 
-`scripts/write-brief.mjs` generates **one brief per market per day, maximum**,
-enforced in code. Generating per-ticker or per-horizon briefs would be ~40
-pages/day — a textbook scaled-content pattern regardless of quality. Briefs are
-written `draft: true`, opened as a pull request, and cannot render until a human
-sets a real `reviewedBy`. **If a day produces too few verifiable facts, no brief
-is written at all** — a page that exists only because the cron fired is exactly
-what the policy describes.
+The daily brief **auto-publishes on a schedule** (`.github/workflows/brief.yml`).
+That is deliberately the pattern Google's inventory-value policy describes as
+"automatically generated content without manual review or curation", so it is
+worth being precise about why this specific case is defensible and where the
+line is.
+
+What makes it defensible:
+
+- **One brief per market per day, maximum**, enforced in `write-brief.mjs`
+  rather than in the workflow so it cannot drift via a config edit. Per-ticker
+  or per-horizon briefs would be ~40 pages/day and would be indefensible at any
+  quality.
+- **No language model writes it.** The text is assembled from figures the
+  pipeline already computed, so every sentence is checkable against the
+  published JSON. This is the crux: the policy targets pages that manufacture
+  the appearance of content, and a deterministic report on your own original
+  dataset is the opposite of that.
+- **A thin day publishes nothing.** Publish mode requires 6 corroborated facts
+  where drafting requires 4. A run that produces zero posts is a success.
+- **It never claims a human read it.** Posts carry `reviewStatus:
+  auto-published` and **no reviewer name**; the content schema *rejects* a
+  reviewer name on an auto-published post, and rejects auto-publishing anything
+  that is not `category: market-brief`. Attaching a person's name to unreviewed
+  output would be the "misrepresents information about the content creator"
+  clause — and a lie.
+- **It is gated on the build and the audit.** The workflow builds the site and
+  runs `npm run audit` *before* committing, so a brief that breaks the schema or
+  the published output never reaches the site.
+
+**The honest risk assessment:** this is more exposed than the review-PR flow it
+replaced. A reviewer who sees a daily cron-published post on a finance site may
+apply the "without manual review" clause regardless of how deterministic the
+generator is. The mitigation is a one-click revert — set the repository variable
+**`BRIEF_AUTOPUBLISH=false`** and the same workflow goes back to opening review
+PRs, no code change. If AdSense rejects on scaled content, flip that first.
 
 ### Compliance infrastructure
 

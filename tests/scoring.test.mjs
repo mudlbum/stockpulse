@@ -331,3 +331,44 @@ test('averageInvestedCapital falls back to the balance sheet when quarters lack 
   const ic = averageInvestedCapital(q, { totalEquity: 500, longTermDebt: 100, cash: 50 });
   assert.equal(ic, 550);
 });
+
+// ── day-over-day state: only reachable on the second run and later ─────────
+
+test('a cooldown carrier row is not treated as an incumbent', () => {
+  // A stopped-out name is carried in `previous` with rank null so its cooldown
+  // counter survives while it is off the board. Pass 1 used to treat that
+  // carrier as an incumbent and hand it a seat, which made METHODOLOGY §7's
+  // five-session cooldown a no-op — pass 2 checked the cooldown but the name
+  // never reached pass 2.
+  const today = mkRanked(['B', 'A', 'C', 'D']);
+  const previous = [
+    { ticker: 'A', rank: 1, heldSessions: 4, cooldownUntilSession: 0 },
+    { ticker: 'B', rank: null, heldSessions: 0, cooldownUntilSession: 5 },
+  ];
+  const { board } = applyHysteresis(today, previous, { exitRank: 12, minHold: 1, topN: 4 });
+  assert.ok(!board.some((r) => r.ticker === 'B'), 'B is serving a cooldown and must stay off');
+  assert.ok(board.some((r) => r.ticker === 'A'));
+});
+
+test('a name returning from cooldown counts as NEW, not as a retained incumbent', () => {
+  const today = mkRanked(['B', 'A']);
+  const previous = [
+    { ticker: 'A', rank: 1, heldSessions: 9, cooldownUntilSession: 0 },
+    { ticker: 'B', rank: null, heldSessions: 0, cooldownUntilSession: 0 },
+  ];
+  const { board } = applyHysteresis(today, previous, { exitRank: 12, minHold: 1, topN: 2 });
+  const b = board.find((r) => r.ticker === 'B');
+  assert.equal(b.movement, 'NEW', 'never published means NEW, not a rank delta');
+  assert.equal(b.heldSessions, 1, 'held count restarts');
+});
+
+test('turnover ignores carrier rows', () => {
+  const today = mkRanked(['A', 'B']);
+  const previous = [
+    { ticker: 'A', rank: 1, heldSessions: 2 },
+    { ticker: 'B', rank: null, cooldownUntilSession: 0 },
+  ];
+  const { turnover } = applyHysteresis(today, previous, { exitRank: 12, minHold: 1, topN: 2 });
+  // B was never on the published board, so its arrival is real turnover.
+  assert.ok(Math.abs(turnover - 0.5) < 1e-9, `expected 0.5, got ${turnover}`);
+});

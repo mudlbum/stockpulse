@@ -2,7 +2,7 @@
 import type { Locale } from '../../config';
 import { UI, fill } from '../../i18n/ui';
 import { news } from '../../lib/data';
-import { fmtNum } from '../../lib/format';
+import { fmtNum, withUnit } from '../../lib/format';
 import Base from '../../layouts/Base.astro';
 import PageEssay from '../../components/PageEssay.astro';
 import { ESSAYS } from '../../i18n/page-essays';
@@ -50,10 +50,10 @@ const statusClass: Record<string, string> = { ok: 'chip-ok', degraded: 'chip-war
                   </h3>
                   <div class="chip-row">
                     <span class="chip">
-                      {c.outlets} {t.news.outlets}
+                      {withUnit(c.outlets, t.news.outlets, lang)}
                     </span>
                     <span class="chip">
-                      {c.size} {t.news.stories}
+                      {withUnit(c.size, t.news.stories, lang)}
                     </span>
                     <span
                       class={`chip ${label === 'bullish' ? 'chip-ok' : label === 'bearish' ? 'chip-danger' : ''}`}

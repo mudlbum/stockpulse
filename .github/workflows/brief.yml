@@ -1,23 +1,55 @@
-name: Draft market brief
+name: Daily market brief
 
-# One brief per market per day, opened as a PULL REQUEST — never auto-merged.
+# Generates the market brief and PUBLISHES it to the blog on a schedule.
 #
-# Google's publisher policies bar "automatically generated content without
+# ── The tension this workflow manages ───────────────────────────────────────
+#
+# Google's publisher policy bars "automatically generated content without
 # manual review or curation", and the Search spam policy defines scaled content
-# abuse in terms of purpose and value rather than volume. A cron that publishes
-# straight to the site would be exactly the pattern those policies describe,
-# however good the prose is. So the automation stops at "draft ready for a
-# human", and a person merges it.
+# abuse in terms of purpose and value. Publishing daily on a cron is squarely
+# the shape those policies describe, so the safeguards are not decoration —
+# they are what separate this from the thing the policy prohibits:
 #
-# The drafter also declines to write anything when the day produced too few
-# verifiable facts. A page that exists only because the schedule fired is the
-# thing to avoid.
+#   1. ONE brief per market per day. Enforced in write-brief.mjs, not here, so
+#      it cannot drift via a workflow edit. Per-ticker or per-horizon briefs
+#      would be ~40 pages/day, which is indefensible at any quality.
+#
+#   2. Nothing is asserted that the pipeline did not compute. The brief is
+#      assembled from figures already in data-store/ — no language model writes
+#      it — so every sentence is checkable against published JSON.
+#
+#   3. A thin day publishes NOTHING. Publish mode requires 6 corroborated facts
+#      (drafting requires 4). "The cron fired" is not a reason for a page to
+#      exist, and the run succeeding with zero posts is a correct outcome.
+#
+#   4. It never claims a human read it. Posts carry `reviewStatus:
+#      auto-published` and NO reviewer name; the content schema rejects a
+#      reviewer name on an auto-published post. Attaching a person's name to
+#      unreviewed output is the "misrepresents information about the content
+#      creator" clause, and a lie.
+#
+#   5. There is a kill switch and an audit trail. Set the repository variable
+#      BRIEF_AUTOPUBLISH to "false" to fall back to review-PR mode without
+#      touching code. Every publication is a normal commit, so any brief can be
+#      corrected or retracted in public history.
+#
+# If the site is ever rejected by AdSense for scaled content, flipping
+# BRIEF_AUTOPUBLISH to "false" reverts to human-in-the-loop in one click.
 
 on:
   schedule:
-    - cron: '0 22 * * 1-5'   # after the US post-close refresh
-    - cron: '40 7 * * 1-5'   # after the KR post-close refresh
+    # Offset after the post-close refresh so the brief reads fresh rankings.
+    # Actions cron is UTC and free-tier runs drift 10-60 minutes, so the gap is
+    # generous rather than tight.
+    - cron: '20 22 * * 1-5'   # ~45 min after the US refresh (21:35 UTC)
+    - cron: '55 7 * * 1-5'    # ~45 min after the KR refresh (07:10 UTC)
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'publish live, or open a review PR'
+        type: choice
+        options: [publish, draft]
+        default: publish
 
 permissions:
   contents: write
@@ -28,35 +60,75 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  draft:
+  brief:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          # A shallow clone cannot rebase onto a concurrent data commit.
+          fetch-depth: 0
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
+
       - run: npm ci --no-audit --no-fund
 
-      - name: Draft
-        id: draft
+      - name: Decide mode
+        id: mode
+        env:
+          AUTOPUBLISH: ${{ vars.BRIEF_AUTOPUBLISH }}
+          REQUESTED: ${{ github.event.inputs.mode }}
         run: |
-          npm run brief | tee /tmp/brief.log
+          MODE="${REQUESTED:-publish}"
+          # The repository variable is the kill switch and always wins.
+          if [ "${AUTOPUBLISH,,}" = "false" ]; then MODE=draft; fi
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          echo "Mode: $MODE"
+
+      - name: Generate
+        id: gen
+        run: |
+          if [ "${{ steps.mode.outputs.mode }}" = "publish" ]; then
+            npm run brief:publish | tee /tmp/brief.log
+          else
+            npm run brief | tee /tmp/brief.log
+          fi
           if git diff --quiet --exit-code -- src/content/posts; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No brief written. On a thin day that is the intended outcome."
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Verify the draft actually builds
-        if: steps.draft.outputs.changed == 'true'
+      # A brief that breaks the schema, the build, or the published-output
+      # audit must never reach the site. This is the gate that replaces the
+      # human reader, so it runs BEFORE anything is committed.
+      - name: Verify the brief builds and passes the audit
+        if: steps.gen.outputs.changed == 'true'
         run: |
-          # A draft that breaks the content schema must not become a PR.
           npx astro sync
-          SITE_URL=https://example.github.io BASE_PATH=/ npm run build
+          SITE_URL="${{ vars.SITE_URL || 'https://example.github.io' }}" \
+          BASE_PATH="${{ vars.BASE_PATH || '/' }}" \
+          npm run build
+          BASE_PATH="${{ vars.BASE_PATH || '/' }}" npm run audit
+
+      - name: Publish
+        if: steps.gen.outputs.changed == 'true' && steps.mode.outputs.mode == 'publish'
+        run: |
+          git config user.name 'stockpulse-bot'
+          git config user.email 'stockpulse-bot@users.noreply.github.com'
+          git add src/content/posts
+          git commit -m "post: market brief $(date -u +%Y-%m-%d) [auto-published]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && git push && break
+            echo "push attempt $i failed, retrying"; sleep 5
+          done
 
       - name: Open a review PR
-        if: steps.draft.outputs.changed == 'true'
+        if: steps.gen.outputs.changed == 'true' && steps.mode.outputs.mode == 'draft'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -69,4 +141,31 @@ jobs:
           git push -u origin "$BRANCH"
           gh pr create \
             --title "Market brief draft — $(date -u +%Y-%m-%d)" \
-            --body-file .github/brief-pr-body.md
+            --body-file .github/brief-pr-body.md || echo "PR creation failed"
+
+      # GITHUB_TOKEN pushes do not trigger other workflows, so the deploy that
+      # actually puts the post on the site has to be dispatched explicitly.
+      - name: Deploy
+        if: steps.gen.outputs.changed == 'true' && steps.mode.outputs.mode == 'publish'
+        run: gh workflow run deploy.yml --ref "${GITHUB_REF_NAME}" || true
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN || github.token }}
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Market brief — ${{ steps.mode.outputs.mode }} mode"
+            echo
+            if [ "${{ steps.gen.outputs.changed }}" = "true" ]; then
+              echo "Wrote:"
+              git log --name-only --oneline -1 -- src/content/posts 2>/dev/null | sed 's/^/    /' || true
+            else
+              echo "Nothing published — the day did not produce enough verifiable facts."
+              echo "This is the intended behaviour, not a failure."
+            fi
+            echo
+            echo '```'
+            cat /tmp/brief.log 2>/dev/null || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

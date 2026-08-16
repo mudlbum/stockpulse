@@ -4,9 +4,18 @@ const LOCALE: Record<Locale, string> = { en: 'en-US', ko: 'ko-KR' };
 
 const priceFormatters = new Map<string, Intl.NumberFormat>();
 
-/** Prices: USD to 2dp, KRW to 0dp (there are no sub-won ticks). */
+/**
+ * Prices: USD to 2dp, KRW to 0dp (there are no sub-won ticks).
+ *
+ * Korean pages print won as a suffix — 349,174원 — not with the ₩ sign that
+ * `Intl` produces for ko-KR. Korean brokerages and financial press use the
+ * suffix; the symbol is what an English-language system emits for the currency,
+ * and it reads that way. The English pages keep ₩349,174, which is correct
+ * there for the same reason.
+ */
 export function fmtPrice(value: number | null | undefined, currency: string, lang: Locale = 'en'): string {
   if (value === null || value === undefined || !Number.isFinite(value)) return '—';
+  if (lang === 'ko' && currency === 'KRW') return `${fmtNum(value, 0, lang)}원`;
   const key = `${lang}:${currency}`;
   let f = priceFormatters.get(key);
   if (!f) {
@@ -58,16 +67,36 @@ export function fmtRatioPct(value: number | null | undefined, digits = 1, lang: 
   return fmtPct(value * 100, digits, lang, false);
 }
 
-/** Compact market cap: $12.4T / 1,240조원 style. */
+/**
+ * Compact market cap: $12.4T / 1,240조원 style.
+ *
+ * Korean counts large sums in 억 (10^8) and 조 (10^12), not in thousands, and
+ * it switches units rather than printing a fraction: a ₩947bn cap is 9,473억원
+ * to a Korean reader, never "0.9조원", and a ₩40bn one is 400억원, never
+ * "0.0조원" — which is what a straight 조 division printed for every KOSPI
+ * sector below a trillion won.
+ */
 export function fmtCap(value: number, currency: string, lang: Locale = 'en'): string {
   if (!Number.isFinite(value)) return '—';
   if (currency === 'KRW') {
     const jo = value / 1e12;
-    return lang === 'ko' ? `${fmtNum(jo, 1, lang)}조원` : `KRW ${fmtNum(jo, 1, lang)}T`;
+    if (lang !== 'ko') return `KRW ${fmtNum(jo, 1, lang)}T`;
+    return Math.abs(value) >= 1e12 ? `${fmtNum(jo, 1, lang)}조원` : `${fmtNum(value / 1e8, 0, lang)}억원`;
   }
   const t = value / 1e12;
   if (t >= 1) return `$${fmtNum(t, 2, lang)}T`;
   return `$${fmtNum(value / 1e9, 0, lang)}B`;
+}
+
+/**
+ * Number joined to its counter word.
+ *
+ * English needs the space ("3 outlets"); Korean closes it up ("3개 매체").
+ * Korean orthography permits the space after an Arabic numeral, but no Korean
+ * publication uses it, so a templated `{n} {unit}` reads as machine output.
+ */
+export function withUnit(value: string | number, unit: string, lang: Locale = 'en'): string {
+  return lang === 'ko' ? `${value}${unit}` : `${value} ${unit}`;
 }
 
 export function fmtDate(iso: string | null | undefined, lang: Locale = 'en'): string {

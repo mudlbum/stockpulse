@@ -106,13 +106,61 @@ const boardFile = (market, horizon) =>
   path.join(STORE, 'boards', `${market.toLowerCase()}-${horizon}.json`);
 
 export async function loadBoard(market, horizon) {
-  return (await readJson(boardFile(market, horizon), null)) ?? { history: [], current: [] };
+  const b = (await readJson(boardFile(market, horizon), null)) ?? {};
+  return {
+    current: b.current ?? [],
+    currentAsOf: b.currentAsOf ?? null,
+    prior: b.prior ?? [],
+    priorAsOf: b.priorAsOf ?? null,
+    history: b.history ?? [],
+  };
+}
+
+/**
+ * The board hysteresis should treat as "yesterday", given the session we are
+ * ranking now.
+ *
+ * This distinction is what makes the ranking job idempotent, and idempotency is
+ * load-bearing: the README claims any commit can be checked out and re-run to
+ * reproduce that day's board, which is the whole basis of the public audit.
+ * Without it, running the job twice on the same data makes the second run treat
+ * the FIRST run's output as the previous session — so incumbents gain a
+ * spurious held-session, every movement badge collapses to 0, and turnover
+ * decays toward zero. The board silently changes without the market changing.
+ *
+ * So: if the stored `current` was produced for this same `asOf`, this is a
+ * replay and the real previous session is `prior`.
+ */
+export function previousBoardFor(stored, asOf) {
+  if (stored.currentAsOf && asOf && stored.currentAsOf === asOf) return stored.prior ?? [];
+  return stored.current ?? [];
 }
 
 export async function saveBoard(market, horizon, board, asOf) {
-  const prev = await loadBoard(market, horizon);
-  const history = [...(prev.history ?? []), { date: asOf, tickers: board.map((r) => r.ticker) }].slice(-400);
-  return writeJson(boardFile(market, horizon), { current: board, history, updatedAt: new Date().toISOString() });
+  const stored = await loadBoard(market, horizon);
+  const isReplay = Boolean(stored.currentAsOf && asOf && stored.currentAsOf === asOf);
+
+  // On a replay the prior session is unchanged; on a new session today's
+  // outgoing `current` becomes the prior.
+  const prior = isReplay ? stored.prior ?? [] : stored.current ?? [];
+  const priorAsOf = isReplay ? stored.priorAsOf ?? null : stored.currentAsOf ?? null;
+
+  // History is keyed by date, so a replay REPLACES its entry rather than
+  // appending a duplicate — otherwise 30-day turnover would count the same
+  // session twice and drift a little further on every re-run.
+  const entry = { date: asOf, tickers: board.map((r) => r.ticker) };
+  const history = [...(stored.history ?? []).filter((h) => h.date !== asOf), entry]
+    .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0))
+    .slice(-400);
+
+  return writeJson(boardFile(market, horizon), {
+    current: board,
+    currentAsOf: asOf,
+    prior,
+    priorAsOf,
+    history,
+    updatedAt: new Date().toISOString(),
+  });
 }
 
 // ─────────────────────────────────────────────────────── recommendations ──

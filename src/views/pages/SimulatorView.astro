@@ -205,6 +205,9 @@ const locale = lang === 'ko' ? 'ko-KR' : 'en-US';
 
       const fmtCache = {};
       function money(v, currency) {
+        /* Korean prints won as a suffix (50,000,000원), not with the ₩ sign
+           Intl emits for ko-KR. Mirrors fmtPrice in src/lib/format.ts. */
+        if (locale === 'ko-KR' && currency === 'KRW') return num(v, 0) + '원';
         const key = 'm' + currency;
         if (!fmtCache[key]) {
           fmtCache[key] = new Intl.NumberFormat(locale, {

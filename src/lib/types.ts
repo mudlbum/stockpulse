@@ -22,6 +22,9 @@ export type RowFlag = 'partial_data' | 'price_limit' | 'stopped_out';
 export interface Row {
   rank: number;
   movement: Movement;
+  /** Consecutive sessions this name has been on the board (>= 1). On the long
+      horizons a high number is the point: those lists are meant to be stable. */
+  heldSessions: number;
   ticker: string;
   name: string;
   market: MarketId;
@@ -71,6 +74,26 @@ export interface EmptyReason {
   ko: string;
 }
 
+/**
+ * A name that was on the board, was published with a stop, and had that stop
+ * breached. Hysteresis ejects it immediately, which previously meant it simply
+ * disappeared — a site that publishes stop levels and then quietly drops the
+ * names that hit them is hiding the one outcome it promised to show.
+ */
+export interface StoppedOut {
+  ticker: string;
+  name: string;
+  /** The level that was breached. */
+  stop: number | null;
+  /** When the position was first published. */
+  entryDate: string | null;
+  lastPrice: number | null;
+  /** Where it sat before it left. */
+  previousRank: number | null;
+  /** Sessions it must sit out before it can re-enter (METHODOLOGY §7). */
+  cooldownSessions: number;
+}
+
 export interface Board {
   market: MarketId;
   horizon: HorizonId;
@@ -79,6 +102,9 @@ export interface Board {
   sampleWarning: boolean;
   rows: Row[];
   justMissed: JustMissed[];
+  /** Empty on most sessions. Older data files predate the field, so every
+      consumer must treat `undefined` as `[]`. */
+  stoppedOut?: StoppedOut[];
   emptyReason: EmptyReason | null;
 }
 

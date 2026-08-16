@@ -981,7 +981,11 @@ table.board tbody tr.row.is-selected td {
    toggle button, levels must hold "ENTRY ZONE nnn.nn–nnn.nn". */
 .th-rank,
 .c-rank {
-  width: 5.5%;
+  /* 5.5% of the 1120px min-width left ~51px of content box, which the tenure
+     badge ("504 sess.") and the movement badge both overflowed by a few px.
+     The 1.5% comes out of the catalyst column, which clamps to 2 lines and
+     absorbs it without losing information. */
+  width: 8.5%;
 }
 .th-stock,
 .c-stock {
@@ -1013,7 +1017,7 @@ table.board tbody tr.row.is-selected td {
 }
 .th-cat,
 .c-cat {
-  width: 16%;
+  width: 13%;
 }
 .th-more,
 .c-more {
@@ -1075,6 +1079,14 @@ table.board tbody tr.row.is-selected td {
     font-size: 0.62rem;
     padding: 0.06rem 0.22rem;
     gap: 0.08rem;
+  }
+  .held {
+    font-size: 0.56rem;
+    padding: 0.02rem 0.18rem;
+    letter-spacing: -0.02em;
+    /* "504거래일" has no break opportunity; allow one rather than bleed. */
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -1315,11 +1327,22 @@ table.board-nostop .c-stock {
 }
 .band-nums {
   display: flex;
+  /* Won tiers are 6–7 digits: the column that fits "1,234.56" three times
+     cannot fit "1,031,679" three times. Wrapping to a second line keeps all
+     three numbers rather than bleeding them out of the cell. */
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 0.2rem;
+  gap: 0.05rem 0.3rem;
   font-size: 0.7rem;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
+}
+.band-nums > * {
+  min-width: 0;
+}
+.c-targets.cur-krw .band-nums {
+  font-size: 0.64rem;
+  letter-spacing: -0.01em;
 }
 .band-nums b {
   color: var(--text);
@@ -1706,6 +1729,120 @@ button.chip:hover {
   color: var(--muted);
 }
 
+/* ------------------------------------------------- stopped out ---------
+   Deliberately NOT styled as an error. The danger fill (--danger-bg) is
+   reserved for the risk_off regime banner, which is a hazard notice about
+   conditions ahead. This is a factual record of something that already
+   happened, so it reads as a normal section of the board with a single red
+   edge marking what kind of record it is. Distinct from "just missed", which
+   is a flat muted card with a warn chip. */
+.stopped-out {
+  margin-top: 1.6rem;
+  padding-top: 1.1rem;
+  border-top: 2px solid var(--border);
+}
+.stopped-out h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.so-rule {
+  display: inline-block;
+  width: 4px;
+  height: 1.05em;
+  border-radius: 2px;
+  background: var(--down);
+  flex: 0 0 auto;
+}
+.so-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: grid;
+  gap: 0.45rem;
+}
+.so-item {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(0, 2.1fr) auto;
+  gap: 0.35rem 1rem;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--border);
+  border-inline-start: 4px solid var(--down);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  font-size: 0.82rem;
+}
+.so-id {
+  min-width: 0;
+}
+.so-tic {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.so-name {
+  display: block;
+  color: var(--muted);
+  font-size: 0.76rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.so-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.1rem;
+  min-width: 0;
+}
+.so-fact {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+.so-fact .so-k {
+  color: var(--muted);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.so-fact b {
+  font-variant-numeric: tabular-nums;
+}
+.so-cooldown {
+  justify-self: end;
+}
+.so-foot {
+  margin: 0.65rem 0 0;
+  font-size: 0.82rem;
+}
+@media (max-width: 760px) {
+  .so-item {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+  .so-cooldown {
+    justify-self: start;
+  }
+  .so-name {
+    white-space: normal;
+  }
+}
+
+/* Sessions-held marker under the movement badge in the rank cell. */
+.held {
+  display: inline-block;
+  margin-top: 0.22rem;
+  padding: 0.04rem 0.28rem;
+  border-radius: 3px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ----------------------------------------------- responsive leaderboard */
 
 /* Below the width at which all ten columns hold their content, drop the two
@@ -1724,11 +1861,14 @@ button.chip:hover {
   }
   .th-rank,
   .c-rank {
-    width: 6%;
+    /* 6% of the 880px min-width is ~43px of content box, which the tenure
+       badge overflows in both languages ("504 sess.", "504거래일"). The 2%
+       comes from the stock column, which ellipsizes and can spare it. */
+    width: 8%;
   }
   .th-stock,
   .c-stock {
-    width: 24%;
+    width: 22%;
   }
   .th-price,
   .c-price {

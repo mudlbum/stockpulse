@@ -18,6 +18,7 @@
  *    구제방법) that have no English counterpart. Both live in src/i18n/ui.ts.
  */
 import { ADS_ENABLED, SITE, type Locale } from '../../config';
+import { fmtDate } from '../../lib/format';
 import { UI } from '../../i18n/ui';
 import { pageHref } from '../../lib/paths';
 import Base from '../../layouts/Base.astro';
@@ -37,7 +38,11 @@ const t = UI[lang];
       <p class="lede">{t.privacy.lead}</p>
       <p class="small muted">
         {t.privacy.effectiveLabel}{' '}
-        <time datetime={SITE.legalEffectiveDate} class="mono">{SITE.legalEffectiveDate}</time>
+        <time datetime={SITE.legalEffectiveDate} class="mono">
+          {/* ISO in the machine-readable attribute; Korean readers get the
+              Korean convention (2026. 8. 15.) rather than a bare ISO stamp. */}
+          {lang === 'ko' ? fmtDate(SITE.legalEffectiveDate, lang) : SITE.legalEffectiveDate}
+        </time>
       </p>
     </div>
 

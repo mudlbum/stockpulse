@@ -303,6 +303,15 @@ export function applyHysteresis(candidates, previous, { exitRank, minHold, topN 
 
   // Pass 1 — incumbents that still qualify keep their seat.
   for (const p of previous) {
+    // `previous` carries two kinds of row: names that were actually ON the
+    // board (rank set), and cooldown carriers for names that stopped out and
+    // are serving their sit-out (rank null). Only the former are incumbents.
+    // Treating a carrier as an incumbent was how a stopped-out name walked
+    // straight back onto the board the next session — pass 2 checked the
+    // cooldown, pass 1 did not, so the name never reached pass 2.
+    if (p.rank == null) continue;
+    if ((p.cooldownUntilSession ?? 0) > 0) continue;
+
     const cur = byTicker.get(p.ticker);
     const held = (p.heldSessions ?? 1) + 1;
 
@@ -341,10 +350,11 @@ export function applyHysteresis(candidates, previous, { exitRank, minHold, topN 
     if (!gate.tryAdd(c)) continue;
 
     const prev = prevByTicker.get(c.ticker);
+    const wasPublished = prev && prev.rank != null;
     board.push({
       ...c,
-      heldSessions: prev ? (prev.heldSessions ?? 1) + 1 : 1,
-      previousRank: prev ? prev.rank : null,
+      heldSessions: wasPublished ? (prev.heldSessions ?? 1) + 1 : 1,
+      previousRank: wasPublished ? prev.rank : null,
     });
     usedTickers.add(c.ticker);
   }
@@ -359,7 +369,9 @@ export function applyHysteresis(candidates, previous, { exitRank, minHold, topN 
     return { ...r, rank, movement };
   });
 
-  const prevSet = new Set(previous.map((r) => r.ticker));
+  // Carriers were never published, so a name returning from cooldown is
+  // correctly counted as new turnover rather than as a retained incumbent.
+  const prevSet = new Set(previous.filter((r) => r.rank != null).map((r) => r.ticker));
   const changed = final.filter((r) => !prevSet.has(r.ticker)).length;
   return {
     board: final,

@@ -10,6 +10,7 @@
  * terms were never read. See docs/LAUNCH_CHECKLIST.md.
  */
 import { SITE, type Locale } from '../../config';
+import { fmtDate } from '../../lib/format';
 import { UI } from '../../i18n/ui';
 import { pageHref } from '../../lib/paths';
 import Base from '../../layouts/Base.astro';
@@ -32,7 +33,11 @@ const jurisdictionUnset = jurisdiction.includes('[');
       <p class="lede">{t.terms.lead}</p>
       <p class="small muted">
         {t.terms.effectiveLabel}{' '}
-        <time datetime={SITE.legalEffectiveDate} class="mono">{SITE.legalEffectiveDate}</time>
+        <time datetime={SITE.legalEffectiveDate} class="mono">
+          {/* ISO in the machine-readable attribute; Korean readers get the
+              Korean convention (2026. 8. 15.) rather than a bare ISO stamp. */}
+          {lang === 'ko' ? fmtDate(SITE.legalEffectiveDate, lang) : SITE.legalEffectiveDate}
+        </time>
       </p>
     </div>
 

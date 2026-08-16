@@ -24,6 +24,14 @@ const mins = readingTime(post.body ?? '');
     <time datetime={d.publishedAt.toISOString()}>{fmtDate(d.publishedAt.toISOString(), lang)}</time>
     <span aria-hidden="true">·</span>
     <span>{fill(t.blog.readingTime, { n: mins })}</span>
+    {/* Review state must be legible before the click, not only on the post. */}
+    {
+      d.reviewStatus === 'auto-published' && (
+        <span class="badge badge-auto" title={t.blog.autoPublishedHelp}>
+          <span aria-hidden="true">⟳</span> {t.blog.autoPublishedShort}
+        </span>
+      )
+    }
     {d.aiAssisted && <span class="badge badge-warn">{t.blog.aiBadge}</span>}
   </div>
   <h3><a href={url}>{d.title}</a></h3>
@@ -74,5 +82,11 @@ const mins = readingTime(post.body ?? '');
   }
   .post-card-meta a.chip {
     text-decoration: none;
+  }
+  /* Informational, not cautionary — distinct from the amber AI badge. */
+  .badge-auto {
+    background: var(--chip-bg);
+    color: var(--link);
+    border: 1px solid var(--link);
   }
 </style>

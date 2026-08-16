@@ -10,7 +10,7 @@ import { HORIZONS, MARKETS, type Locale } from '../../config';
 import { UI, fill } from '../../i18n/ui';
 import { performance as perf } from '../../lib/data';
 import { performanceDataset } from '../../lib/schema';
-import { fmtDate, fmtNum, fmtPct, fmtRatioPct } from '../../lib/format';
+import { fmtDate, fmtNum, fmtPct, fmtRatioPct, withUnit } from '../../lib/format';
 import { pageHref } from '../../lib/paths';
 import Base from '../../layouts/Base.astro';
 import PageEssay from '../../components/PageEssay.astro';
@@ -113,7 +113,7 @@ const warnedHorizons = HORIZONS.filter((h) => perf.summary.byHorizon[h.id]?.samp
             <span aria-hidden="true">▼</span>{fmtPct(Math.abs(o.maxDrawdown), 2, lang, false)}
           </span>
           <span class="cmp">
-            {t.perf.avgHold}: <b>{fmtNum(o.avgHoldDays, 1, lang)} {t.perf.days}</b>
+            {t.perf.avgHold}: <b>{withUnit(fmtNum(o.avgHoldDays, 1, lang), t.perf.days, lang)}</b>
           </span>
         </div>
 

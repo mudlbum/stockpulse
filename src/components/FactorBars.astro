@@ -28,6 +28,43 @@ function humanize(key: string): string {
     .trim();
 }
 
+/**
+ * Korean labels for the pipeline's factor identifiers.
+ *
+ * `humanize` turns `capitalEfficiency` into "Capital Efficiency", which is the
+ * right answer in English and leaves the Korean board's factor breakdown — the
+ * one panel a reader opens to see *why* a name ranked — entirely in English.
+ * The wording here matches the terms already used in the Korean methodology
+ * summary and research notes (성장의 질, 재투자 여력, 거래량비율), so the panel
+ * and the prose explaining it agree. Unmapped keys fall back to `humanize`,
+ * so a new factor degrades to English rather than to a blank label.
+ */
+const FACTOR_KO: Record<string, string> = {
+  relativeVolume: '거래량비율',
+  gapQuality: '갭 품질',
+  newsSentiment: '뉴스 감성',
+  volatilityExpansion: '변동성 확대',
+  trendPosition: '추세 위치',
+  trendAlignment: '추세 정렬',
+  fundamentalMomentum: '펀더멘털 모멘텀',
+  earningsDrift: '실적 드리프트',
+  moneyFlow: '자금 흐름',
+  sectorStrength: '섹터 강도',
+  growthQuality: '성장의 질',
+  capitalEfficiency: '자본 효율성',
+  cashGeneration: '현금 창출력',
+  valuation: '밸류에이션',
+  fScore: 'F 스코어',
+  moatStrength: '해자 강도',
+  cashFlowDurability: '현금흐름 지속성',
+  reinvestmentRunway: '재투자 여력',
+  balanceSheetStrength: '재무구조 건전성',
+  shareholderYield: '주주환원 수익률',
+};
+
+const factorLabel = (key: string): string =>
+  (lang === 'ko' && FACTOR_KO[key.replace(/^_/, '')]) || humanize(key);
+
 const entries = Object.entries(factors || {}).filter(([k]) => !k.startsWith('_'));
 ---
 
@@ -44,9 +81,9 @@ const entries = Object.entries(factors || {}).filter(([k]) => !k.startsWith('_')
       return (
         <div class="factor">
           <span class="fname" title={`${t.home.factorRaw}: ${fmtNum(val?.raw, 3, lang)}`}>
-            {humanize(key)}
+            {factorLabel(key)}
           </span>
-          <span class="fbar" role="img" aria-label={`${humanize(key)} ${t.home.factorZ} ${fmtNum(z, 2, lang)}`}>
+          <span class="fbar" role="img" aria-label={`${factorLabel(key)} ${t.home.factorZ} ${fmtNum(z, 2, lang)}`}>
             {z >= 0 ? (
               <i class="pos" style={`width:${pct}%`} />
             ) : (

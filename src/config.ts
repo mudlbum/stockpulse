@@ -16,15 +16,15 @@ export const SITE = {
   name: 'StockPulse',
   tagline: {
     en: 'Multi-horizon equity screens for US and Korean markets',
-    ko: '미국·한국 증시 멀티 호라이즌 종목 스크리너',
+    ko: '미국·한국 증시 투자 기간별 종목 스크리너',
   },
   description: {
     en:
       'Daily rule-based equity leaderboards across four investment horizons, ' +
       'with a fully public performance audit. Market research and education, not investment advice.',
     ko:
-      '4개 투자 기간별 규칙 기반 종목 순위를 매일 갱신하고, ' +
-      '과거에 발행한 모든 종목의 성과를 공개 검증합니다. 투자 자문이 아닌 시장 조사·교육 자료입니다.',
+      '투자 기간 4종의 규칙 기반 종목 순위를 매일 새로 계산하고, ' +
+      '과거에 발행한 종목의 성과를 하나도 빠짐없이 공개 검증합니다. 투자자문이 아니라 시장 조사·교육 자료입니다.',
   },
   /**
    * PLACEHOLDER — `hello@example.com` must be replaced with a real, monitored
@@ -125,7 +125,7 @@ export const HORIZONS = [
     window: { en: '1–5 days', ko: '1~5일' },
     blurb: {
       en: 'Momentum ignition and volatility expansion. Highest turnover, tightest stops.',
-      ko: '모멘텀 점화와 변동성 확대. 회전율이 가장 높고 손절 폭이 가장 좁습니다.',
+      ko: '모멘텀 점화와 변동성 확대. 종목 교체가 가장 잦고 손절 폭이 가장 좁습니다.',
     },
     hasStop: true,
     exitRank: 12,
@@ -141,7 +141,7 @@ export const HORIZONS = [
     window: { en: '1–2 months', ko: '1~2개월' },
     blurb: {
       en: 'Trend alignment, earnings drift and accumulation. Quality-gated.',
-      ko: '추세 정렬, 실적 드리프트, 기관 매집. 재무 건전성 게이트 적용.',
+      ko: '추세 정렬, 실적 발표 후 드리프트, 기관 매집. 재무 건전성 게이트 적용.',
     },
     hasStop: true,
     exitRank: 16,

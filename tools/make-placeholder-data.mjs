@@ -31,6 +31,7 @@ const between = (a, b) => a + rnd() * (b - a);
 const pick = (arr) => arr[Math.floor(rnd() * arr.length) % arr.length];
 const round = (v, d = 2) => Number(v.toFixed(d));
 
+const STOPPED_ENTRY_DATES = ['2026-08-04', '2026-08-06', '2026-08-07', '2026-08-11', '2026-08-12'];
 const GENERATED_AT = '2026-08-15T21:40:00.000Z';
 const AS_OF = { US: '2026-08-14', KR: '2026-08-14' };
 
@@ -169,7 +170,15 @@ function makeSparkline(price) {
   return out;
 }
 
-function makeRow(rank, horizon, market, stock, score) {
+function makeRow(rank, horizon, market, stock, score, forced = {}) {
+  /* Consecutive sessions on the board. Turnover expectations differ wildly by
+     horizon, so draw from a plausible range per horizon rather than one pool. */
+  const heldRange = {
+    ultra_short: [1, 6],
+    mid_term: [1, 24],
+    long_term: [3, 120],
+    ultra_long: [12, 400],
+  }[horizon];
   const [ticker, name, sector, basePrice] = stock;
   const currency = market === 'US' ? 'USD' : 'KRW';
   const dp = market === 'US' ? 2 : 0;
@@ -198,22 +207,45 @@ function makeRow(rank, horizon, market, stock, score) {
 
   /* Flags are derived, not random: partial_data tracks completeness, the KRX
      ±30% daily limit only exists in Korea, and stopped_out only means anything
-     on a horizon that publishes a price stop. */
+     on a horizon that publishes a price stop.
+
+     `forced` guarantees the fixture exercises every badge. Leaving all three to
+     probability meant this seed produced 39 partial_data flags and not one
+     price_limit or stopped_out, so two of the three renderings were never
+     visible for review. A fixture whose job is to drive the layout should hit
+     every branch by construction rather than by luck. */
+  const forcePriceLimit = Boolean(forced.priceLimit) && market === 'KR';
+  const forceStoppedOut = Boolean(forced.stoppedOut) && hasStop;
+
   const flags = [];
   if (completeness < 1) flags.push(FLAG_PARTIAL);
-  if (market === 'KR' && rnd() < 0.12) flags.push(FLAG_PRICE_LIMIT);
-  if (hasStop && rnd() < 0.1) flags.push(FLAG_STOPPED_OUT);
+  if (forcePriceLimit || (market === 'KR' && rnd() < 0.12)) flags.push(FLAG_PRICE_LIMIT);
+  if (forceStoppedOut || (hasStop && rnd() < 0.1)) flags.push(FLAG_STOPPED_OUT);
+
+  /* Keep the numbers consistent with the flags. A price_limit row that closed
+     +1.8% would be self-contradicting, and a stopped_out row whose stop sits
+     safely below the last price would too. */
+  const limitUp = rnd() < 0.6;
+  const changePct = flags.includes(FLAG_PRICE_LIMIT)
+    ? round(between(29.4, 30.0), 2) * (limitUp ? 1 : -1)
+    : round(between(-3.4, 5.2), 2);
+  const stop = !hasStop
+    ? null
+    : flags.includes(FLAG_STOPPED_OUT)
+      ? round(price * between(1.004, 1.02), dp) /* breached: last price is below it */
+      : round(price - 1.5 * atr, dp);
 
   return {
     rank,
     movement,
+    heldSessions: Math.max(1, Math.round(between(heldRange[0], heldRange[1]))),
     ticker,
     name,
     market,
     sector,
     currency,
     price,
-    changePct: round(between(-3.4, 5.2), 2),
+    changePct,
     score,
     rawZ: round(between(-0.4, 2.2), 3),
     completeness,
@@ -221,7 +253,7 @@ function makeRow(rank, horizon, market, stock, score) {
     entry: hasStop
       ? { low: round(price - 0.25 * atr, dp), high: round(price + 0.4 * atr, dp) }
       : { low: round(price - 1.5 * atr, dp), high: round(price + 0.5 * atr, dp) },
-    stop: hasStop ? round(price - 1.5 * atr, dp) : null,
+    stop,
     /* Three tiers everywhere, but three different kinds of number — see
        targetBasis. ATR multiples on the short horizons, a discounted
        fair-value band at 1–2 years, a compounding scenario band at 5–10. */
@@ -269,6 +301,7 @@ function makeBoard(market, horizon) {
       asOf: AS_OF[market],
       turnover30d: 0,
       sampleWarning: true,
+      stoppedOut: [],
       rows: [],
       justMissed: [],
       emptyReason: {
@@ -295,7 +328,14 @@ function makeBoard(market, horizon) {
     s -= between(0.6, 3.4);
   }
 
-  const rows = uniq.slice(0, 10).map((st, i) => makeRow(i + 1, horizon, market, st, scores[i]));
+  /* Fixed positions so every flag badge appears somewhere in the fixture:
+     a KRX limit close on each Korean board, a breached stop on each board that
+     publishes one. */
+  const forcedAt = (rank) => ({
+    priceLimit: market === 'KR' && rank === 5,
+    stoppedOut: (horizon === 'ultra_short' || horizon === 'mid_term') && rank === 8,
+  });
+  const rows = uniq.slice(0, 10).map((st, i) => makeRow(i + 1, horizon, market, st, scores[i], forcedAt(i + 1)));
   const displacedBy = ['sector_cap', 'correlation_cap', 'catalyst_cluster_cap'];
   const justMissed = uniq.slice(10, 13).map((st, i) => ({
     ticker: st[0],
@@ -308,12 +348,36 @@ function makeBoard(market, horizon) {
     horizon
   ];
 
+  /* Names that were on this board, were published with a stop, and had it
+     breached. Only the horizons that publish a price stop can produce these,
+     and on most sessions the list is empty — the UI must handle both. */
+  const stoppedOut = [];
+  if ((horizon === 'ultra_short' || horizon === 'mid_term') && rnd() < 0.55) {
+    const n = 1 + (Math.floor(rnd() * 2) % 2);
+    for (let i = 0; i < n; i++) {
+      const st = uniq[(13 + i) % uniq.length];
+      const dp = market === 'US' ? 2 : 0;
+      const stop = round(st[3] * between(0.9, 0.95), dp);
+      stoppedOut.push({
+        ticker: st[0],
+        name: st[1],
+        stop,
+        entryDate: STOPPED_ENTRY_DATES[(i + offset) % STOPPED_ENTRY_DATES.length],
+        lastPrice: round(stop * between(0.955, 0.995), dp),
+        previousRank: 3 + (Math.floor(rnd() * 8) % 8),
+        cooldownSessions: 5,
+      });
+    }
+    stoppedOut.sort((a, b) => a.previousRank - b.previousRank);
+  }
+
   return {
     market,
     horizon,
     asOf: AS_OF[market],
     turnover30d: round(between(turnover[0], turnover[1]), 3),
     sampleWarning: horizon === 'long_term' || horizon === 'ultra_long',
+    stoppedOut,
     rows,
     justMissed,
     emptyReason: null,

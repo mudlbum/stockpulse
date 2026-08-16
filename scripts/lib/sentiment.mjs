@@ -60,20 +60,36 @@ const NEGATIVE = [
   'headwinds', 'pressure', 'pressured', 'struggle', 'struggles', 'struggling',
 ];
 
-/** Korean equivalents — the site ranks KRX names and reads Korean wires. */
+/* Korean equivalents — the site ranks KRX names and reads Korean wires.
+ *
+ * Three constraints shape this list, and they are what a word-for-word
+ * translation of the English list gets wrong:
+ *
+ *  1. Matching is by substring (Korean is agglutinative), so entries must be
+ *     STEMS that survive inflection — '상승' catches 상승세, 상승했다, 상승폭.
+ *  2. Entries must therefore not overlap each other, or one phrase scores
+ *     twice. '목표가상향' was dead weight on both counts: Korean wires write
+ *     '목표주가 상향' with a space, so the closed compound never matched, and
+ *     the '상향' already in the list catches it anyway.
+ *  3. The vocabulary is the KRX market's own, not a dictionary rendering of the
+ *     English terms: 상한가/하한가, 신고가/신저가, 흑자전환/적자전환,
+ *     순매수/순매도, 관리종목, 불성실공시 have no English-list counterparts and
+ *     are exactly what moves a Korean headline.
+ */
 const POSITIVE_KO = [
-  '상승', '급등', '강세', '호조', '개선', '흑자', '최대', '최고', '신기록', '수주',
-  '계약', '확대', '증가', '성장', '돌파', '승인', '허가', '수혜', '기대', '낙관',
-  '반등', '회복', '호실적', '어닝서프라이즈', '목표가상향', '상향', '매수', '자사주',
-  '배당', '수출', '점유율', '독점', '특허', '신제품', '출시', '진출', '투자유치',
+  '상승', '급등', '강세', '호조', '개선', '흑자', '최대', '최고', '신기록',
+  '신고가', '상한가', '수주', '계약', '확대', '증가', '성장', '돌파', '승인',
+  '허가', '수혜', '기대', '낙관', '반등', '회복', '호실적', '서프라이즈', '상향',
+  '매수', '자사주', '배당', '수출', '점유율', '독점', '특허', '신제품', '출시',
+  '진출', '투자유치', '증설', '수익성',
 ];
 
 const NEGATIVE_KO = [
   '하락', '급락', '약세', '부진', '악화', '적자', '손실', '감소', '축소', '하향',
-  '목표가하향', '매도', '우려', '리스크', '경고', '조사', '소송', '제재', '과징금',
-  '벌금', '리콜', '지연', '중단', '정지', '거래정지', '상장폐지', '관리종목',
-  '횡령', '배임', '분식', '유상증자', '희석', '구조조정', '감원', '사임', '쇼크',
-  '어닝쇼크', '실적악화', '역성장', '침체', '둔화', '적자전환',
+  '하한가', '신저가', '매도', '우려', '리스크', '경고', '조사', '소송', '제재',
+  '과징금', '벌금', '리콜', '지연', '중단', '정지', '상장폐지', '관리종목',
+  '불성실공시', '횡령', '배임', '분식', '유상증자', '무상감자', '희석', '구조조정',
+  '감원', '사임', '쇼크', '역성장', '침체', '둔화',
 ];
 
 const NEGATORS = new Set([

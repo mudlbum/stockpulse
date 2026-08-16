@@ -42,6 +42,11 @@ const d = post.data;
 const slug = slugOf(post);
 const pageSlug = `blog/${slug}`;
 const author = authorOf(post);
+
+/* Auto-published posts are a disclosed, legitimate practice for deterministic
+   output — not an exception to apologise for — but the byline must state the
+   review state accurately either way. */
+const isAutoPublished = d.reviewStatus === 'auto-published';
 const mins = readingTime(post.body ?? '');
 const modified = lastModified(post);
 const url = pageAbsolute(lang, pageSlug);
@@ -133,20 +138,50 @@ const breadcrumbs = [
           <p class="prov-line">
             <span class="notice-k">{t.blog.writtenBy}</span>
             <b>{author.name}</b>
-            <span class="muted"> · {author.role[lang]}</span>
           </p>
+          {/* Own line, no leading separator: the pipeline role string
+              ("Automated, published without individual review") wraps at every
+              realistic width, which left an orphaned "·" starting the line. */}
+          <p class="prov-role">{author.role[lang]}</p>
           <p class="prov-bio">{author.bio[lang]}</p>
-          <p class="prov-line">
-            <span class="notice-k">{t.blog.reviewedBy}</span>
-            <b>{d.reviewedBy}</b>
-          </p>
-          <p class="prov-bio">{t.blog.reviewedByHelp}</p>
+
+          {/* Review state. The schema forbids `reviewedBy` on an auto-published
+              post, so "a named person read this and is accountable for it"
+              must not render there — on a brief nobody read, that sentence is
+              simply false, and a name under it would be worse. */}
+          {
+            isAutoPublished ? (
+              <div class="prov-review prov-review-auto">
+                <p class="prov-line">
+                  <span aria-hidden="true">⟳</span>
+                  <span class="notice-k">{t.blog.reviewLabel}</span>
+                  <b>{t.blog.autoPublished}</b>
+                </p>
+                <p class="prov-bio">{t.blog.autoPublishedHelp}</p>
+                <p class="prov-bio">
+                  <a href={pageHref(lang, 'editorial-policy')}>{t.blog.autoPublishedPolicy}</a>
+                </p>
+              </div>
+            ) : (
+              <div class="prov-review">
+                <p class="prov-line">
+                  <span aria-hidden="true">✓</span>
+                  <span class="notice-k">{t.blog.reviewedBy}</span>
+                  <b>{d.reviewedBy}</b>
+                </p>
+                <p class="prov-bio">{t.blog.reviewedByHelp}</p>
+              </div>
+            )
+          }
         </div>
 
         <div class={`prov-ai${d.aiAssisted ? ' prov-ai-on' : ''}`}>
+          {/* "Written and reviewed by a person" would be false on an
+              auto-published brief: no model drafted it, but no person wrote or
+              reviewed it either. Three states, three accurate labels. */}
           <p class="prov-line">
-            <span aria-hidden="true">{d.aiAssisted ? '◐' : '✎'}</span>
-            <b>{d.aiAssisted ? t.blog.aiBadge : t.blog.humanOnly}</b>
+            <span aria-hidden="true">{d.aiAssisted ? '◐' : isAutoPublished ? '⚙' : '✎'}</span>
+            <b>{d.aiAssisted ? t.blog.aiBadge : isAutoPublished ? t.blog.noModel : t.blog.humanOnly}</b>
           </p>
           {d.aiAssisted && d.aiNote && <p class="prov-bio">{d.aiNote}</p>}
           <p class="prov-bio">
@@ -298,6 +333,11 @@ const breadcrumbs = [
     gap: 0.3rem;
     align-items: baseline;
   }
+  .prov-role {
+    margin: 0 0 0.4rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
   .prov-bio {
     margin: 0 0 0.6rem;
     font-size: 0.78rem;
@@ -307,6 +347,23 @@ const breadcrumbs = [
   .prov-bio:last-child {
     margin-bottom: 0;
   }
+  /* Review state sits at the same visual weight as the AI disclosure, with a
+     different accent so the two states are told apart at a glance. The auto
+     accent is deliberately the informational link colour, not a warning
+     colour: scheduled publication of computed figures is disclosed practice,
+     not a hazard. */
+  .prov-review {
+    border-inline-start: 3px solid var(--border-strong);
+    padding-inline-start: 0.8rem;
+    margin-top: 0.75rem;
+  }
+  .prov-review-auto {
+    border-inline-start-color: var(--link);
+  }
+  .prov-review-auto .prov-line b {
+    color: var(--link);
+  }
+
   /* The AI disclosure is a peer of the byline, not a footnote under it. */
   .prov-ai {
     border-inline-start: 3px solid var(--border-strong);
