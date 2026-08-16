@@ -41,7 +41,19 @@ machine-readable, no key, no rate ceiling worth worrying about.
   `data-store/profiles/us.json`, never refetch: a SIC code does not move.
 
 - **Send a descriptive `User-Agent` with a contact address.** SEC's stated cap is
-  **10 requests/second**; the pipeline throttles well below it.
+  **10 requests/second**; the pipeline throttles well below it — but verify that
+  the throttle actually throttles under concurrency. Ours did not: it read the
+  last-send time, awaited, then wrote it back, so four concurrent workers all
+  read the same value and fired together. A 120ms interval delivered bursts of
+  four, and the first large cold start drew **148 HTTP 429s and updated
+  fundamentals for zero companies**. A rate limiter that has never been tested
+  with more than one caller is a comment, not a limiter.
+- **A 429 applies to the whole host, not to the request that received it.** Back
+  every in-flight worker off, or a brief refusal becomes a sustained block.
+- **Budget across endpoints, not per endpoint.** `submissions` and
+  `companyfacts` share one rate budget. Spending it on metadata starves the
+  data the models actually need, so profiles are fetched after fundamentals and
+  under a much smaller per-run cap.
 - `company_tickers.json` is an **object keyed by stringified index, not an
   array**, and `cik_str` is a **JSON number** despite the name — zero-pad it to
   10 characters yourself.

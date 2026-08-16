@@ -35,6 +35,8 @@ const HOST_INTERVAL = {
 };
 
 const lastCall = new Map();
+/** Host → epoch ms before which no request may be sent, set by a 429. */
+const cooldownUntil = new Map();
 const health = new Map();
 
 function hostOf(url) {
@@ -45,12 +47,48 @@ function hostOf(url) {
   }
 }
 
-async function throttle(host) {
+/**
+ * Reserve the next send slot for `host` and return the epoch ms to send at.
+ *
+ * Reserving BEFORE awaiting is the whole point, and it is not a micro-detail:
+ * the previous version read `lastCall`, awaited, and only then wrote it back.
+ * Under `mapLimit(items, 4, …)` all four workers read the same `last`,
+ * computed the same wait, slept the same duration and fired simultaneously —
+ * so a 120ms interval intended as ~8 req/s delivered bursts of four, and SEC
+ * (documented cap: 10 req/s) answered a cold start with 148 HTTP 429s and zero
+ * fundamentals for the day. The rate limiter had never actually limited
+ * anything; low volume had simply hidden it.
+ *
+ * Exported for the test, because a timing bug that only appears under
+ * concurrency is exactly the kind that comes back.
+ */
+export function reserveSlot(host, now = Date.now()) {
   const interval = HOST_INTERVAL[host] ?? HOST_INTERVAL.default;
-  const last = lastCall.get(host) ?? 0;
-  const wait = last + interval - Date.now();
+  const floor = Math.max(now, cooldownUntil.get(host) ?? 0);
+  const scheduled = Math.max(floor, (lastCall.get(host) ?? 0) + interval);
+  lastCall.set(host, scheduled);
+  return scheduled;
+}
+
+/** Test seam: forget all reservations and cooldowns. */
+export function resetThrottle() {
+  lastCall.clear();
+  cooldownUntil.clear();
+}
+
+/**
+ * Back every in-flight worker off this host, not just the one that got the 429.
+ * Without this the other three workers keep hammering a source that has already
+ * said no, which is how a brief refusal becomes a sustained block.
+ */
+function penalize(host, ms) {
+  const until = Date.now() + ms;
+  if (until > (cooldownUntil.get(host) ?? 0)) cooldownUntil.set(host, until);
+}
+
+async function throttle(host) {
+  const wait = reserveSlot(host) - Date.now();
   if (wait > 0) await sleep(wait);
-  lastCall.set(host, Date.now());
 }
 
 function record(host, ok, note) {
@@ -105,6 +143,8 @@ export async function fetchWithRetry(url, opts = {}) {
 
       if (res.status === 429 || res.status >= 500) {
         lastErr = new Error(`HTTP ${res.status} from ${host}`);
+        // A 429 is the host telling every worker to stop, not just this one.
+        if (res.status === 429) penalize(host, 2000 * 2 ** attempt);
         if (attempt < retries) {
           await sleep(1500 * 2 ** attempt + Math.floor(Math.random() * 400));
           continue;

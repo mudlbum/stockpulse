@@ -31,12 +31,21 @@ const TARGET_UNIVERSE = Number(process.env.US_UNIVERSE ?? 600);
 const BOOTSTRAP_BUDGET = Number(process.env.US_BOOTSTRAP ?? 120);
 const FUNDAMENTAL_BUDGET = Number(process.env.US_FUNDAMENTALS ?? 60);
 /**
- * Per-run cap on SEC submissions fetches. Generous relative to the fundamentals
- * budget because a profile is fetched ONCE per company and then cached forever
- * — the cost is a one-off cold start, not a daily bill. A universe of 600 fills
- * in three runs; after that this number is almost always 0.
+ * Per-run cap on SEC submissions fetches.
+ *
+ * Deliberately modest. The first version set this to 250 on the reasoning that
+ * a profile is fetched once and cached forever, so a big cold start is a
+ * one-off cost. That reasoning ignored the shared budget: 250 submissions
+ * documents (160KB each) landed SEC in a 429 storm and the 60 companyfacts
+ * fetches queued behind them ALL failed, so the run updated fundamentals for
+ * zero companies. Metadata starved the load-bearing data.
+ *
+ * This file's own stated design is incremental and resumable — the price
+ * bootstrap has worked that way from the start. Profiles now follow the same
+ * rule: fill a bit each run, resume from the committed store, never spend the
+ * whole budget on the least important thing.
  */
-const PROFILE_BUDGET = Number(process.env.US_PROFILES ?? 250);
+const PROFILE_BUDGET = Number(process.env.US_PROFILES ?? 80);
 const BENCHMARKS = ['SPY', 'QQQ', 'IWM'];
 
 /** Sector composites. The eleven SPDR sector ETFs give a free, ready-made
@@ -132,6 +141,34 @@ async function main() {
   const selected = universe.slice(0, TARGET_UNIVERSE);
   console.log(`[us] universe after liquidity/price filters: ${selected.length}`);
 
+  // ── fundamentals (METHODOLOGY §5, §6) ─────────────────────────────────
+  // companyfacts is a multi-megabyte document per filer, so it is refreshed on
+  // a rotation rather than all at once: the least-recently-updated names are
+  // topped up each run. Fundamentals move quarterly; prices move daily.
+  const staleFirst = selected
+    .map((s) => ({ ...s, updatedAt: fundamentals.companies[s.ticker]?.updatedAt ?? null }))
+    .sort((a, b) => (a.updatedAt ?? '') < (b.updatedAt ?? '') ? -1 : 1)
+    .slice(0, FUNDAMENTAL_BUDGET);
+
+  console.log(`[us] refreshing fundamentals for ${staleFirst.length} companies…`);
+  const asOf = new Date().toISOString().slice(0, 10);
+
+  const fund = await mapLimit(staleFirst, 4, async (s) => {
+    const facts = await fetchCompanyFacts(s.cik);
+    return { ticker: s.ticker, parsed: parseFacts(facts, asOf) };
+  });
+  let ok = 0;
+  for (const r of fund.results) {
+    if (!r?.parsed) continue;
+    fundamentals.companies[r.ticker] = { ...r.parsed, updatedAt: new Date().toISOString() };
+    ok++;
+  }
+  await saveFundamentals(MARKET, fundamentals);
+  console.log(`[us] fundamentals updated for ${ok} companies (${fund.errors.length} errors)`);
+
+  // Profiles run AFTER fundamentals, on purpose. Both hit data.sec.gov and share
+  // one rate budget; fundamentals feed the scoring models while a profile only
+  // labels a name. When the budget runs short the metadata must be what degrades.
   // ── company profiles → sector (METHODOLOGY §1.3) ──────────────────────
   // Fetched once per company and cached permanently; a SIC code does not move.
   // Names whose SIC maps to nothing keep `sector: null` and are recorded so the
@@ -176,30 +213,6 @@ async function main() {
     );
   }
 
-  // ── fundamentals (METHODOLOGY §5, §6) ─────────────────────────────────
-  // companyfacts is a multi-megabyte document per filer, so it is refreshed on
-  // a rotation rather than all at once: the least-recently-updated names are
-  // topped up each run. Fundamentals move quarterly; prices move daily.
-  const staleFirst = selected
-    .map((s) => ({ ...s, updatedAt: fundamentals.companies[s.ticker]?.updatedAt ?? null }))
-    .sort((a, b) => (a.updatedAt ?? '') < (b.updatedAt ?? '') ? -1 : 1)
-    .slice(0, FUNDAMENTAL_BUDGET);
-
-  console.log(`[us] refreshing fundamentals for ${staleFirst.length} companies…`);
-  const asOf = new Date().toISOString().slice(0, 10);
-
-  const fund = await mapLimit(staleFirst, 4, async (s) => {
-    const facts = await fetchCompanyFacts(s.cik);
-    return { ticker: s.ticker, parsed: parseFacts(facts, asOf) };
-  });
-  let ok = 0;
-  for (const r of fund.results) {
-    if (!r?.parsed) continue;
-    fundamentals.companies[r.ticker] = { ...r.parsed, updatedAt: new Date().toISOString() };
-    ok++;
-  }
-  await saveFundamentals(MARKET, fundamentals);
-  console.log(`[us] fundamentals updated for ${ok} companies (${fund.errors.length} errors)`);
 
   await publish('universe-us', {
     market: MARKET,

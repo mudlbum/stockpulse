@@ -44,7 +44,7 @@ npm install
 # Offline: seed fixtures, run the real pipeline, validate the output (~2s)
 npm run smoke
 
-# Unit tests (105)
+# Unit tests (111)
 npm test
 
 # Build (both base paths must pass)
@@ -166,6 +166,10 @@ Recorded here because each cost real debugging time and none is obvious:
   enormous sector, allowed four of it, and published **4 names per board instead
   of 10** — no error, no warning, just a short list. Unclassified names are
   exempt from the sector cap and normalized against the whole universe.
+- **A rate limiter that reserves its slot *after* awaiting does not limit
+  anything.** Four `mapLimit` workers read the same last-send time, sleep the
+  same duration and fire together. Reserve before you await. This one was live:
+  148 HTTP 429s from SEC and zero fundamentals updated for a day.
 - **`companyfacts` has no SIC code.** Only the SEC `submissions` endpoint does.
   Getting a filer's industry costs a separate 160KB request, which is why
   profiles are cached permanently in the store instead of refetched.
@@ -192,7 +196,7 @@ Recorded here because each cost real debugging time and none is obvious:
 
 | Command | Covers |
 | --- | --- |
-| `npm test` | 105 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering, SIC→sector |
+| `npm test` | 111 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering, SIC→sector |
 | `npm run smoke` | 2,240 end-to-end checks against the real pipeline |
 | `npm run audit` | built output: base paths, SEO, a11y, links, compliance notices |
 | `npm run contrast` | WCAG AA on 88 colour pairs in both themes |

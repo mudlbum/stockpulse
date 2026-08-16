@@ -6,6 +6,7 @@ import {
 } from '../scripts/lib/sources.mjs';
 import { parseFeed, clusterNews, mapItemsToTickers } from '../scripts/lib/news.mjs';
 import { previousBoardFor } from '../scripts/lib/store.mjs';
+import { reserveSlot, resetThrottle } from '../scripts/lib/http.mjs';
 import { aggregateSentiment, scoreHeadline, sentimentLabel } from '../scripts/lib/sentiment.mjs';
 import {
   ATOM_FEED, KRX_DESC_CSV, KRX_LISTING_CSV, NAVER_SISE_JSON_BODY,
@@ -347,4 +348,45 @@ test('previousBoardFor returns the prior session when replaying the same date', 
 test('previousBoardFor is safe on a cold store', () => {
   assert.deepEqual(previousBoardFor({}, '2026-08-15'), []);
   assert.deepEqual(previousBoardFor({ current: [] }, null), []);
+});
+
+// ── rate limiting ──────────────────────────────────────────────────────────
+
+test('concurrent callers reserve distinct, spaced send slots', () => {
+  // The bug this pins: throttle() read the last-send time, awaited, and only
+  // then wrote it back. Four mapLimit workers all read the same value, computed
+  // the same wait, slept the same duration and fired together — so a 120ms
+  // interval intended as ~8 req/s delivered bursts of 4. SEC answered a cold
+  // start with 148 HTTP 429s and the run updated fundamentals for 0 companies.
+  //
+  // Reserving before awaiting is what makes concurrent callers queue instead of
+  // collide, so the property under test is: N reservations taken at the SAME
+  // instant must be spaced by the host interval.
+  resetThrottle();
+  const now = 1_000_000;
+  const slots = [0, 1, 2, 3, 4, 5].map(() => reserveSlot('data.sec.gov', now));
+
+  for (let i = 1; i < slots.length; i++) {
+    assert.ok(slots[i] > slots[i - 1], `slot ${i} did not advance: ${slots.join(',')}`);
+    assert.ok(slots[i] - slots[i - 1] >= 120,
+      `slots ${i - 1}→${i} only ${slots[i] - slots[i - 1]}ms apart, need >=120`);
+  }
+  // Six requests at ~8/s must span at least 600ms, not arrive at once.
+  assert.ok(slots[5] - slots[0] >= 600);
+});
+
+test('a slot reservation never schedules into the past', () => {
+  resetThrottle();
+  reserveSlot('data.sec.gov', 1_000_000);
+  // A later call, long after the interval has elapsed, sends immediately rather
+  // than inheriting a stale reservation.
+  assert.equal(reserveSlot('data.sec.gov', 9_000_000), 9_000_000);
+});
+
+test('hosts are throttled independently', () => {
+  resetThrottle();
+  const now = 2_000_000;
+  reserveSlot('data.sec.gov', now);
+  assert.equal(reserveSlot('query1.finance.yahoo.com', now), now,
+    'one slow host must not delay another');
 });
