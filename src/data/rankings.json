@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T01:11:29.135Z",
+  "generatedAt": "2026-08-18T04:35:24.991Z",
   "methodologyVersion": "1.0.0",
   "asOf": {
     "US": "2026-08-17",
@@ -51,8 +51,8 @@
             "currency": "USD",
             "price": 987.84,
             "changePct": 16.04,
-            "score": 81.6,
-            "rawZ": 1.897,
+            "score": 81,
+            "rawZ": 1.857,
             "completeness": 1,
             "riskGauge": 3,
             "entry": {
@@ -80,8 +80,8 @@
                 "z": 3
               },
               "newsSentiment": {
-                "raw": 0.236,
-                "z": 0.111
+                "raw": 0.204,
+                "z": -0.09
               },
               "volatilityExpansion": {
                 "raw": 1.784,
@@ -125,7 +125,7 @@
               987.84
             ],
             "newsCount": 1,
-            "sentiment": 0.236,
+            "sentiment": 0.204,
             "flags": []
           },
           {
@@ -139,8 +139,8 @@
             "currency": "USD",
             "price": 193.04,
             "changePct": 0.68,
-            "score": 70.3,
-            "rawZ": 1.22,
+            "score": 70.5,
+            "rawZ": 1.227,
             "completeness": 0.8,
             "riskGauge": 1,
             "entry": {
@@ -168,8 +168,8 @@
                 "z": 0
               },
               "newsSentiment": {
-                "raw": 0.553,
-                "z": 1.353
+                "raw": 0.506,
+                "z": 1.377
               },
               "volatilityExpansion": {
                 "raw": 0.05,
@@ -213,7 +213,7 @@
               193.04
             ],
             "newsCount": 1,
-            "sentiment": 0.553,
+            "sentiment": 0.506,
             "flags": [
               "partial_data"
             ]
@@ -409,8 +409,8 @@
             "currency": "USD",
             "price": 1786.85,
             "changePct": 8.88,
-            "score": 67.4,
-            "rawZ": 1.044,
+            "score": 67.5,
+            "rawZ": 1.052,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
@@ -438,8 +438,8 @@
                 "z": 3
               },
               "newsSentiment": {
-                "raw": 0.565,
-                "z": 1.401
+                "raw": 0.518,
+                "z": 1.438
               },
               "volatilityExpansion": {
                 "raw": 0.223,
@@ -483,7 +483,7 @@
               1786.85
             ],
             "newsCount": 1,
-            "sentiment": 0.565,
+            "sentiment": 0.518,
             "flags": []
           },
           {
@@ -670,6 +670,94 @@
             "rank": 8,
             "movement": "NEW",
             "heldSessions": 1,
+            "ticker": "BHP",
+            "name": "BHP Group Ltd",
+            "market": "US",
+            "sector": null,
+            "currency": "USD",
+            "price": 88.37,
+            "changePct": 1.83,
+            "score": 62.9,
+            "rawZ": 0.776,
+            "completeness": 1,
+            "riskGauge": 1,
+            "entry": {
+              "low": 87.81,
+              "high": 89.27
+            },
+            "stop": 84.99,
+            "targets": {
+              "conservative": 90.62,
+              "base": 92.43,
+              "bull": 95.13
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "BHP: copper overtakes iron ore as primary profit driver, here’s what it means Plus 1 related story.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 1.354,
+                "z": -0.313
+              },
+              "gapQuality": {
+                "raw": 0.37,
+                "z": 3
+              },
+              "newsSentiment": {
+                "raw": 0.436,
+                "z": 1.038
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.706,
+                "z": 0.416
+              }
+            },
+            "sparkline": [
+              80.23,
+              78.3,
+              79.91,
+              81.68,
+              81.37,
+              84.35,
+              85.48,
+              80.71,
+              80.64,
+              80.49,
+              83.45,
+              84.54,
+              83.65,
+              83.72,
+              83.93,
+              83.79,
+              83.11,
+              85.9,
+              84.49,
+              83.5,
+              87.46,
+              89.38,
+              87.9,
+              90.41,
+              90.61,
+              90.02,
+              90.12,
+              87.23,
+              86.78,
+              88.37
+            ],
+            "newsCount": 1,
+            "sentiment": 0.436,
+            "flags": []
+          },
+          {
+            "rank": 9,
+            "movement": "NEW",
+            "heldSessions": 1,
             "ticker": "NKE",
             "name": "NIKE, Inc.",
             "market": "US",
@@ -757,7 +845,7 @@
             ]
           },
           {
-            "rank": 9,
+            "rank": 10,
             "movement": "NEW",
             "heldSessions": 1,
             "ticker": "RBA",
@@ -839,96 +927,6 @@
               86.41,
               84.26,
               82.11
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 10,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "PWR",
-            "name": "QUANTA SERVICES, INC.",
-            "market": "US",
-            "sector": "Industrials",
-            "currency": "USD",
-            "price": 722.31,
-            "changePct": 5.33,
-            "score": 62.8,
-            "rawZ": 0.766,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 715,
-              "high": 734
-            },
-            "stop": 678.47,
-            "targets": {
-              "conservative": 751.54,
-              "base": 774.92,
-              "bull": 809.99
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 1.338,
-                "z": -0.381
-              },
-              "gapQuality": {
-                "raw": 0.322,
-                "z": 3
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.969,
-                "z": 0.846
-              }
-            },
-            "sparkline": [
-              656.79,
-              666.33,
-              668.17,
-              658.56,
-              646.7,
-              660.94,
-              648.84,
-              631.02,
-              628.53,
-              632.56,
-              639.2,
-              643.14,
-              653.8,
-              625.84,
-              620.28,
-              588.36,
-              561.14,
-              657.98,
-              667.36,
-              680.2,
-              693,
-              682.99,
-              667.84,
-              671.86,
-              660.86,
-              670.58,
-              678.02,
-              672.78,
-              685.78,
-              722.31
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -1739,7 +1737,7 @@
               1183.16
             ],
             "newsCount": 2,
-            "sentiment": 0.557,
+            "sentiment": 0.51,
             "flags": []
           },
           {
@@ -2589,7 +2587,7 @@
               390.33
             ],
             "newsCount": 1,
-            "sentiment": 0.112,
+            "sentiment": 0.095,
             "flags": [
               "partial_data"
             ]
@@ -2683,7 +2681,7 @@
               76.02
             ],
             "newsCount": 1,
-            "sentiment": 0.125,
+            "sentiment": 0.106,
             "flags": []
           },
           {
@@ -3199,8 +3197,8 @@
               "Share count grows more than 2% per year for three consecutive years"
             ],
             "maxHoldSessions": 2520,
-            "catalyst": "Why Microsoft Stock Dropped Today Plus 5 related stories.",
-            "catalystCluster": "c50",
+            "catalyst": "Why Microsoft Stock Dropped Today Plus 7 related stories.",
+            "catalystCluster": "c77",
             "factors": {
               "moatStrength": {
                 "raw": 0.878,
@@ -3255,8 +3253,8 @@
               495.4,
               480.35
             ],
-            "newsCount": 3,
-            "sentiment": -0.287,
+            "newsCount": 4,
+            "sentiment": -0.206,
             "flags": []
           },
           {
