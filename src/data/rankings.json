@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T08:36:56.715Z",
+  "generatedAt": "2026-08-19T12:44:56.892Z",
   "methodologyVersion": "1.0.0",
   "asOf": {
     "US": "2026-08-18",
@@ -32,7 +32,97 @@
         "rows": [
           {
             "rank": 1,
-            "movement": 3,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "TRGP",
+            "name": "Targa Resources Corp.",
+            "market": "US",
+            "sector": "Utilities",
+            "currency": "USD",
+            "price": 297.77,
+            "changePct": 7.13,
+            "score": 84.4,
+            "rawZ": 2.064,
+            "completeness": 0.8,
+            "riskGauge": 3,
+            "entry": {
+              "low": 295.56,
+              "high": 301.3
+            },
+            "stop": 284.54,
+            "targets": {
+              "conservative": 306.59,
+              "base": 313.65,
+              "bull": 324.23
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Targa Resources Announces 20-Year ExxonMobil Agreements Plus 1 related story.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 2.005,
+                "z": 1.934
+              },
+              "gapQuality": {
+                "raw": 0.53,
+                "z": 3
+              },
+              "newsSentiment": {
+                "raw": null,
+                "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 1.113,
+                "z": 3
+              },
+              "trendPosition": {
+                "raw": 0.991,
+                "z": 0.918
+              }
+            },
+            "sparkline": [
+              276.57,
+              271.75,
+              272.08,
+              278.1,
+              280.29,
+              276.86,
+              278.96,
+              281.59,
+              281.03,
+              278.91,
+              283.12,
+              284.25,
+              280.02,
+              266.39,
+              260.43,
+              263.44,
+              267.09,
+              270.37,
+              264.6,
+              262.98,
+              260.11,
+              268.23,
+              256.87,
+              266.21,
+              265.45,
+              268.67,
+              266.88,
+              275.79,
+              277.94,
+              297.77
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 2,
+            "movement": 2,
             "heldSessions": 2,
             "ticker": "CVX",
             "name": "CHEVRON CORP",
@@ -41,8 +131,8 @@
             "currency": "USD",
             "price": 205.74,
             "changePct": 1.5,
-            "score": 77.8,
-            "rawZ": 1.667,
+            "score": 76.8,
+            "rawZ": 1.606,
             "completeness": 0.8,
             "riskGauge": 1,
             "entry": {
@@ -70,8 +160,8 @@
                 "z": 3
               },
               "newsSentiment": {
-                "raw": 0.204,
-                "z": 0.216
+                "raw": 0.17,
+                "z": -0.001
               },
               "volatilityExpansion": {
                 "raw": 0.374,
@@ -115,97 +205,7 @@
               205.74
             ],
             "newsCount": 1,
-            "sentiment": 0.204,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 2,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "CRM",
-            "name": "Salesforce, Inc.",
-            "market": "US",
-            "sector": "Information Technology",
-            "currency": "USD",
-            "price": 196.14,
-            "changePct": 2.71,
-            "score": 75.1,
-            "rawZ": 1.505,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 194.13,
-              "high": 199.36
-            },
-            "stop": 184.08,
-            "targets": {
-              "conservative": 204.18,
-              "base": 210.61,
-              "bull": 220.25
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "Why Salesforce Stock Rallied Today Plus 1 related story.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": null,
-                "z": null
-              },
-              "gapQuality": {
-                "raw": 0.279,
-                "z": 3
-              },
-              "newsSentiment": {
-                "raw": 0.452,
-                "z": 1.883
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.734,
-                "z": 0.511
-              }
-            },
-            "sparkline": [
-              166.58,
-              162.5,
-              163.32,
-              171.22,
-              167.56,
-              167,
-              172.68,
-              170.77,
-              173.79,
-              170.06,
-              163,
-              156.93,
-              163.66,
-              173.6,
-              181.5,
-              188.38,
-              180.71,
-              184.02,
-              185.95,
-              190.99,
-              192.98,
-              186.77,
-              192.74,
-              197.51,
-              197.47,
-              193.32,
-              201.37,
-              196.21,
-              190.97,
-              196.14
-            ],
-            "newsCount": 1,
-            "sentiment": 0.452,
+            "sentiment": 0.17,
             "flags": [
               "partial_data"
             ]
@@ -304,96 +304,6 @@
             "rank": 4,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "DLTR",
-            "name": "DOLLAR TREE, INC.",
-            "market": "US",
-            "sector": "Consumer Discretionary",
-            "currency": "USD",
-            "price": 130.48,
-            "changePct": 0.73,
-            "score": 74.8,
-            "rawZ": 1.491,
-            "completeness": 0.8,
-            "riskGauge": 2,
-            "entry": {
-              "low": 129.57,
-              "high": 131.93
-            },
-            "stop": 125.04,
-            "targets": {
-              "conservative": 134.11,
-              "base": 137.01,
-              "bull": 141.36
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "Dollar Tree climbs after Jefferies upgrades stock on improving traffic",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": null,
-                "z": null
-              },
-              "gapQuality": {
-                "raw": 0.266,
-                "z": 3
-              },
-              "newsSentiment": {
-                "raw": 0.451,
-                "z": 1.876
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.698,
-                "z": 0.455
-              }
-            },
-            "sparkline": [
-              123.61,
-              120.92,
-              124.91,
-              126.38,
-              124.56,
-              127.03,
-              128.45,
-              125.94,
-              126.38,
-              125.74,
-              122.15,
-              117.65,
-              120.45,
-              125.54,
-              126.76,
-              128.95,
-              128.57,
-              127.21,
-              129.35,
-              130.71,
-              128.76,
-              129.68,
-              130.9,
-              129.37,
-              128.06,
-              128.61,
-              129.53,
-              129.39,
-              129.54,
-              130.48
-            ],
-            "newsCount": 1,
-            "sentiment": 0.451,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 5,
-            "movement": "NEW",
-            "heldSessions": 1,
             "ticker": "OKE",
             "name": "ONEOK INC /NEW/",
             "market": "US",
@@ -481,95 +391,7 @@
             ]
           },
           {
-            "rank": 6,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "TRGP",
-            "name": "Targa Resources Corp.",
-            "market": "US",
-            "sector": "Utilities",
-            "currency": "USD",
-            "price": 297.77,
-            "changePct": 7.13,
-            "score": 73.2,
-            "rawZ": 1.39,
-            "completeness": 1,
-            "riskGauge": 2,
-            "entry": {
-              "low": 295.56,
-              "high": 301.3
-            },
-            "stop": 284.54,
-            "targets": {
-              "conservative": 306.59,
-              "base": 313.65,
-              "bull": 324.23
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "Targa Resources Announces 20-Year ExxonMobil Agreements Plus 1 related story.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 2.005,
-                "z": 1.934
-              },
-              "gapQuality": {
-                "raw": 0.53,
-                "z": 3
-              },
-              "newsSentiment": {
-                "raw": 0,
-                "z": -1.161
-              },
-              "volatilityExpansion": {
-                "raw": 1.113,
-                "z": 3
-              },
-              "trendPosition": {
-                "raw": 0.991,
-                "z": 0.918
-              }
-            },
-            "sparkline": [
-              276.57,
-              271.75,
-              272.08,
-              278.1,
-              280.29,
-              276.86,
-              278.96,
-              281.59,
-              281.03,
-              278.91,
-              283.12,
-              284.25,
-              280.02,
-              266.39,
-              260.43,
-              263.44,
-              267.09,
-              270.37,
-              264.6,
-              262.98,
-              260.11,
-              268.23,
-              256.87,
-              266.21,
-              265.45,
-              268.67,
-              266.88,
-              275.79,
-              277.94,
-              297.77
-            ],
-            "newsCount": 1,
-            "sentiment": 0,
-            "flags": []
-          },
-          {
-            "rank": 7,
+            "rank": 5,
             "movement": "NEW",
             "heldSessions": 1,
             "ticker": "XOM",
@@ -659,92 +481,274 @@
             ]
           },
           {
-            "rank": 8,
+            "rank": 6,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "TGT",
-            "name": "TARGET CORP",
+            "ticker": "CRM",
+            "name": "Salesforce, Inc.",
             "market": "US",
-            "sector": "Consumer Discretionary",
+            "sector": "Information Technology",
             "currency": "USD",
-            "price": 152.48,
-            "changePct": 0.97,
-            "score": 69.7,
-            "rawZ": 1.179,
-            "completeness": 1,
-            "riskGauge": 2,
+            "price": 196.14,
+            "changePct": 2.71,
+            "score": 70.4,
+            "rawZ": 1.224,
+            "completeness": 0.8,
+            "riskGauge": 4,
             "entry": {
-              "low": 151.54,
-              "high": 153.99
+              "low": 194.13,
+              "high": 199.36
             },
-            "stop": 146.81,
+            "stop": 184.08,
             "targets": {
-              "conservative": 156.26,
-              "base": 159.28,
-              "bull": 163.81
+              "conservative": 204.18,
+              "base": 210.61,
+              "bull": 220.25
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
             "maxHoldSessions": 5,
-            "catalyst": "Iran reportedly weighs attacks on U.S. targets in Europe as UAE severs trade with Tehran Plus 11 related stories.",
+            "catalyst": "Why Salesforce Stock Rallied Today Plus 1 related story.",
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 1.362,
-                "z": -0.238
+                "raw": null,
+                "z": null
               },
               "gapQuality": {
-                "raw": 0.231,
+                "raw": 0.279,
                 "z": 3
               },
               "newsSentiment": {
-                "raw": 0.563,
-                "z": 2.605
+                "raw": 0.396,
+                "z": 0.899
               },
               "volatilityExpansion": {
                 "raw": 0,
                 "z": 0
               },
               "trendPosition": {
-                "raw": 0.958,
-                "z": 0.865
+                "raw": 0.734,
+                "z": 0.511
               }
             },
             "sparkline": [
-              131.41,
-              131.26,
-              134.11,
-              133.74,
-              132.98,
-              137.24,
-              139.14,
-              138.54,
-              138.53,
-              137.43,
-              136.87,
-              133.46,
-              135.74,
-              139.27,
-              143.1,
-              144.79,
-              143.41,
-              143.39,
-              148.21,
-              146.98,
-              146.57,
-              145.96,
-              148.56,
-              150.86,
-              151.13,
-              154,
-              155.51,
-              154.48,
-              151.01,
-              152.48
+              166.58,
+              162.5,
+              163.32,
+              171.22,
+              167.56,
+              167,
+              172.68,
+              170.77,
+              173.79,
+              170.06,
+              163,
+              156.93,
+              163.66,
+              173.6,
+              181.5,
+              188.38,
+              180.71,
+              184.02,
+              185.95,
+              190.99,
+              192.98,
+              186.77,
+              192.74,
+              197.51,
+              197.47,
+              193.32,
+              201.37,
+              196.21,
+              190.97,
+              196.14
             ],
-            "newsCount": 4,
-            "sentiment": 0.563,
-            "flags": []
+            "newsCount": 1,
+            "sentiment": 0.396,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 7,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "DLTR",
+            "name": "DOLLAR TREE, INC.",
+            "market": "US",
+            "sector": "Consumer Discretionary",
+            "currency": "USD",
+            "price": 130.48,
+            "changePct": 0.73,
+            "score": 70.2,
+            "rawZ": 1.21,
+            "completeness": 0.8,
+            "riskGauge": 2,
+            "entry": {
+              "low": 129.57,
+              "high": 131.93
+            },
+            "stop": 125.04,
+            "targets": {
+              "conservative": 134.11,
+              "base": 137.01,
+              "bull": 141.36
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Dollar Tree climbs after Jefferies upgrades stock on improving traffic",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": null,
+                "z": null
+              },
+              "gapQuality": {
+                "raw": 0.266,
+                "z": 3
+              },
+              "newsSentiment": {
+                "raw": 0.395,
+                "z": 0.895
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.698,
+                "z": 0.455
+              }
+            },
+            "sparkline": [
+              123.61,
+              120.92,
+              124.91,
+              126.38,
+              124.56,
+              127.03,
+              128.45,
+              125.94,
+              126.38,
+              125.74,
+              122.15,
+              117.65,
+              120.45,
+              125.54,
+              126.76,
+              128.95,
+              128.57,
+              127.21,
+              129.35,
+              130.71,
+              128.76,
+              129.68,
+              130.9,
+              129.37,
+              128.06,
+              128.61,
+              129.53,
+              129.39,
+              129.54,
+              130.48
+            ],
+            "newsCount": 1,
+            "sentiment": 0.395,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 8,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "MRK",
+            "name": "Merck & Co., Inc.",
+            "market": "US",
+            "sector": "Health Care",
+            "currency": "USD",
+            "price": 135.17,
+            "changePct": -0.59,
+            "score": 68.4,
+            "rawZ": 1.103,
+            "completeness": 0.8,
+            "riskGauge": 2,
+            "entry": {
+              "low": 134.36,
+              "high": 136.46
+            },
+            "stop": 130.31,
+            "targets": {
+              "conservative": 138.41,
+              "base": 141,
+              "bull": 144.88
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Moderna, Merck cancer vaccine shows promise in late-stage trial; Moderna stock soars 90% Plus 1 related story.",
+            "catalystCluster": "c0",
+            "factors": {
+              "relativeVolume": {
+                "raw": null,
+                "z": null
+              },
+              "gapQuality": {
+                "raw": 0.107,
+                "z": 1.108
+              },
+              "newsSentiment": {
+                "raw": 0.712,
+                "z": 2.154
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.915,
+                "z": 0.798
+              }
+            },
+            "sparkline": [
+              125.99,
+              125.07,
+              123.54,
+              124.03,
+              120.78,
+              123.61,
+              127.63,
+              127.5,
+              124.4,
+              126.26,
+              127.47,
+              130.48,
+              131.07,
+              130.76,
+              131.82,
+              130.36,
+              129.79,
+              130.2,
+              127.77,
+              128,
+              128.33,
+              128.37,
+              128.58,
+              130.92,
+              130.42,
+              132.92,
+              135.55,
+              135.84,
+              135.97,
+              135.17
+            ],
+            "newsCount": 2,
+            "sentiment": 0.712,
+            "flags": [
+              "partial_data"
+            ]
           },
           {
             "rank": 9,
@@ -840,91 +844,89 @@
             "rank": 10,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "RBA",
-            "name": "RB GLOBAL INC.",
+            "ticker": "TGT",
+            "name": "TARGET CORP",
             "market": "US",
-            "sector": null,
+            "sector": "Consumer Discretionary",
             "currency": "USD",
-            "price": 85.76,
-            "changePct": 4.45,
-            "score": 67,
-            "rawZ": 1.022,
-            "completeness": 0.8,
-            "riskGauge": 4,
+            "price": 152.48,
+            "changePct": 0.97,
+            "score": 67.6,
+            "rawZ": 1.056,
+            "completeness": 1,
+            "riskGauge": 2,
             "entry": {
-              "low": 84.83,
-              "high": 87.25
+              "low": 151.54,
+              "high": 153.99
             },
-            "stop": 80.18,
+            "stop": 146.81,
             "targets": {
-              "conservative": 89.48,
-              "base": 92.45,
-              "bull": 96.91
+              "conservative": 156.26,
+              "base": 159.28,
+              "bull": 163.81
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
             "maxHoldSessions": 5,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalyst": "Target hikes outlook as sales rebound and huge tariff refund boosts bottom line Plus 11 related stories.",
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 2.779,
-                "z": 3
+                "raw": 1.362,
+                "z": -0.238
               },
               "gapQuality": {
-                "raw": 0.099,
-                "z": 0.987
+                "raw": 0.231,
+                "z": 3
               },
               "newsSentiment": {
-                "raw": null,
-                "z": null
+                "raw": 0.671,
+                "z": 1.99
               },
               "volatilityExpansion": {
                 "raw": 0,
                 "z": 0
               },
               "trendPosition": {
-                "raw": -0.78,
-                "z": -1.865
+                "raw": 0.958,
+                "z": 0.865
               }
             },
             "sparkline": [
-              111.09,
-              111.42,
-              108.13,
-              108.78,
-              109.16,
-              111.32,
-              113.14,
-              111.65,
-              110.59,
-              110.53,
-              110.51,
-              109.16,
-              111.59,
-              116.35,
-              116.59,
-              115.2,
-              110.01,
-              109.74,
-              112.22,
-              111.06,
-              95.63,
-              92.67,
-              94.72,
-              93.82,
-              89.63,
-              86.46,
-              86.41,
-              84.26,
-              82.11,
-              85.76
+              131.41,
+              131.26,
+              134.11,
+              133.74,
+              132.98,
+              137.24,
+              139.14,
+              138.54,
+              138.53,
+              137.43,
+              136.87,
+              133.46,
+              135.74,
+              139.27,
+              143.1,
+              144.79,
+              143.41,
+              143.39,
+              148.21,
+              146.98,
+              146.57,
+              145.96,
+              148.56,
+              150.86,
+              151.13,
+              154,
+              155.51,
+              154.48,
+              151.01,
+              152.48
             ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
+            "newsCount": 6,
+            "sentiment": 0.671,
+            "flags": []
           }
         ],
         "justMissed": []
@@ -1199,7 +1201,7 @@
               205.74
             ],
             "newsCount": 1,
-            "sentiment": 0.204,
+            "sentiment": 0.17,
             "flags": []
           },
           {
@@ -1375,7 +1377,7 @@
               1225.73
             ],
             "newsCount": 1,
-            "sentiment": 0.169,
+            "sentiment": 0.139,
             "flags": []
           },
           {
@@ -2616,7 +2618,7 @@
               "Revenue growth falls below zero year-over-year for two quarters"
             ],
             "maxHoldSessions": 504,
-            "catalyst": "Netflix Stock Is Cheap and It Has More Than 70% Upside Potential Here Plus 5 related stories.",
+            "catalyst": "Netflix Stock Is Cheap and It Has More Than 70% Upside Potential Here Plus 4 related stories.",
             "catalystCluster": null,
             "factors": {
               "growthQuality": {
@@ -2708,7 +2710,7 @@
               "Revenue growth falls below zero year-over-year for two quarters"
             ],
             "maxHoldSessions": 504,
-            "catalyst": "Jim Cramer Breaks Down McDonald’s (MCD) Q2 Earnings and Execution Flaws",
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
             "catalystCluster": null,
             "factors": {
               "growthQuality": {
@@ -3003,7 +3005,7 @@
               "Share count grows more than 2% per year for three consecutive years"
             ],
             "maxHoldSessions": 2520,
-            "catalyst": "D-Wave Quantum vs. Microsoft: Which Is the Better Quantum Computing Stock to Own for the Next 5 Years? Plus 11 related stories.",
+            "catalyst": "D-Wave Quantum vs. Microsoft: Which Is the Better Quantum Computing Stock to Own for the Next 5 Years? Plus 10 related stories.",
             "catalystCluster": null,
             "factors": {
               "moatStrength": {
@@ -3060,7 +3062,7 @@
               481.63
             ],
             "newsCount": 2,
-            "sentiment": 0.414,
+            "sentiment": 0.374,
             "flags": []
           },
           {
@@ -3658,7 +3660,7 @@
               "Share count grows more than 2% per year for three consecutive years"
             ],
             "maxHoldSessions": 2520,
-            "catalyst": "Jim Cramer Breaks Down McDonald’s (MCD) Q2 Earnings and Execution Flaws",
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
             "catalystCluster": null,
             "factors": {
               "moatStrength": {
