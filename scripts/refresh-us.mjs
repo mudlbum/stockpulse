@@ -195,7 +195,28 @@ async function main() {
       fetchedAt: new Date().toISOString(),
     };
   }
-  if (profileNow.length) await saveProfiles(MARKET, profiles);
+  // Re-derive `sector` from the cached SIC on EVERY run, not just for names
+  // fetched this run.
+  //
+  // The SIC is the fact we cache; the sector is a derived value, and the
+  // mapping that derives it is an approximation that will be corrected over
+  // time. Without this, a correction only ever reached companies that happened
+  // to be fetched afterwards — and since a profile is fetched once and never
+  // again, that means never. Reclassifying gas transmission from Utilities to
+  // Energy would have silently applied to nobody.
+  //
+  // It costs one pass over a few hundred cached objects and no network at all.
+  let reclassified = 0;
+  for (const [ticker, rec] of Object.entries(profiles.companies)) {
+    const derived = sectorForSic(rec.sic);
+    if (derived !== rec.sector) {
+      console.log(`[us] reclassified ${ticker} (SIC ${rec.sic}): ${rec.sector ?? 'null'} → ${derived ?? 'null'}`);
+      rec.sector = derived;
+      reclassified++;
+    }
+  }
+  if (reclassified) console.log(`[us] ${reclassified} companies reclassified by the current SIC mapping`);
+  if (profileNow.length || reclassified) await saveProfiles(MARKET, profiles);
 
   for (const s of selected) s.sector = profiles.companies[s.ticker]?.sector ?? null;
   const withSector = selected.filter((s) => s.sector).length;

@@ -99,11 +99,27 @@ jobs:
           else
             npm run brief | tee /tmp/brief.log
           fi
-          if git diff --quiet --exit-code -- src/content/posts; then
+          # Stage first, THEN diff.
+          #
+          # This used to be `git diff --quiet -- src/content/posts`, which does
+          # not see untracked files — and a brief is ALWAYS a new file, never an
+          # edit to an existing one. So the gate asked "did an existing post
+          # change?", the answer was permanently no, and every run printed "no
+          # brief written, a thin day" while the generator had just reported
+          # writing two briefs with 12 and 9 verifiable facts sitting untracked
+          # in the working tree. Five scheduled runs went green and published
+          # nothing.
+          #
+          # `git add` picks up untracked files; `--cached` then compares the
+          # index against HEAD, which is the question actually being asked.
+          git add -A -- src/content/posts
+          if git diff --cached --quiet -- src/content/posts; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No brief written. On a thin day that is the intended outcome."
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Staged:"
+            git diff --cached --name-only -- src/content/posts | sed 's/^/    /'
           fi
 
       # A brief that breaks the schema, the build, or the published-output
@@ -123,7 +139,7 @@ jobs:
         run: |
           git config user.name 'stockpulse-bot'
           git config user.email 'stockpulse-bot@users.noreply.github.com'
-          git add src/content/posts
+          git add -A -- src/content/posts
           git commit -m "post: market brief $(date -u +%Y-%m-%d) [auto-published]"
           for i in 1 2 3; do
             git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && git push && break
@@ -139,7 +155,7 @@ jobs:
           git config user.name 'stockpulse-bot'
           git config user.email 'stockpulse-bot@users.noreply.github.com'
           git checkout -b "$BRANCH"
-          git add src/content/posts
+          git add -A -- src/content/posts
           git commit -m "draft: market brief $(date -u +%Y-%m-%d)"
           git push -u origin "$BRANCH"
           gh pr create \

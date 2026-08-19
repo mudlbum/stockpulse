@@ -44,7 +44,7 @@ npm install
 # Offline: seed fixtures, run the real pipeline, validate the output (~2s)
 npm run smoke
 
-# Unit tests (114)
+# Unit tests (118)
 npm test
 
 # Build (both base paths must pass)
@@ -185,6 +185,19 @@ Recorded here because each cost real debugging time and none is obvious:
 - **A single stale headline must shrink toward neutral.** The weighted mean is
   scale-invariant, so without an evidence shrink one 36-hour-old story scores
   identically to a fresh primary filing.
+- **`git diff` does not see untracked files.** A generated post is always a NEW
+  file, so `git diff --quiet -- src/content/posts` asked "did an existing post
+  change?" — permanently no. Five scheduled brief runs went green printing "no
+  brief written, a thin day" while two briefs with 12 and 9 verifiable facts sat
+  untracked in the working tree. Stage first, then `git diff --cached`.
+- **Headline similarity cannot tell "same story" from "same template".** Wire
+  services publish `<COMPANY> (<TICKER>) Q2 2026 Earnings Call Transcript`
+  hundreds of times a quarter; the template words dominate the token set. That
+  merged 62 unrelated companies into one cluster which then ranked as the day's
+  best-corroborated story. Two items that both name companies may only cluster
+  if they name a company in common, and a cluster's tickers are the
+  INTERSECTION of its members' — union let a Duolingo headline claim it moved
+  Apple.
 - **A workflow that dispatches another workflow needs `actions: write`.**
   `contents: write` is not enough; the dispatch returns 403 "Resource not
   accessible by integration". Ours ended in `|| true`, so the refresh committed
@@ -202,7 +215,7 @@ Recorded here because each cost real debugging time and none is obvious:
 
 | Command | Covers |
 | --- | --- |
-| `npm test` | 114 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering, SIC→sector |
+| `npm test` | 118 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering, SIC→sector |
 | `npm run smoke` | 2,241 end-to-end checks against the real pipeline |
 | `npm run audit` | built output: base paths, SEO, a11y, links, compliance notices |
 | `npm run contrast` | WCAG AA on 88 colour pairs in both themes |

@@ -160,7 +160,7 @@ function money(v, currency) {
  * Assemble the brief body from computed facts.
  * Returns `null` when there is not enough substance to justify a page.
  */
-function composeBrief({ market, lang, rankings, sectors, news, performance }) {
+function composeBrief({ market, lang, rankings, sectors, news, performance, marketTickers }) {
   const asOf = rankings.asOf?.[market];
   const regime = rankings.regime?.[market];
   const boards = rankings.boards?.[market] ?? {};
@@ -267,7 +267,23 @@ function composeBrief({ market, lang, rankings, sectors, news, performance }) {
   // ── corroborated news clusters ───────────────────────────────────────────
   // Only clusters covered by 2+ independent outlets. A single outlet's headline
   // is not a market event, and repeating one is aggregation without curation.
-  const clusters = (news?.clusters ?? []).filter((c) => c.outlets >= 2).slice(0, 3);
+  //
+  // Two filters, both load-bearing for the heading above to be true:
+  //
+  //   1. The cluster must map to at least one ticker. An unmapped headline
+  //      moved no name in this universe, so listing it under "stories moving
+  //      more than one name" asserts something the data does not support.
+  //   2. At least one of those tickers must be in THIS market. There was no
+  //      market filter at all, so a US brief led with an SK hynix story
+  //      (034730) — a Korean ticker, in an English brief about the US close.
+  //
+  // A brief with no qualifying cluster simply omits the section, which is the
+  // honest outcome and already how every other section behaves.
+  const clusters = (news?.clusters ?? [])
+    .filter((c) => c.outlets >= 2)
+    .map((c) => ({ ...c, tickers: (c.tickers ?? []).filter((tk) => marketTickers.has(tk)) }))
+    .filter((c) => c.tickers.length > 0)
+    .slice(0, 3);
   if (clusters.length) {
     push(lang === 'en' ? `\n## Stories moving more than one name\n` : `\n## 여러 종목을 움직인 뉴스\n`);
     push(lang === 'en'
@@ -370,6 +386,14 @@ async function main() {
     return;
   }
 
+  // Ticker → market membership, read from the published universes. Needed to
+  // keep one market's headlines out of the other market's brief.
+  const tickersByMarket = {};
+  for (const m of ['US', 'KR']) {
+    const uni = await readJson(path.join(SRC_DATA, `universe-${m.toLowerCase()}.json`), null);
+    tickersByMarket[m] = new Set((uni?.tickers ?? []).map((x) => x.ticker));
+  }
+
   const written = [];
   const skipped = [];
 
@@ -377,7 +401,10 @@ async function main() {
   // difference between "automation that adds value" and scaled content abuse.
   for (const market of ['US', 'KR']) {
     const lang = market === 'KR' ? 'ko' : 'en';
-    const built = composeBrief({ market, lang, rankings, sectors, news, performance });
+    const built = composeBrief({
+      market, lang, rankings, sectors, news, performance,
+      marketTickers: tickersByMarket[market] ?? new Set(),
+    });
 
     if (!built) {
       skipped.push(

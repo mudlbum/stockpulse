@@ -390,3 +390,53 @@ test('hosts are throttled independently', () => {
   assert.equal(reserveSlot('query1.finance.yahoo.com', now), now,
     'one slow host must not delay another');
 });
+
+test('a headline template does not merge different companies into one story', () => {
+  // Live failure this pins: wire services publish
+  // "<COMPANY> (<TICKER>) Q2 2026 Earnings Call Transcript" hundreds of times a
+  // quarter. The template words dominate the token set, so text similarity
+  // merged 62 unrelated companies into one cluster — which then ranked as the
+  // day's best-corroborated story in the published market brief.
+  const items = [
+    { title: 'AAPL (AAPL) Q2 2026 Earnings Call Transcript', publishedAt: '2026-08-15T05:00:00Z', sourceId: 'a', tickers: ['AAPL'] },
+    { title: 'MSFT (MSFT) Q2 2026 Earnings Call Transcript', publishedAt: '2026-08-15T04:00:00Z', sourceId: 'b', tickers: ['MSFT'] },
+    { title: 'NVDA (NVDA) Q2 2026 Earnings Call Transcript', publishedAt: '2026-08-15T03:00:00Z', sourceId: 'c', tickers: ['NVDA'] },
+  ];
+  const clusters = clusterNews(items);
+  assert.equal(clusters.length, 3, `three companies, three stories — got ${clusters.length}`);
+  for (const c of clusters) {
+    assert.equal(c.size, 1);
+    assert.equal(c.outlets, 1, 'a template collision must not inflate the corroboration count');
+  }
+});
+
+test('the same company across outlets still clusters', () => {
+  // The complement: tightening must not break real corroboration.
+  const items = [
+    { title: 'Nvidia beats estimates and raises guidance', publishedAt: '2026-08-15T05:00:00Z', sourceId: 'a', tickers: ['NVDA'] },
+    { title: 'Nvidia raises guidance after beating estimates', publishedAt: '2026-08-15T04:00:00Z', sourceId: 'b', tickers: ['NVDA'] },
+    { title: 'Nvidia beats estimates, guidance raised', publishedAt: '2026-08-15T03:00:00Z', sourceId: 'c', tickers: ['NVDA'] },
+  ];
+  const clusters = clusterNews(items);
+  assert.equal(clusters[0].size, 3);
+  assert.equal(clusters[0].outlets, 3);
+  assert.deepEqual(clusters[0].tickers, ['NVDA']);
+});
+
+test('a cluster never claims a ticker that not every member is about', () => {
+  // "Why Duolingo Stock Popped Today" was published carrying the tickers WDC
+  // and AAPL, inherited from other members of a template cluster. The displayed
+  // headline and the displayed tickers described different companies.
+  const items = [
+    { title: 'Why Western Digital Stock Popped Today', publishedAt: '2026-08-15T05:00:00Z', sourceId: 'a', tickers: ['WDC'] },
+    { title: 'Why Duolingo Stock Popped Today', publishedAt: '2026-08-15T04:00:00Z', sourceId: 'b', tickers: [] },
+  ];
+  const clusters = clusterNews(items);
+  for (const c of clusters) {
+    for (const tk of c.tickers) {
+      const everyMemberMentions = c.members.every((m) => (m.tickers ?? []).includes(tk));
+      assert.ok(everyMemberMentions,
+        `cluster "${c.headline}" claims ${tk} but not every member is about it`);
+    }
+  }
+});

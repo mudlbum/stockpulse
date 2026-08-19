@@ -594,3 +594,24 @@ test('the counting behind structurallyUnavailable matches the published weights'
   assert.ok(reachable('ultra_short') >= MIN_PRESENT.ultra_short);
   assert.ok(reachable('mid_term') < MIN_PRESENT.mid_term);
 });
+
+test('gas transmission is Energy; gas distribution and electric stay Utilities', () => {
+  // Williams, Kinder Morgan, Targa and ONEOK all file under SIC 4922/4923.
+  // SIC files gas transmission in the 49xx utility block; GICS calls midstream
+  // Energy. Leaving them in Utilities charged a pipeline operator against the
+  // utility allowance in the sector cap and compared its margins against Duke
+  // Energy's under sector-neutral scoring. It also contradicted the mapping's
+  // own SIC 4600-4699 (pipelines) → Energy rule for the same activity.
+  assert.equal(sectorForSic(4922), 'Energy');   // WMB, KMI, TRGP
+  assert.equal(sectorForSic(4923), 'Energy');   // OKE
+  assert.equal(sectorForSic(4610), 'Energy');   // the pipelines rule it now agrees with
+
+  // The boundaries either side must not move.
+  assert.equal(sectorForSic(4911), 'Utilities'); // electric services
+  assert.equal(sectorForSic(4921), 'Utilities');
+  assert.equal(sectorForSic(4924), 'Utilities'); // local gas distribution — a real LDC
+  assert.equal(sectorForSic(4931), 'Utilities');
+  assert.equal(sectorForSic(4932), 'Utilities');
+  assert.equal(sectorForSic(4941), 'Utilities'); // water
+  assert.equal(sectorForSic(4953), 'Industrials'); // refuse systems
+});

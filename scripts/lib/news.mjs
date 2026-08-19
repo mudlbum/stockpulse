@@ -303,9 +303,37 @@ export function clusterNews(items, { threshold = 0.34, maxClusters = 200 } = {})
     const toks = tokensFor(item.title);
     if (toks.size < 2) continue;
 
+    // Two headlines only join if they are BOTH textually similar AND about at
+    // least one company in common.
+    //
+    // Text similarity alone cannot tell "the same story" from "the same
+    // headline template". Wire services publish
+    // "<COMPANY> (<TICKER>) Q2 2026 Earnings Call Transcript" hundreds of times
+    // a quarter and "Why <COMPANY> Stock Popped Today" every session; the
+    // template words dominate the token set and the one distinguishing token —
+    // the company — is a small fraction of it. Live, this produced a cluster of
+    // SIZE 62 whose members were 62 unrelated companies' earnings transcripts,
+    // ranked as the day's best-corroborated story, and a cluster headlined
+    // "Why Duolingo Stock Popped Today" carrying the tickers WDC and AAPL.
+    //
+    // The brief publishes these under "Stories moving more than one name", so a
+    // template collision becomes a false factual claim about which stocks a
+    // story moved. Requiring a shared ticker is what makes the heading true:
+    // a cluster is a story about a company, and items that name no company in
+    // the universe cannot corroborate anything.
+    const mine = new Set(item.tickers ?? []);
     let best = null;
     let bestScore = 0;
     for (const c of clusters) {
+      // The rule applies only when BOTH sides name companies. A macro story
+      // ("Fed signals a September cut") legitimately has no ticker and must
+      // still cluster across outlets on text alone; what must not happen is two
+      // items about DIFFERENT companies merging because they share a template.
+      if (mine.size && c.tickers.size) {
+        let shares = false;
+        for (const tk of mine) { if (c.tickers.has(tk)) { shares = true; break; } }
+        if (!shares) continue;
+      }
       let memberBest = 0;
       for (const m of c.members) {
         const s = similarity(toks, m._tokens);
@@ -320,12 +348,16 @@ export function clusterNews(items, { threshold = 0.34, maxClusters = 200 } = {})
     const withTokens = { ...item, _tokens: toks };
     if (best && bestScore >= threshold) {
       best.members.push(withTokens);
-      for (const t of item.tickers ?? []) best.tickers.add(t);
+      // Intersect, do not union. A cluster's ticker list is the set of names
+      // EVERY member is about; unioning let one member's tickers be attributed
+      // to another member's headline, which is how a Duolingo story came to
+      // claim it moved Apple.
+      for (const tk of [...best.tickers]) if (!mine.has(tk)) best.tickers.delete(tk);
     } else if (clusters.length < maxClusters) {
       clusters.push({
         id: `c${clusters.length}`,
         members: [withTokens],
-        tickers: new Set(item.tickers ?? []),
+        tickers: new Set(mine),
       });
     }
   }

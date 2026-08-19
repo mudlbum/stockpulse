@@ -761,6 +761,12 @@ Applied after scoring, before publication:
 3. **Max 4 names sharing a single dominant news catalyst cluster** (e.g. one
    policy announcement moving an entire sub-industry).
 
+   A cluster is only formed from headlines that name a company in common, and
+   its ticker list is the **intersection** across its members, not the union.
+   Text similarity alone merges headline *templates* — 62 unrelated companies'
+   earnings-call transcripts scored as one story — which would both inflate the
+   corroboration count and attach one company's catalyst to another's name.
+
 Displaced names appear on the "just missed" list with the constraint that
 displaced them stated explicitly.
 

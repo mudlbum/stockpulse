@@ -165,7 +165,20 @@ const RANGES = [
 
   // ── Utilities ─────────────────────────────────────────────────────────────
   [4950, 4959, IND], // sanitary services — waste management is Industrials
-  [4900, 4949, UTL],
+  // Natural gas TRANSMISSION is midstream, and GICS calls midstream Energy.
+  // SIC files it in the 49xx utility block, which put Williams, Kinder Morgan,
+  // Targa and ONEOK in Utilities alongside regulated electric utilities — so
+  // the sector cap counted a pipeline operator against the utility allowance,
+  // and sector-neutral scoring compared its margins to Duke Energy's.
+  //
+  // It also contradicted a rule already made two blocks up: SIC 4600-4699
+  // (pipelines) maps to Energy. Gas transmission is the same activity.
+  //
+  // 4924+ (local gas DISTRIBUTION) stays Utilities: those are rate-regulated
+  // LDCs, which is genuinely what GICS means by a gas utility.
+  [4922, 4923, EN],
+  [4900, 4921, UTL],
+  [4924, 4949, UTL],
   [4960, 4999, UTL],
 
   // ── Wholesale ─────────────────────────────────────────────────────────────
