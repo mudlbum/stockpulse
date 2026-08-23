@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-23T04:36:28.038Z",
+  "generatedAt": "2026-08-23T08:29:21.581Z",
   "methodologyVersion": "1.0.0",
   "asOf": {
     "US": "2026-08-21",
@@ -32,6 +32,94 @@
         "rows": [
           {
             "rank": 1,
+            "movement": 5,
+            "heldSessions": 3,
+            "ticker": "MSTR",
+            "name": "Strategy Inc",
+            "market": "US",
+            "sector": "Financials",
+            "currency": "USD",
+            "price": 119.25,
+            "changePct": 6.1,
+            "score": 88.3,
+            "rawZ": 2.296,
+            "completeness": 1,
+            "riskGauge": 5,
+            "entry": {
+              "low": 117.56,
+              "high": 121.96
+            },
+            "stop": 109.08,
+            "targets": {
+              "conservative": 126.03,
+              "base": 131.45,
+              "bull": 139.58
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "5 big analyst AI moves: Apple upgraded on foldable iPhone push, new AI strategy Plus 9 related stories.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 3.023,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0.5,
+                "z": 3
+              },
+              "newsSentiment": {
+                "raw": 0.504,
+                "z": 2.275
+              },
+              "volatilityExpansion": {
+                "raw": 0.807,
+                "z": 3
+              },
+              "trendPosition": {
+                "raw": 0.226,
+                "z": -0.16
+              }
+            },
+            "sparkline": [
+              92.1,
+              97.58,
+              97.47,
+              94.03,
+              94.85,
+              97.82,
+              101.95,
+              100.01,
+              93.63,
+              91.67,
+              98.65,
+              96.16,
+              93.33,
+              97.74,
+              93.28,
+              94.86,
+              97.65,
+              98.37,
+              96.85,
+              100.01,
+              97.33,
+              96.09,
+              94.83,
+              97.1,
+              93.04,
+              97.68,
+              92.52,
+              104.25,
+              112.39,
+              119.25
+            ],
+            "newsCount": 4,
+            "sentiment": 0.504,
+            "flags": []
+          },
+          {
+            "rank": 2,
             "movement": "NEW",
             "heldSessions": 1,
             "ticker": "FCX",
@@ -119,94 +207,6 @@
             "flags": [
               "partial_data"
             ]
-          },
-          {
-            "rank": 2,
-            "movement": 4,
-            "heldSessions": 3,
-            "ticker": "MSTR",
-            "name": "Strategy Inc",
-            "market": "US",
-            "sector": "Financials",
-            "currency": "USD",
-            "price": 119.25,
-            "changePct": 6.1,
-            "score": 84.8,
-            "rawZ": 2.087,
-            "completeness": 1,
-            "riskGauge": 5,
-            "entry": {
-              "low": 117.56,
-              "high": 121.96
-            },
-            "stop": 109.08,
-            "targets": {
-              "conservative": 126.03,
-              "base": 131.45,
-              "bull": 139.58
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "Six investors reveal the biggest market risks — and one strategy they agree on Plus 8 related stories.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 3.023,
-                "z": 3
-              },
-              "gapQuality": {
-                "raw": 0.5,
-                "z": 3
-              },
-              "newsSentiment": {
-                "raw": 0.381,
-                "z": 1.232
-              },
-              "volatilityExpansion": {
-                "raw": 0.807,
-                "z": 3
-              },
-              "trendPosition": {
-                "raw": 0.226,
-                "z": -0.16
-              }
-            },
-            "sparkline": [
-              92.1,
-              97.58,
-              97.47,
-              94.03,
-              94.85,
-              97.82,
-              101.95,
-              100.01,
-              93.63,
-              91.67,
-              98.65,
-              96.16,
-              93.33,
-              97.74,
-              93.28,
-              94.86,
-              97.65,
-              98.37,
-              96.85,
-              100.01,
-              97.33,
-              96.09,
-              94.83,
-              97.1,
-              93.04,
-              97.68,
-              92.52,
-              104.25,
-              112.39,
-              119.25
-            ],
-            "newsCount": 3,
-            "sentiment": 0.381,
-            "flags": []
           },
           {
             "rank": 3,
@@ -759,8 +759,8 @@
             "currency": "USD",
             "price": 362.86,
             "changePct": 5.14,
-            "score": 70.3,
-            "rawZ": 1.218,
+            "score": 70.9,
+            "rawZ": 1.257,
             "completeness": 1,
             "riskGauge": 4,
             "entry": {
@@ -788,8 +788,8 @@
                 "z": 1.996
               },
               "newsSentiment": {
-                "raw": 0.45,
-                "z": 1.564
+                "raw": 0.414,
+                "z": 1.757
               },
               "volatilityExpansion": {
                 "raw": 0.177,
@@ -833,7 +833,7 @@
               362.86
             ],
             "newsCount": 5,
-            "sentiment": 0.45,
+            "sentiment": 0.414,
             "flags": []
           },
           {
@@ -2333,7 +2333,7 @@
               275.3
             ],
             "newsCount": 1,
-            "sentiment": 0.125,
+            "sentiment": 0.103,
             "flags": [
               "partial_data"
             ]
@@ -2370,7 +2370,7 @@
               "Revenue growth falls below zero year-over-year for two quarters"
             ],
             "maxHoldSessions": 504,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalyst": "Costco Stock: Higher Oil Prices are Bringing Customers to Costco",
             "catalystCluster": null,
             "factors": {
               "growthQuality": {
@@ -2997,7 +2997,7 @@
               275.3
             ],
             "newsCount": 1,
-            "sentiment": 0.125,
+            "sentiment": 0.103,
             "flags": [
               "partial_data"
             ]
@@ -3130,8 +3130,8 @@
               "Share count grows more than 2% per year for three consecutive years"
             ],
             "maxHoldSessions": 2520,
-            "catalyst": "Up almost 20%, Here’s Why Microsoft Stock Could Rise Even Further Plus 7 related stories.",
-            "catalystCluster": "c67",
+            "catalyst": "Microsoft vs. Broadcom: One Has 85% Upside, But I'm Picking the Other Plus 8 related stories.",
+            "catalystCluster": "c93",
             "factors": {
               "moatStrength": {
                 "raw": 0.878,
@@ -3186,8 +3186,8 @@
               481.15,
               483.24
             ],
-            "newsCount": 0,
-            "sentiment": null,
+            "newsCount": 1,
+            "sentiment": 0.115,
             "flags": []
           },
           {
