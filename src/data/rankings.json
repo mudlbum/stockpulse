@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T03:29:20.775Z",
+  "generatedAt": "2026-08-29T10:51:00.238Z",
   "methodologyVersion": "1.0.0",
   "asOf": {
     "US": "2026-08-29",
@@ -134,7 +134,7 @@
             "score": 77.9,
             "rawZ": 1.676,
             "completeness": 0.8,
-            "riskGauge": 3,
+            "riskGauge": 4,
             "entry": {
               "low": 16.43,
               "high": 16.86
@@ -212,6 +212,94 @@
           },
           {
             "rank": 3,
+            "movement": 7,
+            "heldSessions": 4,
+            "ticker": "MRNA",
+            "name": "Moderna, Inc.",
+            "market": "US",
+            "sector": "Health Care",
+            "currency": "USD",
+            "price": 137.99,
+            "changePct": -3.35,
+            "score": 72.4,
+            "rawZ": 1.344,
+            "completeness": 1,
+            "riskGauge": 5,
+            "entry": {
+              "low": 134.33,
+              "high": 143.85
+            },
+            "stop": 116.03,
+            "targets": {
+              "conservative": 152.63,
+              "base": 164.35,
+              "bull": 181.92
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Success after a century of failures: Inside Moderna and Merck’s cancer vaccine breakthrough Plus 2 related stories.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 4.797,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0,
+                "z": -0.674
+              },
+              "newsSentiment": {
+                "raw": 0.419,
+                "z": 2.269
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.95,
+                "z": 0.833
+              }
+            },
+            "sparkline": [
+              59.49,
+              59.66,
+              58.07,
+              57.02,
+              54.07,
+              55.63,
+              55.81,
+              54.49,
+              57.92,
+              54.82,
+              55.14,
+              56.99,
+              56.26,
+              53.86,
+              59.17,
+              59.81,
+              60.57,
+              63.67,
+              63.65,
+              63.32,
+              64.46,
+              62.96,
+              174.38,
+              133.32,
+              145.13,
+              138.89,
+              158.83,
+              149.66,
+              142.77,
+              137.99
+            ],
+            "newsCount": 2,
+            "sentiment": 0.419,
+            "flags": []
+          },
+          {
+            "rank": 4,
             "movement": "NEW",
             "heldSessions": 1,
             "ticker": "PSLV",
@@ -299,94 +387,6 @@
             "flags": [
               "partial_data"
             ]
-          },
-          {
-            "rank": 4,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "ULTA",
-            "name": "Ulta Beauty, Inc.",
-            "market": "US",
-            "sector": "Consumer Discretionary",
-            "currency": "USD",
-            "price": 517.5,
-            "changePct": -4.18,
-            "score": 69.1,
-            "rawZ": 1.147,
-            "completeness": 1,
-            "riskGauge": 2,
-            "entry": {
-              "low": 512.88,
-              "high": 524.89
-            },
-            "stop": 489.78,
-            "targets": {
-              "conservative": 535.98,
-              "base": 550.76,
-              "bull": 572.94
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "Ulta Beauty raises annual forecast after quarterly profit beats estimates Plus 1 related story.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 2.873,
-                "z": 3
-              },
-              "gapQuality": {
-                "raw": 0.054,
-                "z": 0.144
-              },
-              "newsSentiment": {
-                "raw": 0.231,
-                "z": 1.158
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.245,
-                "z": -0.091
-              }
-            },
-            "sparkline": [
-              488.08,
-              489.47,
-              483.52,
-              477.96,
-              475.36,
-              480.51,
-              501.52,
-              508.09,
-              516.73,
-              512.83,
-              534.41,
-              543.86,
-              539.47,
-              538.79,
-              565.15,
-              548.66,
-              541.35,
-              531.89,
-              515.57,
-              510.75,
-              493.33,
-              516.74,
-              527.85,
-              515.14,
-              521.46,
-              538.76,
-              537.22,
-              543.19,
-              540.1,
-              517.5
-            ],
-            "newsCount": 2,
-            "sentiment": 0.231,
-            "flags": []
           },
           {
             "rank": 5,
@@ -669,8 +669,8 @@
             "currency": "USD",
             "price": 205.63,
             "changePct": 1.52,
-            "score": 68.2,
-            "rawZ": 1.092,
+            "score": 67.5,
+            "rawZ": 1.051,
             "completeness": 0.8,
             "riskGauge": 2,
             "entry": {
@@ -698,8 +698,8 @@
                 "z": 0.689
               },
               "newsSentiment": {
-                "raw": 0.603,
-                "z": 3
+                "raw": 0.503,
+                "z": 2.854
               },
               "volatilityExpansion": {
                 "raw": 0,
@@ -743,14 +743,102 @@
               205.63
             ],
             "newsCount": 1,
-            "sentiment": 0.603,
+            "sentiment": 0.503,
             "flags": [
               "partial_data"
             ]
           },
           {
             "rank": 9,
-            "movement": 0,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "ULTA",
+            "name": "Ulta Beauty, Inc.",
+            "market": "US",
+            "sector": "Consumer Discretionary",
+            "currency": "USD",
+            "price": 517.5,
+            "changePct": -4.18,
+            "score": 66.9,
+            "rawZ": 1.014,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 512.88,
+              "high": 524.89
+            },
+            "stop": 489.78,
+            "targets": {
+              "conservative": 535.98,
+              "base": 550.76,
+              "bull": 572.94
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Ulta Beauty raises annual forecast after quarterly profit beats estimates Plus 1 related story.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 2.873,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0.054,
+                "z": 0.144
+              },
+              "newsSentiment": {
+                "raw": 0.166,
+                "z": 0.493
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.245,
+                "z": -0.091
+              }
+            },
+            "sparkline": [
+              488.08,
+              489.47,
+              483.52,
+              477.96,
+              475.36,
+              480.51,
+              501.52,
+              508.09,
+              516.73,
+              512.83,
+              534.41,
+              543.86,
+              539.47,
+              538.79,
+              565.15,
+              548.66,
+              541.35,
+              531.89,
+              515.57,
+              510.75,
+              493.33,
+              516.74,
+              527.85,
+              515.14,
+              521.46,
+              538.76,
+              537.22,
+              543.19,
+              540.1,
+              517.5
+            ],
+            "newsCount": 2,
+            "sentiment": 0.166,
+            "flags": []
+          },
+          {
+            "rank": 10,
+            "movement": -1,
             "heldSessions": 2,
             "ticker": "AFRM",
             "name": "Affirm Holdings, Inc.",
@@ -759,8 +847,8 @@
             "currency": "USD",
             "price": 77.76,
             "changePct": 0.35,
-            "score": 66.7,
-            "rawZ": 1.003,
+            "score": 66.4,
+            "rawZ": 0.986,
             "completeness": 1,
             "riskGauge": 4,
             "entry": {
@@ -788,8 +876,8 @@
                 "z": 0.22
               },
               "newsSentiment": {
-                "raw": 0.137,
-                "z": 0.078
+                "raw": 0.096,
+                "z": -0.004
               },
               "volatilityExpansion": {
                 "raw": 0,
@@ -833,95 +921,7 @@
               77.76
             ],
             "newsCount": 1,
-            "sentiment": 0.137,
-            "flags": []
-          },
-          {
-            "rank": 10,
-            "movement": 0,
-            "heldSessions": 4,
-            "ticker": "MRNA",
-            "name": "Moderna, Inc.",
-            "market": "US",
-            "sector": "Health Care",
-            "currency": "USD",
-            "price": 137.99,
-            "changePct": -3.35,
-            "score": 65.2,
-            "rawZ": 0.911,
-            "completeness": 1,
-            "riskGauge": 5,
-            "entry": {
-              "low": 134.33,
-              "high": 143.85
-            },
-            "stop": 116.03,
-            "targets": {
-              "conservative": 152.63,
-              "base": 164.35,
-              "bull": 181.92
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "Tempus AI (TEM) Jumped on Moderna’s Melanoma Win. Did its $1.5B Personalis Acquisition Just Get Validated? Plus 1 related story.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 4.797,
-                "z": 3
-              },
-              "gapQuality": {
-                "raw": 0,
-                "z": -0.674
-              },
-              "newsSentiment": {
-                "raw": 0.14,
-                "z": 0.105
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.95,
-                "z": 0.833
-              }
-            },
-            "sparkline": [
-              59.49,
-              59.66,
-              58.07,
-              57.02,
-              54.07,
-              55.63,
-              55.81,
-              54.49,
-              57.92,
-              54.82,
-              55.14,
-              56.99,
-              56.26,
-              53.86,
-              59.17,
-              59.81,
-              60.57,
-              63.67,
-              63.65,
-              63.32,
-              64.46,
-              62.96,
-              174.38,
-              133.32,
-              145.13,
-              138.89,
-              158.83,
-              149.66,
-              142.77,
-              137.99
-            ],
-            "newsCount": 1,
-            "sentiment": 0.14,
+            "sentiment": 0.096,
             "flags": []
           }
         ],
@@ -1494,7 +1494,7 @@
             "targetBasis": "atr",
             "thesisInvalidation": null,
             "maxHoldSessions": 45,
-            "catalyst": "Tempus AI (TEM) Jumped on Moderna’s Melanoma Win. Did its $1.5B Personalis Acquisition Just Get Validated? Plus 1 related story.",
+            "catalyst": "Success after a century of failures: Inside Moderna and Merck’s cancer vaccine breakthrough Plus 2 related stories.",
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
@@ -1550,8 +1550,8 @@
               142.77,
               137.99
             ],
-            "newsCount": 1,
-            "sentiment": 0.14,
+            "newsCount": 2,
+            "sentiment": 0.419,
             "flags": []
           },
           {
@@ -2243,7 +2243,7 @@
               "Revenue growth falls below zero year-over-year for two quarters"
             ],
             "maxHoldSessions": 504,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalyst": "Jim Cramer Explained Adobe Inc. (NASDAQ:ADBE)’s Share Price Movement",
             "catalystCluster": null,
             "factors": {
               "growthQuality": {
@@ -2873,7 +2873,7 @@
               513.53
             ],
             "newsCount": 1,
-            "sentiment": 0.13,
+            "sentiment": 0.091,
             "flags": []
           },
           {
@@ -3004,7 +3004,7 @@
               "Share count grows more than 2% per year for three consecutive years"
             ],
             "maxHoldSessions": 2520,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalyst": "Jim Cramer Explained Adobe Inc. (NASDAQ:ADBE)’s Share Price Movement",
             "catalystCluster": null,
             "factors": {
               "moatStrength": {
