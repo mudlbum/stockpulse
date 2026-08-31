@@ -63,6 +63,13 @@ jobs:
       CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL || 'hello@example.com' }}
       US_BOOTSTRAP: ${{ github.event.inputs.bootstrap || '120' }}
       KR_BOOTSTRAP: '90'
+      # Optional. Without it the Korean pipeline runs exactly as before and the
+      # mid-term, long-term and ultra-long Korean boards stay empty, each saying
+      # why. With it, refresh-kr backfills audited statements from the regulator
+      # and those three boards become computable. Secrets are masked in logs,
+      # and an unset secret expands to an empty string, which the script treats
+      # as "not configured" rather than as a bad key.
+      DART_KEY: ${{ secrets.DART_KEY }}
     steps:
       - uses: actions/checkout@v4
 

@@ -11,6 +11,7 @@ import { sentimentLabel } from './lib/sentiment.mjs';
 import { publish, readJson, writeJson, STORE, SRC_DATA } from './lib/store.mjs';
 import { healthReport } from './lib/http.mjs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const MAX_PUBLISHED_ITEMS = 300;
 const RETAIN_HOURS = 72;
@@ -103,7 +104,7 @@ async function main() {
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((err) => {
     console.error('[news] fatal:', err);
     process.exit(1);

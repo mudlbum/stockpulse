@@ -26,6 +26,7 @@ import path from 'node:path';
 import { loadLedger, loadPrices, publish, readJson, writeJson, STORE } from './lib/store.mjs';
 import { atr } from './lib/indicators.mjs';
 import { isNum, median, quantile } from './lib/stats.mjs';
+import { pathToFileURL } from 'node:url';
 
 const COMMISSION_BPS = 10;            // round trip, each side
 const SLIPPAGE_ATR_FRACTION = 0.05;
@@ -429,7 +430,7 @@ const r2 = (x) => (isNum(x) ? Math.round(x * 100) / 100 : null);
 
 export { simulate, statsFor, netOf, mulberry32, maxDrawdown, buildEquityCurve, BOOK_SLOTS };
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((err) => {
     console.error('[audit] fatal:', err);
     process.exit(1);

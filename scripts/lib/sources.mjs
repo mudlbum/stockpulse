@@ -25,11 +25,15 @@
  *   SEC getcurrent  — robots.txt explicitly disallows action=getcurrent. The
  *                     per-company action=getcompany form IS allowed.
  *   DART OpenAPI    — best Korean fundamentals by a wide margin, but needs a
- *                     (free) key. Wired as an optional enhancement, not a
- *                     dependency. See DART_KEY handling in refresh-kr.mjs.
+ *                     (free) key. Implemented below and wired into
+ *                     refresh-kr.mjs as an OPTIONAL enhancement: without
+ *                     DART_KEY the Korean pipeline runs exactly as before, and
+ *                     with it three Korean boards become computable. See
+ *                     scripts/lib/dart.mjs for the account mapping.
  */
 
-import { fetchJson, fetchText, UA_BROWSER, UA_SEC } from './http.mjs';
+import { inflateRawSync } from 'node:zlib';
+import { fetchJson, fetchText, fetchWithRetry, UA_BROWSER, UA_SEC } from './http.mjs';
 
 // ═══════════════════════════════════════════════════════════════════ US ═══
 
@@ -535,4 +539,136 @@ export function splitCsvLine(line) {
   }
   out.push(cur);
   return out.map((s) => s.trim());
+}
+
+// ═════════════════════════════════════════════════════════════════ DART ═══
+//
+// The Korean regulator's OpenAPI. Needs a free key; everything else in this
+// file is keyless. Guarded so the pipeline degrades to its previous behaviour
+// rather than failing when no key is configured.
+
+const DART_BASE = 'https://opendart.fss.or.kr/api';
+
+/**
+ * Minimal ZIP reader — DART returns `corpCode.xml` as a ZIP archive, and a
+ * single-purpose reader is preferable to a dependency for one call a week.
+ *
+ * Reads the CENTRAL DIRECTORY rather than local file headers on purpose. When
+ * an archive is produced by streaming, bit 3 of the general-purpose flag is set
+ * and the local header's sizes are both zero, with the real sizes trailing the
+ * data in a descriptor. A naive local-header reader inflates zero bytes and
+ * returns an empty string — no error, just no companies, which would look
+ * exactly like "DART has no data for you".
+ */
+export function unzipFirstFile(buf) {
+  const EOCD_SIG = 0x06054b50;
+  let eocd = -1;
+  // The comment field can be up to 64KB, so scan back over that window.
+  for (let i = buf.length - 22; i >= Math.max(0, buf.length - 66_000); i--) {
+    if (buf.readUInt32LE(i) === EOCD_SIG) { eocd = i; break; }
+  }
+  if (eocd < 0) throw new Error('not a ZIP archive: no end-of-central-directory record');
+
+  const entries = buf.readUInt16LE(eocd + 10);
+  if (entries < 1) throw new Error('ZIP archive contains no entries');
+  const cdOffset = buf.readUInt32LE(eocd + 16);
+  if (buf.readUInt32LE(cdOffset) !== 0x02014b50) throw new Error('ZIP central directory is malformed');
+
+  const method = buf.readUInt16LE(cdOffset + 10);
+  const compressedSize = buf.readUInt32LE(cdOffset + 20);
+  const nameLen = buf.readUInt16LE(cdOffset + 28);
+  const extraLen = buf.readUInt16LE(cdOffset + 30);
+  const commentLen = buf.readUInt16LE(cdOffset + 32);
+  const localOffset = buf.readUInt32LE(cdOffset + 42);
+  const name = buf.toString('utf8', cdOffset + 46, cdOffset + 46 + nameLen);
+  void extraLen; void commentLen;
+
+  if (buf.readUInt32LE(localOffset) !== 0x04034b50) throw new Error('ZIP local header is malformed');
+  const lNameLen = buf.readUInt16LE(localOffset + 26);
+  const lExtraLen = buf.readUInt16LE(localOffset + 28);
+  const dataStart = localOffset + 30 + lNameLen + lExtraLen;
+  const data = buf.subarray(dataStart, dataStart + compressedSize);
+
+  if (method === 0) return { name, text: data.toString('utf8') };
+  if (method === 8) return { name, text: inflateRawSync(data).toString('utf8') };
+  throw new Error(`unsupported ZIP compression method ${method}`);
+}
+
+/**
+ * [U] Ticker → DART corp_code. One request returns every filer the regulator
+ * knows, so it is fetched rarely and cached in the store.
+ *
+ * `stock_code` is blank for unlisted companies — the large majority of the
+ * file. Only six-digit listed codes are kept, which is what maps onto the KRX
+ * universe.
+ */
+export async function fetchDartCorpCodes(key) {
+  const res = await fetchWithRetry(`${DART_BASE}/corpCode.xml?crtfc_key=${encodeURIComponent(key)}`, {
+    ua: UA_BROWSER, accept: 'application/zip,application/xml,*/*',
+  });
+  const buf = Buffer.from(await res.arrayBuffer());
+
+  // An auth failure comes back as XML with an HTTP 200, not as an error status.
+  if (buf.length > 5 && buf.subarray(0, 5).toString('utf8').startsWith('<?xml')) {
+    const status = /<status>([^<]+)<\/status>/.exec(buf.toString('utf8'))?.[1];
+    const message = /<message>([^<]+)<\/message>/.exec(buf.toString('utf8'))?.[1];
+    throw new Error(`DART corpCode returned XML instead of a ZIP (status ${status ?? '?'}: ${message ?? 'unknown'})`);
+  }
+
+  const { text } = unzipFirstFile(buf);
+  return parseDartCorpCodes(text);
+}
+
+/** Split out from the fetch so it can be tested without a key. */
+export function parseDartCorpCodes(xml) {
+  const out = [];
+  for (const m of String(xml).matchAll(/<list>([\s\S]*?)<\/list>/g)) {
+    const block = m[1];
+    const field = (tag) => {
+      const v = new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`).exec(block)?.[1];
+      return v === undefined ? null : v.trim();
+    };
+    const stockCode = field('stock_code');
+    if (!stockCode || !/^\d{6}$/.test(stockCode)) continue;   // unlisted
+    const corpCode = field('corp_code');
+    if (!corpCode || !/^\d{8}$/.test(corpCode)) continue;
+    out.push({
+      corpCode,
+      ticker: stockCode,
+      name: field('corp_name'),
+      nameEn: field('corp_eng_name'),
+      modifiedAt: field('modify_date'),
+    });
+  }
+  return out;
+}
+
+/**
+ * [U] Full financial statements for one company, one fiscal year, one report.
+ *
+ * `fs_div` is CFS (consolidated) or OFS (individual). Consolidated is the right
+ * basis for equity analysis — it is the economic entity a shareholder owns —
+ * but a company with no subsidiaries files only OFS, so callers fall back.
+ *
+ * DART signals "no data" with status 013 and HTTP 200. That is a legitimate
+ * answer for a year a company had not yet listed, so it returns null rather
+ * than throwing: treating it as an error would abort a backfill on its first
+ * young company.
+ */
+export async function fetchDartStatements(key, { corpCode, year, reprtCode, fsDiv = 'CFS' }) {
+  const url = `${DART_BASE}/fnlttSinglAcntAll.json`
+    + `?crtfc_key=${encodeURIComponent(key)}`
+    + `&corp_code=${encodeURIComponent(corpCode)}`
+    + `&bsns_year=${encodeURIComponent(year)}`
+    + `&reprt_code=${encodeURIComponent(reprtCode)}`
+    + `&fs_div=${encodeURIComponent(fsDiv)}`;
+  const j = await fetchJson(url, { ua: UA_BROWSER });
+
+  if (j?.status === '013') return null;                 // no statement filed
+  if (j?.status && j.status !== '000') {
+    const err = new Error(`DART status ${j.status}: ${j.message ?? 'unknown'}`);
+    err.dartStatus = j.status;
+    throw err;
+  }
+  return Array.isArray(j?.list) ? j.list : [];
 }

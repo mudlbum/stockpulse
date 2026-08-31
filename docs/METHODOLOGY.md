@@ -82,6 +82,29 @@ Source of record: the daily KRX listing snapshot (see `docs/DATA_SOURCES.md`).
 | Administrative flags | Exclude 관리종목, 투자경고, 투자위험, 거래정지 | KRX has already flagged these as hazardous |
 | Price history | ≥ 250 trading days | Same as US |
 
+**Financial statements (optional, requires a DART key).** With `DART_KEY`
+configured the pipeline reads audited statements from the Financial Supervisory
+Service's OpenDART API and maps them onto the same factor vocabulary the US path
+uses, so Korean names are scored by identical models rather than parallel ones.
+
+| Property | Value |
+| --- | --- |
+| Coverage | 2015 onward — the API rejects earlier years |
+| Basis | Consolidated (CFS), falling back to individual (OFS) for filers with no subsidiaries |
+| Point-in-time | The filing date is taken from `rcept_no`, whose first eight digits are the acceptance date — never the fiscal year, which would be look-ahead of up to three months |
+| Backfill | Incremental and resumable under a per-run budget, like the US price bootstrap |
+
+Two limitations are inherent and are stated rather than smoothed over:
+
+1. **Period ends are derived, assuming a December fiscal year.** The full-
+   statement endpoint returns no period-end date — only a fiscal year and a
+   Korean period label — so the end is computed from the report code. That is
+   correct for the overwhelming majority of KOSPI/KOSDAQ issuers and wrong by up
+   to eleven months for a non-December filer.
+2. **2015 onward is eleven years.** That clears the ultra-long model's ten-year
+   requirement, but only just, and it will be the binding constraint on Korean
+   ultra-long scores for years to come.
+
 **A note on Korean price limits.** KRX enforces a ±30% daily price limit. A stock
 that closes limit-up (상한가) has an unknown "true" price — the close is censored,
 not discovered. Any stock closing at or within 0.5% of the limit is **excluded
@@ -835,9 +858,15 @@ Published on the site, not buried here.
    even a language model would be weakly predictive at this horizon.
 3. **No analyst estimates.** Mid-term therefore substitutes realized earnings
    drift for revision momentum. This is a real downgrade from the ideal spec.
-4. **Korea has no keyless source of financial statements at all.** This is
-   stated more bluntly than it was, because the earlier wording ("shallower than
-   US") understated it and the site drew a false conclusion from it.
+4. **Korea has no keyless source of financial statements at all — but there is
+   a free keyed one.** This is stated bluntly because the earlier wording
+   ("shallower than US") understated it and the site drew a false conclusion
+   from it.
+
+   **With `DART_KEY` configured, all four Korean boards are computable** and
+   this limitation applies only to the unkeyed configuration. §1.2 describes the
+   source; the two residual limits are the derived December period end and the
+   2015 coverage floor.
 
    SEC XBRL gives 10+ years of tagged, audited statements for US filers. The
    keyless Korean path gives a daily snapshot of market cap, share count and
@@ -846,12 +875,12 @@ Published on the site, not buried here.
    The consequence is not a lower-confidence score; it is that **three of the
    four Korean boards cannot be produced at all**:
 
-   | Board | Korea without DART | Why |
-   | --- | --- | --- |
-   | Ultra Short | **Works** | Price, volume and news only |
-   | Mid Term | Empty | 2 of 5 factors need quarterly statements; only 3 are reachable, below the completeness floor of 4 |
-   | Long Term | Empty | All 5 factors are statement-derived |
-   | Ultra Long | Empty | Requires ten years of annual statements |
+   | Board | Without DART | With DART | Why |
+   | --- | --- | --- | --- |
+   | Ultra Short | **Works** | Works | Price, volume and news only |
+   | Mid Term | Empty | **Works** | 2 of 5 factors need quarterly statements; only 3 are reachable unkeyed, below the completeness floor of 4 |
+   | Long Term | Empty | **Works** | All 5 factors are statement-derived |
+   | Ultra Long | Empty | **Works** | Needs ten years of annual statements; DART supplies 2015 onward |
 
    Each empty board says which of these applies, in both languages, and names
    the free DART OpenAPI key that would open it. The distinction the code now

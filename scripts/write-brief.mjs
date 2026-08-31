@@ -47,6 +47,7 @@ import path from 'node:path';
 import { existsSync } from 'node:fs';
 import { writeFile, mkdir } from 'node:fs/promises';
 import { ROOT, SRC_DATA, readJson } from './lib/store.mjs';
+import { pathToFileURL } from 'node:url';
 
 const POSTS = path.join(ROOT, 'src', 'content', 'posts');
 
@@ -469,7 +470,7 @@ async function main() {
 
 export { composeBrief };
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((err) => {
     console.error('[brief] fatal:', err);
     process.exit(1);

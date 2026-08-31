@@ -54,7 +54,7 @@ ${horizons}
 1. No intraday or pre-market data; everything is end-of-day.
 2. Headline sentiment is a lexicon score, weakly predictive at best.
 3. No analyst estimates; mid-term uses realized earnings drift instead.
-4. Korean fundamentals are shallower than US; the Korean ultra-long board is not published at all until a DART key is configured.
+4. Korea has no keyless source of financial statements. Without a DART OpenAPI key, only the Korean ultra-short board is published and the other three state the reason; with a key, all four are computed from audited regulator filings covering 2015 onward.
 5. Multiple testing across four horizons, dozens of factors and two markets. Weights are reasoned from literature, not optimized on this data.
 6. The universe is large-cap biased by construction of the liquidity filters.
 7. Long-only. There is no short side, so in a bear market the only expression of caution is the regime multiplier.

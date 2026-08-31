@@ -44,7 +44,7 @@ npm install
 # Offline: seed fixtures, run the real pipeline, validate the output (~2s)
 npm run smoke
 
-# Unit tests (118)
+# Unit tests (135)
 npm test
 
 # Build (both base paths must pass)
@@ -78,6 +78,9 @@ run it once from Actions to verify sources before trusting a board.
    placeholder data, runs the real pipeline, commits the result, and publishes.
 4. Optional: set repository variable `CONTACT_EMAIL` (used in the SEC
    `User-Agent`, which SEC asks for).
+5. Optional but high value: set the repository **secret** `DART_KEY` to a free
+   [OpenDART](https://opendart.fss.or.kr) key. Without it Korea has one working
+   board; with it, four.
 
 After that `refresh.yml` keeps it current on a schedule.
 
@@ -122,6 +125,7 @@ scripts/
     indicators.mjs   EMA, Wilder ATR, RSI, Bollinger, CMF, RVOL
     factors.mjs      per-stock raw factors for all four horizons
     sic.mjs          SEC SIC code → sector, for the eleven SPDR buckets
+    dart.mjs         DART account mapping onto the same factor vocabulary
     derive.mjs       multi-year series: ROIC/FCF history, buyback yield, …
     score.mjs        weighting, gates, regime, diversification, hysteresis
     sentiment.mjs    Loughran–McDonald financial lexicon, EN + KO
@@ -170,6 +174,24 @@ Recorded here because each cost real debugging time and none is obvious:
   anything.** Four `mapLimit` workers read the same last-send time, sleep the
   same duration and fire together. Reserve before you await. This one was live:
   148 HTTP 429s from SEC and zero fundamentals updated for a day.
+- **The `import.meta.url === \`file://${process.argv[1]}\`` idiom is broken on
+  Windows.** argv[1] uses backslashes and no leading slash; `import.meta.url`
+  uses forward slashes and three. The comparison is always false, so `main()`
+  never runs and the script exits 0 having printed nothing — `npm run rank`
+  looked like a clean no-op. Six scripts had it. Compare against
+  `pathToFileURL(process.argv[1]).href`.
+- **`new URL(...).pathname` is not a filesystem path on Windows.** It yields
+  `/C:/Users/...`, and `path.resolve` makes that `C:\C:\Users\...` — the drive
+  letter twice. Use `fileURLToPath`. CI runs on Linux, so this only ever breaks
+  the maintainer's own machine, which is where the verification scripts most
+  need to run.
+- **DART's `corpCode.xml` is a ZIP, and often a *streamed* one** — bit 3 set,
+  local header sizes zeroed, real sizes trailing the data. Read the central
+  directory; a local-header reader inflates nothing and returns no companies,
+  which is indistinguishable from the API having no data for you.
+- **DART's cash flow statement closes with 현금및현금성자산**, the same line
+  name the balance sheet uses. Match on the statement division too, or the
+  balance-sheet cash figure quietly becomes the year-end cash total.
 - **`companyfacts` has no SIC code.** Only the SEC `submissions` endpoint does.
   Getting a filer's industry costs a separate 160KB request, which is why
   profiles are cached permanently in the store instead of refetched.
@@ -215,11 +237,12 @@ Recorded here because each cost real debugging time and none is obvious:
 
 | Command | Covers |
 | --- | --- |
-| `npm test` | 118 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering, SIC→sector |
+| `npm test` | 135 unit tests: statistics, indicators, factors, scoring, hysteresis, parsers, sentiment, clustering, SIC→sector |
 | `npm run smoke` | 2,241 end-to-end checks against the real pipeline |
 | `npm run audit` | built output: base paths, SEO, a11y, links, compliance notices |
 | `npm run contrast` | WCAG AA on 88 colour pairs in both themes |
 | `npm run check:layout` | 112 table regions × 8 viewport widths, no clipping |
+| `npm run verify:dart` | **Korean boards, end to end from DART-shaped statements** — proves the adapter's output is a shape the factor models actually score |
 | `npm run simulate` | **25 sessions of the real pipeline**, replayed day by day — hysteresis, rank movement, turnover, stop-outs, cooldowns, ledger growth and idempotency |
 
 The smoke test is the important one. Because the development sandbox blocks
@@ -236,10 +259,11 @@ Published on the site too, not just here:
 2. **Headline sentiment is a lexicon**, and weakly predictive at best.
 3. **No analyst estimates**, so mid-term substitutes realized earnings drift for
    revision momentum.
-4. **Korea has no keyless statement source at all** — not merely a shallower
-   one. Only the ultra-short board can be produced for Korea; mid, long and
-   ultra-long stay empty and each says exactly why, in both languages, until a
-   free DART OpenAPI key is configured. See METHODOLOGY §10.4.
+4. **Korea has no *keyless* statement source at all** — not merely a shallower
+   one. Unkeyed, only the ultra-short board can be produced; mid, long and
+   ultra-long stay empty and each says exactly why, in both languages. Setting
+   the `DART_KEY` secret to a free OpenDART key opens all four. See
+   METHODOLOGY §1.2 and §10.4.
 5. **Weights are reasoned from published literature, not optimized** on this
    data. That avoids overfitting but means they are untuned.
 6. **Large-cap biased** by construction of the liquidity filters.

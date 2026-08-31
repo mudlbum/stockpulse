@@ -21,15 +21,38 @@
 import {
   fetchLatestKrxListing, fetchKrxDescriptions, fetchKrIndexYear,
   fetchNaverDaily, fetchNaverXmlChart, krHazardFlag, isPriceLimited,
+  fetchDartCorpCodes, fetchDartStatements,
 } from './lib/sources.mjs';
+import {
+  readReport, quartersFromReports, annualFromReport, balanceFromReports,
+  periodEnd, filedFromRcept, REPORT_ORDER, CORE_CONCEPTS,
+} from './lib/dart.mjs';
 import { healthReport, mapLimit } from './lib/http.mjs';
-import { loadPrices, savePrices, mergeBars, loadFundamentals, saveFundamentals, publish } from './lib/store.mjs';
+import {
+  loadPrices, savePrices, mergeBars, loadFundamentals, saveFundamentals,
+  loadProfiles, saveProfiles, publish,
+} from './lib/store.mjs';
 import { medianDollarVolume } from './lib/indicators.mjs';
 import { isNum } from './lib/stats.mjs';
+import { pathToFileURL } from 'node:url';
 
 const MARKET = 'KR';
 const TARGET_UNIVERSE = Number(process.env.KR_UNIVERSE ?? 350);
 const BOOTSTRAP_BUDGET = Number(process.env.KR_BOOTSTRAP ?? 90);
+/**
+ * DART publishes full statements from 2015 onward — the API rejects an earlier
+ * bsns_year outright. Eleven years is just enough for the ultra-long model's
+ * ten-year requirement, and that boundary is the reason it is exactly ten.
+ */
+const DART_FIRST_YEAR = 2015;
+/**
+ * Reports per run. DART allows 20,000 requests a day, but a full decade for 350
+ * companies is ~15,000 of them and far more wall-clock than one Actions run
+ * should hold. The backfill is therefore incremental and resumable, exactly
+ * like the US price bootstrap: spend a bounded budget on whatever is furthest
+ * behind, commit, resume next run.
+ */
+const DART_BUDGET = Number(process.env.KR_DART_BUDGET ?? 400);
 
 /** METHODOLOGY §1.2 */
 const MIN_PRICE = 1000;              // ₩
@@ -179,7 +202,15 @@ async function main() {
       listingDate: s.listingDate, updatedAt: new Date().toISOString(),
     };
   }
+  // Financial statements from DART, when a key is configured. This is the step
+  // that turns Korea from a price-and-market-cap market into one the
+  // fundamental models can actually score.
+  const profiles = await loadProfiles(MARKET);
+  const dart = await fillFromDart(withHistory, fundamentals, profiles);
+  await saveProfiles(MARKET, profiles);
+
   await saveFundamentals(MARKET, fundamentals);
+  reportCoverage(dart.coverage);
 
   await publish('universe-kr', {
     market: MARKET,
@@ -203,7 +234,241 @@ async function main() {
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+
+// ─────────────────────────────────────────────────── DART fundamentals ──
+
+/**
+ * Fill Korean financial statements from DART, if a key is configured.
+ *
+ * OPTIONAL BY DESIGN. Without `DART_KEY` this returns immediately and the
+ * Korean pipeline behaves exactly as it did before — the mirror snapshot and
+ * nothing deeper. With a key, three Korean boards (mid-term, long-term and
+ * ultra-long) become computable for the first time; see METHODOLOGY §10.4.
+ *
+ * Incremental and resumable, like the US price bootstrap it is modelled on.
+ * A full decade for 350 companies is ~15,000 requests — inside DART's daily
+ * 20,000 cap but far outside one comfortable Actions run, so each run spends a
+ * bounded budget on the companies that are furthest behind and the store
+ * carries the progress.
+ */
+export async function fillFromDart(selected, fundamentals, profiles) {
+  const key = process.env.DART_KEY;
+  if (!key) {
+    console.log('[kr] DART_KEY not set — skipping Korean fundamentals (boards mid/long/ultra-long stay empty by design)');
+    return { attempted: 0, coverage: null };
+  }
+  if (!/^[0-9a-f]{40}$/i.test(key.trim())) {
+    // Fail loudly rather than spending a run discovering it request by request.
+    console.error('[kr] DART_KEY is set but is not a 40-character hex key — refusing to call the API with it');
+    process.exitCode = 1;
+    return { attempted: 0, coverage: null };
+  }
+
+  // ── corp_code map: one request, cached, refreshed weekly ────────────────
+  const cachedAt = profiles.dartCorpCodesAt ? Date.parse(profiles.dartCorpCodesAt) : 0;
+  const stale = !cachedAt || (Date.now() - cachedAt) > 7 * 86_400_000;
+  if (stale || !profiles.dartCorpCodes) {
+    try {
+      const codes = await fetchDartCorpCodes(key.trim());
+      profiles.dartCorpCodes = Object.fromEntries(codes.map((c) => [c.ticker, c.corpCode]));
+      profiles.dartCorpCodesAt = new Date().toISOString();
+      console.log(`[kr] DART corp codes: ${codes.length} listed companies mapped`);
+    } catch (err) {
+      console.error(`[kr] DART corp code fetch failed: ${err.message}`);
+      process.exitCode = 1;
+      return { attempted: 0, coverage: null };
+    }
+  }
+  const corpCodes = profiles.dartCorpCodes ?? {};
+
+  // ── what to fetch, in priority order ────────────────────────────────────
+  // Recent years first: they feed the mid-term board and the valuation
+  // factors, and they are also what a reader checking a number will look at.
+  // Older annuals fill in behind them for the ultra-long moat model.
+  const thisYear = new Date().getUTCFullYear();
+  const RECENT_QUARTER_YEARS = 2;
+  const plan = [];
+  for (const s of selected) {
+    const corpCode = corpCodes[s.ticker];
+    if (!corpCode) continue;
+    const rec = fundamentals.companies[s.ticker] ?? {};
+    const done = new Set(rec.dartFetched ?? []);
+    for (let y = thisYear; y >= DART_FIRST_YEAR; y--) {
+      const codes = (thisYear - y) < RECENT_QUARTER_YEARS ? REPORT_ORDER : ['11011'];
+      for (const reprtCode of codes) {
+        const id = `${y}:${reprtCode}`;
+        if (done.has(id)) continue;
+        plan.push({ ticker: s.ticker, corpCode, year: y, reprtCode, id });
+      }
+    }
+  }
+  const batch = plan.slice(0, DART_BUDGET);
+  if (!batch.length) {
+    console.log('[kr] DART: nothing left to backfill');
+    return { attempted: 0, coverage: summariseCoverage(fundamentals, selected) };
+  }
+  console.log(`[kr] DART: fetching ${batch.length} reports (${plan.length} outstanding)`);
+
+  // ── fetch ───────────────────────────────────────────────────────────────
+  const agg = { rows: 0, matched: 0, viaId: 0, viaName: 0, unmatched: new Map() };
+  const byTicker = new Map();
+
+  const res = await mapLimit(batch, 2, async (job) => {
+    let rows = await fetchDartStatements(key.trim(), {
+      corpCode: job.corpCode, year: job.year, reprtCode: job.reprtCode, fsDiv: 'CFS',
+    });
+    // A company with no subsidiaries files individual statements only.
+    if (rows === null || rows.length === 0) {
+      rows = await fetchDartStatements(key.trim(), {
+        corpCode: job.corpCode, year: job.year, reprtCode: job.reprtCode, fsDiv: 'OFS',
+      });
+    }
+    return { job, rows };
+  });
+
+  for (const r of res.results) {
+    if (!r) continue;
+    const { job, rows } = r;
+    if (!byTicker.has(job.ticker)) byTicker.set(job.ticker, { reports: {}, fetched: [] });
+    const entry = byTicker.get(job.ticker);
+    entry.fetched.push(job.id);
+    if (!rows || !rows.length) continue;
+
+    const { values, cumulative, stats } = readReport(rows);
+    agg.rows += stats.rows;
+    agg.matched += stats.matched;
+    agg.viaId += stats.viaId;
+    agg.viaName += stats.viaName;
+    for (const u of stats.unmatched) agg.unmatched.set(u, (agg.unmatched.get(u) ?? 0) + 1);
+
+    entry.reports[`${job.year}:${job.reprtCode}`] = {
+      year: job.year,
+      code: job.reprtCode,
+      end: periodEnd(job.year, job.reprtCode),
+      filed: filedFromRcept(rows[0]?.rcept_no),
+      values,
+      cumulative,
+    };
+  }
+
+  // ── merge into the store, in the same shape the US path produces ────────
+  for (const [ticker, entry] of byTicker) {
+    const rec = fundamentals.companies[ticker] ?? {};
+    const stored = rec.dartReports ?? {};
+    Object.assign(stored, entry.reports);
+
+    const byYear = new Map();
+    for (const [k, rep] of Object.entries(stored)) {
+      const [y, code] = k.split(':');
+      if (!byYear.has(y)) byYear.set(y, {});
+      byYear.get(y)[code] = rep;
+    }
+
+    const quarters = [];
+    const annual = [];
+    for (const [y, reports] of [...byYear.entries()].sort()) {
+      quarters.push(...quartersFromReports(reports));
+      const a = annualFromReport(reports['11011'], y);
+      if (a) annual.push(a);
+    }
+    const allReports = Object.values(stored);
+
+    fundamentals.companies[ticker] = {
+      ...rec,
+      dartReports: stored,
+      dartFetched: [...new Set([...(rec.dartFetched ?? []), ...entry.fetched])],
+      quarters: quarters.sort((a, b) => (a.end < b.end ? -1 : 1)).slice(-24),
+      annual: annual.sort((a, b) => a.fy - b.fy).slice(-12),
+      balance: balanceFromReports(allReports),
+      lastFiled: allReports.map((r) => r.filed).filter(Boolean).sort().at(-1) ?? null,
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  reportMatching(agg, res.errors.length);
+  return { attempted: batch.length, coverage: summariseCoverage(fundamentals, selected) };
+}
+
+/**
+ * Report what the account mapping actually matched, and fail if it clearly did
+ * not work.
+ *
+ * This exists because the mapping in scripts/lib/dart.mjs could not be checked
+ * against a live DART response while it was written — a key is a credential.
+ * The failure mode that creates is silent and total: wrong identifiers mean
+ * every lookup misses, every statement parses empty, and the Korean boards stay
+ * exactly as empty as they were before, with nothing anywhere saying the
+ * mapping was the reason.
+ *
+ * So the first live run measures itself. `unmatched` is printed because it is
+ * the actionable half — those are the real Korean line names DART returned, and
+ * any concept-bearing name among them is a missing alias, pasteable straight
+ * into DART_ACCOUNTS.
+ */
+function reportMatching(agg, errorCount) {
+  const pct = agg.rows ? ((agg.matched / agg.rows) * 100).toFixed(1) : '0.0';
+  console.log(
+    `[kr] DART accounts: ${agg.matched}/${agg.rows} rows matched (${pct}%) — `
+    + `${agg.viaId} by account_id, ${agg.viaName} by Korean name, ${errorCount} request errors`,
+  );
+  const top = [...agg.unmatched.entries()].sort((a, b) => b[1] - a[1]).slice(0, 15);
+  if (top.length) {
+    console.log('[kr] most common UNMATCHED account names (add any real concept to DART_ACCOUNTS):');
+    for (const [nm, n] of top) console.log(`        ${String(n).padStart(5)}  ${nm}`);
+  }
+  // Most rows in a full statement are legitimately unmapped — subtotals,
+  // segment detail, equity movements. A low overall rate is expected. Zero is
+  // not: it means the identifiers are wrong, not that the filers are unusual.
+  if (agg.rows > 200 && agg.matched === 0) {
+    console.error('[kr] FATAL: DART returned rows but NOT ONE matched a known account. The mapping is wrong, not the data.');
+    process.exitCode = 1;
+  }
+}
+
+/** How many companies now have each core concept — the number that decides
+ *  whether a Korean board can actually be scored. */
+function summariseCoverage(fundamentals, selected) {
+  const out = { companies: 0, withQuarters: 0, withAnnual: 0, annual5y: 0, annual10y: 0, core: {} };
+  for (const c of CORE_CONCEPTS) out.core[c] = 0;
+
+  for (const s of selected) {
+    const rec = fundamentals.companies[s.ticker];
+    if (!rec) continue;
+    out.companies++;
+    const quarters = rec.quarters ?? [];
+    const annual = rec.annual ?? [];
+    if (quarters.length) out.withQuarters++;
+    if (annual.length) out.withAnnual++;
+    if (annual.length >= 5) out.annual5y++;
+    if (annual.length >= 10) out.annual10y++;
+    for (const c of CORE_CONCEPTS) {
+      if (annual.some((a) => typeof a[c] === 'number') || quarters.some((q) => typeof q[c] === 'number')) out.core[c]++;
+    }
+  }
+  return out;
+}
+
+/** Print coverage and say plainly which boards it does and does not open. */
+function reportCoverage(cov) {
+  if (!cov) return;
+  console.log(
+    `[kr] DART coverage: ${cov.withQuarters}/${cov.companies} with quarters, `
+    + `${cov.withAnnual} with annual, ${cov.annual5y} with 5+ years, ${cov.annual10y} with 10+ years`,
+  );
+  console.log('[kr] core concepts: ' + CORE_CONCEPTS.map((c) => `${c} ${cov.core[c]}`).join(', '));
+
+  // Board-by-board, in the same terms the site uses, so a thin run explains
+  // itself instead of leaving an empty board to be interpreted.
+  const need = Math.max(20, Math.round(cov.companies * 0.15));
+  const say = (board, have, what) => console.log(
+    `[kr]   ${board.padEnd(11)} ${have >= need ? 'ready' : 'not yet'} — ${have} companies with ${what} (needs ~${need})`,
+  );
+  say('mid-term', cov.withQuarters, 'quarterly statements');
+  say('long-term', cov.withAnnual, 'annual statements');
+  say('ultra-long', cov.annual10y, '10 years of annuals');
+}
+
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((err) => {
     console.error('[kr] fatal:', err);
     process.exit(1);

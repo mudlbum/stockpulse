@@ -24,7 +24,8 @@
     "og": "node tools/make-og-images.mjs",
     "brief": "node scripts/write-brief.mjs",
     "simulate": "node scripts/simulate-days.mjs",
-    "brief:publish": "node scripts/write-brief.mjs --publish"
+    "brief:publish": "node scripts/write-brief.mjs --publish",
+    "verify:dart": "node scripts/verify-dart.mjs"
   },
   "dependencies": {
     "astro": "^5.2.5"

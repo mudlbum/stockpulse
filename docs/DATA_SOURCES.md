@@ -17,6 +17,56 @@ Verification status recorded when this was written (2026-08-15):
 
 ## United States
 
+### DART OpenAPI — Korean fundamentals ✅ [U] (optional key)
+
+The Financial Supervisory Service's filing API. The only source of audited
+Korean financial statements that is free, and the single highest-value upgrade
+available to this project — it is the difference between one working Korean
+board and four.
+
+| Endpoint | Use |
+| --- | --- |
+| `https://opendart.fss.or.kr/api/corpCode.xml` | ticker ↔ `corp_code` map, for every filer |
+| `https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json` | full statements: one company, one year, one report |
+
+**Rules that bite:**
+
+- **`corpCode.xml` is a ZIP, not XML**, despite the name. It is also frequently
+  produced as a STREAMED archive, meaning general-purpose-flag bit 3 is set and
+  the local file header's sizes are both zero. A reader that trusts the local
+  header inflates nothing and returns an empty list — no error, just no
+  companies, which looks exactly like "DART has no data for you". Read the
+  central directory. `unzipFirstFile` in `sources.mjs` does.
+- **An authentication failure arrives as XML with HTTP 200**, carrying a
+  `<status>` code. Checked explicitly, because an unchecked one would be handed
+  to the ZIP reader as if it were an archive.
+- **"No data" (status 013) is a normal answer, not an error** — a company that
+  had not yet listed in 2016 legitimately has no 2016 filing. Returning null
+  rather than throwing is what keeps a backfill from aborting on its first young
+  company.
+- **`account_id` is often the literal `-표준계정코드 미사용-`** ("standard
+  account code not used"), which is common and not an error. Matching on the id
+  alone silently drops every line a filer coded custom, so the Korean
+  `account_nm` is matched as well.
+- **The cash flow statement closes with 현금및현금성자산** — the same line name
+  the balance sheet uses. Without a `sj_div` guard the balance-sheet cash figure
+  becomes the year-end cash total: wrong, and plausible.
+- **`thstrm_amount` vs `thstrm_add_amount`.** The former is documented as the
+  three-month figure on a quarterly report, the latter as year-to-date. Which
+  one a filer populates varies. Storing a Q3 year-to-date figure as one quarter
+  overstates it threefold, so both are handled and the run reports which path it
+  took.
+- **The annual report is twelve months, not Q4.** Same trap as a 10-K. Q4 is
+  derived by subtraction, and omitted when it cannot be.
+- **There is no period-end date in the response** — only `bsns_year` and a
+  Korean period label. The end is derived assuming a December fiscal year.
+- **The filing date is the first eight digits of `rcept_no`.** Using the fiscal
+  year instead is look-ahead of up to three months.
+- Coverage starts at **2015**; the API rejects earlier years. Daily cap is
+  **20,000 requests**, which a full decade for ~350 companies (~15,000) fits
+  inside — but not inside one comfortable Actions run, hence the incremental
+  backfill.
+
 ### SEC EDGAR — fundamentals ✅ [V]
 
 The best free financial data on earth, and it is not close. Audited, tagged,

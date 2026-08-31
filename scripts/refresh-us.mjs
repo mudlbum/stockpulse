@@ -25,6 +25,7 @@ import {
 import { medianDollarVolume } from './lib/indicators.mjs';
 import { sectorForSic } from './lib/sic.mjs';
 import { isNum } from './lib/stats.mjs';
+import { pathToFileURL } from 'node:url';
 
 const MARKET = 'US';
 const TARGET_UNIVERSE = Number(process.env.US_UNIVERSE ?? 600);
@@ -370,7 +371,7 @@ function latestFiledDate(series) {
   return latest;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((err) => {
     console.error('[us] fatal:', err);
     process.exit(1);

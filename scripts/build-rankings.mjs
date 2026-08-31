@@ -28,6 +28,7 @@ import {
   loadPrices, loadFundamentals, loadBoard, previousBoardFor, saveBoard, appendLedger,
   publish, readJson, SRC_DATA, STORE,
 } from './lib/store.mjs';
+import { pathToFileURL } from 'node:url';
 
 const HORIZONS = ['ultra_short', 'mid_term', 'long_term', 'ultra_long'];
 
@@ -695,7 +696,21 @@ const round3 = (x) => (isNum(x) ? Math.round(x * 1000) / 1000 : null);
 
 export { HORIZONS_META };
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+/**
+ * `pathToFileURL`, not string interpolation.
+ *
+ * Interpolating argv[1] into a "file://" string produces file://C:\Users\...
+ * on Windows, while `import.meta.url` is file:///C:/Users/... — different slash
+ * count, opposite separators. The comparison is therefore ALWAYS false on
+ * Windows, so `main()` never runs, the process exits 0, and the script prints
+ * nothing. Running `npm run rank` on Windows looked exactly like a successful
+ * no-op.
+ *
+ * Found because a verification script spawned this one as a subprocess and got
+ * back silence and a zero exit code — the most convincing way for a program to
+ * report success while doing nothing at all.
+ */
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((err) => {
     console.error('[rank] fatal:', err);
     process.exit(1);

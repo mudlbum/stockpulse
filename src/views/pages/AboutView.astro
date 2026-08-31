@@ -19,7 +19,7 @@ const LIMITS_EN = [
   'No intraday or pre-market data. Everything is end-of-day, so a 1–5 day ranking published after the close is actionable at the next open at the earliest.',
   'Headline sentiment is a lexicon, not a language model, and even a language model would be weakly predictive at this horizon.',
   'No analyst estimates. Mid-term substitutes realized earnings drift for revision momentum, which is a real downgrade from the ideal specification.',
-  'Korean fundamentals are shallower than US. Korean long-horizon scores carry a lower-confidence badge, and the ultra-long board is US-only until a DART key is configured.',
+  'Korea has no keyless source of financial statements. Without a DART OpenAPI key only the Korean ultra-short board can be produced, and the other three say so rather than showing a blank table. With a key configured, all four are computed from audited filings.',
   'Multiple testing. Four horizons across dozens of factors and two markets is a large search space. The weights are reasoned from published literature rather than optimized on this data — which avoids overfitting but means they are not tuned.',
   'The universe is large-cap biased by construction of the liquidity filters. Small-cap opportunities are systematically out of scope.',
   'No short side. Every list is long-only. In a bear market the correct answer is often "nothing", and the regime multiplier is the only mechanism expressing that.',

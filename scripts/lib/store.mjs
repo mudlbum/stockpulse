@@ -14,8 +14,22 @@
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-export const ROOT = path.resolve(new URL('../..', import.meta.url).pathname);
+/**
+ * `fileURLToPath`, not `new URL(...).pathname`.
+ *
+ * On POSIX the two agree. On Windows `.pathname` yields `/C:/Users/...` — with
+ * a leading slash — and `path.resolve` turns that into `C:\C:\Users\...`, a
+ * path with the drive letter twice. Every script that touches the store then
+ * fails with ENOENT on a path that looks almost right, which is the most
+ * expensive kind of wrong.
+ *
+ * It never surfaced in CI because the pipeline runs on Linux. It surfaced the
+ * first time a verification script was run on the maintainer's own machine,
+ * which is exactly the person who most needs these scripts to work.
+ */
+export const ROOT = path.resolve(fileURLToPath(new URL('../..', import.meta.url)));
 export const STORE = path.join(ROOT, 'data-store');
 export const PUBLIC_DATA = path.join(ROOT, 'public', 'data');
 export const SRC_DATA = path.join(ROOT, 'src', 'data');
