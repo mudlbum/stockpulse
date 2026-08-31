@@ -52,7 +52,7 @@ const DART_FIRST_YEAR = 2015;
  * like the US price bootstrap: spend a bounded budget on whatever is furthest
  * behind, commit, resume next run.
  */
-const DART_BUDGET = Number(process.env.KR_DART_BUDGET ?? 400);
+const DART_BUDGET = Number(process.env.KR_DART_BUDGET ?? 1200);
 
 /** METHODOLOGY §1.2 */
 const MIN_PRICE = 1000;              // ₩
@@ -250,6 +250,11 @@ async function main() {
  * 20,000 cap but far outside one comfortable Actions run, so each run spends a
  * bounded budget on the companies that are furthest behind and the store
  * carries the progress.
+ *
+ * Measured on the first live run: 400 reports took about 150 seconds end to
+ * end with no request errors, so 1,200 is roughly 8 minutes against a 50-minute
+ * job timeout, and fills a ~5,800-report backlog in about five weekday runs
+ * rather than fifteen. Well under DART's daily cap either way.
  */
 export async function fillFromDart(selected, fundamentals, profiles) {
   const key = process.env.DART_KEY;
