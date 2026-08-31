@@ -603,8 +603,12 @@ export function unzipFirstFile(buf) {
  * universe.
  */
 export async function fetchDartCorpCodes(key) {
+  // A generous timeout: this is the only multi-megabyte download in the
+  // pipeline, and opendart.fss.or.kr is served from Korea, so a runner in a US
+  // datacenter is a long way from it. The default 25s is comfortable for a JSON
+  // response and marginal for this one.
   const res = await fetchWithRetry(`${DART_BASE}/corpCode.xml?crtfc_key=${encodeURIComponent(key)}`, {
-    ua: UA_BROWSER, accept: 'application/zip,application/xml,*/*',
+    ua: UA_BROWSER, accept: 'application/zip,application/xml,*/*', timeoutMs: 90_000, retries: 4,
   });
   const buf = Buffer.from(await res.arrayBuffer());
 

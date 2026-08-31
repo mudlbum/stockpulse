@@ -274,7 +274,13 @@ export async function fillFromDart(selected, fundamentals, profiles) {
       profiles.dartCorpCodesAt = new Date().toISOString();
       console.log(`[kr] DART corp codes: ${codes.length} listed companies mapped`);
     } catch (err) {
-      console.error(`[kr] DART corp code fetch failed: ${err.message}`);
+      // `fetch failed` on its own is useless — it is undici's generic wrapper
+      // and the actual reason (DNS, TLS, connection reset, timeout) is on the
+      // cause. Print it, or a network failure is indistinguishable from a bad
+      // key and the next person guesses instead of reading.
+      const cause = err.cause ? ` (${err.cause.code ?? err.cause.name ?? ''} ${err.cause.message ?? ''})`.trim() : '';
+      console.error(`[kr] DART corp code fetch failed: ${err.message}${cause ? ' — ' + cause : ''}`);
+      console.error('[kr] the rest of the Korean refresh is unaffected; only the statement backfill is skipped');
       process.exitCode = 1;
       return { attempted: 0, coverage: null };
     }
