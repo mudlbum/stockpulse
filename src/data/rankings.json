@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-08-31T23:38:46.362Z",
+  "generatedAt": "2026-09-01T00:57:20.698Z",
   "methodologyVersion": "1.0.0",
   "asOf": {
-    "US": "2026-08-29",
+    "US": "2026-09-01",
     "KR": "2026-08-31"
   },
   "regime": {
@@ -10,7 +10,7 @@
       "multiplier": 1,
       "state": "risk_on",
       "indexAboveMA200": true,
-      "breadth": 0.6916666666666667
+      "breadth": 0.675
     },
     "KR": {
       "multiplier": 0.85,
@@ -24,36 +24,82 @@
       "ultra_short": {
         "market": "US",
         "horizon": "ultra_short",
-        "asOf": "2026-08-29",
-        "turnover30d": 0.6632996632996634,
+        "asOf": "2026-09-01",
+        "turnover30d": 0.6606060606060608,
         "sampleWarning": false,
-        "stoppedOut": [],
+        "stoppedOut": [
+          {
+            "ticker": "PCG",
+            "name": "PG&E Corp",
+            "stop": 15.61,
+            "entryDate": "2026-08-29",
+            "lastPrice": 13.27,
+            "previousRank": 2,
+            "cooldownSessions": 5
+          },
+          {
+            "ticker": "AFRM",
+            "name": "Affirm Holdings, Inc.",
+            "stop": 71.81,
+            "entryDate": "2026-08-29",
+            "lastPrice": 74.45,
+            "previousRank": 3,
+            "cooldownSessions": 5
+          },
+          {
+            "ticker": "TTWO",
+            "name": "TAKE TWO INTERACTIVE SOFTWARE INC",
+            "stop": 222.73,
+            "entryDate": "2026-08-29",
+            "lastPrice": 219.7,
+            "previousRank": 7,
+            "cooldownSessions": 5
+          },
+          {
+            "ticker": "HDB",
+            "name": "HDFC BANK LTD",
+            "stop": 22.36,
+            "entryDate": "2026-08-29",
+            "lastPrice": 22.7,
+            "previousRank": 8,
+            "cooldownSessions": 5
+          },
+          {
+            "ticker": "EIX",
+            "name": "EDISON INTERNATIONAL",
+            "stop": 66.3,
+            "entryDate": "2026-08-29",
+            "lastPrice": 53.98,
+            "previousRank": 9,
+            "cooldownSessions": 5
+          }
+        ],
         "emptyReason": null,
         "rows": [
           {
             "rank": 1,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "SGI",
-            "name": "SOMNIGROUP INTERNATIONAL INC.",
+            "ticker": "SLB",
+            "name": "SLB LIMITED/NV",
             "market": "US",
-            "sector": "Consumer Discretionary",
+            "sector": "Energy",
             "currency": "USD",
-            "price": 64.37,
-            "changePct": 3.02,
-            "score": 78.3,
-            "rawZ": 1.696,
+            "price": 60.1,
+            "changePct": 4.83,
+            "score": 87.5,
+            "rawZ": 2.252,
             "completeness": 0.8,
             "riskGauge": 3,
             "entry": {
-              "low": 63.75,
-              "high": 65.36
+              "low": 59.65,
+              "high": 60.82
             },
-            "stop": 60.66,
+            "stop": 57.39,
             "targets": {
-              "conservative": 66.84,
-              "base": 68.82,
-              "bull": 71.79
+              "conservative": 61.9,
+              "base": 63.35,
+              "bull": 65.51
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -62,11 +108,11 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 3.334,
+                "raw": 3.084,
                 "z": 3
               },
               "gapQuality": {
-                "raw": 0.259,
+                "raw": 0.34,
                 "z": 3
               },
               "newsSentiment": {
@@ -74,45 +120,45 @@
                 "z": null
               },
               "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
+                "raw": 1.335,
+                "z": 3
               },
               "trendPosition": {
-                "raw": -0.414,
-                "z": -0.953
+                "raw": 0.998,
+                "z": 0.918
               }
             },
             "sparkline": [
-              70.3,
-              69.93,
-              69.96,
-              68.67,
-              71.38,
-              72.72,
-              71.91,
-              68.22,
-              66.7,
-              65.16,
-              66.47,
-              69.51,
-              69.4,
-              64.7,
-              65.08,
-              64.65,
-              65.07,
-              64.08,
-              66.17,
-              65.89,
-              64.84,
-              63.73,
-              65.85,
-              64.26,
-              64.71,
-              64.31,
-              64.09,
-              62.83,
-              62.48,
-              64.37
+              46.59,
+              47.67,
+              47.22,
+              52.42,
+              51.53,
+              49.98,
+              48.96,
+              48.91,
+              49.59,
+              49.31,
+              50.81,
+              49.91,
+              51.54,
+              50.53,
+              53.2,
+              53.68,
+              52.61,
+              52.06,
+              53.77,
+              53.86,
+              53.21,
+              53.55,
+              53.55,
+              53.87,
+              54,
+              53.29,
+              53.6,
+              55.01,
+              57.33,
+              60.1
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -124,26 +170,26 @@
             "rank": 2,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "PCG",
-            "name": "PG&E Corp",
+            "ticker": "CNH",
+            "name": "CNH Industrial N.V.",
             "market": "US",
-            "sector": "Utilities",
+            "sector": "Industrials",
             "currency": "USD",
-            "price": 16.6,
-            "changePct": -7.52,
-            "score": 77.9,
-            "rawZ": 1.676,
+            "price": 11.83,
+            "changePct": 1.28,
+            "score": 83.9,
+            "rawZ": 2.033,
             "completeness": 0.8,
             "riskGauge": 4,
             "entry": {
-              "low": 16.43,
-              "high": 16.86
+              "low": 11.71,
+              "high": 12.02
             },
-            "stop": 15.61,
+            "stop": 11.13,
             "targets": {
-              "conservative": 17.26,
-              "base": 17.79,
-              "bull": 18.58
+              "conservative": 12.29,
+              "base": 12.67,
+              "bull": 13.22
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -152,12 +198,12 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 5.081,
+                "raw": 6.919,
                 "z": 3
               },
               "gapQuality": {
-                "raw": 0.219,
-                "z": 2.611
+                "raw": 0.506,
+                "z": 3
               },
               "newsSentiment": {
                 "raw": null,
@@ -168,41 +214,41 @@
                 "z": 0
               },
               "trendPosition": {
-                "raw": -0.101,
-                "z": -0.543
+                "raw": 0.937,
+                "z": 0.845
               }
             },
             "sparkline": [
-              17.43,
-              17.49,
-              18.11,
-              17.54,
-              17.85,
-              17.6,
-              17.78,
-              17.71,
-              17.78,
-              17.38,
-              17.43,
-              17.45,
-              17.2,
-              17,
-              17.46,
-              17.04,
-              17.3,
-              17.38,
-              17.46,
-              17.84,
-              17.5,
-              17.82,
-              17.65,
-              17.96,
-              17.6,
-              18.11,
-              18.36,
-              18.22,
-              17.95,
-              16.6
+              10.35,
+              10.7,
+              10.62,
+              11.15,
+              11.08,
+              11.44,
+              10.76,
+              10.32,
+              10.25,
+              10.8,
+              11.22,
+              10.79,
+              10.85,
+              10.91,
+              10.48,
+              10.63,
+              10.73,
+              10.39,
+              10.44,
+              10.29,
+              10.03,
+              10.29,
+              10.95,
+              11.87,
+              11.76,
+              11.56,
+              11.62,
+              11.43,
+              11.68,
+              11.83
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -212,42 +258,42 @@
           },
           {
             "rank": 3,
-            "movement": 6,
-            "heldSessions": 2,
-            "ticker": "AFRM",
-            "name": "Affirm Holdings, Inc.",
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "SWKS",
+            "name": "SKYWORKS SOLUTIONS, INC.",
             "market": "US",
-            "sector": "Financials",
+            "sector": "Information Technology",
             "currency": "USD",
-            "price": 77.76,
-            "changePct": 0.35,
-            "score": 70.6,
-            "rawZ": 1.234,
+            "price": 67.01,
+            "changePct": 1.85,
+            "score": 78.4,
+            "rawZ": 1.703,
             "completeness": 0.8,
-            "riskGauge": 5,
+            "riskGauge": 4,
             "entry": {
-              "low": 76.77,
-              "high": 79.35
+              "low": 66.31,
+              "high": 68.14
             },
-            "stop": 71.81,
+            "stop": 62.78,
             "targets": {
-              "conservative": 81.73,
-              "base": 84.9,
-              "bull": 89.66
+              "conservative": 69.83,
+              "base": 72.08,
+              "bull": 75.46
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
             "maxHoldSessions": 5,
-            "catalyst": "Affirm Stock: Follow Now and Buy Later or Buy Right Now? Plus 1 related story.",
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 9.986,
+                "raw": 4.083,
                 "z": 3
               },
               "gapQuality": {
-                "raw": 0.06,
-                "z": 0.22
+                "raw": 0.208,
+                "z": 2.161
               },
               "newsSentiment": {
                 "raw": null,
@@ -258,41 +304,41 @@
                 "z": 0
               },
               "trendPosition": {
-                "raw": 0.534,
-                "z": 0.288
+                "raw": 0.421,
+                "z": 0.204
               }
             },
             "sparkline": [
-              75.32,
-              74.72,
-              73.92,
-              71.21,
-              70.23,
-              73.05,
-              72.4,
-              70.11,
-              73.25,
-              71.51,
-              75.63,
-              78.12,
-              78.47,
-              76.58,
-              75.25,
-              75.54,
-              76.71,
-              73.4,
-              78.32,
-              78.35,
-              74.52,
-              73.56,
-              77.33,
-              75.05,
-              77.03,
-              76.88,
-              77.94,
-              76.46,
-              77.49,
-              77.76
+              62.95,
+              63.16,
+              60.47,
+              60.21,
+              63.44,
+              64.68,
+              61.19,
+              62.48,
+              62.28,
+              61.29,
+              66.79,
+              66.99,
+              66.84,
+              70.62,
+              68.79,
+              68.33,
+              69.68,
+              69.76,
+              69.62,
+              67.73,
+              67.43,
+              68.48,
+              67.94,
+              67.14,
+              66.86,
+              65.7,
+              66.62,
+              67.36,
+              65.79,
+              67.01
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -304,26 +350,26 @@
             "rank": 4,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "PSLV",
-            "name": "Sprott Physical Silver Trust",
+            "ticker": "WMB",
+            "name": "WILLIAMS COMPANIES, INC.",
             "market": "US",
-            "sector": "Financials",
+            "sector": "Energy",
             "currency": "USD",
-            "price": 21.84,
-            "changePct": -4.63,
-            "score": 69.8,
-            "rawZ": 1.189,
+            "price": 75.05,
+            "changePct": 1.79,
+            "score": 76.6,
+            "rawZ": 1.594,
             "completeness": 0.8,
-            "riskGauge": 2,
+            "riskGauge": 3,
             "entry": {
-              "low": 21.65,
-              "high": 22.14
+              "low": 74.52,
+              "high": 75.9
             },
-            "stop": 20.72,
+            "stop": 71.87,
             "targets": {
-              "conservative": 22.59,
-              "base": 23.18,
-              "bull": 24.08
+              "conservative": 77.17,
+              "base": 78.86,
+              "bull": 81.4
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -332,12 +378,12 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 2.006,
-                "z": 1.324
+                "raw": 3.288,
+                "z": 3
               },
               "gapQuality": {
-                "raw": 0.215,
-                "z": 2.556
+                "raw": 0.133,
+                "z": 1.383
               },
               "newsSentiment": {
                 "raw": null,
@@ -348,41 +394,41 @@
                 "z": 0
               },
               "trendPosition": {
-                "raw": 0.532,
-                "z": 0.286
+                "raw": 0.784,
+                "z": 0.655
               }
             },
             "sparkline": [
-              18.09,
-              18.89,
-              19.24,
-              18.53,
-              18.73,
-              18.88,
-              18.48,
-              18.55,
-              19.18,
-              18.8,
-              18.89,
-              19.35,
-              20.23,
-              20.17,
-              20.82,
-              21.6,
-              21.29,
-              21.41,
-              20.97,
-              21.08,
-              21.5,
-              20.7,
-              21.62,
-              22.37,
-              22.84,
-              22.71,
-              22.74,
-              22.5,
-              22.9,
-              21.84
+              73.36,
+              74.49,
+              75.25,
+              74,
+              70.79,
+              70.16,
+              70.13,
+              70.91,
+              71.54,
+              70.43,
+              71.51,
+              71.81,
+              71.76,
+              70.4,
+              71.85,
+              72.31,
+              73.7,
+              73.04,
+              75.2,
+              73.45,
+              75.13,
+              73.24,
+              71.68,
+              70.49,
+              70.97,
+              71.08,
+              74.41,
+              74.19,
+              73.73,
+              75.05
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -394,40 +440,128 @@
             "rank": 5,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "ULTA",
-            "name": "Ulta Beauty, Inc.",
+            "ticker": "CRWD",
+            "name": "CrowdStrike Holdings, Inc.",
             "market": "US",
-            "sector": "Consumer Discretionary",
+            "sector": "Information Technology",
             "currency": "USD",
-            "price": 517.5,
-            "changePct": -4.18,
-            "score": 69.1,
-            "rawZ": 1.144,
-            "completeness": 0.8,
-            "riskGauge": 3,
+            "price": 231,
+            "changePct": 5.77,
+            "score": 75.1,
+            "rawZ": 1.504,
+            "completeness": 1,
+            "riskGauge": 5,
             "entry": {
-              "low": 512.88,
-              "high": 524.89
+              "low": 227.92,
+              "high": 235.93
             },
-            "stop": 489.78,
+            "stop": 212.52,
             "targets": {
-              "conservative": 535.98,
-              "base": 550.76,
-              "bull": 572.94
+              "conservative": 243.32,
+              "base": 253.18,
+              "bull": 267.96
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
             "maxHoldSessions": 5,
-            "catalyst": "Ulta Beauty (ULTA) Sales Jumped 8.9%, but Space NK Pressured Gross Margin. Is the Deal Paying Off?",
+            "catalyst": "Is It Too Late to Buy CrowdStrike Stock After Its 20% Surge? Plus 6 related stories.",
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 2.873,
-                "z": 3
+                "raw": 2.325,
+                "z": 2.274
               },
               "gapQuality": {
-                "raw": 0.054,
-                "z": 0.144
+                "raw": 0.299,
+                "z": 3
+              },
+              "newsSentiment": {
+                "raw": 0.321,
+                "z": 0.422
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.996,
+                "z": 0.918
+              }
+            },
+            "sparkline": [
+              191.15,
+              188.42,
+              183.42,
+              183.28,
+              180.11,
+              181.8,
+              179.38,
+              185.22,
+              190.86,
+              202.54,
+              211.22,
+              209.86,
+              207.39,
+              214.42,
+              225.16,
+              221.9,
+              221.78,
+              225.53,
+              216.95,
+              213.9,
+              212.92,
+              201.63,
+              190.34,
+              191.95,
+              190.68,
+              185.38,
+              189.18,
+              227.96,
+              218.4,
+              231
+            ],
+            "newsCount": 2,
+            "sentiment": 0.321,
+            "flags": []
+          },
+          {
+            "rank": 6,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "FANG",
+            "name": "Diamondback Energy, Inc.",
+            "market": "US",
+            "sector": "Energy",
+            "currency": "USD",
+            "price": 200.48,
+            "changePct": 1.42,
+            "score": 74.5,
+            "rawZ": 1.471,
+            "completeness": 0.8,
+            "riskGauge": 3,
+            "entry": {
+              "low": 199.01,
+              "high": 202.84
+            },
+            "stop": 191.63,
+            "targets": {
+              "conservative": 206.38,
+              "base": 211.1,
+              "bull": 218.17
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 2.132,
+                "z": 1.802
+              },
+              "gapQuality": {
+                "raw": 0.326,
+                "z": 3
               },
               "newsSentiment": {
                 "raw": null,
@@ -438,41 +572,41 @@
                 "z": 0
               },
               "trendPosition": {
-                "raw": 0.245,
-                "z": -0.091
+                "raw": 0.451,
+                "z": 0.241
               }
             },
             "sparkline": [
-              488.08,
-              489.47,
-              483.52,
-              477.96,
-              475.36,
-              480.51,
-              501.52,
-              508.09,
-              516.73,
-              512.83,
-              534.41,
-              543.86,
-              539.47,
-              538.79,
-              565.15,
-              548.66,
-              541.35,
-              531.89,
-              515.57,
-              510.75,
-              493.33,
-              516.74,
-              527.85,
-              515.14,
-              521.46,
-              538.76,
-              537.22,
-              543.19,
-              540.1,
-              517.5
+              198.71,
+              201.91,
+              204.36,
+              203.56,
+              194.73,
+              189.27,
+              198.04,
+              198.68,
+              201.84,
+              197.66,
+              190.82,
+              185.15,
+              188.59,
+              187.01,
+              197.88,
+              200.61,
+              199.74,
+              199.51,
+              202.47,
+              206.29,
+              210.02,
+              208.55,
+              211.02,
+              210.72,
+              205.6,
+              199.89,
+              199.84,
+              200.52,
+              197.67,
+              200.48
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -481,29 +615,299 @@
             ]
           },
           {
-            "rank": 6,
-            "movement": 4,
-            "heldSessions": 4,
+            "rank": 7,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "NVT",
+            "name": "nVent Electric plc",
+            "market": "US",
+            "sector": "Industrials",
+            "currency": "USD",
+            "price": 150.75,
+            "changePct": 1.53,
+            "score": 74.1,
+            "rawZ": 1.444,
+            "completeness": 0.8,
+            "riskGauge": 5,
+            "entry": {
+              "low": 148.8,
+              "high": 153.87
+            },
+            "stop": 139.03,
+            "targets": {
+              "conservative": 158.56,
+              "base": 164.81,
+              "bull": 174.18
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 6.562,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0.185,
+                "z": 1.921
+              },
+              "newsSentiment": {
+                "raw": null,
+                "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": -0.436,
+                "z": -0.861
+              }
+            },
+            "sparkline": [
+              160.47,
+              158.26,
+              158.57,
+              151.79,
+              149.29,
+              141.75,
+              133.61,
+              144.8,
+              153.83,
+              159.41,
+              162.24,
+              162.04,
+              163.3,
+              164.69,
+              162.33,
+              167.16,
+              171.16,
+              170.01,
+              171.39,
+              177.21,
+              164.63,
+              156.88,
+              154.3,
+              151.98,
+              153.35,
+              151.48,
+              155.23,
+              155.55,
+              148.48,
+              150.75
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 8,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "CNC",
+            "name": "CENTENE CORP",
+            "market": "US",
+            "sector": "Financials",
+            "currency": "USD",
+            "price": 64.34,
+            "changePct": -0.63,
+            "score": 73.9,
+            "rawZ": 1.433,
+            "completeness": 0.8,
+            "riskGauge": 4,
+            "entry": {
+              "low": 63.8,
+              "high": 65.21
+            },
+            "stop": 61.08,
+            "targets": {
+              "conservative": 66.51,
+              "base": 68.25,
+              "bull": 70.86
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 2.459,
+                "z": 2.587
+              },
+              "gapQuality": {
+                "raw": 0.168,
+                "z": 1.748
+              },
+              "newsSentiment": {
+                "raw": null,
+                "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.367,
+                "z": 0.136
+              }
+            },
+            "sparkline": [
+              67.59,
+              65.89,
+              63.74,
+              63.41,
+              64.08,
+              63.91,
+              61.82,
+              60.84,
+              62.22,
+              63.76,
+              64.07,
+              66.99,
+              64.2,
+              65.77,
+              66.57,
+              64.88,
+              67.07,
+              66.04,
+              67.47,
+              64.41,
+              65.22,
+              64.7,
+              64.14,
+              65.02,
+              65.65,
+              65,
+              65.47,
+              65.33,
+              64.75,
+              64.34
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 9,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "TYL",
+            "name": "TYLER TECHNOLOGIES INC",
+            "market": "US",
+            "sector": "Information Technology",
+            "currency": "USD",
+            "price": 372.22,
+            "changePct": -1.51,
+            "score": 71.1,
+            "rawZ": 1.268,
+            "completeness": 0.8,
+            "riskGauge": 4,
+            "entry": {
+              "low": 368.78,
+              "high": 377.72
+            },
+            "stop": 351.6,
+            "targets": {
+              "conservative": 385.96,
+              "base": 396.96,
+              "bull": 413.45
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 6.871,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0,
+                "z": 0
+              },
+              "newsSentiment": {
+                "raw": null,
+                "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.869,
+                "z": 0.76
+              }
+            },
+            "sparkline": [
+              299.74,
+              284.32,
+              288.16,
+              297.15,
+              315.88,
+              333.35,
+              333.5,
+              323.31,
+              309.6,
+              305.54,
+              313.33,
+              306.58,
+              306.33,
+              312.45,
+              318.63,
+              322.93,
+              317.64,
+              328.95,
+              328.64,
+              320.48,
+              332.21,
+              346.88,
+              348.14,
+              350.73,
+              355.79,
+              350.06,
+              352.65,
+              369.88,
+              377.94,
+              372.22
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 10,
+            "movement": -4,
+            "heldSessions": 5,
             "ticker": "MRNA",
             "name": "Moderna, Inc.",
             "market": "US",
             "sector": "Health Care",
             "currency": "USD",
-            "price": 137.99,
-            "changePct": -3.35,
-            "score": 68.6,
-            "rawZ": 1.114,
+            "price": 140.34,
+            "changePct": 1.7,
+            "score": 70.7,
+            "rawZ": 1.241,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
-              "low": 134.33,
-              "high": 143.85
+              "low": 136.76,
+              "high": 146.07
             },
-            "stop": 116.03,
+            "stop": 118.84,
             "targets": {
-              "conservative": 152.63,
-              "base": 164.35,
-              "bull": 181.92
+              "conservative": 154.68,
+              "base": 166.14,
+              "bull": 183.35
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -512,28 +916,27 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 4.797,
+                "raw": 3.305,
                 "z": 3
               },
               "gapQuality": {
                 "raw": 0,
-                "z": -0.674
+                "z": 0
               },
               "newsSentiment": {
-                "raw": 0.594,
-                "z": 1.121
+                "raw": 0.576,
+                "z": 1.058
               },
               "volatilityExpansion": {
                 "raw": 0,
                 "z": 0
               },
               "trendPosition": {
-                "raw": 0.95,
-                "z": 0.833
+                "raw": 0.953,
+                "z": 0.865
               }
             },
             "sparkline": [
-              59.49,
               59.66,
               58.07,
               57.02,
@@ -562,404 +965,56 @@
               158.83,
               149.66,
               142.77,
-              137.99
+              137.99,
+              140.34
             ],
             "newsCount": 1,
-            "sentiment": 0.594,
+            "sentiment": 0.576,
             "flags": []
-          },
-          {
-            "rank": 7,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "TTWO",
-            "name": "TAKE TWO INTERACTIVE SOFTWARE INC",
-            "market": "US",
-            "sector": "Information Technology",
-            "currency": "USD",
-            "price": 235.39,
-            "changePct": 1.03,
-            "score": 68.6,
-            "rawZ": 1.114,
-            "completeness": 0.8,
-            "riskGauge": 3,
-            "entry": {
-              "low": 233.28,
-              "high": 238.77
-            },
-            "stop": 222.73,
-            "targets": {
-              "conservative": 243.83,
-              "base": 250.58,
-              "bull": 260.71
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 1.866,
-                "z": 0.984
-              },
-              "gapQuality": {
-                "raw": 0.415,
-                "z": 3
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.293,
-                "z": -0.027
-              }
-            },
-            "sparkline": [
-              238.98,
-              235.93,
-              233.58,
-              230.25,
-              231.65,
-              243.95,
-              247.62,
-              246.43,
-              247.43,
-              242.92,
-              245.15,
-              240.22,
-              234.91,
-              232.47,
-              246.5,
-              253.57,
-              250.5,
-              243,
-              241.91,
-              246.95,
-              241.61,
-              242.4,
-              237.04,
-              240.15,
-              239.62,
-              233.5,
-              232.93,
-              233.45,
-              233,
-              235.39
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 8,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "HDB",
-            "name": "HDFC BANK LTD",
-            "market": "US",
-            "sector": "Financials",
-            "currency": "USD",
-            "price": 23.08,
-            "changePct": 2.76,
-            "score": 67.2,
-            "rawZ": 1.031,
-            "completeness": 1,
-            "riskGauge": 1,
-            "entry": {
-              "low": 22.96,
-              "high": 23.27
-            },
-            "stop": 22.36,
-            "targets": {
-              "conservative": 23.56,
-              "base": 23.95,
-              "bull": 24.53
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "India’s largest private lender HDFC Bank sees shares rise after CEO announces surprise exit Plus 1 related story.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 2.122,
-                "z": 1.593
-              },
-              "gapQuality": {
-                "raw": 0.355,
-                "z": 3
-              },
-              "newsSentiment": {
-                "raw": 0.378,
-                "z": 0.602
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": -0.538,
-                "z": -1.116
-              }
-            },
-            "sparkline": [
-              23.6,
-              23.73,
-              23.18,
-              23.13,
-              23.23,
-              23.22,
-              23.58,
-              24.03,
-              24.14,
-              23.93,
-              24.1,
-              23.89,
-              23.85,
-              23.77,
-              23.63,
-              23.45,
-              23.29,
-              23.11,
-              23.1,
-              23.37,
-              23.15,
-              23.17,
-              23.16,
-              23.34,
-              23.6,
-              23.54,
-              23.63,
-              23.17,
-              22.46,
-              23.08
-            ],
-            "newsCount": 1,
-            "sentiment": 0.378,
-            "flags": []
-          },
-          {
-            "rank": 9,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "EIX",
-            "name": "EDISON INTERNATIONAL",
-            "market": "US",
-            "sector": "Utilities",
-            "currency": "USD",
-            "price": 70.17,
-            "changePct": -4.76,
-            "score": 66.7,
-            "rawZ": 1.002,
-            "completeness": 1,
-            "riskGauge": 3,
-            "entry": {
-              "low": 69.53,
-              "high": 71.2
-            },
-            "stop": 66.3,
-            "targets": {
-              "conservative": 72.75,
-              "base": 74.81,
-              "bull": 77.9
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "Edison International options activity surges as wildfire liability fears weigh on EIX Plus 1 related story.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 2.424,
-                "z": 2.251
-              },
-              "gapQuality": {
-                "raw": 0.167,
-                "z": 1.836
-              },
-              "newsSentiment": {
-                "raw": 0.381,
-                "z": 0.612
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": -0.518,
-                "z": -1.089
-              }
-            },
-            "sparkline": [
-              77.25,
-              78.17,
-              80.38,
-              79.64,
-              79.75,
-              78.64,
-              79.79,
-              78.63,
-              78.73,
-              73.37,
-              71.46,
-              70.69,
-              68.32,
-              67.23,
-              68.62,
-              67.83,
-              69.89,
-              69.4,
-              70.68,
-              71.41,
-              71.3,
-              73.69,
-              73.44,
-              74.66,
-              71.59,
-              73.97,
-              74.78,
-              74.51,
-              73.68,
-              70.17
-            ],
-            "newsCount": 1,
-            "sentiment": 0.381,
-            "flags": []
-          },
-          {
-            "rank": 10,
-            "movement": -5,
-            "heldSessions": 2,
-            "ticker": "RBRK",
-            "name": "Rubrik, Inc.",
-            "market": "US",
-            "sector": "Information Technology",
-            "currency": "USD",
-            "price": 93.05,
-            "changePct": -13.05,
-            "score": 66.3,
-            "rawZ": 0.975,
-            "completeness": 0.8,
-            "riskGauge": 5,
-            "entry": {
-              "low": 91.49,
-              "high": 95.55
-            },
-            "stop": 83.67,
-            "targets": {
-              "conservative": 99.3,
-              "base": 104.31,
-              "bull": 111.81
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "Rubrik (RBRK) Grew Revenue 38%, but Free Cash Flow Margin Fell to 15%. Is Growth Becoming Less Cash-Efficient? Plus 1 related story.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 3.772,
-                "z": 3
-              },
-              "gapQuality": {
-                "raw": 0,
-                "z": -0.674
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.392,
-                "z": 0.102
-              }
-            },
-            "sparkline": [
-              78.18,
-              75.8,
-              73.69,
-              72.63,
-              73.24,
-              74.82,
-              71.45,
-              71.91,
-              71.58,
-              72.36,
-              74.74,
-              80.99,
-              84.81,
-              84.6,
-              90.07,
-              97.91,
-              96.93,
-              96.73,
-              105.09,
-              102.23,
-              101.02,
-              100.55,
-              99.78,
-              97.52,
-              100.09,
-              98.04,
-              92.65,
-              96.13,
-              107.02,
-              93.05
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
           }
         ],
-        "justMissed": []
+        "justMissed": [
+          {
+            "ticker": "PBR",
+            "name": "PETROBRAS - PETROLEO BRASILEIRO SA",
+            "score": 73.4,
+            "displacedBy": "sector_cap"
+          }
+        ]
       },
       "mid_term": {
         "market": "US",
         "horizon": "mid_term",
-        "asOf": "2026-08-29",
-        "turnover30d": 0.1,
+        "asOf": "2026-09-01",
+        "turnover30d": 0.11000000000000001,
         "sampleWarning": true,
         "stoppedOut": [],
         "emptyReason": null,
         "rows": [
           {
             "rank": 1,
-            "movement": 1,
-            "heldSessions": 6,
+            "movement": 0,
+            "heldSessions": 7,
             "ticker": "INTU",
             "name": "INTUIT INC.",
             "market": "US",
             "sector": "Information Technology",
             "currency": "USD",
-            "price": 358.06,
-            "changePct": 2.89,
-            "score": 80,
-            "rawZ": 1.8,
+            "price": 359.3,
+            "changePct": 0.35,
+            "score": 79.1,
+            "rawZ": 1.747,
             "completeness": 0.8,
             "riskGauge": 4,
             "entry": {
-              "low": 348.65,
-              "high": 362.77
+              "low": 350.1,
+              "high": 363.9
             },
-            "stop": 318.83,
+            "stop": 320.96,
             "targets": {
-              "conservative": 397.29,
-              "base": 428.67,
-              "bull": 467.9
+              "conservative": 397.64,
+              "base": 428.31,
+              "bull": 466.65
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -968,8 +1023,8 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.494,
-                "z": 0.203
+                "raw": 0.495,
+                "z": 0.266
               },
               "fundamentalMomentum": {
                 "raw": 0.825,
@@ -980,16 +1035,15 @@
                 "z": null
               },
               "moneyFlow": {
-                "raw": 0.434,
-                "z": 2.505
+                "raw": 0.365,
+                "z": 2.353
               },
               "sectorStrength": {
-                "raw": 0.192,
-                "z": 1.857
+                "raw": 0.199,
+                "z": 1.653
               }
             },
             "sparkline": [
-              293.82,
               289.92,
               284.47,
               281.53,
@@ -1018,7 +1072,8 @@
               357.46,
               345.88,
               348,
-              358.06
+              358.06,
+              359.3
             ],
             "newsCount": 1,
             "sentiment": 0,
@@ -1028,28 +1083,28 @@
           },
           {
             "rank": 2,
-            "movement": -1,
-            "heldSessions": 11,
+            "movement": 0,
+            "heldSessions": 12,
             "ticker": "PLTR",
             "name": "Palantir Technologies Inc.",
             "market": "US",
             "sector": "Information Technology",
             "currency": "USD",
-            "price": 186.29,
-            "changePct": 0.19,
-            "score": 79.3,
-            "rawZ": 1.757,
+            "price": 186.38,
+            "changePct": 0.05,
+            "score": 77.8,
+            "rawZ": 1.669,
             "completeness": 1,
             "riskGauge": 4,
             "entry": {
-              "low": 181.66,
-              "high": 188.6
+              "low": 181.91,
+              "high": 188.62
             },
-            "stop": 149.98,
+            "stop": 151.38,
             "targets": {
-              "conservative": 205.56,
-              "base": 220.98,
-              "bull": 240.26
+              "conservative": 205.02,
+              "base": 219.93,
+              "bull": 238.57
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -1059,27 +1114,26 @@
             "factors": {
               "trendAlignment": {
                 "raw": 0.689,
-                "z": 0.906
+                "z": 0.827
               },
               "fundamentalMomentum": {
                 "raw": 0.585,
                 "z": 3
               },
               "earningsDrift": {
-                "raw": 0.115,
+                "raw": 0.107,
                 "z": 3
               },
               "moneyFlow": {
-                "raw": -0.13,
-                "z": -0.045
+                "raw": -0.142,
+                "z": -0.257
               },
               "sectorStrength": {
-                "raw": 0.192,
-                "z": 1.857
+                "raw": 0.199,
+                "z": 1.653
               }
             },
             "sparkline": [
-              134.85,
               132.66,
               124.57,
               123.37,
@@ -1108,7 +1162,8 @@
               172.73,
               177.5,
               185.93,
-              186.29
+              186.29,
+              186.38
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -1116,28 +1171,28 @@
           },
           {
             "rank": 3,
-            "movement": "NEW",
-            "heldSessions": 1,
+            "movement": 0,
+            "heldSessions": 2,
             "ticker": "HALO",
             "name": "HALOZYME THERAPEUTICS, INC.",
             "market": "US",
             "sector": "Health Care",
             "currency": "USD",
-            "price": 105.35,
-            "changePct": -1.47,
-            "score": 77.7,
-            "rawZ": 1.66,
+            "price": 106.49,
+            "changePct": 1.08,
+            "score": 76.1,
+            "rawZ": 1.567,
             "completeness": 1,
-            "riskGauge": 2,
+            "riskGauge": 3,
             "entry": {
-              "low": 103.63,
-              "high": 106.21
+              "low": 104.74,
+              "high": 107.36
             },
-            "stop": 88.77,
+            "stop": 89.39,
             "targets": {
-              "conservative": 112.53,
-              "base": 118.28,
-              "bull": 125.46
+              "conservative": 113.78,
+              "base": 119.61,
+              "bull": 126.9
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -1146,28 +1201,27 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.688,
-                "z": 0.903
+                "raw": 0.712,
+                "z": 0.894
               },
               "fundamentalMomentum": {
                 "raw": 0.538,
                 "z": 3
               },
               "earningsDrift": {
-                "raw": 0.121,
+                "raw": 0.113,
                 "z": 3
               },
               "moneyFlow": {
-                "raw": 0.062,
-                "z": 0.966
+                "raw": -0.002,
+                "z": 0.465
               },
               "sectorStrength": {
-                "raw": -0.021,
+                "raw": -0.016,
                 "z": 0
               }
             },
             "sparkline": [
-              77.09,
               78.6,
               77.82,
               80.84,
@@ -1196,7 +1250,8 @@
               109.32,
               107.06,
               106.92,
-              105.35
+              105.35,
+              106.49
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -1204,116 +1259,28 @@
           },
           {
             "rank": 4,
-            "movement": -1,
-            "heldSessions": 6,
-            "ticker": "ABNB",
-            "name": "Airbnb, Inc.",
-            "market": "US",
-            "sector": "Industrials",
-            "currency": "USD",
-            "price": 189.43,
-            "changePct": 2.73,
-            "score": 76.4,
-            "rawZ": 1.585,
-            "completeness": 1,
-            "riskGauge": 3,
-            "entry": {
-              "low": 186.12,
-              "high": 191.09
-            },
-            "stop": 160.9,
-            "targets": {
-              "conservative": 203.24,
-              "base": 214.29,
-              "bull": 228.1
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.736,
-                "z": 1.035
-              },
-              "fundamentalMomentum": {
-                "raw": 0.574,
-                "z": 3
-              },
-              "earningsDrift": {
-                "raw": 0.132,
-                "z": 3
-              },
-              "moneyFlow": {
-                "raw": 0.054,
-                "z": 0.927
-              },
-              "sectorStrength": {
-                "raw": -0.099,
-                "z": -0.674
-              }
-            },
-            "sparkline": [
-              144.94,
-              144.1,
-              140.05,
-              137.57,
-              141.1,
-              146.86,
-              153.11,
-              153.01,
-              152.08,
-              151.52,
-              150.64,
-              149.92,
-              152.49,
-              151.64,
-              178.07,
-              184.7,
-              184.98,
-              180.1,
-              185.13,
-              184.06,
-              179.29,
-              183.25,
-              186.39,
-              185,
-              187.3,
-              190.21,
-              190.5,
-              188.07,
-              184.4,
-              189.43
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": []
-          },
-          {
-            "rank": 5,
-            "movement": 0,
-            "heldSessions": 6,
+            "movement": 1,
+            "heldSessions": 7,
             "ticker": "BMNR",
             "name": "BITMINE IMMERSION TECHNOLOGIES, INC.",
             "market": "US",
             "sector": "Financials",
             "currency": "USD",
-            "price": 23.8,
-            "changePct": -7.14,
-            "score": 73.8,
-            "rawZ": 1.428,
+            "price": 25.32,
+            "changePct": 6.39,
+            "score": 73.2,
+            "rawZ": 1.39,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
-              "low": 22.95,
-              "high": 24.23
+              "low": 24.45,
+              "high": 25.75
             },
-            "stop": 18.44,
+            "stop": 18.66,
             "targets": {
-              "conservative": 27.34,
-              "base": 30.18,
-              "bull": 33.72
+              "conservative": 28.93,
+              "base": 31.81,
+              "bull": 35.42
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -1322,28 +1289,27 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.593,
-                "z": 0.558
+                "raw": 0.6,
+                "z": 0.57
               },
               "fundamentalMomentum": {
                 "raw": 1.737,
                 "z": 3
               },
               "earningsDrift": {
-                "raw": 0.016,
-                "z": 0.589
+                "raw": 0.015,
+                "z": 0.587
               },
               "moneyFlow": {
-                "raw": 0.388,
-                "z": 2.505
+                "raw": 0.41,
+                "z": 2.353
               },
               "sectorStrength": {
                 "raw": 0.024,
-                "z": 0.396
+                "z": 0.306
               }
             },
             "sparkline": [
-              16.63,
               17.23,
               17.74,
               16.59,
@@ -1372,36 +1338,37 @@
               24.82,
               24.91,
               25.63,
-              23.8
+              23.8,
+              25.32
             ],
             "newsCount": 0,
             "sentiment": null,
             "flags": []
           },
           {
-            "rank": 6,
-            "movement": -2,
-            "heldSessions": 6,
-            "ticker": "MP",
-            "name": "MP Materials Corp. / DE",
+            "rank": 5,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "HNGE",
+            "name": "Hinge Health, Inc.",
             "market": "US",
-            "sector": "Materials",
+            "sector": "Information Technology",
             "currency": "USD",
-            "price": 56.13,
-            "changePct": -4.91,
-            "score": 72.3,
-            "rawZ": 1.337,
+            "price": 92.56,
+            "changePct": 5.96,
+            "score": 73.1,
+            "rawZ": 1.385,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
-              "low": 54,
-              "high": 57.2
+              "low": 89.7,
+              "high": 93.99
             },
-            "stop": 47.24,
+            "stop": 79.06,
             "targets": {
-              "conservative": 65.02,
-              "base": 72.13,
-              "bull": 81.01
+              "conservative": 104.49,
+              "base": 114.03,
+              "bull": 125.96
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -1410,28 +1377,203 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.427,
-                "z": -0.043
+                "raw": 0.636,
+                "z": 0.675
+              },
+              "fundamentalMomentum": {
+                "raw": 0.316,
+                "z": 1.623
+              },
+              "earningsDrift": {
+                "raw": 0.074,
+                "z": 2.801
+              },
+              "moneyFlow": {
+                "raw": -0.037,
+                "z": 0.284
+              },
+              "sectorStrength": {
+                "raw": 0.199,
+                "z": 1.653
+              }
+            },
+            "sparkline": [
+              84.35,
+              79.08,
+              76.69,
+              74.31,
+              75.11,
+              75.25,
+              74.06,
+              75.11,
+              74.71,
+              77.65,
+              79.42,
+              80.79,
+              80.08,
+              89.33,
+              91.57,
+              89.01,
+              86.32,
+              87.42,
+              88.49,
+              87.87,
+              88.24,
+              88.46,
+              85.62,
+              88.42,
+              89.98,
+              89.87,
+              90.5,
+              92.85,
+              87.35,
+              92.56
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": []
+          },
+          {
+            "rank": 6,
+            "movement": -2,
+            "heldSessions": 7,
+            "ticker": "ABNB",
+            "name": "Airbnb, Inc.",
+            "market": "US",
+            "sector": "Industrials",
+            "currency": "USD",
+            "price": 183.22,
+            "changePct": -3.28,
+            "score": 73.1,
+            "rawZ": 1.384,
+            "completeness": 1,
+            "riskGauge": 3,
+            "entry": {
+              "low": 179.82,
+              "high": 184.92
+            },
+            "stop": 161.59,
+            "targets": {
+              "conservative": 197.4,
+              "base": 208.74,
+              "bull": 222.92
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 0.594,
+                "z": 0.552
+              },
+              "fundamentalMomentum": {
+                "raw": 0.574,
+                "z": 3
+              },
+              "earningsDrift": {
+                "raw": 0.124,
+                "z": 3
+              },
+              "moneyFlow": {
+                "raw": 0.001,
+                "z": 0.481
+              },
+              "sectorStrength": {
+                "raw": -0.103,
+                "z": -0.674
+              }
+            },
+            "sparkline": [
+              144.1,
+              140.05,
+              137.57,
+              141.1,
+              146.86,
+              153.11,
+              153.01,
+              152.08,
+              151.52,
+              150.64,
+              149.92,
+              152.49,
+              151.64,
+              178.07,
+              184.7,
+              184.98,
+              180.1,
+              185.13,
+              184.06,
+              179.29,
+              183.25,
+              186.39,
+              185,
+              187.3,
+              190.21,
+              190.5,
+              188.07,
+              184.4,
+              189.43,
+              183.22
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": []
+          },
+          {
+            "rank": 7,
+            "movement": -1,
+            "heldSessions": 7,
+            "ticker": "MP",
+            "name": "MP Materials Corp. / DE",
+            "market": "US",
+            "sector": "Materials",
+            "currency": "USD",
+            "price": 54.75,
+            "changePct": -2.46,
+            "score": 71,
+            "rawZ": 1.259,
+            "completeness": 1,
+            "riskGauge": 5,
+            "entry": {
+              "low": 52.69,
+              "high": 55.78
+            },
+            "stop": 46.17,
+            "targets": {
+              "conservative": 63.33,
+              "base": 70.2,
+              "bull": 78.78
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 0.389,
+                "z": -0.041
               },
               "fundamentalMomentum": {
                 "raw": 0.525,
                 "z": 3
               },
               "earningsDrift": {
-                "raw": 0.088,
+                "raw": 0.082,
                 "z": 3
               },
               "moneyFlow": {
-                "raw": 0.035,
-                "z": 0.823
+                "raw": -0.01,
+                "z": 0.425
               },
               "sectorStrength": {
-                "raw": -0.068,
-                "z": -0.406
+                "raw": -0.074,
+                "z": -0.447
               }
             },
             "sparkline": [
-              45.7,
               46.3,
               45.68,
               44.65,
@@ -1460,212 +1602,37 @@
               60.17,
               59.31,
               59.03,
-              56.13
+              56.13,
+              54.75
             ],
             "newsCount": 0,
             "sentiment": null,
-            "flags": []
-          },
-          {
-            "rank": 7,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "MRNA",
-            "name": "Moderna, Inc.",
-            "market": "US",
-            "sector": "Health Care",
-            "currency": "USD",
-            "price": 137.99,
-            "changePct": -3.35,
-            "score": 70.9,
-            "rawZ": 1.251,
-            "completeness": 1,
-            "riskGauge": 5,
-            "entry": {
-              "low": 129.2,
-              "high": 142.38
-            },
-            "stop": 76.23,
-            "targets": {
-              "conservative": 174.6,
-              "base": 203.88,
-              "bull": 240.49
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "23 best-performing stocks of August, as the software industry continues its recovery Plus 4 related stories.",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.619,
-                "z": 0.653
-              },
-              "fundamentalMomentum": {
-                "raw": 0.579,
-                "z": 3
-              },
-              "earningsDrift": {
-                "raw": -0.004,
-                "z": -0.117
-              },
-              "moneyFlow": {
-                "raw": 0.49,
-                "z": 2.505
-              },
-              "sectorStrength": {
-                "raw": -0.021,
-                "z": 0
-              }
-            },
-            "sparkline": [
-              59.49,
-              59.66,
-              58.07,
-              57.02,
-              54.07,
-              55.63,
-              55.81,
-              54.49,
-              57.92,
-              54.82,
-              55.14,
-              56.99,
-              56.26,
-              53.86,
-              59.17,
-              59.81,
-              60.57,
-              63.67,
-              63.65,
-              63.32,
-              64.46,
-              62.96,
-              174.38,
-              133.32,
-              145.13,
-              138.89,
-              158.83,
-              149.66,
-              142.77,
-              137.99
-            ],
-            "newsCount": 1,
-            "sentiment": 0.594,
             "flags": []
           },
           {
             "rank": 8,
-            "movement": -1,
-            "heldSessions": 6,
-            "ticker": "CDE",
-            "name": "Coeur Mining, Inc.",
-            "market": "US",
-            "sector": "Materials",
-            "currency": "USD",
-            "price": 21.13,
-            "changePct": -4.86,
-            "score": 70.4,
-            "rawZ": 1.225,
-            "completeness": 1,
-            "riskGauge": 5,
-            "entry": {
-              "low": 20.47,
-              "high": 21.46
-            },
-            "stop": 17.61,
-            "targets": {
-              "conservative": 23.87,
-              "base": 26.07,
-              "bull": 28.82
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "AVDV, CDE, CSTM, BWLP: ETF Inflow Alert",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.554,
-                "z": 0.418
-              },
-              "fundamentalMomentum": {
-                "raw": 0.999,
-                "z": 3
-              },
-              "earningsDrift": {
-                "raw": 0.033,
-                "z": 1.188
-              },
-              "moneyFlow": {
-                "raw": 0.178,
-                "z": 1.58
-              },
-              "sectorStrength": {
-                "raw": -0.068,
-                "z": -0.406
-              }
-            },
-            "sparkline": [
-              14.16,
-              15.3,
-              15.84,
-              15.24,
-              15.13,
-              15.36,
-              14.91,
-              14.63,
-              15.4,
-              14.91,
-              15.56,
-              16.21,
-              17.43,
-              15.65,
-              17.39,
-              18.15,
-              18.58,
-              18.8,
-              18.45,
-              18.81,
-              19.31,
-              18.51,
-              20.93,
-              21.11,
-              20.97,
-              20.88,
-              21.59,
-              21.44,
-              22.21,
-              21.13
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": []
-          },
-          {
-            "rank": 9,
-            "movement": 0,
-            "heldSessions": 6,
+            "movement": 1,
+            "heldSessions": 7,
             "ticker": "PSX",
             "name": "Phillips 66",
             "market": "US",
             "sector": "Energy",
             "currency": "USD",
-            "price": 244.01,
-            "changePct": 1.75,
-            "score": 70.3,
-            "rawZ": 1.221,
+            "price": 246.58,
+            "changePct": 1.05,
+            "score": 70.9,
+            "rawZ": 1.254,
             "completeness": 1,
             "riskGauge": 3,
             "entry": {
-              "low": 239.91,
-              "high": 246.06
+              "low": 242.46,
+              "high": 248.64
             },
-            "stop": 208.67,
+            "stop": 210,
             "targets": {
-              "conservative": 261.08,
-              "base": 274.73,
-              "bull": 291.79
+              "conservative": 263.76,
+              "base": 277.5,
+              "bull": 294.68
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -1674,28 +1641,27 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.743,
-                "z": 1.035
+                "raw": 0.74,
+                "z": 0.976
               },
               "fundamentalMomentum": {
                 "raw": 0.71,
                 "z": 3
               },
               "earningsDrift": {
-                "raw": 0.005,
-                "z": 0.182
+                "raw": 0.004,
+                "z": 0.181
               },
               "moneyFlow": {
-                "raw": 0.145,
-                "z": 1.407
+                "raw": 0.192,
+                "z": 1.467
               },
               "sectorStrength": {
-                "raw": -0.012,
-                "z": 0.081
+                "raw": 0.027,
+                "z": 0.333
               }
             },
             "sparkline": [
-              207.7,
               211.15,
               210.29,
               205.89,
@@ -1724,114 +1690,196 @@
               236.9,
               242.23,
               239.81,
-              244.01
+              244.01,
+              246.58
             ],
             "newsCount": 0,
             "sentiment": null,
             "flags": []
           },
           {
-            "rank": 10,
-            "movement": -4,
-            "heldSessions": 6,
-            "ticker": "U",
-            "name": "Unity Software Inc.",
+            "rank": 9,
+            "movement": -2,
+            "heldSessions": 2,
+            "ticker": "MRNA",
+            "name": "Moderna, Inc.",
             "market": "US",
-            "sector": "Information Technology",
+            "sector": "Health Care",
             "currency": "USD",
-            "price": 43.31,
-            "changePct": -0.41,
-            "score": 69.6,
-            "rawZ": 1.178,
+            "price": 140.34,
+            "changePct": 1.7,
+            "score": 70.4,
+            "rawZ": 1.222,
             "completeness": 1,
-            "riskGauge": 4,
+            "riskGauge": 5,
             "entry": {
-              "low": 42.23,
-              "high": 43.85
+              "low": 131.74,
+              "high": 144.64
             },
-            "stop": 36.36,
+            "stop": 78.61,
             "targets": {
-              "conservative": 47.79,
-              "base": 51.37,
-              "bull": 55.85
+              "conservative": 176.18,
+              "base": 204.85,
+              "bull": 240.69
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
             "maxHoldSessions": 45,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalyst": "23 best-performing stocks of August, as the software industry continues its recovery Plus 4 related stories.",
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.492,
-                "z": 0.195
+                "raw": 0.627,
+                "z": 0.647
               },
               "fundamentalMomentum": {
-                "raw": 0.21,
-                "z": 0.781
-              },
-              "earningsDrift": {
-                "raw": 0.128,
+                "raw": 0.579,
                 "z": 3
               },
+              "earningsDrift": {
+                "raw": -0.004,
+                "z": -0.118
+              },
               "moneyFlow": {
-                "raw": -0.039,
-                "z": 0.436
+                "raw": 0.501,
+                "z": 2.353
               },
               "sectorStrength": {
-                "raw": 0.192,
-                "z": 1.857
+                "raw": -0.016,
+                "z": 0
               }
             },
             "sparkline": [
-              29.81,
-              29.87,
-              29.27,
-              28.94,
-              28.62,
-              30.44,
-              31.83,
-              32.04,
-              33.34,
-              31.71,
-              33.38,
-              35.22,
-              35.47,
-              40.81,
-              43,
-              43.1,
-              43.87,
-              44.53,
-              45.79,
-              46.25,
-              45.45,
-              46.74,
-              47.11,
-              46.54,
-              46.93,
-              46.16,
-              44.99,
-              44.38,
-              43.49,
-              43.31
+              59.66,
+              58.07,
+              57.02,
+              54.07,
+              55.63,
+              55.81,
+              54.49,
+              57.92,
+              54.82,
+              55.14,
+              56.99,
+              56.26,
+              53.86,
+              59.17,
+              59.81,
+              60.57,
+              63.67,
+              63.65,
+              63.32,
+              64.46,
+              62.96,
+              174.38,
+              133.32,
+              145.13,
+              138.89,
+              158.83,
+              149.66,
+              142.77,
+              137.99,
+              140.34
+            ],
+            "newsCount": 1,
+            "sentiment": 0.576,
+            "flags": []
+          },
+          {
+            "rank": 10,
+            "movement": -2,
+            "heldSessions": 7,
+            "ticker": "CDE",
+            "name": "Coeur Mining, Inc.",
+            "market": "US",
+            "sector": "Materials",
+            "currency": "USD",
+            "price": 20.78,
+            "changePct": -1.66,
+            "score": 68.9,
+            "rawZ": 1.131,
+            "completeness": 1,
+            "riskGauge": 5,
+            "entry": {
+              "low": 20.13,
+              "high": 21.11
+            },
+            "stop": 17.72,
+            "targets": {
+              "conservative": 23.49,
+              "base": 25.66,
+              "bull": 28.36
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "AVDV, CDE, CSTM, BWLP: ETF Inflow Alert",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 0.505,
+                "z": 0.296
+              },
+              "fundamentalMomentum": {
+                "raw": 0.999,
+                "z": 3
+              },
+              "earningsDrift": {
+                "raw": 0.031,
+                "z": 1.186
+              },
+              "moneyFlow": {
+                "raw": 0.152,
+                "z": 1.261
+              },
+              "sectorStrength": {
+                "raw": -0.074,
+                "z": -0.447
+              }
+            },
+            "sparkline": [
+              15.3,
+              15.84,
+              15.24,
+              15.13,
+              15.36,
+              14.91,
+              14.63,
+              15.4,
+              14.91,
+              15.56,
+              16.21,
+              17.43,
+              15.65,
+              17.39,
+              18.15,
+              18.58,
+              18.8,
+              18.45,
+              18.81,
+              19.31,
+              18.51,
+              20.93,
+              21.11,
+              20.97,
+              20.88,
+              21.59,
+              21.44,
+              22.21,
+              21.13,
+              20.78
             ],
             "newsCount": 0,
             "sentiment": null,
             "flags": []
           }
         ],
-        "justMissed": [
-          {
-            "ticker": "ZETA",
-            "name": "Zeta Global Holdings Corp.",
-            "score": 73.8,
-            "displacedBy": "sector_cap"
-          }
-        ]
+        "justMissed": []
       },
       "long_term": {
         "market": "US",
         "horizon": "long_term",
-        "asOf": "2026-08-29",
+        "asOf": "2026-09-01",
         "turnover30d": 0,
         "sampleWarning": true,
         "stoppedOut": [],
@@ -1840,27 +1888,27 @@
           {
             "rank": 1,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "APP",
             "name": "AppLovin Corp",
             "market": "US",
             "sector": "Information Technology",
             "currency": "USD",
-            "price": 317.76,
-            "changePct": 1.64,
-            "score": 64.5,
-            "rawZ": 0.872,
+            "price": 312.06,
+            "changePct": -1.79,
+            "score": 65.1,
+            "rawZ": 0.907,
             "completeness": 0.8,
             "riskGauge": 5,
             "entry": {
-              "low": 299.58,
-              "high": 326.85
+              "low": 294.35,
+              "high": 320.91
             },
             "stop": null,
             "targets": {
-              "conservative": 415.08,
-              "base": 553.43,
-              "bull": 747.14
+              "conservative": 407.63,
+              "base": 543.51,
+              "bull": 733.73
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -1878,15 +1926,15 @@
               },
               "capitalEfficiency": {
                 "raw": 1.49,
-                "z": 1.04
+                "z": 1.155
               },
               "cashGeneration": {
                 "raw": null,
                 "z": null
               },
               "valuation": {
-                "raw": -1.843,
-                "z": 0.67
+                "raw": -1.832,
+                "z": 0.669
               },
               "fScore": {
                 "raw": 9,
@@ -1894,7 +1942,6 @@
               }
             },
             "sparkline": [
-              424.6,
               428.69,
               412.48,
               398.86,
@@ -1923,7 +1970,8 @@
               310.54,
               308.11,
               312.63,
-              317.76
+              317.76,
+              312.06
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -1933,28 +1981,28 @@
           },
           {
             "rank": 2,
-            "movement": 1,
-            "heldSessions": 11,
+            "movement": 0,
+            "heldSessions": 12,
             "ticker": "UNH",
             "name": "UNITEDHEALTH GROUP INC",
             "market": "US",
             "sector": "Financials",
             "currency": "USD",
-            "price": 392.95,
-            "changePct": -0.53,
-            "score": 62.6,
-            "rawZ": 0.754,
+            "price": 389.41,
+            "changePct": -0.9,
+            "score": 62.5,
+            "rawZ": 0.752,
             "completeness": 0.8,
             "riskGauge": 1,
             "entry": {
-              "low": 383.9,
-              "high": 397.47
+              "low": 380.52,
+              "high": 393.86
             },
             "stop": null,
             "targets": {
-              "conservative": 381.84,
-              "base": 509.12,
-              "bull": 687.31
+              "conservative": 378.4,
+              "base": 504.53,
+              "bull": 681.12
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -1979,8 +2027,8 @@
                 "z": null
               },
               "valuation": {
-                "raw": -1.63,
-                "z": 0.201
+                "raw": -1.625,
+                "z": 0.191
               },
               "fScore": {
                 "raw": 6,
@@ -1988,7 +2036,6 @@
               }
             },
             "sparkline": [
-              421.55,
               436.35,
               431.31,
               423.56,
@@ -2017,38 +2064,39 @@
               396.59,
               401.01,
               395.05,
-              392.95
+              392.95,
+              389.41
             ],
             "newsCount": 1,
-            "sentiment": 0.507,
+            "sentiment": 0.488,
             "flags": [
               "partial_data"
             ]
           },
           {
             "rank": 3,
-            "movement": -1,
-            "heldSessions": 11,
+            "movement": 0,
+            "heldSessions": 12,
             "ticker": "TMUS",
             "name": "T-Mobile US, Inc.",
             "market": "US",
             "sector": "Communication Services",
             "currency": "USD",
-            "price": 181.37,
-            "changePct": 2.04,
-            "score": 62.1,
-            "rawZ": 0.726,
+            "price": 180.44,
+            "changePct": -0.51,
+            "score": 62,
+            "rawZ": 0.722,
             "completeness": 1,
             "riskGauge": 2,
             "entry": {
-              "low": 176.56,
-              "high": 183.78
+              "low": 175.77,
+              "high": 182.78
             },
             "stop": null,
             "targets": {
-              "conservative": 146.77,
-              "base": 195.7,
-              "bull": 264.19
+              "conservative": 146.02,
+              "base": 194.7,
+              "bull": 262.84
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -2070,11 +2118,11 @@
               },
               "cashGeneration": {
                 "raw": 0.363,
-                "z": 1.832
+                "z": 1.834
               },
               "valuation": {
-                "raw": -1.321,
-                "z": 0.559
+                "raw": -1.318,
+                "z": 0.531
               },
               "fScore": {
                 "raw": 7.714,
@@ -2082,7 +2130,6 @@
               }
             },
             "sparkline": [
-              195.64,
               190.77,
               190.94,
               170.42,
@@ -2092,26 +2139,27 @@
               181.52,
               173.34,
               172.71,
-              177.09,
-              177.21,
-              173.46,
-              179.97,
-              177.19,
-              178.2,
+              176.07,
+              176.19,
+              172.46,
+              178.94,
+              176.17,
+              177.18,
+              177.56,
+              176.11,
+              182.33,
+              181.56,
+              179.09,
+              181.7,
+              181.31,
+              180.18,
+              181.99,
+              181.57,
+              180.57,
               178.58,
-              177.13,
-              183.38,
-              182.61,
-              180.12,
-              182.75,
-              182.36,
-              181.22,
-              183.04,
-              182.62,
-              181.61,
-              179.61,
-              177.75,
-              181.37
+              176.73,
+              181.37,
+              180.44
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -2119,28 +2167,122 @@
           },
           {
             "rank": 4,
-            "movement": 0,
-            "heldSessions": 11,
+            "movement": 1,
+            "heldSessions": 12,
+            "ticker": "ADBE",
+            "name": "ADOBE INC.",
+            "market": "US",
+            "sector": "Information Technology",
+            "currency": "USD",
+            "price": 292.79,
+            "changePct": 0.44,
+            "score": 61.4,
+            "rawZ": 0.684,
+            "completeness": 0.8,
+            "riskGauge": 4,
+            "entry": {
+              "low": 282.34,
+              "high": 298.01
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 289.69,
+              "base": 386.26,
+              "bull": 521.45
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 1.131,
+                "z": 0.146
+              },
+              "capitalEfficiency": {
+                "raw": 1.49,
+                "z": 1.155
+              },
+              "cashGeneration": {
+                "raw": null,
+                "z": null
+              },
+              "valuation": {
+                "raw": -1.531,
+                "z": 1.339
+              },
+              "fScore": {
+                "raw": 6,
+                "z": -0.225
+              }
+            },
+            "sparkline": [
+              227.16,
+              218.36,
+              212.17,
+              225.11,
+              237.75,
+              249.18,
+              263.43,
+              247.9,
+              250.41,
+              251.34,
+              257.49,
+              259.32,
+              260.24,
+              265.21,
+              272.96,
+              263.71,
+              258.75,
+              270.49,
+              264.02,
+              254.04,
+              263.14,
+              272.47,
+              272.22,
+              275.3,
+              276.27,
+              273.92,
+              273.47,
+              289.15,
+              291.52,
+              292.79
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 5,
+            "movement": -1,
+            "heldSessions": 12,
             "ticker": "ISRG",
             "name": "INTUITIVE SURGICAL INC",
             "market": "US",
             "sector": "Health Care",
             "currency": "USD",
-            "price": 372.6,
-            "changePct": 1.51,
-            "score": 61.7,
-            "rawZ": 0.704,
+            "price": 376.86,
+            "changePct": 1.14,
+            "score": 60.6,
+            "rawZ": 0.633,
             "completeness": 0.8,
             "riskGauge": 3,
             "entry": {
-              "low": 361.18,
-              "high": 378.31
+              "low": 365.4,
+              "high": 382.59
             },
             "stop": null,
             "targets": {
-              "conservative": 414.28,
-              "base": 552.37,
-              "bull": 745.7
+              "conservative": 419.01,
+              "base": 558.68,
+              "bull": 754.22
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -2154,19 +2296,19 @@
             "factors": {
               "growthQuality": {
                 "raw": 1.447,
-                "z": 2.127
+                "z": 2.007
               },
               "capitalEfficiency": {
                 "raw": 0.84,
-                "z": 0.378
+                "z": 0.296
               },
               "cashGeneration": {
                 "raw": null,
                 "z": null
               },
               "valuation": {
-                "raw": -2.195,
-                "z": -0.735
+                "raw": -2.201,
+                "z": -0.757
               },
               "fScore": {
                 "raw": 7.5,
@@ -2174,7 +2316,6 @@
               }
             },
             "sparkline": [
-              353.17,
               350.06,
               340.69,
               332.02,
@@ -2203,101 +2344,8 @@
               371.84,
               370.42,
               367.07,
-              372.6
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 5,
-            "movement": 0,
-            "heldSessions": 11,
-            "ticker": "ADBE",
-            "name": "ADOBE INC.",
-            "market": "US",
-            "sector": "Information Technology",
-            "currency": "USD",
-            "price": 291.52,
-            "changePct": 0.82,
-            "score": 61,
-            "rawZ": 0.657,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 280.89,
-              "high": 296.83
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 288.44,
-              "base": 384.58,
-              "bull": 519.18
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": 1.131,
-                "z": 0.147
-              },
-              "capitalEfficiency": {
-                "raw": 1.49,
-                "z": 1.04
-              },
-              "cashGeneration": {
-                "raw": null,
-                "z": null
-              },
-              "valuation": {
-                "raw": -1.528,
-                "z": 1.374
-              },
-              "fScore": {
-                "raw": 6,
-                "z": -0.225
-              }
-            },
-            "sparkline": [
-              234.74,
-              227.16,
-              218.36,
-              212.17,
-              225.11,
-              237.75,
-              249.18,
-              263.43,
-              247.9,
-              250.41,
-              251.34,
-              257.49,
-              259.32,
-              260.24,
-              265.21,
-              272.96,
-              263.71,
-              258.75,
-              270.49,
-              264.02,
-              254.04,
-              263.14,
-              272.47,
-              272.22,
-              275.3,
-              276.27,
-              273.92,
-              273.47,
-              289.15,
-              291.52
+              372.6,
+              376.86
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -2307,122 +2355,28 @@
           },
           {
             "rank": 6,
-            "movement": 0,
-            "heldSessions": 11,
-            "ticker": "AMGN",
-            "name": "AMGEN INC",
-            "market": "US",
-            "sector": "Health Care",
-            "currency": "USD",
-            "price": 432.42,
-            "changePct": -1.05,
-            "score": 60.3,
-            "rawZ": 0.618,
-            "completeness": 0.8,
-            "riskGauge": 2,
-            "entry": {
-              "low": 422.45,
-              "high": 437.4
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 412.65,
-              "base": 550.2,
-              "bull": 742.77
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": 1.037,
-                "z": 1.068
-              },
-              "capitalEfficiency": {
-                "raw": 0.756,
-                "z": 0.26
-              },
-              "cashGeneration": {
-                "raw": null,
-                "z": null
-              },
-              "valuation": {
-                "raw": -1.916,
-                "z": 0.29
-              },
-              "fScore": {
-                "raw": 9,
-                "z": 0.899
-              }
-            },
-            "sparkline": [
-              364.17,
-              366.24,
-              366.05,
-              371.5,
-              376.04,
-              374.07,
-              390.82,
-              385.39,
-              385.39,
-              382.92,
-              376.67,
-              387.75,
-              405.46,
-              402.5,
-              408.56,
-              414.78,
-              411.89,
-              413.76,
-              415.41,
-              412.8,
-              416.94,
-              422.81,
-              439.79,
-              431.21,
-              439.33,
-              443.84,
-              442.24,
-              440.34,
-              436.99,
-              432.42
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 7,
-            "movement": 0,
-            "heldSessions": 11,
+            "movement": 1,
+            "heldSessions": 12,
             "ticker": "SMCI",
             "name": "Super Micro Computer, Inc.",
             "market": "US",
             "sector": "Information Technology",
             "currency": "USD",
-            "price": 37.08,
-            "changePct": -3.59,
-            "score": 59.6,
-            "rawZ": 0.574,
+            "price": 37.28,
+            "changePct": 0.54,
+            "score": 60,
+            "rawZ": 0.6,
             "completeness": 0.8,
             "riskGauge": 5,
             "entry": {
-              "low": 34.65,
-              "high": 38.3
+              "low": 34.92,
+              "high": 38.46
             },
             "stop": null,
             "targets": {
-              "conservative": 50.68,
-              "base": 67.58,
-              "bull": 91.23
+              "conservative": 50.96,
+              "base": 67.94,
+              "bull": 91.72
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -2440,15 +2394,15 @@
               },
               "capitalEfficiency": {
                 "raw": 1.462,
-                "z": 1.006
+                "z": 1.12
               },
               "cashGeneration": {
                 "raw": null,
                 "z": null
               },
               "valuation": {
-                "raw": -1.62,
-                "z": 1.169
+                "raw": -1.623,
+                "z": 1.133
               },
               "fScore": {
                 "raw": 3,
@@ -2456,7 +2410,6 @@
               }
             },
             "sparkline": [
-              23.83,
               25.5,
               30.56,
               31.2,
@@ -2485,7 +2438,102 @@
               38.46,
               37.39,
               38.46,
-              37.08
+              37.08,
+              37.28
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 7,
+            "movement": -1,
+            "heldSessions": 12,
+            "ticker": "AMGN",
+            "name": "AMGEN INC",
+            "market": "US",
+            "sector": "Health Care",
+            "currency": "USD",
+            "price": 429.88,
+            "changePct": -0.59,
+            "score": 59.6,
+            "rawZ": 0.575,
+            "completeness": 0.8,
+            "riskGauge": 1,
+            "entry": {
+              "low": 420.17,
+              "high": 434.74
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 410.23,
+              "base": 546.97,
+              "bull": 738.41
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": 1.037,
+                "z": 1.001
+              },
+              "capitalEfficiency": {
+                "raw": 0.756,
+                "z": 0.187
+              },
+              "cashGeneration": {
+                "raw": null,
+                "z": null
+              },
+              "valuation": {
+                "raw": -1.913,
+                "z": 0.297
+              },
+              "fScore": {
+                "raw": 9,
+                "z": 0.899
+              }
+            },
+            "sparkline": [
+              366.24,
+              366.05,
+              371.5,
+              376.04,
+              374.07,
+              390.82,
+              385.39,
+              385.39,
+              382.92,
+              376.67,
+              387.75,
+              405.46,
+              402.5,
+              408.56,
+              414.78,
+              411.89,
+              413.76,
+              415.41,
+              412.8,
+              416.94,
+              422.81,
+              439.79,
+              431.21,
+              439.33,
+              443.84,
+              442.24,
+              440.34,
+              436.99,
+              432.42,
+              429.88
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -2496,27 +2544,27 @@
           {
             "rank": 8,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "COST",
             "name": "COSTCO WHOLESALE CORP /NEW",
             "market": "US",
             "sector": "Consumer Discretionary",
             "currency": "USD",
-            "price": 945.47,
-            "changePct": 1.16,
-            "score": 57.3,
-            "rawZ": 0.436,
+            "price": 943.89,
+            "changePct": -0.17,
+            "score": 57.1,
+            "rawZ": 0.426,
             "completeness": 0.8,
             "riskGauge": 1,
             "entry": {
-              "low": 927.17,
-              "high": 954.62
+              "low": 926.3,
+              "high": 952.69
             },
             "stop": null,
             "targets": {
-              "conservative": 1057.86,
-              "base": 1410.47,
-              "bull": 1904.14
+              "conservative": 1056.09,
+              "base": 1408.12,
+              "bull": 1900.96
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -2541,8 +2589,8 @@
                 "z": null
               },
               "valuation": {
-                "raw": -2.222,
-                "z": -1.254
+                "raw": -2.221,
+                "z": -1.296
               },
               "fScore": {
                 "raw": 7.5,
@@ -2550,7 +2598,6 @@
               }
             },
             "sparkline": [
-              934.31,
               927.74,
               925.84,
               924.59,
@@ -2579,7 +2626,8 @@
               960.01,
               956.12,
               934.66,
-              945.47
+              945.47,
+              943.89
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -2590,27 +2638,27 @@
           {
             "rank": 9,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "NFLX",
             "name": "NETFLIX INC",
             "market": "US",
             "sector": "Communication Services",
             "currency": "USD",
-            "price": 81.72,
-            "changePct": 2.35,
+            "price": 81.05,
+            "changePct": -0.82,
             "score": 55.2,
-            "rawZ": 0.31,
+            "rawZ": 0.313,
             "completeness": 1,
             "riskGauge": 2,
             "entry": {
-              "low": 79.44,
-              "high": 82.86
+              "low": 78.86,
+              "high": 82.15
             },
             "stop": null,
             "targets": {
-              "conservative": 81.94,
-              "base": 109.25,
-              "bull": 147.49
+              "conservative": 81.27,
+              "base": 108.36,
+              "bull": 146.28
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -2619,7 +2667,7 @@
               "Revenue growth falls below zero year-over-year for two quarters"
             ],
             "maxHoldSessions": 504,
-            "catalyst": "Netflix's Profit Is at a Record and Its Stock Sits 35% Below Its High. Time to Buy the Stock? Plus 1 related story.",
+            "catalyst": "Netflix's Profit Is at a Record and Its Stock Sits 35% Below Its High. Time to Buy the Stock? Plus 2 related stories.",
             "catalystCluster": null,
             "factors": {
               "growthQuality": {
@@ -2632,11 +2680,11 @@
               },
               "cashGeneration": {
                 "raw": 0.181,
-                "z": 0.054
+                "z": 0.055
               },
               "valuation": {
-                "raw": -1.742,
-                "z": -1.082
+                "raw": -1.736,
+                "z": -1.069
               },
               "fScore": {
                 "raw": 5.625,
@@ -2644,7 +2692,6 @@
               }
             },
             "sparkline": [
-              67.6,
               68.67,
               68.53,
               68.89,
@@ -2673,7 +2720,8 @@
               82.23,
               81.46,
               79.84,
-              81.72
+              81.72,
+              81.05
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -2682,27 +2730,27 @@
           {
             "rank": 10,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "MCD",
             "name": "MCDONALDS CORP",
             "market": "US",
             "sector": "Consumer Discretionary",
             "currency": "USD",
-            "price": 265,
-            "changePct": 1.9,
+            "price": 263.54,
+            "changePct": -0.55,
             "score": 45.6,
-            "rawZ": -0.261,
+            "rawZ": -0.266,
             "completeness": 1,
             "riskGauge": 1,
             "entry": {
-              "low": 259.79,
-              "high": 267.61
+              "low": 258.51,
+              "high": 266.06
             },
             "stop": null,
             "targets": {
-              "conservative": 221.07,
-              "base": 294.76,
-              "bull": 397.93
+              "conservative": 219.86,
+              "base": 293.14,
+              "bull": 395.74
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -2727,8 +2775,8 @@
                 "z": 0
               },
               "valuation": {
-                "raw": -2.111,
-                "z": -0.945
+                "raw": -2.107,
+                "z": -0.974
               },
               "fScore": {
                 "raw": 7.875,
@@ -2736,7 +2784,6 @@
               }
             },
             "sparkline": [
-              267.64,
               263.91,
               263.57,
               262.8,
@@ -2765,7 +2812,8 @@
               268.1,
               266.93,
               260.06,
-              265
+              265,
+              263.54
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -2777,7 +2825,7 @@
       "ultra_long": {
         "market": "US",
         "horizon": "ultra_long",
-        "asOf": "2026-08-29",
+        "asOf": "2026-09-01",
         "turnover30d": 0,
         "sampleWarning": true,
         "stoppedOut": [],
@@ -2786,27 +2834,27 @@
           {
             "rank": 1,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "MSFT",
             "name": "MICROSOFT CORP",
             "market": "US",
             "sector": "Information Technology",
             "currency": "USD",
-            "price": 513.53,
-            "changePct": 1.68,
-            "score": 74,
-            "rawZ": 1.439,
+            "price": 507.29,
+            "changePct": -1.22,
+            "score": 74.5,
+            "rawZ": 1.468,
             "completeness": 1,
             "riskGauge": 3,
             "entry": {
-              "low": 495.45,
-              "high": 519.56
+              "low": 489.74,
+              "high": 513.14
             },
             "stop": null,
             "targets": {
-              "conservative": 801.05,
-              "base": 1129.8,
-              "bull": 1624.66
+              "conservative": 791.31,
+              "base": 1116.07,
+              "bull": 1604.92
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -2821,15 +2869,15 @@
             "factors": {
               "moatStrength": {
                 "raw": 0.878,
-                "z": 1.52
+                "z": 1.61
               },
               "cashFlowDurability": {
                 "raw": 0.92,
-                "z": 0.602
+                "z": 0.603
               },
               "reinvestmentRunway": {
                 "raw": 0.119,
-                "z": 1.539
+                "z": 1.554
               },
               "balanceSheetStrength": {
                 "raw": 0.871,
@@ -2837,11 +2885,10 @@
               },
               "shareholderYield": {
                 "raw": 0.305,
-                "z": 0.679
+                "z": 0.681
               }
             },
             "sparkline": [
-              402.29,
               397.75,
               389.61,
               380.86,
@@ -2870,7 +2917,8 @@
               491.71,
               496.37,
               505.06,
-              513.53
+              513.53,
+              507.29
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -2878,123 +2926,28 @@
           },
           {
             "rank": 2,
-            "movement": 0,
-            "heldSessions": 11,
-            "ticker": "VZ",
-            "name": "VERIZON COMMUNICATIONS INC",
-            "market": "US",
-            "sector": "Communication Services",
-            "currency": "USD",
-            "price": 50.1,
-            "changePct": 1.36,
-            "score": 65.4,
-            "rawZ": 0.924,
-            "completeness": 0.8,
-            "riskGauge": 2,
-            "entry": {
-              "low": 48.63,
-              "high": 50.59
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 54.09,
-              "base": 57.55,
-              "bull": 61.62
-            },
-            "targetBasis": "compounding_scenarios",
-            "thesisInvalidation": [
-              "Return on invested capital declines for three consecutive fiscal years",
-              "Gross margin falls below its 10-year 20th percentile",
-              "Net debt to EBITDA rises above 3.5x",
-              "Share count grows more than 2% per year for three consecutive years"
-            ],
-            "maxHoldSessions": 2520,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
-            "catalystCluster": null,
-            "factors": {
-              "moatStrength": {
-                "raw": 0.375,
-                "z": 1.502
-              },
-              "cashFlowDurability": {
-                "raw": 0.679,
-                "z": 0.22
-              },
-              "reinvestmentRunway": {
-                "raw": -0.007,
-                "z": -0.285
-              },
-              "balanceSheetStrength": {
-                "raw": null,
-                "z": null
-              },
-              "shareholderYield": {
-                "raw": 0.098,
-                "z": 3
-              }
-            },
-            "sparkline": [
-              43.5,
-              43.78,
-              44.29,
-              43.82,
-              46.38,
-              47.32,
-              48.19,
-              47.22,
-              46.11,
-              46.81,
-              47.36,
-              46.88,
-              46.47,
-              46.99,
-              47.06,
-              47.03,
-              47.27,
-              46.98,
-              48.22,
-              48.48,
-              48.06,
-              48.54,
-              49.36,
-              49.19,
-              49.45,
-              50.15,
-              50.25,
-              50.19,
-              49.43,
-              50.1
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 3,
-            "movement": 0,
-            "heldSessions": 11,
+            "movement": 1,
+            "heldSessions": 12,
             "ticker": "ADBE",
             "name": "ADOBE INC.",
             "market": "US",
             "sector": "Information Technology",
             "currency": "USD",
-            "price": 291.52,
-            "changePct": 0.82,
-            "score": 64.8,
-            "rawZ": 0.89,
+            "price": 292.79,
+            "changePct": 0.44,
+            "score": 65.5,
+            "rawZ": 0.929,
             "completeness": 0.8,
             "riskGauge": 5,
             "entry": {
-              "low": 275.58,
-              "high": 296.83
+              "low": 277.12,
+              "high": 298.01
             },
             "stop": null,
             "targets": {
-              "conservative": 385.58,
-              "base": 480.83,
-              "bull": 609.67
+              "conservative": 387.26,
+              "base": 482.93,
+              "bull": 612.33
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -3009,15 +2962,15 @@
             "factors": {
               "moatStrength": {
                 "raw": 0.907,
-                "z": 1.584
+                "z": 1.672
               },
               "cashFlowDurability": {
                 "raw": 0.957,
-                "z": 0.724
+                "z": 0.725
               },
               "reinvestmentRunway": {
                 "raw": 0.074,
-                "z": 0.635
+                "z": 0.674
               },
               "balanceSheetStrength": {
                 "raw": null,
@@ -3025,11 +2978,10 @@
               },
               "shareholderYield": {
                 "raw": 0.012,
-                "z": 0.026
+                "z": 0.025
               }
             },
             "sparkline": [
-              234.74,
               227.16,
               218.36,
               212.17,
@@ -3058,7 +3010,103 @@
               273.92,
               273.47,
               289.15,
-              291.52
+              291.52,
+              292.79
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 3,
+            "movement": -1,
+            "heldSessions": 12,
+            "ticker": "VZ",
+            "name": "VERIZON COMMUNICATIONS INC",
+            "market": "US",
+            "sector": "Communication Services",
+            "currency": "USD",
+            "price": 50.02,
+            "changePct": -0.16,
+            "score": 65.4,
+            "rawZ": 0.924,
+            "completeness": 0.8,
+            "riskGauge": 2,
+            "entry": {
+              "low": 48.59,
+              "high": 50.5
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 54,
+              "base": 57.46,
+              "bull": 61.52
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Share count grows more than 2% per year for three consecutive years"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "Better Telecom Stock: AT&T vs. Verizon Communications",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 0.375,
+                "z": 1.502
+              },
+              "cashFlowDurability": {
+                "raw": 0.679,
+                "z": 0.22
+              },
+              "reinvestmentRunway": {
+                "raw": -0.007,
+                "z": -0.285
+              },
+              "balanceSheetStrength": {
+                "raw": null,
+                "z": null
+              },
+              "shareholderYield": {
+                "raw": 0.098,
+                "z": 3
+              }
+            },
+            "sparkline": [
+              43.78,
+              44.29,
+              43.82,
+              46.38,
+              47.32,
+              48.19,
+              47.22,
+              46.11,
+              46.81,
+              47.36,
+              46.88,
+              46.47,
+              46.99,
+              47.06,
+              47.03,
+              47.27,
+              46.98,
+              48.22,
+              48.48,
+              48.06,
+              48.54,
+              49.36,
+              49.19,
+              49.45,
+              50.15,
+              50.25,
+              50.19,
+              49.43,
+              50.1,
+              50.02
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -3069,21 +3117,21 @@
           {
             "rank": 4,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "NEE",
             "name": "NEXTERA ENERGY INC",
             "market": "US",
             "sector": "Utilities",
             "currency": "USD",
-            "price": 81.84,
-            "changePct": -1.95,
+            "price": 82.34,
+            "changePct": 0.61,
             "score": 63.9,
             "rawZ": 0.835,
             "completeness": 0.8,
             "riskGauge": 1,
             "entry": {
-              "low": 79.66,
-              "high": 82.57
+              "low": 80.17,
+              "high": 83.06
             },
             "stop": null,
             "targets": null,
@@ -3120,7 +3168,6 @@
               }
             },
             "sparkline": [
-              88,
               87.93,
               89.41,
               89.79,
@@ -3130,26 +3177,27 @@
               88.46,
               87.93,
               86.92,
+              85.9,
               86.55,
-              87.2,
-              85.91,
-              84.6,
-              84.65,
-              84.7,
-              85.74,
-              85.78,
-              86.01,
-              86.19,
-              86.22,
-              86.22,
-              85.91,
-              85.03,
-              83.65,
-              84.1,
-              84.22,
-              84.22,
+              85.27,
+              83.97,
+              84.02,
+              84.07,
+              85.1,
+              85.14,
+              85.37,
+              85.55,
+              85.58,
+              85.58,
+              85.27,
+              84.4,
+              83.03,
               83.47,
-              81.84
+              83.59,
+              83.59,
+              82.85,
+              81.84,
+              82.34
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -3160,27 +3208,27 @@
           {
             "rank": 5,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "T",
             "name": "AT&T INC.",
             "market": "US",
             "sector": "Communication Services",
             "currency": "USD",
-            "price": 26.01,
-            "changePct": 2.28,
+            "price": 25.89,
+            "changePct": -0.46,
             "score": 59,
             "rawZ": 0.542,
             "completeness": 0.8,
             "riskGauge": 2,
             "entry": {
-              "low": 25.18,
-              "high": 26.29
+              "low": 25.08,
+              "high": 26.16
             },
             "stop": null,
             "targets": {
-              "conservative": 28.08,
-              "base": 29.88,
-              "bull": 31.99
+              "conservative": 27.95,
+              "base": 29.74,
+              "bull": 31.84
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -3215,7 +3263,6 @@
               }
             },
             "sparkline": [
-              21.95,
               22.26,
               23.04,
               22.96,
@@ -3244,7 +3291,8 @@
               25.77,
               25.87,
               25.43,
-              26.01
+              26.01,
+              25.89
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -3255,27 +3303,27 @@
           {
             "rank": 6,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "TRV",
             "name": "TRAVELERS COMPANIES, INC.",
             "market": "US",
             "sector": "Financials",
             "currency": "USD",
-            "price": 369.9,
-            "changePct": 0.15,
+            "price": 365.93,
+            "changePct": -1.07,
             "score": 58.9,
             "rawZ": 0.534,
             "completeness": 0.8,
             "riskGauge": 2,
             "entry": {
-              "low": 359.27,
-              "high": 373.44
+              "low": 355.53,
+              "high": 369.4
             },
             "stop": null,
             "targets": {
-              "conservative": 435.84,
-              "base": 497.05,
-              "bull": 573.57
+              "conservative": 431.16,
+              "base": 491.72,
+              "bull": 567.41
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -3310,7 +3358,6 @@
               }
             },
             "sparkline": [
-              368.5,
               369.63,
               372.08,
               376.37,
@@ -3339,7 +3386,8 @@
               369.66,
               371.15,
               369.33,
-              369.9
+              369.9,
+              365.93
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -3350,27 +3398,27 @@
           {
             "rank": 7,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "UNH",
             "name": "UNITEDHEALTH GROUP INC",
             "market": "US",
             "sector": "Financials",
             "currency": "USD",
-            "price": 392.95,
-            "changePct": -0.53,
+            "price": 389.41,
+            "changePct": -0.9,
             "score": 56.7,
             "rawZ": 0.4,
             "completeness": 0.8,
             "riskGauge": 3,
             "entry": {
-              "low": 379.38,
-              "high": 397.47
+              "low": 376.07,
+              "high": 393.86
             },
             "stop": null,
             "targets": {
-              "conservative": 489.17,
-              "base": 582.28,
-              "bull": 703.17
+              "conservative": 484.76,
+              "base": 577.03,
+              "bull": 696.83
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -3405,7 +3453,6 @@
               }
             },
             "sparkline": [
-              421.55,
               436.35,
               431.31,
               423.56,
@@ -3434,10 +3481,11 @@
               396.59,
               401.01,
               395.05,
-              392.95
+              392.95,
+              389.41
             ],
             "newsCount": 1,
-            "sentiment": 0.507,
+            "sentiment": 0.488,
             "flags": [
               "partial_data"
             ]
@@ -3445,27 +3493,27 @@
           {
             "rank": 8,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "BSX",
             "name": "BOSTON SCIENTIFIC CORP",
             "market": "US",
             "sector": "Health Care",
             "currency": "USD",
-            "price": 46.84,
-            "changePct": 0.36,
-            "score": 54.3,
-            "rawZ": 0.26,
+            "price": 48.3,
+            "changePct": 3.12,
+            "score": 54.1,
+            "rawZ": 0.248,
             "completeness": 0.8,
             "riskGauge": 5,
             "entry": {
-              "low": 44.27,
-              "high": 47.7
+              "low": 45.61,
+              "high": 49.2
             },
             "stop": null,
             "targets": {
-              "conservative": 58.04,
-              "base": 68.84,
-              "bull": 82.82
+              "conservative": 59.85,
+              "base": 70.99,
+              "bull": 85.41
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -3484,11 +3532,11 @@
               },
               "cashFlowDurability": {
                 "raw": 0.674,
-                "z": 0.115
+                "z": 0.063
               },
               "reinvestmentRunway": {
                 "raw": 0.057,
-                "z": 0.624
+                "z": 0.635
               },
               "balanceSheetStrength": {
                 "raw": null,
@@ -3496,11 +3544,10 @@
               },
               "shareholderYield": {
                 "raw": -0.004,
-                "z": -0.016
+                "z": -0.014
               }
             },
             "sparkline": [
-              43.77,
               43.19,
               42.97,
               43.58,
@@ -3529,7 +3576,8 @@
               49.86,
               48.17,
               46.67,
-              46.84
+              46.84,
+              48.3
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -3540,21 +3588,21 @@
           {
             "rank": 9,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "COF",
             "name": "CAPITAL ONE FINANCIAL CORP",
             "market": "US",
             "sector": "Financials",
             "currency": "USD",
-            "price": 215.67,
-            "changePct": -0.46,
+            "price": 214.51,
+            "changePct": -0.54,
             "score": 49.4,
             "rawZ": -0.037,
             "completeness": 0.8,
             "riskGauge": 3,
             "entry": {
-              "low": 208.31,
-              "high": 218.12
+              "low": 207.39,
+              "high": 216.88
             },
             "stop": null,
             "targets": null,
@@ -3591,7 +3639,6 @@
               }
             },
             "sparkline": [
-              206.04,
               205.49,
               200.65,
               199.26,
@@ -3620,7 +3667,8 @@
               216.24,
               217.21,
               216.67,
-              215.67
+              215.67,
+              214.51
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -3631,27 +3679,27 @@
           {
             "rank": 10,
             "movement": 0,
-            "heldSessions": 11,
+            "heldSessions": 12,
             "ticker": "MCD",
             "name": "MCDONALDS CORP",
             "market": "US",
             "sector": "Consumer Discretionary",
             "currency": "USD",
-            "price": 265,
-            "changePct": 1.9,
+            "price": 263.54,
+            "changePct": -0.55,
             "score": 44.4,
             "rawZ": -0.338,
             "completeness": 1,
             "riskGauge": 2,
             "entry": {
-              "low": 257.18,
-              "high": 267.61
+              "low": 255.99,
+              "high": 266.06
             },
             "stop": null,
             "targets": {
-              "conservative": 287.92,
-              "base": 307.92,
-              "bull": 331.53
+              "conservative": 286.34,
+              "base": 306.23,
+              "bull": 329.71
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -3682,11 +3730,10 @@
               },
               "shareholderYield": {
                 "raw": 0.287,
-                "z": 0.631
+                "z": 0.632
               }
             },
             "sparkline": [
-              267.64,
               263.91,
               263.57,
               262.8,
@@ -3715,7 +3762,8 @@
               268.1,
               266.93,
               260.06,
-              265
+              265,
+              263.54
             ],
             "newsCount": 0,
             "sentiment": null,
