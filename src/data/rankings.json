@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T09:05:04.466Z",
+  "generatedAt": "2026-09-13T15:42:11.236Z",
   "methodologyVersion": "1.0.0",
   "asOf": {
     "US": "2026-09-11",
@@ -41,8 +41,8 @@
             "currency": "USD",
             "price": 567.29,
             "changePct": 11.98,
-            "score": 86,
-            "rawZ": 2.16,
+            "score": 84.5,
+            "rawZ": 2.07,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
@@ -70,8 +70,8 @@
                 "z": 2.874
               },
               "newsSentiment": {
-                "raw": 0.115,
-                "z": 0.001
+                "raw": 0.083,
+                "z": -0.45
               },
               "volatilityExpansion": {
                 "raw": 0.327,
@@ -115,7 +115,7 @@
               567.29
             ],
             "newsCount": 1,
-            "sentiment": 0.115,
+            "sentiment": 0.083,
             "flags": []
           },
           {
@@ -129,8 +129,8 @@
             "currency": "USD",
             "price": 62.09,
             "changePct": 12.44,
-            "score": 84.5,
-            "rawZ": 2.07,
+            "score": 82.9,
+            "rawZ": 1.972,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
@@ -158,8 +158,8 @@
                 "z": 2.874
               },
               "newsSentiment": {
-                "raw": 0.184,
-                "z": 0.434
+                "raw": 0.135,
+                "z": -0.054
               },
               "volatilityExpansion": {
                 "raw": 0.652,
@@ -203,7 +203,7 @@
               62.09
             ],
             "newsCount": 1,
-            "sentiment": 0.184,
+            "sentiment": 0.135,
             "flags": []
           },
           {
@@ -397,8 +397,8 @@
             "currency": "USD",
             "price": 150.28,
             "changePct": -1.74,
-            "score": 70.6,
-            "rawZ": 1.236,
+            "score": 69,
+            "rawZ": 1.137,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
@@ -415,7 +415,7 @@
             "thesisInvalidation": null,
             "maxHoldSessions": 5,
             "catalyst": "Oracle posts 30% revenue growth fueled by AI cloud demand as debts hits $125 billion Plus 11 related stories.",
-            "catalystCluster": "c81",
+            "catalystCluster": "c140",
             "factors": {
               "relativeVolume": {
                 "raw": 3.181,
@@ -426,8 +426,8 @@
                 "z": 0.764
               },
               "newsSentiment": {
-                "raw": 0.193,
-                "z": 0.492
+                "raw": 0.142,
+                "z": 0
               },
               "volatilityExpansion": {
                 "raw": 0,
@@ -471,7 +471,7 @@
               150.28
             ],
             "newsCount": 1,
-            "sentiment": 0.193,
+            "sentiment": 0.142,
             "flags": []
           },
           {
@@ -748,94 +748,6 @@
             "rank": 9,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "KHC",
-            "name": "Kraft Heinz Co",
-            "market": "US",
-            "sector": "Consumer Staples",
-            "currency": "USD",
-            "price": 24.6,
-            "changePct": 0.86,
-            "score": 66.3,
-            "rawZ": 0.98,
-            "completeness": 1,
-            "riskGauge": 2,
-            "entry": {
-              "low": 24.44,
-              "high": 24.86
-            },
-            "stop": 23.61,
-            "targets": {
-              "conservative": 25.26,
-              "base": 25.78,
-              "bull": 26.57
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "Kraft Heinz Sees Early Turnaround Gains as $700M Brand Bet Builds Momentum",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 8.364,
-                "z": 3
-              },
-              "gapQuality": {
-                "raw": 0.141,
-                "z": -0.022
-              },
-              "newsSentiment": {
-                "raw": 0.136,
-                "z": 0.13
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.225,
-                "z": 0.391
-              }
-            },
-            "sparkline": [
-              25.85,
-              26.42,
-              26.64,
-              25.33,
-              24.57,
-              24.92,
-              24.54,
-              24.26,
-              24.14,
-              24.98,
-              25.11,
-              24.36,
-              24.43,
-              25.28,
-              25.17,
-              25.18,
-              25.27,
-              24.92,
-              24.4,
-              24.73,
-              25.3,
-              25.27,
-              25.46,
-              25.85,
-              25.02,
-              24.85,
-              24.9,
-              24.61,
-              24.39,
-              24.6
-            ],
-            "newsCount": 1,
-            "sentiment": 0.136,
-            "flags": []
-          },
-          {
-            "rank": 10,
-            "movement": "NEW",
-            "heldSessions": 1,
             "ticker": "CLX",
             "name": "CLOROX CO /DE/",
             "market": "US",
@@ -921,9 +833,103 @@
             "flags": [
               "partial_data"
             ]
+          },
+          {
+            "rank": 10,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "KHC",
+            "name": "Kraft Heinz Co",
+            "market": "US",
+            "sector": "Consumer Staples",
+            "currency": "USD",
+            "price": 24.6,
+            "changePct": 0.86,
+            "score": 64.8,
+            "rawZ": 0.888,
+            "completeness": 1,
+            "riskGauge": 2,
+            "entry": {
+              "low": 24.44,
+              "high": 24.86
+            },
+            "stop": 23.61,
+            "targets": {
+              "conservative": 25.26,
+              "base": 25.78,
+              "bull": 26.57
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "Kraft Heinz Sees Early Turnaround Gains as $700M Brand Bet Builds Momentum",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 8.364,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0.141,
+                "z": -0.022
+              },
+              "newsSentiment": {
+                "raw": 0.098,
+                "z": -0.334
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.225,
+                "z": 0.391
+              }
+            },
+            "sparkline": [
+              25.85,
+              26.42,
+              26.64,
+              25.33,
+              24.57,
+              24.92,
+              24.54,
+              24.26,
+              24.14,
+              24.98,
+              25.11,
+              24.36,
+              24.43,
+              25.28,
+              25.17,
+              25.18,
+              25.27,
+              24.92,
+              24.4,
+              24.73,
+              25.3,
+              25.27,
+              25.46,
+              25.85,
+              25.02,
+              24.85,
+              24.9,
+              24.61,
+              24.39,
+              24.6
+            ],
+            "newsCount": 1,
+            "sentiment": 0.098,
+            "flags": []
           }
         ],
         "justMissed": [
+          {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "score": 74.9,
+            "displacedBy": "sector_cap"
+          },
           {
             "ticker": "HPQ",
             "name": "HP INC",
@@ -931,21 +937,21 @@
             "displacedBy": "sector_cap"
           },
           {
-            "ticker": "AMD",
-            "name": "ADVANCED MICRO DEVICES INC",
-            "score": 69.3,
+            "ticker": "NOK",
+            "name": "NOKIA CORP",
+            "score": 68.4,
             "displacedBy": "sector_cap"
           },
           {
             "ticker": "ADBE",
             "name": "ADOBE INC.",
-            "score": 68.8,
+            "score": 67.8,
             "displacedBy": "sector_cap"
           },
           {
-            "ticker": "NOK",
-            "name": "NOKIA CORP",
-            "score": 68.4,
+            "ticker": "AMD",
+            "name": "ADVANCED MICRO DEVICES INC",
+            "score": 66.9,
             "displacedBy": "sector_cap"
           },
           {
@@ -1050,7 +1056,7 @@
               62.09
             ],
             "newsCount": 1,
-            "sentiment": 0.184,
+            "sentiment": 0.135,
             "flags": []
           },
           {
@@ -1081,7 +1087,7 @@
             "targetBasis": "atr",
             "thesisInvalidation": null,
             "maxHoldSessions": 45,
-            "catalyst": "Exiting Insmed (INSM) Following Disappointing Key Drug Uptake",
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
@@ -2303,7 +2309,7 @@
             ],
             "maxHoldSessions": 504,
             "catalyst": "Adobe: After Lifting Guidance, Is the Beaten-Down Stock Ready to Break Out? Plus 4 related stories.",
-            "catalystCluster": "c58",
+            "catalystCluster": "c117",
             "factors": {
               "growthQuality": {
                 "raw": 1.131,
@@ -2359,7 +2365,7 @@
               252.23
             ],
             "newsCount": 3,
-            "sentiment": 0.5,
+            "sentiment": 0.422,
             "flags": [
               "partial_data"
             ]
@@ -2396,7 +2402,7 @@
               "Revenue growth falls below zero year-over-year for two quarters"
             ],
             "maxHoldSessions": 504,
-            "catalyst": "Positive Lung Cancer Data Lifts the Case for Amgen and AstraZeneca Plus 3 related stories.",
+            "catalyst": "Amgen (AMGN) Fell 5% on a Drug That Isn’t Even Its Own. Here’s the Lp(a) Bet Now in Question. Plus 4 related stories.",
             "catalystCluster": null,
             "factors": {
               "growthQuality": {
@@ -2453,7 +2459,7 @@
               377.35
             ],
             "newsCount": 1,
-            "sentiment": 0.076,
+            "sentiment": -0.438,
             "flags": [
               "partial_data"
             ]
@@ -2678,7 +2684,7 @@
               "Revenue growth falls below zero year-over-year for two quarters"
             ],
             "maxHoldSessions": 504,
-            "catalyst": "Netflix (NFLX) Shares Pressured by Weak Q2 Outlook Plus 3 related stories.",
+            "catalyst": "3 Beaten-Down Stocks to Buy if There Is a Recession Plus 2 related stories.",
             "catalystCluster": null,
             "factors": {
               "growthQuality": {
@@ -2932,7 +2938,7 @@
               495.63
             ],
             "newsCount": 1,
-            "sentiment": 0.215,
+            "sentiment": 0.159,
             "flags": []
           },
           {
@@ -3155,7 +3161,7 @@
             ],
             "maxHoldSessions": 2520,
             "catalyst": "Adobe: After Lifting Guidance, Is the Beaten-Down Stock Ready to Break Out? Plus 4 related stories.",
-            "catalystCluster": "c58",
+            "catalystCluster": "c117",
             "factors": {
               "moatStrength": {
                 "raw": 0.907,
@@ -3211,7 +3217,7 @@
               252.23
             ],
             "newsCount": 3,
-            "sentiment": 0.5,
+            "sentiment": 0.422,
             "flags": [
               "partial_data"
             ]
@@ -6184,7 +6190,7 @@
               119000
             ],
             "newsCount": 1,
-            "sentiment": -0.087,
+            "sentiment": -0.062,
             "flags": [
               "partial_data"
             ]
