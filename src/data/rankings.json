@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-23T09:07:12.516Z",
+  "generatedAt": "2026-09-23T12:44:06.245Z",
   "methodologyVersion": "1.0.0",
   "asOf": {
     "US": "2026-09-22",
-    "KR": "2026-09-22"
+    "KR": "2026-09-23"
   },
   "regime": {
     "US": {
@@ -16,7 +16,7 @@
       "multiplier": 0.85,
       "state": "narrowing",
       "indexAboveMA200": true,
-      "breadth": 0.4647058823529412
+      "breadth": 0.471976401179941
     }
   },
   "boards": {
@@ -131,8 +131,8 @@
             "currency": "USD",
             "price": 147.74,
             "changePct": 7.12,
-            "score": 78.8,
-            "rawZ": 1.729,
+            "score": 78.7,
+            "rawZ": 1.725,
             "completeness": 1,
             "riskGauge": 4,
             "entry": {
@@ -160,8 +160,8 @@
                 "z": 3
               },
               "newsSentiment": {
-                "raw": 0.117,
-                "z": 0.137
+                "raw": 0.098,
+                "z": 0.117
               },
               "volatilityExpansion": {
                 "raw": 0,
@@ -205,7 +205,7 @@
               147.74
             ],
             "newsCount": 1,
-            "sentiment": 0.117,
+            "sentiment": 0.098,
             "flags": []
           },
           {
@@ -662,91 +662,89 @@
             "rank": 8,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "PYPL",
-            "name": "PayPal Holdings, Inc.",
+            "ticker": "EXPE",
+            "name": "Expedia Group, Inc.",
             "market": "US",
             "sector": "Industrials",
             "currency": "USD",
-            "price": 52.89,
-            "changePct": 0.51,
-            "score": 73.9,
-            "rawZ": 1.436,
-            "completeness": 0.8,
-            "riskGauge": 3,
+            "price": 280.7,
+            "changePct": -0.11,
+            "score": 74.1,
+            "rawZ": 1.443,
+            "completeness": 1,
+            "riskGauge": 4,
             "entry": {
-              "low": 52.47,
-              "high": 53.56
+              "low": 277.6,
+              "high": 285.66
             },
-            "stop": 50.4,
+            "stop": 261.94,
             "targets": {
-              "conservative": 54.55,
-              "base": 55.88,
-              "bull": 57.88
+              "conservative": 293.11,
+              "base": 303.04,
+              "bull": 317.94
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
             "maxHoldSessions": 5,
-            "catalyst": "Marram Exits PayPal Holdings (PYPL) Due to Thesis Breakdown",
+            "catalyst": "Morgan Stanley Cuts Expedia (EXPE) to Underweight as Rivals Pull Ahead on Users",
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 2.622,
+                "raw": 3.886,
                 "z": 3
               },
               "gapQuality": {
-                "raw": 0.152,
-                "z": 1.12
+                "raw": 0.316,
+                "z": 3
               },
               "newsSentiment": {
-                "raw": null,
-                "z": null
+                "raw": -0.088,
+                "z": -0.454
               },
               "volatilityExpansion": {
                 "raw": 0,
                 "z": 0
               },
               "trendPosition": {
-                "raw": 0.064,
-                "z": 0.168
+                "raw": 0.106,
+                "z": 0.225
               }
             },
             "sparkline": [
-              58.85,
-              59.05,
-              60.44,
-              61.51,
-              60.32,
-              60.28,
-              61.1,
-              62.15,
-              61.4,
-              61.53,
-              62.12,
-              61.66,
-              61.32,
-              53.53,
-              52.54,
-              52.27,
-              54.54,
-              56.68,
-              54.96,
-              53.18,
-              52.17,
-              53.31,
-              53.72,
-              54.03,
-              53.81,
-              52.71,
-              52.94,
-              52.41,
-              52.62,
-              52.89
+              320.61,
+              325.1,
+              327.84,
+              332.21,
+              318.04,
+              320.96,
+              325.8,
+              323.7,
+              321.17,
+              338.64,
+              337.48,
+              332.96,
+              318.92,
+              329.44,
+              317.12,
+              304.23,
+              308.06,
+              303.14,
+              298.04,
+              274.55,
+              272.6,
+              276.88,
+              280.83,
+              287.86,
+              293.08,
+              286.97,
+              284.55,
+              279.35,
+              281.02,
+              280.7
             ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
+            "newsCount": 1,
+            "sentiment": -0.088,
+            "flags": []
           },
           {
             "rank": 9,
@@ -931,9 +929,9 @@
         ],
         "justMissed": [
           {
-            "ticker": "EXPE",
-            "name": "Expedia Group, Inc.",
-            "score": 73.7,
+            "ticker": "PYPL",
+            "name": "PayPal Holdings, Inc.",
+            "score": 73.9,
             "displacedBy": "sector_cap"
           },
           {
@@ -1232,7 +1230,7 @@
               61.03
             ],
             "newsCount": 1,
-            "sentiment": 0.072,
+            "sentiment": 0.06,
             "flags": []
           },
           {
@@ -1584,7 +1582,7 @@
               276.53
             ],
             "newsCount": 1,
-            "sentiment": 0.072,
+            "sentiment": 0.059,
             "flags": [
               "partial_data"
             ]
@@ -2085,7 +2083,7 @@
               140.41
             ],
             "newsCount": 2,
-            "sentiment": 0.63,
+            "sentiment": 0.582,
             "flags": [
               "partial_data"
             ]
@@ -2778,7 +2776,7 @@
               "Revenue growth falls below zero year-over-year for two quarters"
             ],
             "maxHoldSessions": 504,
-            "catalyst": "Trade Desk Falls 4% as Index-Removal Flows Keep Pressure On; Magnite Drops 3%, AppLovin Pulls Back",
+            "catalyst": "Trade Desk Falls 4% as Index-Removal Flows Keep Pressure On; Magnite Drops 3%, AppLovin Pulls Back Plus 1 related story.",
             "catalystCluster": null,
             "factors": {
               "growthQuality": {
@@ -2834,8 +2832,8 @@
               330.17,
               328.73
             ],
-            "newsCount": 1,
-            "sentiment": -0.243,
+            "newsCount": 2,
+            "sentiment": -0.352,
             "flags": [
               "partial_data"
             ]
@@ -2942,7 +2940,7 @@
               498
             ],
             "newsCount": 3,
-            "sentiment": -0.194,
+            "sentiment": -0.172,
             "flags": []
           },
           {
@@ -3798,8 +3796,8 @@
       "ultra_short": {
         "market": "KR",
         "horizon": "ultra_short",
-        "asOf": "2026-09-22",
-        "turnover30d": 0.5687592710319983,
+        "asOf": "2026-09-23",
+        "turnover30d": 0.583161041856694,
         "sampleWarning": false,
         "stoppedOut": [],
         "emptyReason": null,
@@ -3808,26 +3806,26 @@
             "rank": 1,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "020560",
-            "name": "아시아나항공",
+            "ticker": "079370",
+            "name": "제우스",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 8260,
-            "changePct": 9.4,
-            "score": 84.1,
-            "rawZ": 2.045,
+            "price": 12840,
+            "changePct": 19.11,
+            "score": 80.5,
+            "rawZ": 1.832,
             "completeness": 0.8,
-            "riskGauge": 1,
+            "riskGauge": 2,
             "entry": {
-              "low": 8178,
-              "high": 8392
+              "low": 12643,
+              "high": 13155
             },
-            "stop": 7717,
+            "stop": 11131,
             "targets": {
-              "conservative": 8589,
-              "base": 8853,
-              "bull": 9248
+              "conservative": 13628,
+              "base": 14259,
+              "bull": 15205
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -3836,11 +3834,11 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 8.487,
+                "raw": 12.095,
                 "z": 3
               },
               "gapQuality": {
-                "raw": 0.616,
+                "raw": 0.879,
                 "z": 3
               },
               "newsSentiment": {
@@ -3848,45 +3846,45 @@
                 "z": null
               },
               "volatilityExpansion": {
-                "raw": 1.659,
+                "raw": 1.452,
                 "z": 3
               },
               "trendPosition": {
-                "raw": 0.91,
-                "z": 1.088
+                "raw": 0.287,
+                "z": 0.091
               }
             },
             "sparkline": [
-              7140,
-              7080,
-              6850,
-              6910,
-              6800,
-              6940,
-              6850,
-              7110,
-              6880,
-              6670,
-              6720,
-              6960,
-              7050,
-              7000,
-              7230,
-              7390,
-              7310,
-              7210,
-              7120,
-              7200,
-              7050,
-              7190,
-              6880,
-              6870,
-              6910,
-              6990,
-              7070,
-              7100,
-              7550,
-              8260
+              7930,
+              7060,
+              6970,
+              8450,
+              8510,
+              8950,
+              9120,
+              9030,
+              8760,
+              9320,
+              9550,
+              9810,
+              10260,
+              10230,
+              9540,
+              9260,
+              9750,
+              9820,
+              9620,
+              9920,
+              10420,
+              10480,
+              10290,
+              10320,
+              10050,
+              9960,
+              9650,
+              10100,
+              10780,
+              12840
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -3898,26 +3896,26 @@
             "rank": 2,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "052710",
-            "name": "아모텍",
+            "ticker": "468530",
+            "name": "프로티나",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 19080,
-            "changePct": 11.32,
-            "score": 80.2,
-            "rawZ": 1.813,
+            "price": 47350,
+            "changePct": 20.64,
+            "score": 79.7,
+            "rawZ": 1.78,
             "completeness": 0.8,
-            "riskGauge": 4,
+            "riskGauge": 5,
             "entry": {
-              "low": 18701,
-              "high": 19686
+              "low": 45988,
+              "high": 49529
             },
-            "stop": 16807,
+            "stop": 39179,
             "targets": {
-              "conservative": 20595,
-              "base": 21808,
-              "bull": 23626
+              "conservative": 52797,
+              "base": 57155,
+              "bull": 63692
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -3926,11 +3924,11 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 6.769,
-                "z": 3
+                "raw": 3.091,
+                "z": 1.681
               },
               "gapQuality": {
-                "raw": 0.718,
+                "raw": 0.813,
                 "z": 3
               },
               "newsSentiment": {
@@ -3938,45 +3936,45 @@
                 "z": null
               },
               "volatilityExpansion": {
-                "raw": 0.101,
-                "z": 1.363
+                "raw": 0.814,
+                "z": 3
               },
               "trendPosition": {
-                "raw": 0.894,
-                "z": 1.066
+                "raw": 0.863,
+                "z": 0.806
               }
             },
             "sparkline": [
-              12784,
-              13630,
-              13520,
-              13420,
-              12330,
-              11790,
-              12000,
-              11220,
-              11260,
-              11460,
-              11480,
-              11200,
-              10820,
-              10890,
-              10700,
-              10760,
-              10430,
-              11290,
-              11200,
-              10620,
-              11650,
-              11640,
-              15130,
-              15800,
-              16280,
-              16000,
-              15960,
-              16960,
-              17140,
-              19080
+              22300,
+              20850,
+              20500,
+              18830,
+              16410,
+              15860,
+              18520,
+              21250,
+              23050,
+              26100,
+              26750,
+              25900,
+              30500,
+              31300,
+              29400,
+              34450,
+              37600,
+              37600,
+              37600,
+              32100,
+              34250,
+              35600,
+              36700,
+              34350,
+              37550,
+              37550,
+              28800,
+              32300,
+              39250,
+              47350
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -3988,26 +3986,26 @@
             "rank": 3,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "356860",
-            "name": "티엘비",
+            "ticker": "440110",
+            "name": "파두",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 44150,
-            "changePct": 15.42,
-            "score": 78.6,
-            "rawZ": 1.714,
+            "price": 81500,
+            "changePct": 12.72,
+            "score": 79.6,
+            "rawZ": 1.776,
             "completeness": 0.8,
             "riskGauge": 4,
             "entry": {
-              "low": 43288,
-              "high": 45530
+              "low": 79891,
+              "high": 84074
             },
-            "stop": 38975,
+            "stop": 71846,
             "targets": {
-              "conservative": 47600,
-              "base": 50359,
-              "bull": 54499
+              "conservative": 87936,
+              "base": 93085,
+              "bull": 100808
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -4016,57 +4014,57 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 4.445,
-                "z": 2.477
+                "raw": 3.401,
+                "z": 2.001
               },
               "gapQuality": {
-                "raw": 0.397,
-                "z": 2.054
+                "raw": 0.74,
+                "z": 3
               },
               "newsSentiment": {
                 "raw": null,
                 "z": null
               },
               "volatilityExpansion": {
-                "raw": 0.149,
-                "z": 1.97
+                "raw": 0.765,
+                "z": 3
               },
               "trendPosition": {
-                "raw": 0.912,
-                "z": 1.091
+                "raw": 0.326,
+                "z": 0.139
               }
             },
             "sparkline": [
-              28100,
-              28800,
-              28300,
-              29850,
-              31200,
-              31400,
-              31400,
-              31400,
-              34350,
-              33850,
-              34600,
-              31100,
-              33750,
-              38700,
-              39150,
-              41500,
-              39600,
-              42000,
-              39600,
-              37650,
-              37150,
-              37150,
-              37900,
-              36300,
-              37300,
-              37700,
-              37650,
-              37450,
-              38250,
-              44150
+              61400,
+              62000,
+              65000,
+              63000,
+              65500,
+              65500,
+              65500,
+              68300,
+              63900,
+              65900,
+              61900,
+              62000,
+              64300,
+              62600,
+              63600,
+              63300,
+              65700,
+              62800,
+              61500,
+              67300,
+              69900,
+              68500,
+              60400,
+              61500,
+              59300,
+              63600,
+              61000,
+              65500,
+              72300,
+              81500
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -4078,878 +4076,55 @@
             "rank": 4,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "425420",
-            "name": "티에프이",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 64500,
-            "changePct": 10.82,
-            "score": 77.9,
-            "rawZ": 1.673,
-            "completeness": 0.8,
-            "riskGauge": 3,
-            "entry": {
-              "low": 63386,
-              "high": 66282
-            },
-            "stop": 57819,
-            "targets": {
-              "conservative": 68954,
-              "base": 72517,
-              "bull": 77862
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 4.636,
-                "z": 2.605
-              },
-              "gapQuality": {
-                "raw": 0.503,
-                "z": 2.83
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0.322,
-                "z": 3
-              },
-              "trendPosition": {
-                "raw": 0.951,
-                "z": 1.143
-              }
-            },
-            "sparkline": [
-              30250,
-              31050,
-              32400,
-              31400,
-              30400,
-              33100,
-              34250,
-              34700,
-              38600,
-              37350,
-              38500,
-              37950,
-              40600,
-              40800,
-              42000,
-              44700,
-              46750,
-              47400,
-              47500,
-              46250,
-              48500,
-              50700,
-              52700,
-              52700,
-              55800,
-              53000,
-              53700,
-              58200,
-              58200,
-              64500
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 5,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "058470",
-            "name": "리노공업",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 74700,
-            "changePct": 6.87,
-            "score": 76.4,
-            "rawZ": 1.583,
-            "completeness": 0.8,
-            "riskGauge": 1,
-            "entry": {
-              "low": 73821,
-              "high": 76107
-            },
-            "stop": 69425,
-            "targets": {
-              "conservative": 78217,
-              "base": 81030,
-              "bull": 85250
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 3.757,
-                "z": 1.978
-              },
-              "gapQuality": {
-                "raw": 0.399,
-                "z": 2.066
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0.447,
-                "z": 3
-              },
-              "trendPosition": {
-                "raw": 0.268,
-                "z": 0.222
-              }
-            },
-            "sparkline": [
-              65700,
-              70700,
-              71500,
-              71400,
-              71300,
-              70800,
-              70800,
-              70800,
-              67800,
-              67900,
-              69500,
-              65700,
-              64600,
-              67400,
-              66400,
-              66300,
-              66800,
-              66600,
-              64400,
-              64300,
-              66600,
-              68400,
-              66400,
-              64600,
-              64800,
-              65800,
-              67100,
-              69400,
-              69900,
-              74700
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 6,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "012210",
-            "name": "삼미금속",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 13330,
-            "changePct": 20.42,
-            "score": 75.9,
-            "rawZ": 1.552,
-            "completeness": 0.8,
-            "riskGauge": 5,
-            "entry": {
-              "low": 13015,
-              "high": 13834
-            },
-            "stop": 10684,
-            "targets": {
-              "conservative": 14590,
-              "base": 15598,
-              "bull": 17110
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 31.24,
-                "z": 3
-              },
-              "gapQuality": {
-                "raw": 0.386,
-                "z": 1.969
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.928,
-                "z": 1.112
-              }
-            },
-            "sparkline": [
-              7170,
-              7320,
-              8210,
-              7920,
-              7810,
-              7940,
-              8090,
-              7510,
-              7270,
-              7890,
-              8670,
-              8690,
-              8870,
-              8800,
-              8460,
-              8260,
-              8340,
-              8350,
-              10200,
-              10030,
-              13030,
-              12630,
-              12290,
-              11280,
-              11600,
-              10860,
-              11410,
-              11160,
-              11070,
-              13330
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 7,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "388210",
-            "name": "씨엠티엑스",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 86500,
-            "changePct": 4.98,
-            "score": 74.7,
-            "rawZ": 1.479,
-            "completeness": 0.8,
-            "riskGauge": 2,
-            "entry": {
-              "low": 85191,
-              "high": 88594
-            },
-            "stop": 78646,
-            "targets": {
-              "conservative": 91736,
-              "base": 95925,
-              "bull": 102208
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 2.69,
-                "z": 1.039
-              },
-              "gapQuality": {
-                "raw": 0.688,
-                "z": 3
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0.467,
-                "z": 3
-              },
-              "trendPosition": {
-                "raw": 0.253,
-                "z": 0.202
-              }
-            },
-            "sparkline": [
-              82200,
-              82000,
-              81700,
-              80800,
-              76800,
-              73800,
-              74500,
-              69500,
-              70000,
-              74000,
-              73200,
-              74800,
-              72500,
-              72600,
-              71800,
-              69600,
-              68600,
-              74800,
-              75100,
-              71300,
-              73700,
-              76900,
-              72300,
-              70800,
-              70500,
-              72100,
-              73000,
-              74000,
-              82400,
-              86500
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 8,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "222800",
-            "name": "심텍",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 145800,
-            "changePct": 11.55,
-            "score": 73.6,
-            "rawZ": 1.414,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 143029,
-              "high": 150233
-            },
-            "stop": 129175,
-            "targets": {
-              "conservative": 156883,
-              "base": 165750,
-              "bull": 179050
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 2.259,
-                "z": 0.58
-              },
-              "gapQuality": {
-                "raw": 0.479,
-                "z": 2.654
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0.318,
-                "z": 3
-              },
-              "trendPosition": {
-                "raw": 0.974,
-                "z": 1.174
-              }
-            },
-            "sparkline": [
-              110000,
-              115900,
-              113900,
-              104600,
-              105800,
-              108700,
-              108700,
-              108700,
-              110900,
-              110700,
-              114900,
-              99700,
-              105200,
-              116900,
-              112700,
-              126500,
-              122800,
-              129300,
-              123400,
-              117500,
-              117900,
-              119800,
-              131200,
-              122600,
-              125300,
-              129200,
-              128600,
-              126000,
-              130700,
-              145800
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 9,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "036540",
-            "name": "SFA반도체",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 10550,
-            "changePct": 1.25,
-            "score": 73.1,
-            "rawZ": 1.383,
-            "completeness": 0.8,
-            "riskGauge": 3,
-            "entry": {
-              "low": 10372,
-              "high": 10834
-            },
-            "stop": 9483,
-            "targets": {
-              "conservative": 11261,
-              "base": 11830,
-              "bull": 12683
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 9.699,
-                "z": 3
-              },
-              "gapQuality": {
-                "raw": 0.427,
-                "z": 2.273
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0.339,
-                "z": 3
-              },
-              "trendPosition": {
-                "raw": 0.974,
-                "z": 1.174
-              }
-            },
-            "sparkline": [
-              4995,
-              5540,
-              6180,
-              6150,
-              6230,
-              6040,
-              6040,
-              6040,
-              5990,
-              5720,
-              6060,
-              5560,
-              5390,
-              5810,
-              5680,
-              5750,
-              5610,
-              5700,
-              5800,
-              5620,
-              5610,
-              6010,
-              7040,
-              7400,
-              8570,
-              8850,
-              8680,
-              9010,
-              10420,
-              10550
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 10,
-            "movement": -3,
-            "heldSessions": 2,
-            "ticker": "041190",
-            "name": "우리기술투자",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 6030,
-            "changePct": -0.17,
-            "score": 72.9,
-            "rawZ": 1.375,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 5909,
-              "high": 6224
-            },
-            "stop": 5302,
-            "targets": {
-              "conservative": 6516,
-              "base": 6904,
-              "bull": 7487
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 6.457,
-                "z": 3
-              },
-              "gapQuality": {
-                "raw": 0.313,
-                "z": 1.438
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.63,
-                "z": 0.711
-              }
-            },
-            "sparkline": [
-              4635,
-              4655,
-              4580,
-              4745,
-              4825,
-              4860,
-              4855,
-              4915,
-              4585,
-              4420,
-              4935,
-              5920,
-              5870,
-              6800,
-              6500,
-              6150,
-              6490,
-              6060,
-              5840,
-              5710,
-              6220,
-              6030,
-              5560,
-              5570,
-              5560,
-              5150,
-              5270,
-              5430,
-              6040,
-              6030
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          }
-        ],
-        "justMissed": []
-      },
-      "mid_term": {
-        "market": "KR",
-        "horizon": "mid_term",
-        "asOf": "2026-09-22",
-        "turnover30d": 0.10000000000000003,
-        "sampleWarning": true,
-        "stoppedOut": [],
-        "emptyReason": null,
-        "rows": [
-          {
-            "rank": 1,
-            "movement": 1,
-            "heldSessions": 8,
-            "ticker": "092870",
-            "name": "엑시콘",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 38000,
-            "changePct": -0.39,
-            "score": 84.2,
-            "rawZ": 2.05,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 36363,
-              "high": 38819
-            },
-            "stop": 23762,
-            "targets": {
-              "conservative": 44821,
-              "base": 50279,
-              "bull": 57100
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.697,
-                "z": 2.261
-              },
-              "fundamentalMomentum": {
-                "raw": 1.187,
-                "z": 3
-              },
-              "earningsDrift": {
-                "raw": 0.068,
-                "z": 3
-              },
-              "moneyFlow": {
-                "raw": 0.348,
-                "z": 1.249
-              },
-              "sectorStrength": {
-                "raw": null,
-                "z": null
-              }
-            },
-            "sparkline": [
-              10960,
-              13090,
-              13270,
-              14450,
-              16100,
-              15810,
-              15350,
-              16650,
-              18170,
-              19020,
-              19890,
-              21200,
-              23100,
-              23100,
-              24600,
-              26550,
-              26500,
-              24000,
-              31050,
-              30300,
-              32650,
-              30500,
-              29550,
-              28800,
-              30500,
-              32000,
-              33700,
-              35400,
-              38150,
-              38000
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 2,
-            "movement": -1,
-            "heldSessions": 8,
-            "ticker": "098120",
-            "name": "마이크로컨텍솔",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 56900,
-            "changePct": -1.22,
-            "score": 83.7,
-            "rawZ": 2.02,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 54438,
-              "high": 58131
-            },
-            "stop": 34165,
-            "targets": {
-              "conservative": 67157,
-              "base": 75362,
-              "bull": 85619
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.727,
-                "z": 2.261
-              },
-              "fundamentalMomentum": {
-                "raw": 0.67,
-                "z": 3
-              },
-              "earningsDrift": {
-                "raw": 0.196,
-                "z": 3
-              },
-              "moneyFlow": {
-                "raw": 0.3,
-                "z": 1.083
-              },
-              "sectorStrength": {
-                "raw": null,
-                "z": null
-              }
-            },
-            "sparkline": [
-              20200,
-              17520,
-              17120,
-              20600,
-              21000,
-              22550,
-              24600,
-              24100,
-              24000,
-              25650,
-              27650,
-              28250,
-              28250,
-              29100,
-              37800,
-              41450,
-              41400,
-              39800,
-              38850,
-              43550,
-              41250,
-              46550,
-              55800,
-              49700,
-              51000,
-              50900,
-              52100,
-              53100,
-              57600,
-              56900
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 3,
-            "movement": "NEW",
-            "heldSessions": 1,
             "ticker": "159010",
             "name": "아스플로",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 24050,
-            "changePct": -0.21,
-            "score": 81.1,
-            "rawZ": 1.864,
+            "price": 29600,
+            "changePct": 23.08,
+            "score": 78.8,
+            "rawZ": 1.729,
             "completeness": 0.8,
             "riskGauge": 5,
             "entry": {
-              "low": 22459,
-              "high": 24846
+              "low": 28861,
+              "high": 30782
             },
-            "stop": 17309,
+            "stop": 24254,
             "targets": {
-              "conservative": 30681,
-              "base": 35986,
-              "bull": 42616
+              "conservative": 32556,
+              "base": 34920,
+              "bull": 38467
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
-            "maxHoldSessions": 45,
+            "maxHoldSessions": 5,
             "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
             "catalystCluster": null,
             "factors": {
-              "trendAlignment": {
-                "raw": 0.597,
-                "z": 2.036
-              },
-              "fundamentalMomentum": {
-                "raw": 0.875,
+              "relativeVolume": {
+                "raw": 4.602,
                 "z": 3
               },
-              "earningsDrift": {
-                "raw": 0.029,
-                "z": 1.915
+              "gapQuality": {
+                "raw": 0.772,
+                "z": 3
               },
-              "moneyFlow": {
-                "raw": 0.534,
-                "z": 1.735
-              },
-              "sectorStrength": {
+              "newsSentiment": {
                 "raw": null,
                 "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.99,
+                "z": 0.96
               }
             },
             "sparkline": [
-              13230,
               16380,
               15100,
               15440,
@@ -4978,97 +4153,8 @@
               24950,
               25400,
               24100,
-              24050
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 4,
-            "movement": 0,
-            "heldSessions": 8,
-            "ticker": "417840",
-            "name": "저스템",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 15940,
-            "changePct": 6.48,
-            "score": 75.9,
-            "rawZ": 1.557,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 15189,
-              "high": 16316
-            },
-            "stop": 12593,
-            "targets": {
-              "conservative": 19070,
-              "base": 21573,
-              "bull": 24703
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.544,
-                "z": 1.912
-              },
-              "fundamentalMomentum": {
-                "raw": 1.029,
-                "z": 3
-              },
-              "earningsDrift": {
-                "raw": 0.038,
-                "z": 2.574
-              },
-              "moneyFlow": {
-                "raw": -0.164,
-                "z": -0.534
-              },
-              "sectorStrength": {
-                "raw": null,
-                "z": null
-              }
-            },
-            "sparkline": [
-              7580,
-              7220,
-              9040,
-              8900,
-              9380,
-              10130,
-              10900,
-              9950,
-              11750,
-              12390,
-              13850,
-              13440,
-              13570,
-              13570,
-              13570,
-              14150,
-              13320,
-              13900,
-              15030,
-              14970,
-              15110,
-              14080,
-              15720,
-              14650,
-              14490,
-              14500,
-              14410,
-              14760,
-              14970,
-              15940
+              24050,
+              29600
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -5080,85 +4166,85 @@
             "rank": 5,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "253590",
-            "name": "네오셈",
+            "ticker": "103590",
+            "name": "일진전기",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 13210,
-            "changePct": 0.99,
-            "score": 75.5,
-            "rawZ": 1.529,
+            "price": 81600,
+            "changePct": 6.81,
+            "score": 77.7,
+            "rawZ": 1.661,
             "completeness": 0.8,
-            "riskGauge": 4,
+            "riskGauge": 2,
             "entry": {
-              "low": 12630,
-              "high": 13500
+              "low": 80465,
+              "high": 83416
             },
-            "stop": 10742,
+            "stop": 74790,
             "targets": {
-              "conservative": 15628,
-              "base": 17562,
-              "bull": 19979
+              "conservative": 86140,
+              "base": 89772,
+              "bull": 95220
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
-            "maxHoldSessions": 45,
+            "maxHoldSessions": 5,
             "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
             "catalystCluster": null,
             "factors": {
-              "trendAlignment": {
-                "raw": 0.596,
-                "z": 2.035
+              "relativeVolume": {
+                "raw": 3.636,
+                "z": 2.228
               },
-              "fundamentalMomentum": {
-                "raw": 0.914,
-                "z": 3
+              "gapQuality": {
+                "raw": 0.405,
+                "z": 1.603
               },
-              "earningsDrift": {
-                "raw": 0.016,
-                "z": 0.941
-              },
-              "moneyFlow": {
-                "raw": 0.263,
-                "z": 0.955
-              },
-              "sectorStrength": {
+              "newsSentiment": {
                 "raw": null,
                 "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0.422,
+                "z": 3
+              },
+              "trendPosition": {
+                "raw": 0.884,
+                "z": 0.832
               }
             },
             "sparkline": [
-              9170,
-              9710,
-              9040,
-              9430,
-              8240,
-              7210,
-              6900,
-              8250,
-              8520,
-              8880,
-              9290,
-              9230,
-              8900,
-              9620,
-              10260,
-              11100,
-              11030,
-              11450,
-              11450,
-              11450,
-              11250,
-              10940,
-              11550,
-              11140,
-              11290,
-              11460,
-              11860,
-              12310,
-              13080,
-              13210
+              62600,
+              61800,
+              72500,
+              72400,
+              74300,
+              74300,
+              74300,
+              71700,
+              71100,
+              70000,
+              65600,
+              66100,
+              66300,
+              69200,
+              74400,
+              72600,
+              71200,
+              67500,
+              67600,
+              68300,
+              70600,
+              71000,
+              68800,
+              68700,
+              69900,
+              70400,
+              76300,
+              73600,
+              76400,
+              81600
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -5168,1117 +4254,177 @@
           },
           {
             "rank": 6,
-            "movement": -3,
-            "heldSessions": 3,
-            "ticker": "108490",
-            "name": "로보티즈",
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "042000",
+            "name": "카페24",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 300500,
-            "changePct": -2.12,
-            "score": 75.4,
-            "rawZ": 1.521,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 287079,
-              "high": 307211
-            },
-            "stop": 244578,
-            "targets": {
-              "conservative": 356422,
-              "base": 401160,
-              "bull": 457082
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "금융위원장 앞에서 아이돌 춤춘 로봇…“피지컬 AI 지역거점 지원”",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.46,
-                "z": 1.717
-              },
-              "fundamentalMomentum": {
-                "raw": 0.691,
-                "z": 3
-              },
-              "earningsDrift": {
-                "raw": 0.031,
-                "z": 2.01
-              },
-              "moneyFlow": {
-                "raw": 0.037,
-                "z": 0.168
-              },
-              "sectorStrength": {
-                "raw": null,
-                "z": null
-              }
-            },
-            "sparkline": [
-              229500,
-              247000,
-              243500,
-              247500,
-              261000,
-              280000,
-              280000,
-              280000,
-              279000,
-              267000,
-              262500,
-              254000,
-              247500,
-              255000,
-              250500,
-              251000,
-              242000,
-              257500,
-              247000,
-              248500,
-              304500,
-              301500,
-              323500,
-              316000,
-              321500,
-              307000,
-              310000,
-              306000,
-              307000,
-              300500
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 7,
-            "movement": -1,
-            "heldSessions": 2,
-            "ticker": "200470",
-            "name": "에이팩트",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 7900,
-            "changePct": -1.25,
-            "score": 71.9,
-            "rawZ": 1.313,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 7579,
-              "high": 8060
-            },
-            "stop": 6185,
-            "targets": {
-              "conservative": 9236,
-              "base": 10304,
-              "bull": 11640
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.6,
-                "z": 2.044
-              },
-              "fundamentalMomentum": {
-                "raw": 0.418,
-                "z": 1.669
-              },
-              "earningsDrift": {
-                "raw": 0.017,
-                "z": 1.045
-              },
-              "moneyFlow": {
-                "raw": 0.35,
-                "z": 1.257
-              },
-              "sectorStrength": {
-                "raw": null,
-                "z": null
-              }
-            },
-            "sparkline": [
-              5520,
-              5580,
-              5790,
-              6070,
-              6010,
-              6030,
-              6430,
-              6190,
-              5900,
-              6200,
-              6700,
-              6110,
-              6030,
-              6100,
-              5940,
-              6070,
-              6380,
-              6240,
-              6250,
-              6220,
-              6450,
-              6290,
-              6180,
-              6040,
-              6290,
-              6200,
-              7230,
-              7270,
-              8000,
-              7900
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 8,
-            "movement": -1,
-            "heldSessions": 8,
-            "ticker": "031980",
-            "name": "피에스케이홀딩스",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 158200,
-            "changePct": -6.94,
-            "score": 70.8,
-            "rawZ": 1.248,
-            "completeness": 0.8,
-            "riskGauge": 5,
-            "entry": {
-              "low": 149504,
-              "high": 162548
-            },
-            "stop": 121967,
-            "targets": {
-              "conservative": 194433,
-              "base": 223420,
-              "bull": 259653
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.588,
-                "z": 2.017
-              },
-              "fundamentalMomentum": {
-                "raw": 0.317,
-                "z": 1.099
-              },
-              "earningsDrift": {
-                "raw": 0.024,
-                "z": 1.525
-              },
-              "moneyFlow": {
-                "raw": 0.304,
-                "z": 1.095
-              },
-              "sectorStrength": {
-                "raw": null,
-                "z": null
-              }
-            },
-            "sparkline": [
-              94000,
-              105000,
-              109100,
-              108100,
-              105200,
-              111200,
-              111200,
-              111200,
-              111700,
-              112200,
-              115400,
-              107500,
-              110200,
-              120700,
-              119200,
-              125900,
-              120100,
-              124800,
-              122000,
-              129500,
-              144000,
-              156000,
-              157000,
-              153200,
-              165300,
-              166800,
-              166900,
-              159900,
-              170000,
-              158200
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 9,
-            "movement": -1,
-            "heldSessions": 7,
-            "ticker": "033790",
-            "name": "피노",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 7490,
-            "changePct": -4.1,
-            "score": 69.8,
-            "rawZ": 1.189,
-            "completeness": 0.8,
-            "riskGauge": 5,
-            "entry": {
-              "low": 7033,
-              "high": 7718
-            },
-            "stop": 5586,
-            "targets": {
-              "conservative": 9394,
-              "base": 10917,
-              "bull": 12820
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.404,
-                "z": 1.584
-              },
-              "fundamentalMomentum": {
-                "raw": 0.637,
-                "z": 2.898
-              },
-              "earningsDrift": {
-                "raw": 0.004,
-                "z": 0.059
-              },
-              "moneyFlow": {
-                "raw": 0.218,
-                "z": 0.798
-              },
-              "sectorStrength": {
-                "raw": null,
-                "z": null
-              }
-            },
-            "sparkline": [
-              5210,
-              5480,
-              5540,
-              5460,
-              5600,
-              6750,
-              6800,
-              6380,
-              6370,
-              6430,
-              6430,
-              6430,
-              6050,
-              5590,
-              6010,
-              6450,
-              6750,
-              7850,
-              7850,
-              8830,
-              10200,
-              9460,
-              7600,
-              7370,
-              7490,
-              7760,
-              7420,
-              8040,
-              7810,
-              7490
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 10,
-            "movement": 0,
-            "heldSessions": 5,
-            "ticker": "122640",
-            "name": "예스티",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 31150,
-            "changePct": -3.56,
-            "score": 63.6,
-            "rawZ": 0.815,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 29739,
-              "high": 31855
-            },
-            "stop": 25272,
-            "targets": {
-              "conservative": 37028,
-              "base": 41730,
-              "bull": 47608
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.499,
-                "z": 1.806
-              },
-              "fundamentalMomentum": {
-                "raw": 0.542,
-                "z": 2.366
-              },
-              "earningsDrift": {
-                "raw": -0.006,
-                "z": -0.655
-              },
-              "moneyFlow": {
-                "raw": -0.053,
-                "z": -0.145
-              },
-              "sectorStrength": {
-                "raw": null,
-                "z": null
-              }
-            },
-            "sparkline": [
-              20400,
-              22000,
-              25100,
-              27400,
-              29100,
-              28700,
-              28700,
-              28700,
-              27500,
-              28000,
-              28850,
-              29550,
-              28450,
-              29850,
-              27800,
-              27850,
-              30200,
-              29600,
-              27000,
-              26850,
-              27150,
-              27450,
-              30050,
-              28450,
-              28450,
-              28550,
-              29250,
-              29600,
-              32300,
-              31150
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          }
-        ],
-        "justMissed": []
-      },
-      "long_term": {
-        "market": "KR",
-        "horizon": "long_term",
-        "asOf": "2026-09-22",
-        "turnover30d": 0.05,
-        "sampleWarning": true,
-        "stoppedOut": [],
-        "emptyReason": null,
-        "rows": [
-          {
-            "rank": 1,
-            "movement": 0,
-            "heldSessions": 3,
-            "ticker": "267250",
-            "name": "HD현대",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 207000,
-            "changePct": -1.9,
-            "score": 89.8,
-            "rawZ": 2.385,
-            "completeness": 0.8,
-            "riskGauge": 3,
-            "entry": {
-              "low": 194088,
-              "high": 213456
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 282943,
-              "base": 377258,
-              "bull": 509298
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": null,
-                "z": null
-              },
-              "capitalEfficiency": {
-                "raw": 1.4,
-                "z": 2.235
-              },
-              "cashGeneration": {
-                "raw": 2.324,
-                "z": 2.985
-              },
-              "valuation": {
-                "raw": 14.915,
-                "z": 2.462
-              },
-              "fScore": {
-                "raw": 9,
-                "z": 1.288
-              }
-            },
-            "sparkline": [
-              225000,
-              226000,
-              224500,
-              230500,
-              229000,
-              235500,
-              235500,
-              235500,
-              234500,
-              228000,
-              221500,
-              213000,
-              212000,
-              215500,
-              217000,
-              215000,
-              218000,
-              219000,
-              209500,
-              213500,
-              240500,
-              243500,
-              247500,
-              243000,
-              226000,
-              218500,
-              222000,
-              212000,
-              211000,
-              207000
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 2,
-            "movement": 0,
-            "heldSessions": 13,
-            "ticker": "002990",
-            "name": "금호건설",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 13150,
-            "changePct": -3.31,
-            "score": 76.5,
-            "rawZ": 1.589,
-            "completeness": 0.8,
-            "riskGauge": 5,
-            "entry": {
-              "low": 11552,
-              "high": 13949
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 17974,
-              "base": 23966,
-              "bull": 32354
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": null,
-                "z": null
-              },
-              "capitalEfficiency": {
-                "raw": 1.4,
-                "z": 2.235
-              },
-              "cashGeneration": {
-                "raw": 0.561,
-                "z": 1.882
-              },
-              "valuation": {
-                "raw": 0.091,
-                "z": 1.253
-              },
-              "fScore": {
-                "raw": 5.625,
-                "z": 0
-              }
-            },
-            "sparkline": [
-              9770,
-              8840,
-              11490,
-              14930,
-              14370,
-              13400,
-              13400,
-              13400,
-              13950,
-              12600,
-              15650,
-              14750,
-              14860,
-              15380,
-              15690,
-              15060,
-              17020,
-              16460,
-              17100,
-              16510,
-              16090,
-              16110,
-              14710,
-              13480,
-              13320,
-              13620,
-              13440,
-              13380,
-              13600,
-              13150
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 3,
-            "movement": 0,
-            "heldSessions": 13,
-            "ticker": "005930",
-            "name": "삼성전자",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 273500,
-            "changePct": -0.18,
-            "score": 72.5,
-            "rawZ": 1.347,
-            "completeness": 0.8,
-            "riskGauge": 2,
-            "entry": {
-              "low": 260287,
-              "high": 280106
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 373840,
-              "base": 498454,
-              "bull": 672913
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": null,
-                "z": null
-              },
-              "capitalEfficiency": {
-                "raw": 1.4,
-                "z": 2.235
-              },
-              "cashGeneration": {
-                "raw": 0.371,
-                "z": 1.034
-              },
-              "valuation": {
-                "raw": -0.728,
-                "z": 0.58
-              },
-              "fScore": {
-                "raw": 9,
-                "z": 1.288
-              }
-            },
-            "sparkline": [
-              231000,
-              230000,
-              239500,
-              255500,
-              268000,
-              274500,
-              274500,
-              274500,
-              268500,
-              247500,
-              271000,
-              281500,
-              257000,
-              257000,
-              261500,
-              265000,
-              257000,
-              260000,
-              250500,
-              250000,
-              255500,
-              270000,
-              259500,
-              248000,
-              248500,
-              253000,
-              254500,
-              260500,
-              274000,
-              273500
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 4,
-            "movement": 0,
-            "heldSessions": 13,
-            "ticker": "000660",
-            "name": "SK하이닉스",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 1818000,
-            "changePct": -3.14,
-            "score": 67.8,
-            "rawZ": 1.066,
-            "completeness": 0.8,
-            "riskGauge": 3,
-            "entry": {
-              "low": 1713352,
-              "high": 1870324
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 2484979,
-              "base": 3313305,
-              "bull": 4472962
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": null,
-                "z": null
-              },
-              "capitalEfficiency": {
-                "raw": 1.4,
-                "z": 2.235
-              },
-              "cashGeneration": {
-                "raw": 0.24,
-                "z": 0.449
-              },
-              "valuation": {
-                "raw": -0.977,
-                "z": 0.374
-              },
-              "fScore": {
-                "raw": 7.875,
-                "z": 0.858
-              }
-            },
-            "sparkline": [
-              1422000,
-              1420000,
-              1425000,
-              1504000,
-              1593000,
-              1645000,
-              1645000,
-              1645000,
-              1662000,
-              1500000,
-              1691000,
-              1730000,
-              1671000,
-              1678000,
-              1688000,
-              1716000,
-              1653000,
-              1674000,
-              1613000,
-              1596000,
-              1647000,
-              1783000,
-              1812000,
-              1684000,
-              1689000,
-              1750000,
-              1757000,
-              1850000,
-              1877000,
-              1818000
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 5,
-            "movement": 0,
-            "heldSessions": 13,
-            "ticker": "003230",
-            "name": "삼양식품",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 1251000,
-            "changePct": -2.19,
-            "score": 67.2,
-            "rawZ": 1.034,
-            "completeness": 0.8,
-            "riskGauge": 2,
-            "entry": {
-              "low": 1188280,
-              "high": 1282360
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 1709961,
-              "base": 2279948,
-              "bull": 3077929
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": null,
-                "z": null
-              },
-              "capitalEfficiency": {
-                "raw": 1.4,
-                "z": 2.235
-              },
-              "cashGeneration": {
-                "raw": 0.277,
-                "z": 0.613
-              },
-              "valuation": {
-                "raw": -1.376,
-                "z": 0.046
-              },
-              "fScore": {
-                "raw": 7.875,
-                "z": 0.858
-              }
-            },
-            "sparkline": [
-              1306000,
-              1288000,
-              1254000,
-              1204000,
-              1219000,
-              1270000,
-              1270000,
-              1270000,
-              1334000,
-              1304000,
-              1397000,
-              1366000,
-              1404000,
-              1430000,
-              1507000,
-              1478000,
-              1547000,
-              1531000,
-              1475000,
-              1424000,
-              1417000,
-              1330000,
-              1278000,
-              1293000,
-              1274000,
-              1260000,
-              1286000,
-              1297000,
-              1279000,
-              1251000
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 6,
-            "movement": 0,
-            "heldSessions": 13,
-            "ticker": "192820",
-            "name": "코스맥스",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 269000,
-            "changePct": -2,
-            "score": 66.7,
-            "rawZ": 0.999,
-            "completeness": 0.8,
-            "riskGauge": 3,
-            "entry": {
-              "low": 253388,
-              "high": 276806
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 367689,
-              "base": 490253,
-              "bull": 661841
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": null,
-                "z": null
-              },
-              "capitalEfficiency": {
-                "raw": 1.4,
-                "z": 2.235
-              },
-              "cashGeneration": {
-                "raw": 0.282,
-                "z": 0.633
-              },
-              "valuation": {
-                "raw": -1.209,
-                "z": 0.183
-              },
-              "fScore": {
-                "raw": 6.429,
-                "z": 0.307
-              }
-            },
-            "sparkline": [
-              205500,
-              203500,
-              210000,
-              249500,
-              249000,
-              247500,
-              247500,
-              247500,
-              239000,
-              246000,
-              260500,
-              271000,
-              286000,
-              289000,
-              288000,
-              281500,
-              303000,
-              300000,
-              285500,
-              282000,
-              275500,
-              274000,
-              270500,
-              273500,
-              273500,
-              281500,
-              271500,
-              272000,
-              274500,
-              269000
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 7,
-            "movement": 1,
-            "heldSessions": 13,
-            "ticker": "000270",
-            "name": "기아",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 118700,
-            "changePct": -1.08,
-            "score": 65,
-            "rawZ": 0.903,
+            "price": 17800,
+            "changePct": 18.04,
+            "score": 77.3,
+            "rawZ": 1.637,
             "completeness": 0.8,
             "riskGauge": 1,
             "entry": {
-              "low": 114218,
-              "high": 120941
+              "low": 17586,
+              "high": 18143
             },
-            "stop": null,
+            "stop": 15284,
             "targets": {
-              "conservative": 162248,
-              "base": 216331,
-              "bull": 292047
+              "conservative": 18657,
+              "base": 19343,
+              "bull": 20372
             },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
             "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
             "catalystCluster": null,
             "factors": {
-              "growthQuality": {
+              "relativeVolume": {
+                "raw": 22.388,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0.416,
+                "z": 1.666
+              },
+              "newsSentiment": {
                 "raw": null,
                 "z": null
               },
-              "capitalEfficiency": {
-                "raw": 0.568,
-                "z": 0.411
+              "volatilityExpansion": {
+                "raw": 0.26,
+                "z": 2.04
               },
-              "cashGeneration": {
-                "raw": 0.447,
-                "z": 1.374
-              },
-              "valuation": {
-                "raw": 0.372,
-                "z": 1.484
-              },
-              "fScore": {
-                "raw": 5.625,
-                "z": 0
+              "trendPosition": {
+                "raw": 0.22,
+                "z": 0.008
               }
             },
             "sparkline": [
-              134900,
-              135500,
-              134300,
-              135600,
-              137400,
-              141700,
-              141700,
-              141700,
-              137200,
-              133000,
-              131100,
-              130900,
-              131500,
-              134900,
-              131400,
-              125800,
-              128000,
-              131000,
-              124400,
-              127400,
-              126500,
-              128400,
-              126600,
-              123400,
-              122100,
-              121000,
-              120800,
-              121800,
-              120000,
-              118700
+              18130,
+              18060,
+              17840,
+              16570,
+              16460,
+              16900,
+              16330,
+              16660,
+              16810,
+              16890,
+              17020,
+              17120,
+              16990,
+              16740,
+              16040,
+              15810,
+              16120,
+              16130,
+              15920,
+              15540,
+              15510,
+              15500,
+              15530,
+              15820,
+              15510,
+              15380,
+              15070,
+              15190,
+              15080,
+              17800
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 7,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "005290",
+            "name": "동진쎄미켐",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 46850,
+            "changePct": 9.59,
+            "score": 76.5,
+            "rawZ": 1.593,
+            "completeness": 0.8,
+            "riskGauge": 1,
+            "entry": {
+              "low": 46306,
+              "high": 47720
+            },
+            "stop": 43083,
+            "targets": {
+              "conservative": 49025,
+              "base": 50764,
+              "bull": 53374
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 2.884,
+                "z": 1.454
+              },
+              "gapQuality": {
+                "raw": 0.702,
+                "z": 3
+              },
+              "newsSentiment": {
+                "raw": null,
+                "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0.425,
+                "z": 3
+              },
+              "trendPosition": {
+                "raw": 0.282,
+                "z": 0.085
+              }
+            },
+            "sparkline": [
+              42050,
+              43000,
+              43400,
+              43200,
+              43450,
+              43450,
+              43450,
+              43200,
+              42200,
+              43200,
+              41100,
+              42000,
+              43650,
+              42350,
+              42750,
+              42400,
+              42600,
+              40400,
+              39750,
+              40250,
+              41550,
+              40800,
+              39200,
+              39500,
+              40450,
+              40900,
+              41300,
+              42600,
+              42750,
+              46850
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6288,357 +4434,57 @@
           },
           {
             "rank": 8,
-            "movement": 1,
-            "heldSessions": 13,
-            "ticker": "078930",
-            "name": "GS",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 110000,
-            "changePct": -2.83,
-            "score": 64.9,
-            "rawZ": 0.892,
-            "completeness": 0.8,
-            "riskGauge": 3,
-            "entry": {
-              "low": 102940,
-              "high": 113530
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 150356,
-              "base": 200475,
-              "bull": 270641
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "Stock Market Today, Sept. 21: Tech Strength Powers Nasdaq to Record Close",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": null,
-                "z": null
-              },
-              "capitalEfficiency": {
-                "raw": 0.592,
-                "z": 0.464
-              },
-              "cashGeneration": {
-                "raw": 0.365,
-                "z": 1.007
-              },
-              "valuation": {
-                "raw": 0.202,
-                "z": 1.343
-              },
-              "fScore": {
-                "raw": 7.875,
-                "z": 0.858
-              }
-            },
-            "sparkline": [
-              98900,
-              97300,
-              97500,
-              101000,
-              107400,
-              117000,
-              117000,
-              117000,
-              119300,
-              119700,
-              113600,
-              116200,
-              114600,
-              121800,
-              127700,
-              122700,
-              129200,
-              127100,
-              120000,
-              118900,
-              123900,
-              125600,
-              119000,
-              115000,
-              114500,
-              111300,
-              113100,
-              113800,
-              113200,
-              110000
-            ],
-            "newsCount": 1,
-            "sentiment": 0.186,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 9,
-            "movement": -2,
-            "heldSessions": 13,
-            "ticker": "267260",
-            "name": "HD현대일렉트릭",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 714000,
-            "changePct": -0.7,
-            "score": 64.8,
-            "rawZ": 0.887,
-            "completeness": 0.8,
-            "riskGauge": 2,
-            "entry": {
-              "low": 674440,
-              "high": 733780
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 975949,
-              "base": 1301265,
-              "bull": 1756708
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": null,
-                "z": null
-              },
-              "capitalEfficiency": {
-                "raw": 1.4,
-                "z": 2.235
-              },
-              "cashGeneration": {
-                "raw": 0.272,
-                "z": 0.591
-              },
-              "valuation": {
-                "raw": -1.705,
-                "z": -0.224
-              },
-              "fScore": {
-                "raw": 6.429,
-                "z": 0.307
-              }
-            },
-            "sparkline": [
-              762000,
-              764000,
-              739000,
-              782000,
-              785000,
-              803000,
-              803000,
-              803000,
-              785000,
-              752000,
-              746000,
-              718000,
-              720000,
-              719000,
-              733000,
-              803000,
-              814000,
-              781000,
-              711000,
-              706000,
-              714000,
-              763000,
-              747000,
-              727000,
-              702000,
-              706000,
-              711000,
-              727000,
-              719000,
-              714000
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 10,
-            "movement": 0,
-            "heldSessions": 13,
-            "ticker": "064400",
-            "name": "LG씨엔에스",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 71000,
-            "changePct": 2.31,
-            "score": 64,
-            "rawZ": 0.839,
-            "completeness": 0.8,
-            "riskGauge": 2,
-            "entry": {
-              "low": 67364,
-              "high": 72818
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 97048,
-              "base": 129398,
-              "bull": 174687
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": null,
-                "z": null
-              },
-              "capitalEfficiency": {
-                "raw": 0.884,
-                "z": 1.105
-              },
-              "cashGeneration": {
-                "raw": 0.391,
-                "z": 1.123
-              },
-              "valuation": {
-                "raw": -0.991,
-                "z": 0.363
-              },
-              "fScore": {
-                "raw": 6.75,
-                "z": 0.429
-              }
-            },
-            "sparkline": [
-              72600,
-              73600,
-              75600,
-              77300,
-              78400,
-              79900,
-              79900,
-              79900,
-              73900,
-              71000,
-              73800,
-              71600,
-              72300,
-              73000,
-              74100,
-              74000,
-              75800,
-              77200,
-              74500,
-              72500,
-              74100,
-              76300,
-              71900,
-              70500,
-              70900,
-              69900,
-              69500,
-              70300,
-              69400,
-              71000
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          }
-        ],
-        "justMissed": []
-      },
-      "ultra_long": {
-        "market": "KR",
-        "horizon": "ultra_long",
-        "asOf": "2026-09-22",
-        "turnover30d": 0.045454545454545456,
-        "sampleWarning": true,
-        "stoppedOut": [],
-        "emptyReason": null,
-        "rows": [
-          {
-            "rank": 1,
-            "movement": 0,
-            "heldSessions": 13,
+            "movement": "NEW",
+            "heldSessions": 1,
             "ticker": "240810",
             "name": "원익IPS",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 128300,
-            "changePct": -1.08,
-            "score": 75.2,
-            "rawZ": 1.514,
+            "price": 133300,
+            "changePct": 3.9,
+            "score": 75.7,
+            "rawZ": 1.543,
             "completeness": 0.8,
-            "riskGauge": 4,
+            "riskGauge": 3,
             "entry": {
-              "low": 114675,
-              "high": 132842
+              "low": 130909,
+              "high": 137125
             },
-            "stop": null,
+            "stop": 118955,
             "targets": {
-              "conservative": 158143,
-              "base": 186808,
-              "bull": 223773
+              "conservative": 142863,
+              "base": 150514,
+              "bull": 161990
             },
-            "targetBasis": "compounding_scenarios",
-            "thesisInvalidation": [
-              "Return on invested capital declines for three consecutive fiscal years",
-              "Gross margin falls below its 10-year 20th percentile",
-              "Net debt to EBITDA rises above 3.5x",
-              "Share count grows more than 2% per year for three consecutive years"
-            ],
-            "maxHoldSessions": 2520,
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
             "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
             "catalystCluster": null,
             "factors": {
-              "moatStrength": {
-                "raw": 0.631,
-                "z": 1.084
+              "relativeVolume": {
+                "raw": 3.507,
+                "z": 2.105
               },
-              "cashFlowDurability": {
-                "raw": 0.62,
-                "z": 1.038
+              "gapQuality": {
+                "raw": 0.492,
+                "z": 2.117
               },
-              "reinvestmentRunway": {
-                "raw": 0.055,
-                "z": 3
-              },
-              "balanceSheetStrength": {
-                "raw": 1.599,
-                "z": 1.123
-              },
-              "shareholderYield": {
+              "newsSentiment": {
                 "raw": null,
                 "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0.221,
+                "z": 1.763
+              },
+              "trendPosition": {
+                "raw": 0.926,
+                "z": 0.885
               }
             },
             "sparkline": [
-              88300,
               98400,
               104700,
               111500,
@@ -6667,7 +4513,290 @@
               118300,
               121100,
               129700,
-              128300
+              128300,
+              133300
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 9,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "229640",
+            "name": "LS에코에너지",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 63800,
+            "changePct": 6.87,
+            "score": 75.3,
+            "rawZ": 1.516,
+            "completeness": 0.8,
+            "riskGauge": 4,
+            "entry": {
+              "low": 62624,
+              "high": 65681
+            },
+            "stop": 56746,
+            "targets": {
+              "conservative": 68503,
+              "base": 72265,
+              "bull": 77908
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 5.937,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0.178,
+                "z": 0.265
+              },
+              "newsSentiment": {
+                "raw": null,
+                "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0.301,
+                "z": 2.326
+              },
+              "trendPosition": {
+                "raw": 0.882,
+                "z": 0.829
+              }
+            },
+            "sparkline": [
+              39500,
+              35450,
+              34050,
+              40350,
+              40700,
+              44200,
+              47600,
+              45550,
+              45450,
+              47900,
+              46800,
+              48350,
+              48150,
+              48300,
+              48300,
+              48300,
+              46600,
+              45900,
+              48050,
+              45900,
+              45900,
+              44300,
+              47650,
+              49900,
+              55800,
+              53500,
+              60100,
+              60000,
+              59700,
+              63800
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 10,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "356680",
+            "name": "엑스게이트",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 18380,
+            "changePct": 11.39,
+            "score": 74.7,
+            "rawZ": 1.48,
+            "completeness": 0.8,
+            "riskGauge": 5,
+            "entry": {
+              "low": 17988,
+              "high": 19007
+            },
+            "stop": 16030,
+            "targets": {
+              "conservative": 19947,
+              "base": 21200,
+              "bull": 23080
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 18.404,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0.443,
+                "z": 1.827
+              },
+              "newsSentiment": {
+                "raw": null,
+                "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.9,
+                "z": 0.853
+              }
+            },
+            "sparkline": [
+              9820,
+              9900,
+              10540,
+              11370,
+              11100,
+              11090,
+              12000,
+              11990,
+              12230,
+              12910,
+              12870,
+              12870,
+              12870,
+              12120,
+              11430,
+              11440,
+              11630,
+              11530,
+              11770,
+              12020,
+              11810,
+              16060,
+              17050,
+              17300,
+              16970,
+              17300,
+              17490,
+              17800,
+              16500,
+              18380
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          }
+        ],
+        "justMissed": []
+      },
+      "mid_term": {
+        "market": "KR",
+        "horizon": "mid_term",
+        "asOf": "2026-09-23",
+        "turnover30d": 0.10434782608695656,
+        "sampleWarning": true,
+        "stoppedOut": [],
+        "emptyReason": null,
+        "rows": [
+          {
+            "rank": 1,
+            "movement": 0,
+            "heldSessions": 9,
+            "ticker": "092870",
+            "name": "엑시콘",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 43250,
+            "changePct": 13.82,
+            "score": 84.1,
+            "rawZ": 2.047,
+            "completeness": 0.8,
+            "riskGauge": 4,
+            "entry": {
+              "low": 41404,
+              "high": 44173
+            },
+            "stop": 24298,
+            "targets": {
+              "conservative": 50941,
+              "base": 57094,
+              "bull": 64786
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 0.719,
+                "z": 1.944
+              },
+              "fundamentalMomentum": {
+                "raw": 1.187,
+                "z": 3
+              },
+              "earningsDrift": {
+                "raw": 0.066,
+                "z": 3
+              },
+              "moneyFlow": {
+                "raw": 0.564,
+                "z": 1.67
+              },
+              "sectorStrength": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              13090,
+              13270,
+              14450,
+              16100,
+              15810,
+              15350,
+              16650,
+              18170,
+              19020,
+              19890,
+              21200,
+              23100,
+              23100,
+              24600,
+              26550,
+              26500,
+              24000,
+              31050,
+              30300,
+              32650,
+              30500,
+              29550,
+              28800,
+              30500,
+              32000,
+              33700,
+              35400,
+              38150,
+              38000,
+              43250
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6678,184 +4807,176 @@
           {
             "rank": 2,
             "movement": 0,
-            "heldSessions": 13,
-            "ticker": "042700",
-            "name": "한미반도체",
+            "heldSessions": 9,
+            "ticker": "098120",
+            "name": "마이크로컨텍솔",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 236500,
-            "changePct": -0.21,
-            "score": 74.7,
-            "rawZ": 1.483,
-            "completeness": 1,
-            "riskGauge": 3,
-            "entry": {
-              "low": 216339,
-              "high": 243220
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 268850,
-              "base": 298070,
-              "bull": 333690
-            },
-            "targetBasis": "compounding_scenarios",
-            "thesisInvalidation": [
-              "Return on invested capital declines for three consecutive fiscal years",
-              "Gross margin falls below its 10-year 20th percentile",
-              "Net debt to EBITDA rises above 3.5x",
-              "Share count grows more than 2% per year for three consecutive years"
-            ],
-            "maxHoldSessions": 2520,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "moatStrength": {
-                "raw": 0.759,
-                "z": 1.693
-              },
-              "cashFlowDurability": {
-                "raw": 0.851,
-                "z": 1.989
-              },
-              "reinvestmentRunway": {
-                "raw": 0.034,
-                "z": 2.178
-              },
-              "balanceSheetStrength": {
-                "raw": 1.24,
-                "z": 0.566
-              },
-              "shareholderYield": {
-                "raw": 0.301,
-                "z": 0.044
-              }
-            },
-            "sparkline": [
-              192300,
-              205500,
-              213000,
-              217500,
-              226000,
-              229000,
-              229000,
-              229000,
-              229000,
-              221000,
-              225500,
-              213500,
-              209000,
-              217500,
-              219500,
-              220000,
-              219500,
-              220500,
-              213500,
-              210500,
-              230000,
-              240500,
-              231000,
-              231000,
-              222000,
-              225000,
-              226000,
-              235000,
-              237000,
-              236500
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": []
-          },
-          {
-            "rank": 3,
-            "movement": 0,
-            "heldSessions": 13,
-            "ticker": "068270",
-            "name": "셀트리온",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 178100,
-            "changePct": -1.6,
-            "score": 70.1,
-            "rawZ": 1.203,
+            "price": 58700,
+            "changePct": 3.16,
+            "score": 81.5,
+            "rawZ": 1.887,
             "completeness": 0.8,
-            "riskGauge": 1,
+            "riskGauge": 4,
             "entry": {
-              "low": 170099,
-              "high": 180767
+              "low": 56200,
+              "high": 59950
             },
-            "stop": null,
+            "stop": 35014,
             "targets": {
-              "conservative": 192275,
-              "base": 204581,
-              "bull": 219041
+              "conservative": 69117,
+              "base": 77451,
+              "bull": 87868
             },
-            "targetBasis": "compounding_scenarios",
-            "thesisInvalidation": [
-              "Return on invested capital declines for three consecutive fiscal years",
-              "Gross margin falls below its 10-year 20th percentile",
-              "Net debt to EBITDA rises above 3.5x",
-              "Share count grows more than 2% per year for three consecutive years"
-            ],
-            "maxHoldSessions": 2520,
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
             "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
             "catalystCluster": null,
             "factors": {
-              "moatStrength": {
-                "raw": 0.714,
-                "z": 1.479
+              "trendAlignment": {
+                "raw": 0.719,
+                "z": 1.944
               },
-              "cashFlowDurability": {
-                "raw": 0.759,
-                "z": 1.611
+              "fundamentalMomentum": {
+                "raw": 0.67,
+                "z": 3
               },
-              "reinvestmentRunway": {
-                "raw": 0.011,
-                "z": 0.703
+              "earningsDrift": {
+                "raw": 0.192,
+                "z": 3
               },
-              "balanceSheetStrength": {
-                "raw": 1.349,
-                "z": 0.735
+              "moneyFlow": {
+                "raw": 0.222,
+                "z": 0.785
               },
-              "shareholderYield": {
+              "sectorStrength": {
                 "raw": null,
                 "z": null
               }
             },
             "sparkline": [
-              199300,
-              201000,
-              210500,
-              202000,
-              202000,
-              201000,
-              201000,
-              201000,
-              195500,
-              194100,
-              194100,
-              192300,
-              194000,
-              189600,
-              193400,
-              190900,
-              190700,
-              188900,
-              186300,
-              187100,
-              188100,
-              186300,
-              178200,
-              177400,
-              177800,
-              177200,
-              180300,
-              179900,
-              181000,
-              178100
+              17520,
+              17120,
+              20600,
+              21000,
+              22550,
+              24600,
+              24100,
+              24000,
+              25650,
+              27650,
+              28250,
+              28250,
+              29100,
+              37800,
+              41450,
+              41400,
+              39800,
+              38850,
+              43550,
+              41250,
+              46550,
+              55800,
+              49700,
+              51000,
+              50900,
+              52100,
+              53100,
+              57600,
+              56900,
+              58700
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 3,
+            "movement": 0,
+            "heldSessions": 2,
+            "ticker": "159010",
+            "name": "아스플로",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 29600,
+            "changePct": 23.08,
+            "score": 80.4,
+            "rawZ": 1.822,
+            "completeness": 0.8,
+            "riskGauge": 5,
+            "entry": {
+              "low": 27827,
+              "high": 30487
+            },
+            "stop": 17588,
+            "targets": {
+              "conservative": 36989,
+              "base": 42901,
+              "bull": 50290
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 0.724,
+                "z": 1.944
+              },
+              "fundamentalMomentum": {
+                "raw": 0.875,
+                "z": 3
+              },
+              "earningsDrift": {
+                "raw": 0.029,
+                "z": 1.878
+              },
+              "moneyFlow": {
+                "raw": 0.583,
+                "z": 1.67
+              },
+              "sectorStrength": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              16380,
+              15100,
+              15440,
+              16690,
+              16150,
+              15300,
+              13750,
+              14000,
+              12160,
+              10940,
+              11120,
+              13880,
+              13190,
+              14930,
+              16500,
+              19000,
+              19220,
+              20200,
+              21700,
+              21750,
+              22950,
+              23300,
+              23300,
+              23300,
+              24100,
+              24950,
+              25400,
+              24100,
+              24050,
+              29600
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6866,91 +4987,86 @@
           {
             "rank": 4,
             "movement": 0,
-            "heldSessions": 13,
-            "ticker": "214450",
-            "name": "파마리서치",
+            "heldSessions": 9,
+            "ticker": "417840",
+            "name": "저스템",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 324000,
-            "changePct": -0.31,
-            "score": 68.4,
-            "rawZ": 1.103,
+            "price": 17070,
+            "changePct": 7.09,
+            "score": 76,
+            "rawZ": 1.559,
             "completeness": 0.8,
             "riskGauge": 4,
             "entry": {
-              "low": 291480,
-              "high": 334840
+              "low": 16313,
+              "high": 17448
             },
-            "stop": null,
+            "stop": 12739,
             "targets": {
-              "conservative": 349787,
-              "base": 372174,
-              "bull": 398479
+              "conservative": 20223,
+              "base": 22745,
+              "bull": 25897
             },
-            "targetBasis": "compounding_scenarios",
-            "thesisInvalidation": [
-              "Return on invested capital declines for three consecutive fiscal years",
-              "Gross margin falls below its 10-year 20th percentile",
-              "Net debt to EBITDA rises above 3.5x",
-              "Share count grows more than 2% per year for three consecutive years"
-            ],
-            "maxHoldSessions": 2520,
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
             "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
             "catalystCluster": null,
             "factors": {
-              "moatStrength": {
-                "raw": 0.747,
-                "z": 1.633
+              "trendAlignment": {
+                "raw": 0.61,
+                "z": 1.727
               },
-              "cashFlowDurability": {
-                "raw": 0.718,
-                "z": 1.443
+              "fundamentalMomentum": {
+                "raw": 1.029,
+                "z": 3
               },
-              "reinvestmentRunway": {
-                "raw": 0.003,
-                "z": 0.177
+              "earningsDrift": {
+                "raw": 0.037,
+                "z": 2.517
               },
-              "balanceSheetStrength": {
-                "raw": 1.407,
-                "z": 0.825
+              "moneyFlow": {
+                "raw": -0.055,
+                "z": -0.199
               },
-              "shareholderYield": {
+              "sectorStrength": {
                 "raw": null,
                 "z": null
               }
             },
             "sparkline": [
-              378500,
-              410000,
-              417000,
-              408000,
-              425500,
-              398000,
-              398000,
-              398000,
-              393000,
-              391000,
-              413500,
-              400500,
-              416000,
-              414500,
-              442000,
-              434000,
-              461500,
-              426000,
-              392500,
-              381000,
-              386500,
-              376500,
-              342000,
-              341500,
-              336500,
-              327500,
-              329500,
-              324000,
-              325000,
-              324000
+              7220,
+              9040,
+              8900,
+              9380,
+              10130,
+              10900,
+              9950,
+              11750,
+              12390,
+              13850,
+              13440,
+              13570,
+              13570,
+              13570,
+              14150,
+              13320,
+              13900,
+              15030,
+              14970,
+              15110,
+              14080,
+              15720,
+              14650,
+              14490,
+              14500,
+              14410,
+              14760,
+              14970,
+              15940,
+              17070
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6960,92 +5076,87 @@
           },
           {
             "rank": 5,
-            "movement": 0,
-            "heldSessions": 13,
-            "ticker": "000100",
-            "name": "유한양행",
+            "movement": 1,
+            "heldSessions": 4,
+            "ticker": "108490",
+            "name": "로보티즈",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 74800,
-            "changePct": -1.45,
-            "score": 65.5,
-            "rawZ": 0.929,
+            "price": 300500,
+            "changePct": 0,
+            "score": 74.4,
+            "rawZ": 1.465,
             "completeness": 0.8,
-            "riskGauge": 1,
+            "riskGauge": 4,
             "entry": {
-              "low": 70868,
-              "high": 76111
+              "low": 287330,
+              "high": 307085
             },
-            "stop": null,
+            "stop": 245626,
             "targets": {
-              "conservative": 87286,
-              "base": 98791,
-              "bull": 113076
+              "conservative": 355374,
+              "base": 399273,
+              "bull": 454148
             },
-            "targetBasis": "compounding_scenarios",
-            "thesisInvalidation": [
-              "Return on invested capital declines for three consecutive fiscal years",
-              "Gross margin falls below its 10-year 20th percentile",
-              "Net debt to EBITDA rises above 3.5x",
-              "Share count grows more than 2% per year for three consecutive years"
-            ],
-            "maxHoldSessions": 2520,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "금융위원장 앞에서 아이돌 춤춘 로봇…“피지컬 AI 지역거점 지원”",
             "catalystCluster": null,
             "factors": {
-              "moatStrength": {
-                "raw": 0.48,
-                "z": 0.368
+              "trendAlignment": {
+                "raw": 0.456,
+                "z": 1.413
               },
-              "cashFlowDurability": {
-                "raw": 0.472,
-                "z": 0.426
+              "fundamentalMomentum": {
+                "raw": 0.691,
+                "z": 3
               },
-              "reinvestmentRunway": {
-                "raw": 0.041,
-                "z": 2.628
+              "earningsDrift": {
+                "raw": 0.03,
+                "z": 1.97
               },
-              "balanceSheetStrength": {
-                "raw": 1.224,
-                "z": 0.541
+              "moneyFlow": {
+                "raw": 0.091,
+                "z": 0.32
               },
-              "shareholderYield": {
+              "sectorStrength": {
                 "raw": null,
                 "z": null
               }
             },
             "sparkline": [
-              80600,
-              82000,
-              85600,
-              83100,
-              82500,
-              83700,
-              83700,
-              83700,
-              79600,
-              79600,
-              83400,
-              82300,
-              84300,
-              83300,
-              86700,
-              82900,
-              84900,
-              83700,
-              81300,
-              81400,
-              81400,
-              80700,
-              79400,
-              78500,
-              79800,
-              77400,
-              77500,
-              75900,
-              75900,
-              74800
+              247000,
+              243500,
+              247500,
+              261000,
+              280000,
+              280000,
+              280000,
+              279000,
+              267000,
+              262500,
+              254000,
+              247500,
+              255000,
+              250500,
+              251000,
+              242000,
+              257500,
+              247000,
+              248500,
+              304500,
+              301500,
+              323500,
+              316000,
+              321500,
+              307000,
+              310000,
+              306000,
+              307000,
+              300500,
+              300500
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -7055,92 +5166,87 @@
           },
           {
             "rank": 6,
-            "movement": 1,
-            "heldSessions": 13,
-            "ticker": "161890",
-            "name": "한국콜마",
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "323280",
+            "name": "태성",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 145500,
-            "changePct": -0.27,
-            "score": 62.7,
-            "rawZ": 0.762,
+            "price": 46950,
+            "changePct": 1.62,
+            "score": 74.1,
+            "rawZ": 1.443,
             "completeness": 0.8,
             "riskGauge": 3,
             "entry": {
-              "low": 133196,
-              "high": 149601
+              "low": 45181,
+              "high": 47834
             },
-            "stop": null,
+            "stop": 39581,
             "targets": {
-              "conservative": 161490,
-              "base": 175670,
-              "bull": 192666
+              "conservative": 54319,
+              "base": 60214,
+              "bull": 67583
             },
-            "targetBasis": "compounding_scenarios",
-            "thesisInvalidation": [
-              "Return on invested capital declines for three consecutive fiscal years",
-              "Gross margin falls below its 10-year 20th percentile",
-              "Net debt to EBITDA rises above 3.5x",
-              "Share count grows more than 2% per year for three consecutive years"
-            ],
-            "maxHoldSessions": 2520,
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
             "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
             "catalystCluster": null,
             "factors": {
-              "moatStrength": {
-                "raw": 0.55,
-                "z": 0.699
+              "trendAlignment": {
+                "raw": 0.426,
+                "z": 1.353
               },
-              "cashFlowDurability": {
-                "raw": 0.636,
-                "z": 1.105
+              "fundamentalMomentum": {
+                "raw": 1.47,
+                "z": 3
               },
-              "reinvestmentRunway": {
-                "raw": 0.027,
-                "z": 1.767
+              "earningsDrift": {
+                "raw": 0.037,
+                "z": 2.488
               },
-              "balanceSheetStrength": {
-                "raw": 0.294,
-                "z": -0.899
+              "moneyFlow": {
+                "raw": -0.081,
+                "z": -0.292
               },
-              "shareholderYield": {
+              "sectorStrength": {
                 "raw": null,
                 "z": null
               }
             },
             "sparkline": [
-              106700,
-              105900,
-              107900,
-              132500,
-              135200,
-              136700,
-              136700,
-              136700,
-              129700,
-              127800,
-              137800,
-              136700,
-              143300,
-              150000,
-              148800,
-              145000,
-              161700,
-              160100,
-              155000,
-              150600,
-              145800,
-              144300,
-              141300,
-              144000,
-              144600,
-              149600,
-              147200,
-              145100,
-              145900,
-              145500
+              45650,
+              49350,
+              49700,
+              51000,
+              54000,
+              54000,
+              54000,
+              51700,
+              51900,
+              53100,
+              48450,
+              47700,
+              49550,
+              49900,
+              50300,
+              49450,
+              49000,
+              45500,
+              43450,
+              44850,
+              47450,
+              46650,
+              44450,
+              44700,
+              44550,
+              45450,
+              45200,
+              45550,
+              46200,
+              46950
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -7150,92 +5256,87 @@
           },
           {
             "rank": 7,
-            "movement": -1,
-            "heldSessions": 13,
-            "ticker": "011070",
-            "name": "LG이노텍",
+            "movement": -2,
+            "heldSessions": 2,
+            "ticker": "253590",
+            "name": "네오셈",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 535000,
-            "changePct": 2.88,
-            "score": 62.6,
-            "rawZ": 0.753,
+            "price": 13610,
+            "changePct": 3.03,
+            "score": 73.6,
+            "rawZ": 1.414,
             "completeness": 0.8,
-            "riskGauge": 5,
+            "riskGauge": 4,
             "entry": {
-              "low": 474615,
-              "high": 555128
+              "low": 13006,
+              "high": 13912
             },
-            "stop": null,
+            "stop": 10816,
             "targets": {
-              "conservative": 633380,
-              "base": 725033,
-              "bull": 839983
+              "conservative": 16126,
+              "base": 18139,
+              "bull": 20656
             },
-            "targetBasis": "compounding_scenarios",
-            "thesisInvalidation": [
-              "Return on invested capital declines for three consecutive fiscal years",
-              "Gross margin falls below its 10-year 20th percentile",
-              "Net debt to EBITDA rises above 3.5x",
-              "Share count grows more than 2% per year for three consecutive years"
-            ],
-            "maxHoldSessions": 2520,
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
             "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
             "catalystCluster": null,
             "factors": {
-              "moatStrength": {
-                "raw": 0.351,
-                "z": -0.242
+              "trendAlignment": {
+                "raw": 0.6,
+                "z": 1.706
               },
-              "cashFlowDurability": {
-                "raw": 0.569,
-                "z": 0.827
+              "fundamentalMomentum": {
+                "raw": 0.914,
+                "z": 3
               },
-              "reinvestmentRunway": {
-                "raw": 0.044,
-                "z": 2.877
+              "earningsDrift": {
+                "raw": 0.016,
+                "z": 0.932
               },
-              "balanceSheetStrength": {
-                "raw": 0.699,
-                "z": -0.272
+              "moneyFlow": {
+                "raw": 0.222,
+                "z": 0.786
               },
-              "shareholderYield": {
+              "sectorStrength": {
                 "raw": null,
                 "z": null
               }
             },
             "sparkline": [
-              552000,
-              555000,
-              549000,
-              604000,
-              615000,
-              654000,
-              654000,
-              654000,
-              633000,
-              603000,
-              587000,
-              550000,
-              570000,
-              602000,
-              583000,
-              592000,
-              611000,
-              642000,
-              567000,
-              556000,
-              562000,
-              586000,
-              543000,
-              508000,
-              507000,
-              512000,
-              510000,
-              530000,
-              520000,
-              535000
+              9710,
+              9040,
+              9430,
+              8240,
+              7210,
+              6900,
+              8250,
+              8520,
+              8880,
+              9290,
+              9230,
+              8900,
+              9620,
+              10260,
+              11100,
+              11030,
+              11450,
+              11450,
+              11450,
+              11250,
+              10940,
+              11550,
+              11140,
+              11290,
+              11460,
+              11860,
+              12310,
+              13080,
+              13210,
+              13610
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -7245,92 +5346,87 @@
           },
           {
             "rank": 8,
-            "movement": 0,
-            "heldSessions": 13,
-            "ticker": "033780",
-            "name": "KT&G",
+            "movement": -1,
+            "heldSessions": 3,
+            "ticker": "200470",
+            "name": "에이팩트",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 175600,
-            "changePct": 1.33,
-            "score": 60.5,
-            "rawZ": 0.63,
+            "price": 8120,
+            "changePct": 2.78,
+            "score": 70.3,
+            "rawZ": 1.218,
             "completeness": 0.8,
-            "riskGauge": 1,
+            "riskGauge": 3,
             "entry": {
-              "low": 168738,
-              "high": 177887
+              "low": 7806,
+              "high": 8277
             },
-            "stop": null,
+            "stop": 6255,
             "targets": {
-              "conservative": 189576,
-              "base": 201709,
-              "bull": 215966
+              "conservative": 9430,
+              "base": 10478,
+              "bull": 11787
             },
-            "targetBasis": "compounding_scenarios",
-            "thesisInvalidation": [
-              "Return on invested capital declines for three consecutive fiscal years",
-              "Gross margin falls below its 10-year 20th percentile",
-              "Net debt to EBITDA rises above 3.5x",
-              "Share count grows more than 2% per year for three consecutive years"
-            ],
-            "maxHoldSessions": 2520,
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
             "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
             "catalystCluster": null,
             "factors": {
-              "moatStrength": {
-                "raw": 0.603,
-                "z": 0.954
+              "trendAlignment": {
+                "raw": 0.6,
+                "z": 1.706
               },
-              "cashFlowDurability": {
-                "raw": 0.52,
-                "z": 0.626
+              "fundamentalMomentum": {
+                "raw": 0.418,
+                "z": 1.797
               },
-              "reinvestmentRunway": {
-                "raw": 0.003,
-                "z": 0.202
+              "earningsDrift": {
+                "raw": 0.017,
+                "z": 1.033
               },
-              "balanceSheetStrength": {
-                "raw": 1.266,
-                "z": 0.606
+              "moneyFlow": {
+                "raw": 0.298,
+                "z": 1.056
               },
-              "shareholderYield": {
+              "sectorStrength": {
                 "raw": null,
                 "z": null
               }
             },
             "sparkline": [
-              188800,
-              185700,
-              179900,
-              177400,
-              173800,
-              176000,
-              176000,
-              176000,
-              176600,
-              175500,
-              171900,
-              172300,
-              173200,
-              175400,
-              174700,
-              174200,
-              176300,
-              178100,
-              174400,
-              174700,
-              172500,
-              170300,
-              171800,
-              171900,
-              170700,
-              171400,
-              172700,
-              172600,
-              173300,
-              175600
+              5580,
+              5790,
+              6070,
+              6010,
+              6030,
+              6430,
+              6190,
+              5900,
+              6200,
+              6700,
+              6110,
+              6030,
+              6100,
+              5940,
+              6070,
+              6380,
+              6240,
+              6250,
+              6220,
+              6450,
+              6290,
+              6180,
+              6040,
+              6290,
+              6200,
+              7230,
+              7270,
+              8000,
+              7900,
+              8120
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -7340,63 +5436,535 @@
           },
           {
             "rank": 9,
-            "movement": 0,
-            "heldSessions": 13,
-            "ticker": "000660",
-            "name": "SK하이닉스",
+            "movement": -1,
+            "heldSessions": 9,
+            "ticker": "031980",
+            "name": "피에스케이홀딩스",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 1818000,
-            "changePct": -3.14,
-            "score": 60.3,
-            "rawZ": 0.62,
+            "price": 163200,
+            "changePct": 3.16,
+            "score": 69.9,
+            "rawZ": 1.195,
             "completeness": 0.8,
-            "riskGauge": 3,
+            "riskGauge": 5,
             "entry": {
-              "low": 1661028,
-              "high": 1870324
+              "low": 154894,
+              "high": 167353
             },
-            "stop": null,
+            "stop": 125243,
             "targets": {
-              "conservative": 1962691,
-              "base": 2088311,
-              "bull": 2235911
+              "conservative": 197809,
+              "base": 225497,
+              "bull": 260106
             },
-            "targetBasis": "compounding_scenarios",
-            "thesisInvalidation": [
-              "Return on invested capital declines for three consecutive fiscal years",
-              "Gross margin falls below its 10-year 20th percentile",
-              "Net debt to EBITDA rises above 3.5x",
-              "Share count grows more than 2% per year for three consecutive years"
-            ],
-            "maxHoldSessions": 2520,
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
             "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
             "catalystCluster": null,
             "factors": {
-              "moatStrength": {
-                "raw": 0.517,
-                "z": 0.544
+              "trendAlignment": {
+                "raw": 0.633,
+                "z": 1.774
               },
-              "cashFlowDurability": {
-                "raw": 0.677,
-                "z": 1.274
+              "fundamentalMomentum": {
+                "raw": 0.317,
+                "z": 1.197
               },
-              "reinvestmentRunway": {
-                "raw": 0.003,
-                "z": 0.194
+              "earningsDrift": {
+                "raw": 0.023,
+                "z": 1.499
               },
-              "balanceSheetStrength": {
-                "raw": 1.069,
-                "z": 0.302
+              "moneyFlow": {
+                "raw": 0.296,
+                "z": 1.048
               },
-              "shareholderYield": {
+              "sectorStrength": {
                 "raw": null,
                 "z": null
               }
             },
             "sparkline": [
-              1422000,
+              105000,
+              109100,
+              108100,
+              105200,
+              111200,
+              111200,
+              111200,
+              111700,
+              112200,
+              115400,
+              107500,
+              110200,
+              120700,
+              119200,
+              125900,
+              120100,
+              124800,
+              122000,
+              129500,
+              144000,
+              156000,
+              157000,
+              153200,
+              165300,
+              166800,
+              166900,
+              159900,
+              170000,
+              158200,
+              163200
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 10,
+            "movement": -1,
+            "heldSessions": 8,
+            "ticker": "033790",
+            "name": "피노",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 7580,
+            "changePct": 1.2,
+            "score": 68.1,
+            "rawZ": 1.086,
+            "completeness": 0.8,
+            "riskGauge": 5,
+            "entry": {
+              "low": 7135,
+              "high": 7803
+            },
+            "stop": 5725,
+            "targets": {
+              "conservative": 9435,
+              "base": 10919,
+              "bull": 12775
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 0.415,
+                "z": 1.33
+              },
+              "fundamentalMomentum": {
+                "raw": 0.637,
+                "z": 3
+              },
+              "earningsDrift": {
+                "raw": 0.004,
+                "z": 0.075
+              },
+              "moneyFlow": {
+                "raw": 0.124,
+                "z": 0.437
+              },
+              "sectorStrength": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              5480,
+              5540,
+              5460,
+              5600,
+              6750,
+              6800,
+              6380,
+              6370,
+              6430,
+              6430,
+              6430,
+              6050,
+              5590,
+              6010,
+              6450,
+              6750,
+              7850,
+              7850,
+              8830,
+              10200,
+              9460,
+              7600,
+              7370,
+              7490,
+              7760,
+              7420,
+              8040,
+              7810,
+              7490,
+              7580
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          }
+        ],
+        "justMissed": []
+      },
+      "long_term": {
+        "market": "KR",
+        "horizon": "long_term",
+        "asOf": "2026-09-23",
+        "turnover30d": 0.04782608695652174,
+        "sampleWarning": true,
+        "stoppedOut": [],
+        "emptyReason": null,
+        "rows": [
+          {
+            "rank": 1,
+            "movement": 0,
+            "heldSessions": 4,
+            "ticker": "267250",
+            "name": "HD현대",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 205500,
+            "changePct": -0.72,
+            "score": 89.1,
+            "rawZ": 2.346,
+            "completeness": 0.8,
+            "riskGauge": 3,
+            "entry": {
+              "low": 192903,
+              "high": 211798
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 280893,
+              "base": 374524,
+              "bull": 505607
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": null,
+                "z": null
+              },
+              "capitalEfficiency": {
+                "raw": 1.4,
+                "z": 2.271
+              },
+              "cashGeneration": {
+                "raw": 2.434,
+                "z": 2.857
+              },
+              "valuation": {
+                "raw": 15.674,
+                "z": 2.458
+              },
+              "fScore": {
+                "raw": 9,
+                "z": 1.199
+              }
+            },
+            "sparkline": [
+              226000,
+              224500,
+              230500,
+              229000,
+              235500,
+              235500,
+              235500,
+              234500,
+              228000,
+              221500,
+              213000,
+              212000,
+              215500,
+              217000,
+              215000,
+              218000,
+              219000,
+              209500,
+              213500,
+              240500,
+              243500,
+              247500,
+              243000,
+              226000,
+              218500,
+              222000,
+              212000,
+              211000,
+              207000,
+              205500
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 2,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "002990",
+            "name": "금호건설",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 13040,
+            "changePct": -0.84,
+            "score": 75.6,
+            "rawZ": 1.537,
+            "completeness": 0.8,
+            "riskGauge": 5,
+            "entry": {
+              "low": 11524,
+              "high": 13798
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 17824,
+              "base": 23765,
+              "bull": 32083
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": null,
+                "z": null
+              },
+              "capitalEfficiency": {
+                "raw": 1.4,
+                "z": 2.271
+              },
+              "cashGeneration": {
+                "raw": 0.565,
+                "z": 1.803
+              },
+              "valuation": {
+                "raw": 0.129,
+                "z": 1.296
+              },
+              "fScore": {
+                "raw": 5.625,
+                "z": -0.375
+              }
+            },
+            "sparkline": [
+              8840,
+              11490,
+              14930,
+              14370,
+              13400,
+              13400,
+              13400,
+              13950,
+              12600,
+              15650,
+              14750,
+              14860,
+              15380,
+              15690,
+              15060,
+              17020,
+              16460,
+              17100,
+              16510,
+              16090,
+              16110,
+              14710,
+              13480,
+              13320,
+              13620,
+              13440,
+              13380,
+              13600,
+              13150,
+              13040
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 3,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "005930",
+            "name": "삼성전자",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 285000,
+            "changePct": 4.2,
+            "score": 72,
+            "rawZ": 1.321,
+            "completeness": 0.8,
+            "riskGauge": 1,
+            "entry": {
+              "low": 271874,
+              "high": 291563
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 389559,
+              "base": 519413,
+              "bull": 701207
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": null,
+                "z": null
+              },
+              "capitalEfficiency": {
+                "raw": 1.4,
+                "z": 2.271
+              },
+              "cashGeneration": {
+                "raw": 0.369,
+                "z": 0.956
+              },
+              "valuation": {
+                "raw": -0.766,
+                "z": 0.568
+              },
+              "fScore": {
+                "raw": 9,
+                "z": 1.199
+              }
+            },
+            "sparkline": [
+              230000,
+              239500,
+              255500,
+              268000,
+              274500,
+              274500,
+              274500,
+              268500,
+              247500,
+              271000,
+              281500,
+              257000,
+              257000,
+              261500,
+              265000,
+              257000,
+              260000,
+              250500,
+              250000,
+              255500,
+              270000,
+              259500,
+              248000,
+              248500,
+              253000,
+              254500,
+              260500,
+              274000,
+              273500,
+              285000
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 4,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "000660",
+            "name": "SK하이닉스",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 1862000,
+            "changePct": 2.42,
+            "score": 67.4,
+            "rawZ": 1.041,
+            "completeness": 0.8,
+            "riskGauge": 2,
+            "entry": {
+              "low": 1758970,
+              "high": 1913515
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 2545121,
+              "base": 3393495,
+              "bull": 4581218
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": null,
+                "z": null
+              },
+              "capitalEfficiency": {
+                "raw": 1.4,
+                "z": 2.271
+              },
+              "cashGeneration": {
+                "raw": 0.24,
+                "z": 0.401
+              },
+              "valuation": {
+                "raw": -0.989,
+                "z": 0.387
+              },
+              "fScore": {
+                "raw": 7.875,
+                "z": 0.674
+              }
+            },
+            "sparkline": [
               1420000,
               1425000,
               1504000,
@@ -7425,7 +5993,1437 @@
               1757000,
               1850000,
               1877000,
-              1818000
+              1818000,
+              1862000
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 5,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "003230",
+            "name": "삼양식품",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 1218000,
+            "changePct": -2.64,
+            "score": 67,
+            "rawZ": 1.019,
+            "completeness": 0.8,
+            "riskGauge": 2,
+            "entry": {
+              "low": 1156475,
+              "high": 1248763
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 1664854,
+              "base": 2219805,
+              "bull": 2996737
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": null,
+                "z": null
+              },
+              "capitalEfficiency": {
+                "raw": 1.4,
+                "z": 2.271
+              },
+              "cashGeneration": {
+                "raw": 0.278,
+                "z": 0.567
+              },
+              "valuation": {
+                "raw": -1.35,
+                "z": 0.093
+              },
+              "fScore": {
+                "raw": 7.875,
+                "z": 0.674
+              }
+            },
+            "sparkline": [
+              1288000,
+              1254000,
+              1204000,
+              1219000,
+              1270000,
+              1270000,
+              1270000,
+              1334000,
+              1304000,
+              1397000,
+              1366000,
+              1404000,
+              1430000,
+              1507000,
+              1478000,
+              1547000,
+              1531000,
+              1475000,
+              1424000,
+              1417000,
+              1330000,
+              1278000,
+              1293000,
+              1274000,
+              1260000,
+              1286000,
+              1297000,
+              1279000,
+              1251000,
+              1218000
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 6,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "192820",
+            "name": "코스맥스",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 271500,
+            "changePct": 0.93,
+            "score": 66,
+            "rawZ": 0.958,
+            "completeness": 0.8,
+            "riskGauge": 3,
+            "entry": {
+              "low": 255931,
+              "high": 279284
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 371107,
+              "base": 494809,
+              "bull": 667992
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": null,
+                "z": null
+              },
+              "capitalEfficiency": {
+                "raw": 1.4,
+                "z": 2.271
+              },
+              "cashGeneration": {
+                "raw": 0.281,
+                "z": 0.58
+              },
+              "valuation": {
+                "raw": -1.217,
+                "z": 0.202
+              },
+              "fScore": {
+                "raw": 6.429,
+                "z": 0
+              }
+            },
+            "sparkline": [
+              203500,
+              210000,
+              249500,
+              249000,
+              247500,
+              247500,
+              247500,
+              239000,
+              246000,
+              260500,
+              271000,
+              286000,
+              289000,
+              288000,
+              281500,
+              303000,
+              300000,
+              285500,
+              282000,
+              275500,
+              274000,
+              270500,
+              273500,
+              273500,
+              281500,
+              271500,
+              272000,
+              274500,
+              269000,
+              271500
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 7,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "000270",
+            "name": "기아",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 115900,
+            "changePct": -2.36,
+            "score": 64.2,
+            "rawZ": 0.852,
+            "completeness": 0.8,
+            "riskGauge": 1,
+            "entry": {
+              "low": 111395,
+              "high": 118152
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 158421,
+              "base": 211228,
+              "bull": 285157
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": null,
+                "z": null
+              },
+              "capitalEfficiency": {
+                "raw": 0.568,
+                "z": 0.405
+              },
+              "cashGeneration": {
+                "raw": 0.455,
+                "z": 1.326
+              },
+              "valuation": {
+                "raw": 0.442,
+                "z": 1.55
+              },
+              "fScore": {
+                "raw": 5.625,
+                "z": -0.375
+              }
+            },
+            "sparkline": [
+              135500,
+              134300,
+              135600,
+              137400,
+              141700,
+              141700,
+              141700,
+              137200,
+              133000,
+              131100,
+              130900,
+              131500,
+              134900,
+              131400,
+              125800,
+              128000,
+              131000,
+              124400,
+              127400,
+              126500,
+              128400,
+              126600,
+              123400,
+              122100,
+              121000,
+              120800,
+              121800,
+              120000,
+              118700,
+              115900
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 8,
+            "movement": 1,
+            "heldSessions": 14,
+            "ticker": "267260",
+            "name": "HD현대일렉트릭",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 710000,
+            "changePct": -0.56,
+            "score": 64.2,
+            "rawZ": 0.852,
+            "completeness": 0.8,
+            "riskGauge": 2,
+            "entry": {
+              "low": 671694,
+              "high": 729153
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 970481,
+              "base": 1293975,
+              "bull": 1746866
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": null,
+                "z": null
+              },
+              "capitalEfficiency": {
+                "raw": 1.4,
+                "z": 2.271
+              },
+              "cashGeneration": {
+                "raw": 0.272,
+                "z": 0.542
+              },
+              "valuation": {
+                "raw": -1.698,
+                "z": -0.189
+              },
+              "fScore": {
+                "raw": 6.429,
+                "z": 0
+              }
+            },
+            "sparkline": [
+              764000,
+              739000,
+              782000,
+              785000,
+              803000,
+              803000,
+              803000,
+              785000,
+              752000,
+              746000,
+              718000,
+              720000,
+              719000,
+              733000,
+              803000,
+              814000,
+              781000,
+              711000,
+              706000,
+              714000,
+              763000,
+              747000,
+              727000,
+              702000,
+              706000,
+              711000,
+              727000,
+              719000,
+              714000,
+              710000
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 9,
+            "movement": -1,
+            "heldSessions": 14,
+            "ticker": "078930",
+            "name": "GS",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 110300,
+            "changePct": 0.27,
+            "score": 64.2,
+            "rawZ": 0.849,
+            "completeness": 0.8,
+            "riskGauge": 3,
+            "entry": {
+              "low": 103280,
+              "high": 113810
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 150766,
+              "base": 201022,
+              "bull": 271379
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "Stock Market Today, Sept. 21: Tech Strength Powers Nasdaq to Record Close",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": null,
+                "z": null
+              },
+              "capitalEfficiency": {
+                "raw": 0.592,
+                "z": 0.459
+              },
+              "cashGeneration": {
+                "raw": 0.365,
+                "z": 0.942
+              },
+              "valuation": {
+                "raw": 0.201,
+                "z": 1.354
+              },
+              "fScore": {
+                "raw": 7.875,
+                "z": 0.674
+              }
+            },
+            "sparkline": [
+              97300,
+              97500,
+              101000,
+              107400,
+              117000,
+              117000,
+              117000,
+              119300,
+              119700,
+              113600,
+              116200,
+              114600,
+              121800,
+              127700,
+              122700,
+              129200,
+              127100,
+              120000,
+              118900,
+              123900,
+              125600,
+              119000,
+              115000,
+              114500,
+              111300,
+              113100,
+              113800,
+              113200,
+              110000,
+              110300
+            ],
+            "newsCount": 1,
+            "sentiment": 0.158,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 10,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "064400",
+            "name": "LG씨엔에스",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 69700,
+            "changePct": -1.83,
+            "score": 63.3,
+            "rawZ": 0.799,
+            "completeness": 0.8,
+            "riskGauge": 2,
+            "entry": {
+              "low": 66152,
+              "high": 71474
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 95271,
+              "base": 127028,
+              "bull": 171488
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": null,
+                "z": null
+              },
+              "capitalEfficiency": {
+                "raw": 0.884,
+                "z": 1.115
+              },
+              "cashGeneration": {
+                "raw": 0.394,
+                "z": 1.065
+              },
+              "valuation": {
+                "raw": -0.955,
+                "z": 0.415
+              },
+              "fScore": {
+                "raw": 6.75,
+                "z": 0.15
+              }
+            },
+            "sparkline": [
+              73600,
+              75600,
+              77300,
+              78400,
+              79900,
+              79900,
+              79900,
+              73900,
+              71000,
+              73800,
+              71600,
+              72300,
+              73000,
+              74100,
+              74000,
+              75800,
+              77200,
+              74500,
+              72500,
+              74100,
+              76300,
+              71900,
+              70500,
+              70900,
+              69900,
+              69500,
+              70300,
+              69400,
+              71000,
+              69700
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          }
+        ],
+        "justMissed": []
+      },
+      "ultra_long": {
+        "market": "KR",
+        "horizon": "ultra_long",
+        "asOf": "2026-09-23",
+        "turnover30d": 0.043478260869565216,
+        "sampleWarning": true,
+        "stoppedOut": [],
+        "emptyReason": null,
+        "rows": [
+          {
+            "rank": 1,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "240810",
+            "name": "원익IPS",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 133300,
+            "changePct": 3.9,
+            "score": 75.2,
+            "rawZ": 1.514,
+            "completeness": 0.8,
+            "riskGauge": 4,
+            "entry": {
+              "low": 118955,
+              "high": 138082
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 164306,
+              "base": 194088,
+              "bull": 232494
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Share count grows more than 2% per year for three consecutive years"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 0.631,
+                "z": 1.089
+              },
+              "cashFlowDurability": {
+                "raw": 0.62,
+                "z": 1.038
+              },
+              "reinvestmentRunway": {
+                "raw": 0.055,
+                "z": 3
+              },
+              "balanceSheetStrength": {
+                "raw": 1.599,
+                "z": 1.116
+              },
+              "shareholderYield": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              98400,
+              104700,
+              111500,
+              120000,
+              116600,
+              116600,
+              116600,
+              112400,
+              109300,
+              113900,
+              107900,
+              106400,
+              112300,
+              109300,
+              111300,
+              111100,
+              111500,
+              109700,
+              105000,
+              114800,
+              117600,
+              110300,
+              109100,
+              108000,
+              117400,
+              118300,
+              121100,
+              129700,
+              128300,
+              133300
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 2,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "042700",
+            "name": "한미반도체",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 242500,
+            "changePct": 2.54,
+            "score": 74.6,
+            "rawZ": 1.476,
+            "completeness": 1,
+            "riskGauge": 2,
+            "entry": {
+              "low": 223029,
+              "high": 248990
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 275671,
+              "base": 305632,
+              "bull": 342156
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Share count grows more than 2% per year for three consecutive years"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 0.759,
+                "z": 1.7
+              },
+              "cashFlowDurability": {
+                "raw": 0.851,
+                "z": 1.989
+              },
+              "reinvestmentRunway": {
+                "raw": 0.034,
+                "z": 2.158
+              },
+              "balanceSheetStrength": {
+                "raw": 1.24,
+                "z": 0.549
+              },
+              "shareholderYield": {
+                "raw": 0.301,
+                "z": 0.029
+              }
+            },
+            "sparkline": [
+              205500,
+              213000,
+              217500,
+              226000,
+              229000,
+              229000,
+              229000,
+              229000,
+              221000,
+              225500,
+              213500,
+              209000,
+              217500,
+              219500,
+              220000,
+              219500,
+              220500,
+              213500,
+              210500,
+              230000,
+              240500,
+              231000,
+              231000,
+              222000,
+              225000,
+              226000,
+              235000,
+              237000,
+              236500,
+              242500
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": []
+          },
+          {
+            "rank": 3,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "068270",
+            "name": "셀트리온",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 178000,
+            "changePct": -0.06,
+            "score": 70,
+            "rawZ": 1.201,
+            "completeness": 0.8,
+            "riskGauge": 1,
+            "entry": {
+              "low": 170260,
+              "high": 180580
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 192167,
+              "base": 204466,
+              "bull": 218918
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Share count grows more than 2% per year for three consecutive years"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 0.714,
+                "z": 1.486
+              },
+              "cashFlowDurability": {
+                "raw": 0.759,
+                "z": 1.611
+              },
+              "reinvestmentRunway": {
+                "raw": 0.011,
+                "z": 0.695
+              },
+              "balanceSheetStrength": {
+                "raw": 1.349,
+                "z": 0.721
+              },
+              "shareholderYield": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              201000,
+              210500,
+              202000,
+              202000,
+              201000,
+              201000,
+              201000,
+              195500,
+              194100,
+              194100,
+              192300,
+              194000,
+              189600,
+              193400,
+              190900,
+              190700,
+              188900,
+              186300,
+              187100,
+              188100,
+              186300,
+              178200,
+              177400,
+              177800,
+              177200,
+              180300,
+              179900,
+              181000,
+              178100,
+              178000
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 4,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "214450",
+            "name": "파마리서치",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 322500,
+            "changePct": -0.46,
+            "score": 68.4,
+            "rawZ": 1.102,
+            "completeness": 0.8,
+            "riskGauge": 4,
+            "entry": {
+              "low": 291178,
+              "high": 332941
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 348167,
+              "base": 370451,
+              "bull": 396634
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Share count grows more than 2% per year for three consecutive years"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 0.747,
+                "z": 1.64
+              },
+              "cashFlowDurability": {
+                "raw": 0.718,
+                "z": 1.443
+              },
+              "reinvestmentRunway": {
+                "raw": 0.003,
+                "z": 0.173
+              },
+              "balanceSheetStrength": {
+                "raw": 1.407,
+                "z": 0.812
+              },
+              "shareholderYield": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              410000,
+              417000,
+              408000,
+              425500,
+              398000,
+              398000,
+              398000,
+              393000,
+              391000,
+              413500,
+              400500,
+              416000,
+              414500,
+              442000,
+              434000,
+              461500,
+              426000,
+              392500,
+              381000,
+              386500,
+              376500,
+              342000,
+              341500,
+              336500,
+              327500,
+              329500,
+              324000,
+              325000,
+              324000,
+              322500
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 5,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "000100",
+            "name": "유한양행",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 74000,
+            "changePct": -1.07,
+            "score": 65.4,
+            "rawZ": 0.921,
+            "completeness": 0.8,
+            "riskGauge": 1,
+            "entry": {
+              "low": 70210,
+              "high": 75263
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 86352,
+              "base": 97735,
+              "bull": 111867
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Share count grows more than 2% per year for three consecutive years"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 0.48,
+                "z": 0.371
+              },
+              "cashFlowDurability": {
+                "raw": 0.472,
+                "z": 0.426
+              },
+              "reinvestmentRunway": {
+                "raw": 0.041,
+                "z": 2.604
+              },
+              "balanceSheetStrength": {
+                "raw": 1.224,
+                "z": 0.524
+              },
+              "shareholderYield": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              82000,
+              85600,
+              83100,
+              82500,
+              83700,
+              83700,
+              83700,
+              79600,
+              79600,
+              83400,
+              82300,
+              84300,
+              83300,
+              86700,
+              82900,
+              84900,
+              83700,
+              81300,
+              81400,
+              81400,
+              80700,
+              79400,
+              78500,
+              79800,
+              77400,
+              77500,
+              75900,
+              75900,
+              74800,
+              74000
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 6,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "161890",
+            "name": "한국콜마",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 147100,
+            "changePct": 1.1,
+            "score": 62.5,
+            "rawZ": 0.752,
+            "completeness": 0.8,
+            "riskGauge": 3,
+            "entry": {
+              "low": 134817,
+              "high": 151194
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 163265,
+              "base": 177602,
+              "bull": 194784
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Share count grows more than 2% per year for three consecutive years"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 0.55,
+                "z": 0.703
+              },
+              "cashFlowDurability": {
+                "raw": 0.636,
+                "z": 1.105
+              },
+              "reinvestmentRunway": {
+                "raw": 0.027,
+                "z": 1.751
+              },
+              "balanceSheetStrength": {
+                "raw": 0.294,
+                "z": -0.941
+              },
+              "shareholderYield": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              105900,
+              107900,
+              132500,
+              135200,
+              136700,
+              136700,
+              136700,
+              129700,
+              127800,
+              137800,
+              136700,
+              143300,
+              150000,
+              148800,
+              145000,
+              161700,
+              160100,
+              155000,
+              150600,
+              145800,
+              144300,
+              141300,
+              144000,
+              144600,
+              149600,
+              147200,
+              145100,
+              145900,
+              145500,
+              147100
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 7,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "011070",
+            "name": "LG이노텍",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 535000,
+            "changePct": 0,
+            "score": 62.4,
+            "rawZ": 0.742,
+            "completeness": 0.8,
+            "riskGauge": 4,
+            "entry": {
+              "low": 476357,
+              "high": 554548
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 633380,
+              "base": 725033,
+              "bull": 839983
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Share count grows more than 2% per year for three consecutive years"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 0.351,
+                "z": -0.242
+              },
+              "cashFlowDurability": {
+                "raw": 0.569,
+                "z": 0.827
+              },
+              "reinvestmentRunway": {
+                "raw": 0.044,
+                "z": 2.851
+              },
+              "balanceSheetStrength": {
+                "raw": 0.699,
+                "z": -0.303
+              },
+              "shareholderYield": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              555000,
+              549000,
+              604000,
+              615000,
+              654000,
+              654000,
+              654000,
+              633000,
+              603000,
+              587000,
+              550000,
+              570000,
+              602000,
+              583000,
+              592000,
+              611000,
+              642000,
+              567000,
+              556000,
+              562000,
+              586000,
+              543000,
+              508000,
+              507000,
+              512000,
+              510000,
+              530000,
+              520000,
+              535000,
+              535000
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 8,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "033780",
+            "name": "KT&G",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 174900,
+            "changePct": -0.4,
+            "score": 60.5,
+            "rawZ": 0.628,
+            "completeness": 0.8,
+            "riskGauge": 1,
+            "entry": {
+              "low": 167939,
+              "high": 177220
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 188820,
+              "base": 200905,
+              "bull": 215105
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Share count grows more than 2% per year for three consecutive years"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 0.603,
+                "z": 0.959
+              },
+              "cashFlowDurability": {
+                "raw": 0.52,
+                "z": 0.626
+              },
+              "reinvestmentRunway": {
+                "raw": 0.003,
+                "z": 0.198
+              },
+              "balanceSheetStrength": {
+                "raw": 1.266,
+                "z": 0.59
+              },
+              "shareholderYield": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              185700,
+              179900,
+              177400,
+              173800,
+              176000,
+              176000,
+              176000,
+              176600,
+              175500,
+              171900,
+              172300,
+              173200,
+              175400,
+              174700,
+              174200,
+              176300,
+              178100,
+              174400,
+              174700,
+              172500,
+              170300,
+              171800,
+              171900,
+              170700,
+              171400,
+              172700,
+              172600,
+              173300,
+              175600,
+              174900
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 9,
+            "movement": 0,
+            "heldSessions": 14,
+            "ticker": "000660",
+            "name": "SK하이닉스",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 1862000,
+            "changePct": 2.42,
+            "score": 60.3,
+            "rawZ": 0.616,
+            "completeness": 0.8,
+            "riskGauge": 3,
+            "entry": {
+              "low": 1707455,
+              "high": 1913515
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 2010193,
+              "base": 2138853,
+              "bull": 2290025
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Share count grows more than 2% per year for three consecutive years"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 0.517,
+                "z": 0.548
+              },
+              "cashFlowDurability": {
+                "raw": 0.677,
+                "z": 1.274
+              },
+              "reinvestmentRunway": {
+                "raw": 0.003,
+                "z": 0.19
+              },
+              "balanceSheetStrength": {
+                "raw": 1.069,
+                "z": 0.281
+              },
+              "shareholderYield": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              1420000,
+              1425000,
+              1504000,
+              1593000,
+              1645000,
+              1645000,
+              1645000,
+              1662000,
+              1500000,
+              1691000,
+              1730000,
+              1671000,
+              1678000,
+              1688000,
+              1716000,
+              1653000,
+              1674000,
+              1613000,
+              1596000,
+              1647000,
+              1783000,
+              1812000,
+              1684000,
+              1689000,
+              1750000,
+              1757000,
+              1850000,
+              1877000,
+              1818000,
+              1862000
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -7436,27 +7434,27 @@
           {
             "rank": 10,
             "movement": 0,
-            "heldSessions": 13,
+            "heldSessions": 14,
             "ticker": "018260",
             "name": "삼성에스디에스",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 224500,
-            "changePct": 0.45,
+            "price": 220500,
+            "changePct": -1.78,
             "score": 58.5,
             "rawZ": 0.512,
             "completeness": 0.8,
             "riskGauge": 2,
             "entry": {
-              "low": 208127,
-              "high": 229958
+              "low": 204332,
+              "high": 225889
             },
             "stop": null,
             "targets": {
-              "conservative": 242368,
-              "base": 257880,
-              "bull": 276107
+              "conservative": 238049,
+              "base": 253285,
+              "bull": 271187
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -7471,7 +7469,7 @@
             "factors": {
               "moatStrength": {
                 "raw": 0.573,
-                "z": 0.811
+                "z": 0.815
               },
               "cashFlowDurability": {
                 "raw": 0.757,
@@ -7479,11 +7477,11 @@
               },
               "reinvestmentRunway": {
                 "raw": -0.02,
-                "z": -1.306
+                "z": -1.297
               },
               "balanceSheetStrength": {
                 "raw": 1.276,
-                "z": 0.622
+                "z": 0.606
               },
               "shareholderYield": {
                 "raw": null,
@@ -7491,7 +7489,6 @@
               }
             },
             "sparkline": [
-              221500,
               222500,
               237000,
               235500,
@@ -7520,7 +7517,8 @@
               216000,
               220000,
               223500,
-              224500
+              224500,
+              220500
             ],
             "newsCount": 0,
             "sentiment": null,
