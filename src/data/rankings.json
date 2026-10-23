@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-23T09:08:10.003Z",
+  "generatedAt": "2026-10-23T12:35:36.782Z",
   "methodologyVersion": "1.0.0",
   "asOf": {
     "US": "2026-10-23",
-    "KR": "2026-10-22"
+    "KR": "2026-10-23"
   },
   "regime": {
     "US": {
@@ -16,7 +16,7 @@
       "multiplier": 0.5,
       "state": "risk_off",
       "indexAboveMA200": false,
-      "breadth": 0.30434782608695654
+      "breadth": 0.27246376811594203
     }
   },
   "boards": {
@@ -508,7 +508,7 @@
             "targetBasis": "atr",
             "thesisInvalidation": null,
             "maxHoldSessions": 5,
-            "catalyst": "TD Cowen upgrades BlackRock to Buy, sets $1,405 price target Plus 3 related stories.",
+            "catalyst": "BlackRock's Rick Rieder sees 'historic' opportunity in high-quality bonds Plus 1 related story.",
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
@@ -953,7 +953,7 @@
           {
             "ticker": "NDAQ",
             "name": "NASDAQ, INC.",
-            "score": 72,
+            "score": 71.9,
             "displacedBy": "sector_cap"
           }
         ]
@@ -1228,7 +1228,7 @@
               245.81
             ],
             "newsCount": 2,
-            "sentiment": -0.63,
+            "sentiment": -0.585,
             "flags": []
           },
           {
@@ -1950,7 +1950,7 @@
               90.39
             ],
             "newsCount": 1,
-            "sentiment": 0.21,
+            "sentiment": 0.18,
             "flags": [
               "partial_data"
             ]
@@ -2900,8 +2900,8 @@
               531.87,
               532.95
             ],
-            "newsCount": 1,
-            "sentiment": 0.122,
+            "newsCount": 0,
+            "sentiment": null,
             "flags": []
           },
           {
@@ -2989,8 +2989,8 @@
               78.86,
               78.28
             ],
-            "newsCount": 1,
-            "sentiment": 0.122,
+            "newsCount": 0,
+            "sentiment": null,
             "flags": [
               "partial_data"
             ]
@@ -3757,8 +3757,8 @@
       "ultra_short": {
         "market": "KR",
         "horizon": "ultra_short",
-        "asOf": "2026-10-22",
-        "turnover30d": 0.6319699485774536,
+        "asOf": "2026-10-23",
+        "turnover30d": 0.6377170750142352,
         "sampleWarning": false,
         "stoppedOut": [],
         "emptyReason": null,
@@ -3767,26 +3767,26 @@
             "rank": 1,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "028050",
-            "name": "삼성E&A",
+            "ticker": "456160",
+            "name": "지투지바이오",
             "market": "KR",
-            "sector": null,
+            "sector": "기술성장기업부",
             "currency": "KRW",
-            "price": 55200,
-            "changePct": 15.97,
-            "score": 68.3,
-            "rawZ": 1.096,
+            "price": 50000,
+            "changePct": 21.65,
+            "score": 74.7,
+            "rawZ": 1.482,
             "completeness": 0.8,
-            "riskGauge": 2,
+            "riskGauge": 4,
             "entry": {
-              "low": 54419,
-              "high": 56449
+              "low": 48830,
+              "high": 51872
             },
-            "stop": 50188,
+            "stop": 40682,
             "targets": {
-              "conservative": 58323,
-              "base": 60821,
-              "bull": 64568
+              "conservative": 54681,
+              "base": 58426,
+              "bull": 64043
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -3795,11 +3795,11 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 8.41,
+                "raw": 7.025,
                 "z": 3
               },
               "gapQuality": {
-                "raw": 0.528,
+                "raw": 0.556,
                 "z": 3
               },
               "newsSentiment": {
@@ -3807,16 +3807,105 @@
                 "z": null
               },
               "volatilityExpansion": {
-                "raw": 0.44,
-                "z": 0
+                "raw": 0.349,
+                "z": 3
               },
               "trendPosition": {
-                "raw": 0.345,
-                "z": 1.693
+                "raw": 0.254,
+                "z": 2.81
               }
             },
             "sparkline": [
+              40950,
+              37400,
+              37950,
+              37500,
+              41750,
+              41350,
+              43650,
+              41350,
+              37050,
+              33000,
+              31350,
+              34300,
+              33000,
+              31750,
+              34500,
+              34100,
+              35450,
+              42850,
               43700,
+              43900,
+              44600,
+              42000,
+              37500,
+              33150,
+              31150,
+              38650,
+              36000,
+              42250,
+              41100,
+              50000
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 2,
+            "movement": -1,
+            "heldSessions": 2,
+            "ticker": "028050",
+            "name": "삼성E&A",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 59300,
+            "changePct": 7.43,
+            "score": 72.9,
+            "rawZ": 1.372,
+            "completeness": 0.8,
+            "riskGauge": 2,
+            "entry": {
+              "low": 58466,
+              "high": 60634
+            },
+            "stop": 54297,
+            "targets": {
+              "conservative": 62635,
+              "base": 65304,
+              "bull": 69306
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 8.819,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0.381,
+                "z": 3
+              },
+              "newsSentiment": {
+                "raw": null,
+                "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 1.026,
+                "z": 3
+              },
+              "trendPosition": {
+                "raw": 0.964,
+                "z": 3
+              }
+            },
+            "sparkline": [
               46100,
               45850,
               48000,
@@ -3845,97 +3934,8 @@
               45300,
               43300,
               47600,
-              55200
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 2,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "089890",
-            "name": "코세스",
-            "market": "KR",
-            "sector": "우량기업부",
-            "currency": "KRW",
-            "price": 37300,
-            "changePct": 7.18,
-            "score": 67.4,
-            "rawZ": 1.046,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 36471,
-              "high": 38626
-            },
-            "stop": 32328,
-            "targets": {
-              "conservative": 40614,
-              "base": 43266,
-              "bull": 47243
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 3.333,
-                "z": 2.185
-              },
-              "gapQuality": {
-                "raw": 0.335,
-                "z": 3
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.929,
-                "z": 2.788
-              }
-            },
-            "sparkline": [
-              24450,
-              23800,
-              22850,
-              22250,
-              24500,
-              26250,
-              23500,
-              23500,
-              27800,
-              27850,
-              28200,
-              27550,
-              28750,
-              30300,
-              32250,
-              32900,
-              35900,
-              36550,
-              35500,
-              32850,
-              33000,
-              30900,
-              31850,
-              32150,
-              27100,
-              30200,
-              31750,
-              32100,
-              34800,
-              37300
+              55200,
+              59300
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -3945,208 +3945,28 @@
           },
           {
             "rank": 3,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "004700",
-            "name": "조광피혁",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 66400,
-            "changePct": -0.3,
-            "score": 65.2,
-            "rawZ": 0.91,
-            "completeness": 0.8,
-            "riskGauge": 1,
-            "entry": {
-              "low": 65949,
-              "high": 67121
-            },
-            "stop": 63696,
-            "targets": {
-              "conservative": 68202,
-              "base": 69644,
-              "bull": 71807
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 104.96,
-                "z": 3
-              },
-              "gapQuality": {
-                "raw": 0.067,
-                "z": 1.461
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.379,
-                "z": 1.763
-              }
-            },
-            "sparkline": [
-              65800,
-              64500,
-              65000,
-              65000,
-              64100,
-              63600,
-              64200,
-              63700,
-              65500,
-              68100,
-              67700,
-              66600,
-              65700,
-              66700,
-              66100,
-              68200,
-              66200,
-              65200,
-              65400,
-              66900,
-              65500,
-              67700,
-              66600,
-              67000,
-              66500,
-              65600,
-              67200,
-              67200,
-              66600,
-              66400
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 4,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "126340",
-            "name": "비나텍",
-            "market": "KR",
-            "sector": "벤처기업부",
-            "currency": "KRW",
-            "price": 105800,
-            "changePct": 11.72,
-            "score": 63.7,
-            "rawZ": 0.824,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 103381,
-              "high": 109670
-            },
-            "stop": 91286,
-            "targets": {
-              "conservative": 115476,
-              "base": 123217,
-              "bull": 134828
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 5.775,
-                "z": 3
-              },
-              "gapQuality": {
-                "raw": 0,
-                "z": 0
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0.391,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.878,
-                "z": 2.788
-              }
-            },
-            "sparkline": [
-              66700,
-              67900,
-              63600,
-              62100,
-              64200,
-              63300,
-              64900,
-              74400,
-              77900,
-              80700,
-              84000,
-              81500,
-              86500,
-              83400,
-              85400,
-              92400,
-              94400,
-              95000,
-              94000,
-              93000,
-              87000,
-              80800,
-              78600,
-              87500,
-              75000,
-              79900,
-              82000,
-              88800,
-              94700,
-              105800
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 5,
-            "movement": "NEW",
-            "heldSessions": 1,
+            "movement": 2,
+            "heldSessions": 2,
             "ticker": "293490",
             "name": "카카오게임즈",
             "market": "KR",
             "sector": "중견기업부",
             "currency": "KRW",
-            "price": 10840,
-            "changePct": 4.94,
-            "score": 63.6,
-            "rawZ": 0.816,
+            "price": 11590,
+            "changePct": 6.92,
+            "score": 71.3,
+            "rawZ": 1.279,
             "completeness": 0.8,
             "riskGauge": 2,
             "entry": {
-              "low": 10649,
-              "high": 11145
+              "low": 11393,
+              "high": 11906
             },
-            "stop": 9695,
+            "stop": 10406,
             "targets": {
-              "conservative": 11603,
-              "base": 12214,
-              "bull": 13130
+              "conservative": 12379,
+              "base": 13011,
+              "bull": 13958
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -4155,28 +3975,27 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 4.139,
-                "z": 2.958
+                "raw": 4.43,
+                "z": 3
               },
               "gapQuality": {
-                "raw": 0,
-                "z": 0
+                "raw": 0.076,
+                "z": 1.566
               },
               "newsSentiment": {
                 "raw": null,
                 "z": null
               },
               "volatilityExpansion": {
-                "raw": 0.545,
-                "z": 0
+                "raw": 1.102,
+                "z": 3
               },
               "trendPosition": {
-                "raw": 0.87,
-                "z": 2.786
+                "raw": 0.883,
+                "z": 3
               }
             },
             "sparkline": [
-              7450,
               7790,
               7650,
               7910,
@@ -4205,7 +4024,188 @@
               10160,
               9630,
               10330,
-              10840
+              10840,
+              11590
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 4,
+            "movement": "NEW",
+            "heldSessions": 1,
+            "ticker": "053800",
+            "name": "안랩",
+            "market": "KR",
+            "sector": "우량기업부",
+            "currency": "KRW",
+            "price": 77800,
+            "changePct": -9.85,
+            "score": 70.3,
+            "rawZ": 1.219,
+            "completeness": 0.8,
+            "riskGauge": 4,
+            "entry": {
+              "low": 76138,
+              "high": 80460
+            },
+            "stop": 67826,
+            "targets": {
+              "conservative": 84449,
+              "base": 89769,
+              "bull": 97748
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 3.267,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0.327,
+                "z": 3
+              },
+              "newsSentiment": {
+                "raw": null,
+                "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0,
+                "z": 0
+              },
+              "trendPosition": {
+                "raw": 0.335,
+                "z": 3
+              }
+            },
+            "sparkline": [
+              57700,
+              57100,
+              56700,
+              56800,
+              57100,
+              59300,
+              60800,
+              63300,
+              66200,
+              65100,
+              67300,
+              68300,
+              70600,
+              73900,
+              74100,
+              75900,
+              75000,
+              89000,
+              76700,
+              75300,
+              78000,
+              86200,
+              89300,
+              85400,
+              88100,
+              86200,
+              88800,
+              87200,
+              86300,
+              77800
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 5,
+            "movement": -3,
+            "heldSessions": 2,
+            "ticker": "089890",
+            "name": "코세스",
+            "market": "KR",
+            "sector": "우량기업부",
+            "currency": "KRW",
+            "price": 39850,
+            "changePct": 6.84,
+            "score": 68.8,
+            "rawZ": 1.125,
+            "completeness": 0.8,
+            "riskGauge": 4,
+            "entry": {
+              "low": 38993,
+              "high": 41221
+            },
+            "stop": 34708,
+            "targets": {
+              "conservative": 43278,
+              "base": 46020,
+              "bull": 50133
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 3.254,
+                "z": 3
+              },
+              "gapQuality": {
+                "raw": 0,
+                "z": 0
+              },
+              "newsSentiment": {
+                "raw": null,
+                "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0.223,
+                "z": 3
+              },
+              "trendPosition": {
+                "raw": 0.941,
+                "z": 3
+              }
+            },
+            "sparkline": [
+              23800,
+              22850,
+              22250,
+              24500,
+              26250,
+              23500,
+              23500,
+              27800,
+              27850,
+              28200,
+              27550,
+              28750,
+              30300,
+              32250,
+              32900,
+              35900,
+              36550,
+              35500,
+              32850,
+              33000,
+              30900,
+              31850,
+              32150,
+              27100,
+              30200,
+              31750,
+              32100,
+              34800,
+              37300,
+              39850
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -4217,26 +4217,26 @@
             "rank": 6,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "452280",
-            "name": "한선엔지니어링",
+            "ticker": "441270",
+            "name": "파인엠텍",
             "market": "KR",
-            "sector": "우량기업부",
+            "sector": "벤처기업부",
             "currency": "KRW",
-            "price": 15530,
-            "changePct": -3.66,
-            "score": 63,
-            "rawZ": 0.779,
+            "price": 11350,
+            "changePct": 14.65,
+            "score": 68.8,
+            "rawZ": 1.125,
             "completeness": 0.8,
-            "riskGauge": 4,
+            "riskGauge": 3,
             "entry": {
-              "low": 15173,
-              "high": 16101
+              "low": 11128,
+              "high": 11706
             },
-            "stop": 13389,
+            "stop": 9311,
             "targets": {
-              "conservative": 16957,
-              "base": 18099,
-              "bull": 19812
+              "conservative": 12240,
+              "base": 12951,
+              "bull": 14019
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -4245,7 +4245,7 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 4.629,
+                "raw": 4.542,
                 "z": 3
               },
               "gapQuality": {
@@ -4257,45 +4257,45 @@
                 "z": null
               },
               "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
+                "raw": 1.182,
+                "z": 3
               },
               "trendPosition": {
-                "raw": 0.641,
-                "z": 2.309
+                "raw": 0.95,
+                "z": 3
               }
             },
             "sparkline": [
-              9690,
-              10180,
-              10190,
-              10140,
-              10810,
-              10680,
-              10710,
-              10740,
-              10770,
-              13400,
-              13580,
-              13590,
-              13670,
-              13440,
-              13360,
-              12910,
-              12600,
-              13730,
-              14080,
-              14360,
-              15070,
-              14150,
-              14060,
-              13060,
-              12510,
-              16020,
-              16810,
-              16970,
-              16120,
-              15530
+              9160,
+              8930,
+              8730,
+              9100,
+              8740,
+              7660,
+              8160,
+              8180,
+              8180,
+              9220,
+              9350,
+              9260,
+              8290,
+              9160,
+              9120,
+              8880,
+              9440,
+              9070,
+              8600,
+              9280,
+              10000,
+              9680,
+              8820,
+              9540,
+              9230,
+              9410,
+              9420,
+              9550,
+              9900,
+              11350
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -4307,26 +4307,26 @@
             "rank": 7,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "059090",
-            "name": "미코",
+            "ticker": "484120",
+            "name": "도우인시스",
             "market": "KR",
-            "sector": "벤처기업부",
+            "sector": "중견기업부",
             "currency": "KRW",
-            "price": 22000,
-            "changePct": 4.51,
-            "score": 62.8,
-            "rawZ": 0.765,
+            "price": 28050,
+            "changePct": 14.26,
+            "score": 68.8,
+            "rawZ": 1.125,
             "completeness": 0.8,
-            "riskGauge": 4,
+            "riskGauge": 3,
             "entry": {
-              "low": 21516,
-              "high": 22775
+              "low": 27480,
+              "high": 28962
             },
-            "stop": 19094,
+            "stop": 23472,
             "targets": {
-              "conservative": 23938,
-              "base": 25488,
-              "bull": 27813
+              "conservative": 30330,
+              "base": 32155,
+              "bull": 34891
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -4335,57 +4335,57 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 2.406,
-                "z": 1.093
+                "raw": 4.113,
+                "z": 3
               },
               "gapQuality": {
-                "raw": 0.183,
-                "z": 3
+                "raw": 0,
+                "z": 0
               },
               "newsSentiment": {
                 "raw": null,
                 "z": null
               },
               "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
+                "raw": 1.177,
+                "z": 3
               },
               "trendPosition": {
-                "raw": 0.481,
-                "z": 1.976
+                "raw": 0.969,
+                "z": 3
               }
             },
             "sparkline": [
-              19500,
-              19350,
-              17120,
-              17300,
-              18580,
-              17250,
-              19680,
-              19620,
-              20600,
-              19780,
-              19620,
-              20200,
-              22250,
-              22500,
-              22000,
-              23050,
+              19980,
+              19450,
+              19310,
+              18770,
+              17920,
+              18430,
+              18310,
+              21000,
+              22800,
               23450,
+              22700,
+              23850,
+              23100,
+              24250,
               24000,
-              24000,
-              22650,
-              24800,
+              24250,
+              23150,
+              22950,
+              23000,
+              23250,
+              21750,
+              20900,
+              23800,
+              21800,
+              24150,
+              23750,
+              22550,
               24550,
-              24500,
-              23900,
-              20650,
-              21950,
-              21200,
-              19650,
-              21050,
-              22000
+              24550,
+              28050
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -4395,28 +4395,28 @@
           },
           {
             "rank": 8,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "007810",
-            "name": "코리아써키트",
+            "movement": -4,
+            "heldSessions": 2,
+            "ticker": "126340",
+            "name": "비나텍",
             "market": "KR",
-            "sector": null,
+            "sector": "벤처기업부",
             "currency": "KRW",
-            "price": 68900,
-            "changePct": -5.49,
-            "score": 62.3,
-            "rawZ": 0.736,
+            "price": 118600,
+            "changePct": 12.1,
+            "score": 67.8,
+            "rawZ": 1.068,
             "completeness": 0.8,
             "riskGauge": 4,
             "entry": {
-              "low": 67295,
-              "high": 71468
+              "low": 115975,
+              "high": 122800
             },
-            "stop": 59270,
+            "stop": 98650,
             "targets": {
-              "conservative": 75320,
-              "base": 80456,
-              "bull": 88160
+              "conservative": 129099,
+              "base": 137499,
+              "bull": 150098
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -4425,57 +4425,57 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 2.888,
-                "z": 1.693
+                "raw": 4.334,
+                "z": 3
               },
               "gapQuality": {
-                "raw": 0.1,
-                "z": 2.171
+                "raw": 0,
+                "z": 0
               },
               "newsSentiment": {
                 "raw": null,
                 "z": null
               },
               "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
+                "raw": 0.96,
+                "z": 3
               },
               "trendPosition": {
-                "raw": 0.286,
-                "z": 1.569
+                "raw": 0.894,
+                "z": 3
               }
             },
             "sparkline": [
-              57300,
-              51400,
-              51000,
-              52200,
-              51100,
-              48850,
-              49450,
-              50600,
-              51900,
-              52300,
-              52200,
-              65500,
-              65300,
-              69100,
-              75100,
+              67900,
+              63600,
+              62100,
+              64200,
+              63300,
+              64900,
               74400,
-              78200,
-              82700,
-              88700,
-              86300,
-              88100,
-              80500,
-              80300,
-              75200,
-              64000,
-              64400,
-              66200,
-              72100,
-              72900,
-              68900
+              77900,
+              80700,
+              84000,
+              81500,
+              86500,
+              83400,
+              85400,
+              92400,
+              94400,
+              95000,
+              94000,
+              93000,
+              87000,
+              80800,
+              78600,
+              87500,
+              75000,
+              79900,
+              82000,
+              88800,
+              94700,
+              105800,
+              118600
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -4487,26 +4487,26 @@
             "rank": 9,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "042000",
-            "name": "카페24",
+            "ticker": "207940",
+            "name": "삼성바이오로직스",
             "market": "KR",
-            "sector": "우량기업부",
+            "sector": null,
             "currency": "KRW",
-            "price": 18400,
-            "changePct": 5.99,
-            "score": 62,
-            "rawZ": 0.722,
+            "price": 1456000,
+            "changePct": 7.3,
+            "score": 67.1,
+            "rawZ": 1.027,
             "completeness": 0.8,
-            "riskGauge": 4,
+            "riskGauge": 1,
             "entry": {
-              "low": 17971,
-              "high": 19087
+              "low": 1439226,
+              "high": 1482838
             },
-            "stop": 15824,
+            "stop": 1355358,
             "targets": {
-              "conservative": 20117,
-              "base": 21491,
-              "bull": 23551
+              "conservative": 1523095,
+              "base": 1576770,
+              "bull": 1657284
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -4515,12 +4515,12 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 7.695,
-                "z": 3
+                "raw": 2.354,
+                "z": 2.04
               },
               "gapQuality": {
-                "raw": 0,
-                "z": 0
+                "raw": 0.459,
+                "z": 3
               },
               "newsSentiment": {
                 "raw": null,
@@ -4531,41 +4531,41 @@
                 "z": 0
               },
               "trendPosition": {
-                "raw": 0.347,
-                "z": 1.697
+                "raw": 0.273,
+                "z": 2.873
               }
             },
             "sparkline": [
-              17020,
-              17120,
-              16990,
-              16740,
-              16040,
-              15810,
-              16120,
-              16130,
-              15920,
-              15540,
-              15510,
-              15500,
-              15530,
-              15820,
-              15510,
-              15380,
-              15070,
-              15190,
-              15080,
-              17800,
-              18670,
-              21200,
-              20500,
-              22950,
-              22300,
-              22200,
-              18260,
-              17350,
-              17360,
-              18400
+              1477000,
+              1447000,
+              1466000,
+              1415000,
+              1409000,
+              1411000,
+              1401000,
+              1399000,
+              1395000,
+              1399000,
+              1391000,
+              1371000,
+              1393000,
+              1382000,
+              1390000,
+              1422000,
+              1365000,
+              1310000,
+              1274000,
+              1219000,
+              1201000,
+              1206000,
+              1177000,
+              1221000,
+              1285000,
+              1394000,
+              1382000,
+              1416000,
+              1357000,
+              1456000
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -4577,26 +4577,26 @@
             "rank": 10,
             "movement": "NEW",
             "heldSessions": 1,
-            "ticker": "486990",
-            "name": "노타",
+            "ticker": "290550",
+            "name": "디케이티",
             "market": "KR",
-            "sector": "기술성장기업부",
+            "sector": "우량기업부",
             "currency": "KRW",
-            "price": 16130,
-            "changePct": 4.88,
-            "score": 61.8,
-            "rawZ": 0.708,
+            "price": 25600,
+            "changePct": 10.34,
+            "score": 66.1,
+            "rawZ": 0.967,
             "completeness": 0.8,
             "riskGauge": 3,
             "entry": {
-              "low": 15816,
-              "high": 16632
+              "low": 25069,
+              "high": 26450
             },
-            "stop": 14248,
+            "stop": 21888,
             "targets": {
-              "conservative": 17384,
-              "base": 18388,
-              "bull": 19893
+              "conservative": 27724,
+              "base": 29424,
+              "bull": 31973
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -4605,57 +4605,57 @@
             "catalystCluster": null,
             "factors": {
               "relativeVolume": {
-                "raw": 3.084,
-                "z": 1.916
+                "raw": 2.443,
+                "z": 2.223
               },
               "gapQuality": {
-                "raw": 0.214,
-                "z": 3
+                "raw": 0,
+                "z": 0
               },
               "newsSentiment": {
                 "raw": null,
                 "z": null
               },
               "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
+                "raw": 0.096,
+                "z": 2.871
               },
               "trendPosition": {
-                "raw": -0.6,
-                "z": -0.276
+                "raw": 0.934,
+                "z": 3
               }
             },
             "sparkline": [
-              17750,
-              17810,
-              17800,
-              17720,
-              17210,
-              16720,
-              16960,
-              16830,
-              17310,
-              17460,
-              17490,
-              22550,
-              20400,
-              20350,
-              20350,
-              19610,
-              20450,
-              20500,
+              15800,
+              15700,
+              16500,
+              15550,
+              16800,
+              16040,
+              15840,
+              17220,
+              16940,
+              18880,
+              21250,
+              21550,
+              21350,
+              22150,
+              22150,
+              22450,
+              21650,
+              23950,
+              24450,
+              23450,
+              25550,
+              22200,
+              22400,
+              19840,
               20950,
-              20200,
-              18900,
-              17200,
-              16810,
-              16600,
-              14700,
-              15600,
-              16000,
-              15070,
-              15380,
-              16130
+              21750,
+              21900,
+              21950,
+              23200,
+              25600
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -4669,7 +4669,7 @@
       "mid_term": {
         "market": "KR",
         "horizon": "mid_term",
-        "asOf": "2026-10-22",
+        "asOf": "2026-10-23",
         "turnover30d": 0.07931034482758621,
         "sampleWarning": false,
         "stoppedOut": [],
@@ -4678,27 +4678,27 @@
           {
             "rank": 1,
             "movement": 0,
-            "heldSessions": 3,
+            "heldSessions": 4,
             "ticker": "159010",
             "name": "아스플로",
             "market": "KR",
             "sector": "벤처기업부",
             "currency": "KRW",
-            "price": 30150,
-            "changePct": -1.63,
-            "score": 70,
-            "rawZ": 1.201,
+            "price": 31900,
+            "changePct": 5.8,
+            "score": 69.9,
+            "rawZ": 1.191,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
-              "low": 28309,
-              "high": 31071
+              "low": 30012,
+              "high": 32844
             },
-            "stop": 20950,
+            "stop": 21280,
             "targets": {
-              "conservative": 37822,
-              "base": 43960,
-              "bull": 51632
+              "conservative": 39765,
+              "base": 46057,
+              "bull": 53923
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -4707,7 +4707,7 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.562,
+                "raw": 0.63,
                 "z": 3
               },
               "fundamentalMomentum": {
@@ -4715,20 +4715,19 @@
                 "z": 3
               },
               "earningsDrift": {
-                "raw": 0.021,
-                "z": 2.15
+                "raw": 0.02,
+                "z": 2.086
               },
               "moneyFlow": {
-                "raw": 0.214,
-                "z": 1.376
+                "raw": 0.148,
+                "z": 1.06
               },
               "sectorStrength": {
-                "raw": 0.614,
-                "z": 2.099
+                "raw": 0.761,
+                "z": 2.43
               }
             },
             "sparkline": [
-              10940,
               11120,
               13880,
               13190,
@@ -4757,7 +4756,8 @@
               29400,
               28450,
               30650,
-              30150
+              30150,
+              31900
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -4766,27 +4766,27 @@
           {
             "rank": 2,
             "movement": 0,
-            "heldSessions": 26,
+            "heldSessions": 27,
             "ticker": "092870",
             "name": "엑시콘",
             "market": "KR",
             "sector": "우량기업부",
             "currency": "KRW",
-            "price": 48950,
-            "changePct": -7.12,
-            "score": 69.1,
-            "rawZ": 1.144,
+            "price": 51300,
+            "changePct": 4.8,
+            "score": 68.6,
+            "rawZ": 1.115,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
-              "low": 45537,
-              "high": 50656
+              "low": 47745,
+              "high": 53077
             },
-            "stop": 34730,
+            "stop": 36126,
             "targets": {
-              "conservative": 63170,
-              "base": 74546,
-              "bull": 88766
+              "conservative": 66111,
+              "base": 77961,
+              "bull": 92772
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -4795,7 +4795,7 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.466,
+                "raw": 0.523,
                 "z": 3
               },
               "fundamentalMomentum": {
@@ -4803,20 +4803,19 @@
                 "z": 3
               },
               "earningsDrift": {
-                "raw": 0.044,
+                "raw": 0.042,
                 "z": 3
               },
               "moneyFlow": {
-                "raw": 0.252,
-                "z": 1.539
+                "raw": 0.184,
+                "z": 1.221
               },
               "sectorStrength": {
-                "raw": 0.118,
+                "raw": 0.102,
                 "z": 0
               }
             },
             "sparkline": [
-              31050,
               30300,
               32650,
               30500,
@@ -4845,7 +4844,8 @@
               54200,
               49900,
               52700,
-              48950
+              48950,
+              51300
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -4853,28 +4853,28 @@
           },
           {
             "rank": 3,
-            "movement": 2,
-            "heldSessions": 26,
+            "movement": 0,
+            "heldSessions": 27,
             "ticker": "098120",
             "name": "마이크로컨텍솔",
             "market": "KR",
             "sector": "우량기업부",
             "currency": "KRW",
-            "price": 41100,
-            "changePct": -9.17,
-            "score": 67.4,
-            "rawZ": 1.045,
+            "price": 43850,
+            "changePct": 6.69,
+            "score": 67.6,
+            "rawZ": 1.053,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
-              "low": 38457,
-              "high": 42422
+              "low": 41145,
+              "high": 45203
             },
-            "stop": 30086,
+            "stop": 32578,
             "targets": {
-              "conservative": 52114,
-              "base": 60926,
-              "bull": 71940
+              "conservative": 55122,
+              "base": 64140,
+              "bull": 75412
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -4883,7 +4883,7 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.201,
+                "raw": 0.279,
                 "z": 3
               },
               "fundamentalMomentum": {
@@ -4891,20 +4891,19 @@
                 "z": 3
               },
               "earningsDrift": {
-                "raw": 0.11,
+                "raw": 0.106,
                 "z": 3
               },
               "moneyFlow": {
-                "raw": -0.003,
-                "z": 0.447
+                "raw": 0.03,
+                "z": 0.537
               },
               "sectorStrength": {
-                "raw": 0.118,
+                "raw": 0.102,
                 "z": 0
               }
             },
             "sparkline": [
-              38850,
               43550,
               41250,
               46550,
@@ -4933,7 +4932,8 @@
               48950,
               46050,
               45250,
-              41100
+              41100,
+              43850
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -4942,27 +4942,27 @@
           {
             "rank": 4,
             "movement": 0,
-            "heldSessions": 26,
+            "heldSessions": 27,
             "ticker": "417840",
             "name": "저스템",
             "market": "KR",
             "sector": "벤처기업부",
             "currency": "KRW",
-            "price": 13000,
-            "changePct": -7.93,
-            "score": 67.1,
-            "rawZ": 1.026,
+            "price": 13790,
+            "changePct": 6.08,
+            "score": 66.9,
+            "rawZ": 1.011,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
-              "low": 12085,
-              "high": 13457
+              "low": 12881,
+              "high": 14245
             },
-            "stop": 9188,
+            "stop": 10002,
             "targets": {
-              "conservative": 16812,
-              "base": 19861,
-              "bull": 23673
+              "conservative": 17578,
+              "base": 20608,
+              "bull": 24396
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -4971,7 +4971,7 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.203,
+                "raw": 0.267,
                 "z": 3
               },
               "fundamentalMomentum": {
@@ -4979,20 +4979,19 @@
                 "z": 3
               },
               "earningsDrift": {
-                "raw": 0.013,
-                "z": 1.191
+                "raw": 0.012,
+                "z": 1.067
               },
               "moneyFlow": {
-                "raw": 0.008,
-                "z": 0.493
+                "raw": -0.047,
+                "z": 0.194
               },
               "sectorStrength": {
-                "raw": 0.614,
-                "z": 2.099
+                "raw": 0.761,
+                "z": 2.43
               }
             },
             "sparkline": [
-              15030,
               14970,
               15110,
               14080,
@@ -5021,7 +5020,8 @@
               15130,
               13520,
               14120,
-              13000
+              13000,
+              13790
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -5029,206 +5029,28 @@
           },
           {
             "rank": 5,
-            "movement": 1,
-            "heldSessions": 19,
-            "ticker": "253590",
-            "name": "네오셈",
-            "market": "KR",
-            "sector": "우량기업부",
-            "currency": "KRW",
-            "price": 15710,
-            "changePct": -1.19,
-            "score": 65.8,
-            "rawZ": 0.95,
-            "completeness": 1,
-            "riskGauge": 3,
-            "entry": {
-              "low": 14974,
-              "high": 16078
-            },
-            "stop": 12554,
-            "targets": {
-              "conservative": 18778,
-              "base": 21233,
-              "bull": 24301
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.498,
-                "z": 3
-              },
-              "fundamentalMomentum": {
-                "raw": 0.914,
-                "z": 3
-              },
-              "earningsDrift": {
-                "raw": 0.017,
-                "z": 1.718
-              },
-              "moneyFlow": {
-                "raw": 0.083,
-                "z": 0.818
-              },
-              "sectorStrength": {
-                "raw": 0.118,
-                "z": 0
-              }
-            },
-            "sparkline": [
-              11450,
-              11450,
-              11250,
-              10940,
-              11550,
-              11140,
-              11290,
-              11460,
-              11860,
-              12310,
-              13080,
-              13210,
-              13610,
-              13100,
-              13490,
-              13380,
-              14490,
-              15590,
-              16230,
-              15790,
-              16150,
-              15690,
-              15720,
-              14940,
-              12910,
-              14900,
-              15670,
-              15010,
-              15900,
-              15710
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": []
-          },
-          {
-            "rank": 6,
-            "movement": 1,
-            "heldSessions": 13,
-            "ticker": "353200",
-            "name": "대덕전자",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 125300,
-            "changePct": -5.65,
-            "score": 65.8,
-            "rawZ": 0.948,
-            "completeness": 0.8,
-            "riskGauge": 4,
-            "entry": {
-              "low": 118765,
-              "high": 128567
-            },
-            "stop": 98072,
-            "targets": {
-              "conservative": 152528,
-              "base": 174310,
-              "bull": 201537
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 45,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "trendAlignment": {
-                "raw": 0.338,
-                "z": 3
-              },
-              "fundamentalMomentum": {
-                "raw": 0.333,
-                "z": 1.186
-              },
-              "earningsDrift": {
-                "raw": 0.023,
-                "z": 2.453
-              },
-              "moneyFlow": {
-                "raw": 0.036,
-                "z": 0.613
-              },
-              "sectorStrength": {
-                "raw": null,
-                "z": null
-              }
-            },
-            "sparkline": [
-              108900,
-              101600,
-              99500,
-              103600,
-              100000,
-              95900,
-              98300,
-              100700,
-              101000,
-              102900,
-              102300,
-              111500,
-              119200,
-              122300,
-              131600,
-              132700,
-              148000,
-              148700,
-              157900,
-              149200,
-              157700,
-              146900,
-              146900,
-              144600,
-              129000,
-              131500,
-              137400,
-              131500,
-              132800,
-              125300
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 7,
-            "movement": -4,
-            "heldSessions": 3,
+            "movement": 2,
+            "heldSessions": 4,
             "ticker": "039200",
             "name": "오스코텍",
             "market": "KR",
             "sector": "벤처기업부",
             "currency": "KRW",
             "price": 37250,
-            "changePct": -1.59,
-            "score": 65.5,
-            "rawZ": 0.932,
+            "changePct": 0,
+            "score": 66.3,
+            "rawZ": 0.976,
             "completeness": 1,
             "riskGauge": 2,
             "entry": {
-              "low": 35750,
-              "high": 38000
+              "low": 35799,
+              "high": 37975
             },
-            "stop": 30999,
+            "stop": 31205,
             "targets": {
-              "conservative": 43501,
-              "base": 48501,
-              "bull": 54752
+              "conservative": 43295,
+              "base": 48132,
+              "bull": 54177
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -5245,20 +5067,19 @@
                 "z": 3
               },
               "earningsDrift": {
-                "raw": 0.002,
-                "z": -0.193
+                "raw": 0.005,
+                "z": 0.207
               },
               "moneyFlow": {
-                "raw": 0.122,
-                "z": 0.985
+                "raw": 0.08,
+                "z": 0.76
               },
               "sectorStrength": {
-                "raw": 0.614,
-                "z": 2.099
+                "raw": 0.761,
+                "z": 2.43
               }
             },
             "sparkline": [
-              33600,
               35350,
               34950,
               38000,
@@ -5287,6 +5108,7 @@
               38500,
               37500,
               37850,
+              37250,
               37250
             ],
             "newsCount": 0,
@@ -5294,29 +5116,29 @@
             "flags": []
           },
           {
-            "rank": 8,
-            "movement": 1,
-            "heldSessions": 26,
-            "ticker": "031980",
-            "name": "피에스케이홀딩스",
+            "rank": 6,
+            "movement": -1,
+            "heldSessions": 20,
+            "ticker": "253590",
+            "name": "네오셈",
             "market": "KR",
             "sector": "우량기업부",
             "currency": "KRW",
-            "price": 165200,
-            "changePct": -10.27,
-            "score": 64.4,
-            "rawZ": 0.864,
+            "price": 16290,
+            "changePct": 3.69,
+            "score": 65.4,
+            "rawZ": 0.925,
             "completeness": 1,
-            "riskGauge": 5,
+            "riskGauge": 3,
             "entry": {
-              "low": 155139,
-              "high": 170231
+              "low": 15520,
+              "high": 16675
             },
-            "stop": 123278,
+            "stop": 12648,
             "targets": {
-              "conservative": 207122,
-              "base": 240660,
-              "bull": 282583
+              "conservative": 19500,
+              "base": 22068,
+              "bull": 25278
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -5325,86 +5147,86 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.301,
+                "raw": 0.533,
                 "z": 3
               },
               "fundamentalMomentum": {
-                "raw": 0.317,
-                "z": 1.096
+                "raw": 0.914,
+                "z": 3
               },
               "earningsDrift": {
-                "raw": 0.021,
-                "z": 2.211
+                "raw": 0.016,
+                "z": 1.567
               },
               "moneyFlow": {
-                "raw": 0.274,
-                "z": 1.634
+                "raw": 0.066,
+                "z": 0.698
               },
               "sectorStrength": {
-                "raw": 0.118,
+                "raw": 0.102,
                 "z": 0
               }
             },
             "sparkline": [
-              122000,
-              129500,
-              144000,
-              156000,
-              157000,
-              153200,
-              165300,
-              166800,
-              166900,
-              159900,
-              170000,
-              158200,
-              163200,
-              166900,
-              180800,
-              178600,
-              194000,
-              193600,
-              197000,
-              202000,
-              209500,
-              201500,
-              216000,
-              208500,
-              184800,
-              198800,
-              195100,
-              176600,
-              184100,
-              165200
+              11450,
+              11250,
+              10940,
+              11550,
+              11140,
+              11290,
+              11460,
+              11860,
+              12310,
+              13080,
+              13210,
+              13610,
+              13100,
+              13490,
+              13380,
+              14490,
+              15590,
+              16230,
+              15790,
+              16150,
+              15690,
+              15720,
+              14940,
+              12910,
+              14900,
+              15670,
+              15010,
+              15900,
+              15710,
+              16290
             ],
             "newsCount": 0,
             "sentiment": null,
             "flags": []
           },
           {
-            "rank": 9,
+            "rank": 7,
             "movement": -1,
-            "heldSessions": 18,
-            "ticker": "323280",
-            "name": "태성",
+            "heldSessions": 14,
+            "ticker": "353200",
+            "name": "대덕전자",
             "market": "KR",
-            "sector": "중견기업부",
+            "sector": null,
             "currency": "KRW",
-            "price": 50900,
-            "changePct": -10.7,
-            "score": 64.4,
-            "rawZ": 0.863,
-            "completeness": 1,
+            "price": 124400,
+            "changePct": -0.72,
+            "score": 65.3,
+            "rawZ": 0.92,
+            "completeness": 0.8,
             "riskGauge": 4,
             "entry": {
-              "low": 48272,
-              "high": 52214
+              "low": 117874,
+              "high": 127663
             },
-            "stop": 39949,
+            "stop": 97207,
             "targets": {
-              "conservative": 61851,
-              "base": 70612,
-              "bull": 81563
+              "conservative": 151593,
+              "base": 173348,
+              "bull": 200542
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -5413,7 +5235,97 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.304,
+                "raw": 0.337,
+                "z": 3
+              },
+              "fundamentalMomentum": {
+                "raw": 0.333,
+                "z": 1.27
+              },
+              "earningsDrift": {
+                "raw": 0.023,
+                "z": 2.412
+              },
+              "moneyFlow": {
+                "raw": -0.026,
+                "z": 0.286
+              },
+              "sectorStrength": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              101600,
+              99500,
+              103600,
+              100000,
+              95900,
+              98300,
+              100700,
+              101000,
+              102900,
+              102300,
+              111500,
+              119200,
+              122300,
+              131600,
+              132700,
+              148000,
+              148700,
+              157900,
+              149200,
+              157700,
+              146900,
+              146900,
+              144600,
+              129000,
+              131500,
+              137400,
+              131500,
+              132800,
+              125300,
+              124400
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 8,
+            "movement": 1,
+            "heldSessions": 19,
+            "ticker": "323280",
+            "name": "태성",
+            "market": "KR",
+            "sector": "중견기업부",
+            "currency": "KRW",
+            "price": 51000,
+            "changePct": 0.2,
+            "score": 64.7,
+            "rawZ": 0.882,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 48399,
+              "high": 52301
+            },
+            "stop": 40162,
+            "targets": {
+              "conservative": 61838,
+              "base": 70509,
+              "bull": 81347
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 0.315,
                 "z": 3
               },
               "fundamentalMomentum": {
@@ -5421,20 +5333,19 @@
                 "z": 3
               },
               "earningsDrift": {
-                "raw": 0.014,
-                "z": 1.281
+                "raw": 0.017,
+                "z": 1.648
               },
               "moneyFlow": {
-                "raw": 0.078,
-                "z": 0.795
+                "raw": -0.008,
+                "z": 0.367
               },
               "sectorStrength": {
-                "raw": -0.014,
-                "z": -0.561
+                "raw": 0.028,
+                "z": -0.275
               }
             },
             "sparkline": [
-              45500,
               43450,
               44850,
               47450,
@@ -5463,36 +5374,37 @@
               59800,
               56400,
               57000,
-              50900
+              50900,
+              51000
             ],
             "newsCount": 0,
             "sentiment": null,
             "flags": []
           },
           {
-            "rank": 10,
-            "movement": 0,
-            "heldSessions": 8,
+            "rank": 9,
+            "movement": 1,
+            "heldSessions": 9,
             "ticker": "080580",
             "name": "오킨스전자",
             "market": "KR",
             "sector": "벤처기업부",
             "currency": "KRW",
-            "price": 23150,
-            "changePct": -10.1,
-            "score": 63.5,
-            "rawZ": 0.81,
+            "price": 24450,
+            "changePct": 5.62,
+            "score": 64.3,
+            "rawZ": 0.856,
             "completeness": 1,
             "riskGauge": 5,
             "entry": {
-              "low": 21584,
-              "high": 23933
+              "low": 22855,
+              "high": 25248
             },
-            "stop": 16626,
+            "stop": 17803,
             "targets": {
-              "conservative": 29674,
-              "base": 34893,
-              "bull": 41417
+              "conservative": 31097,
+              "base": 36415,
+              "bull": 43062
             },
             "targetBasis": "atr",
             "thesisInvalidation": null,
@@ -5501,28 +5413,27 @@
             "catalystCluster": null,
             "factors": {
               "trendAlignment": {
-                "raw": 0.311,
+                "raw": 0.389,
                 "z": 3
               },
               "fundamentalMomentum": {
                 "raw": 0.145,
-                "z": 0.144
+                "z": 0.175
               },
               "earningsDrift": {
-                "raw": 0.017,
-                "z": 1.736
+                "raw": 0.02,
+                "z": 2.091
               },
               "moneyFlow": {
-                "raw": 0.122,
-                "z": 0.985
+                "raw": 0.086,
+                "z": 0.788
               },
               "sectorStrength": {
-                "raw": 0.614,
-                "z": 2.099
+                "raw": 0.761,
+                "z": 2.43
               }
             },
             "sparkline": [
-              19480,
               20300,
               21000,
               19460,
@@ -5551,7 +5462,96 @@
               28350,
               25550,
               25750,
-              23150
+              23150,
+              24450
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": []
+          },
+          {
+            "rank": 10,
+            "movement": -2,
+            "heldSessions": 27,
+            "ticker": "031980",
+            "name": "피에스케이홀딩스",
+            "market": "KR",
+            "sector": "우량기업부",
+            "currency": "KRW",
+            "price": 172600,
+            "changePct": 4.48,
+            "score": 64.1,
+            "rawZ": 0.846,
+            "completeness": 1,
+            "riskGauge": 4,
+            "entry": {
+              "low": 162452,
+              "high": 177674
+            },
+            "stop": 130315,
+            "targets": {
+              "conservative": 214885,
+              "base": 248713,
+              "bull": 290998
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 45,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "trendAlignment": {
+                "raw": 0.372,
+                "z": 3
+              },
+              "fundamentalMomentum": {
+                "raw": 0.317,
+                "z": 1.175
+              },
+              "earningsDrift": {
+                "raw": 0.02,
+                "z": 2.049
+              },
+              "moneyFlow": {
+                "raw": 0.252,
+                "z": 1.524
+              },
+              "sectorStrength": {
+                "raw": 0.102,
+                "z": 0
+              }
+            },
+            "sparkline": [
+              129500,
+              144000,
+              156000,
+              157000,
+              153200,
+              165300,
+              166800,
+              166900,
+              159900,
+              170000,
+              158200,
+              163200,
+              166900,
+              180800,
+              178600,
+              194000,
+              193600,
+              197000,
+              202000,
+              209500,
+              201500,
+              216000,
+              208500,
+              184800,
+              198800,
+              195100,
+              176600,
+              184100,
+              165200,
+              172600
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -5563,7 +5563,7 @@
       "long_term": {
         "market": "KR",
         "horizon": "long_term",
-        "asOf": "2026-10-22",
+        "asOf": "2026-10-23",
         "turnover30d": 0.031034482758620686,
         "sampleWarning": true,
         "stoppedOut": [],
@@ -5572,27 +5572,27 @@
           {
             "rank": 1,
             "movement": 0,
-            "heldSessions": 8,
+            "heldSessions": 9,
             "ticker": "170920",
             "name": "엘티씨",
             "market": "KR",
             "sector": "벤처기업부",
             "currency": "KRW",
-            "price": 34400,
-            "changePct": -4.84,
-            "score": 89.1,
-            "rawZ": 2.348,
+            "price": 34100,
+            "changePct": -0.87,
+            "score": 85.7,
+            "rawZ": 2.144,
             "completeness": 0.8,
             "riskGauge": 5,
             "entry": {
-              "low": 31035,
-              "high": 36083
+              "low": 30768,
+              "high": 35766
             },
             "stop": null,
             "targets": {
-              "conservative": 47021,
-              "base": 62694,
-              "bull": 84637
+              "conservative": 46610,
+              "base": 62147,
+              "bull": 83899
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -5610,15 +5610,15 @@
               },
               "capitalEfficiency": {
                 "raw": 0.946,
-                "z": 3
+                "z": 2.125
               },
               "cashGeneration": {
-                "raw": 0.348,
+                "raw": 0.349,
                 "z": 3
               },
               "valuation": {
-                "raw": -0.474,
-                "z": 1.563
+                "raw": -0.46,
+                "z": 1.893
               },
               "fScore": {
                 "raw": 7.875,
@@ -5626,7 +5626,6 @@
               }
             },
             "sparkline": [
-              33000,
               33700,
               32750,
               35950,
@@ -5655,7 +5654,8 @@
               38250,
               36600,
               36150,
-              34400
+              34400,
+              34100
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -5666,27 +5666,27 @@
           {
             "rank": 2,
             "movement": 0,
-            "heldSessions": 7,
+            "heldSessions": 8,
             "ticker": "067310",
             "name": "하나마이크론",
             "market": "KR",
             "sector": "중견기업부",
             "currency": "KRW",
-            "price": 36150,
-            "changePct": -7.31,
-            "score": 83.4,
-            "rawZ": 2.002,
+            "price": 35750,
+            "changePct": -1.11,
+            "score": 85.6,
+            "rawZ": 2.137,
             "completeness": 0.8,
             "riskGauge": 4,
             "entry": {
-              "low": 32787,
-              "high": 37831
+              "low": 32470,
+              "high": 37390
             },
             "stop": null,
             "targets": {
-              "conservative": 49413,
-              "base": 65883,
-              "bull": 88943
+              "conservative": 48866,
+              "base": 65154,
+              "bull": 87958
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -5707,20 +5707,19 @@
                 "z": 3
               },
               "cashGeneration": {
-                "raw": 0.303,
+                "raw": 0.304,
                 "z": 3
               },
               "valuation": {
-                "raw": -0.911,
-                "z": 0
+                "raw": -0.884,
+                "z": 0.462
               },
               "fScore": {
                 "raw": 7.875,
-                "z": 1.012
+                "z": 1.18
               }
             },
             "sparkline": [
-              35350,
               34700,
               34850,
               36350,
@@ -5749,7 +5748,8 @@
               40400,
               37300,
               39000,
-              36150
+              36150,
+              35750
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -5760,27 +5760,27 @@
           {
             "rank": 3,
             "movement": 0,
-            "heldSessions": 10,
+            "heldSessions": 11,
             "ticker": "073240",
             "name": "금호타이어",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 5300,
-            "changePct": -3.28,
-            "score": 79.6,
-            "rawZ": 1.778,
+            "price": 5220,
+            "changePct": -1.51,
+            "score": 78.6,
+            "rawZ": 1.717,
             "completeness": 0.8,
-            "riskGauge": 3,
+            "riskGauge": 2,
             "entry": {
-              "low": 4935,
-              "high": 5483
+              "low": 4870,
+              "high": 5395
             },
             "stop": null,
             "targets": {
-              "conservative": 7244,
-              "base": 9659,
-              "bull": 13040
+              "conservative": 7135,
+              "base": 9513,
+              "bull": 12843
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -5798,15 +5798,15 @@
               },
               "capitalEfficiency": {
                 "raw": 1.042,
-                "z": 1.523
+                "z": 1.505
               },
               "cashGeneration": {
-                "raw": 1.071,
-                "z": 2.446
+                "raw": 1.097,
+                "z": 2.255
               },
               "valuation": {
-                "raw": 4.049,
-                "z": 2.522
+                "raw": 4.24,
+                "z": 2.529
               },
               "fScore": {
                 "raw": 5.625,
@@ -5814,7 +5814,6 @@
               }
             },
             "sparkline": [
-              7100,
               7360,
               7360,
               7130,
@@ -5843,7 +5842,8 @@
               5980,
               5380,
               5480,
-              5300
+              5300,
+              5220
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -5854,27 +5854,27 @@
           {
             "rank": 4,
             "movement": 0,
-            "heldSessions": 31,
+            "heldSessions": 32,
             "ticker": "002990",
             "name": "금호건설",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 9760,
-            "changePct": -2.69,
-            "score": 78.5,
-            "rawZ": 1.707,
+            "price": 9420,
+            "changePct": -3.48,
+            "score": 78.6,
+            "rawZ": 1.713,
             "completeness": 0.8,
             "riskGauge": 5,
             "entry": {
-              "low": 8601,
-              "high": 10339
+              "low": 8306,
+              "high": 9977
             },
             "stop": null,
             "targets": {
-              "conservative": 13341,
-              "base": 17788,
-              "bull": 24013
+              "conservative": 12876,
+              "base": 17168,
+              "bull": 23177
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -5892,15 +5892,15 @@
               },
               "capitalEfficiency": {
                 "raw": 1.4,
-                "z": 2.349
+                "z": 2.33
               },
               "cashGeneration": {
-                "raw": 0.647,
-                "z": 1.896
+                "raw": 0.66,
+                "z": 1.842
               },
               "valuation": {
-                "raw": 0.882,
-                "z": 1.802
+                "raw": 0.995,
+                "z": 1.921
               },
               "fScore": {
                 "raw": 5.625,
@@ -5908,7 +5908,6 @@
               }
             },
             "sparkline": [
-              17100,
               16510,
               16090,
               16110,
@@ -5937,7 +5936,8 @@
               10430,
               9560,
               10030,
-              9760
+              9760,
+              9420
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -5948,27 +5948,27 @@
           {
             "rank": 5,
             "movement": 0,
-            "heldSessions": 10,
+            "heldSessions": 11,
             "ticker": "064350",
             "name": "현대로템",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 83600,
-            "changePct": -5.64,
-            "score": 77.7,
-            "rawZ": 1.66,
+            "price": 81600,
+            "changePct": -2.39,
+            "score": 77.8,
+            "rawZ": 1.669,
             "completeness": 0.8,
             "riskGauge": 3,
             "entry": {
-              "low": 77314,
-              "high": 86743
+              "low": 75498,
+              "high": 84651
             },
             "stop": null,
             "targets": {
-              "conservative": 114271,
-              "base": 152361,
-              "bull": 205687
+              "conservative": 111537,
+              "base": 148716,
+              "bull": 200767
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -5986,15 +5986,15 @@
               },
               "capitalEfficiency": {
                 "raw": 1.4,
-                "z": 2.349
+                "z": 2.33
               },
               "cashGeneration": {
-                "raw": 0.724,
-                "z": 2.196
+                "raw": 0.739,
+                "z": 2.139
               },
               "valuation": {
-                "raw": 1,
-                "z": 1.898
+                "raw": 1.127,
+                "z": 2.03
               },
               "fScore": {
                 "raw": 3.375,
@@ -6002,7 +6002,6 @@
               }
             },
             "sparkline": [
-              122900,
               126400,
               126800,
               127200,
@@ -6031,7 +6030,8 @@
               100300,
               86100,
               88600,
-              83600
+              83600,
+              81600
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6042,27 +6042,27 @@
           {
             "rank": 6,
             "movement": 0,
-            "heldSessions": 10,
+            "heldSessions": 11,
             "ticker": "015760",
             "name": "한국전력",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 28500,
-            "changePct": -0.87,
-            "score": 76,
-            "rawZ": 1.562,
+            "price": 28550,
+            "changePct": 0.18,
+            "score": 75,
+            "rawZ": 1.502,
             "completeness": 0.8,
             "riskGauge": 1,
             "entry": {
-              "low": 27525,
-              "high": 28987
+              "low": 27580,
+              "high": 29035
             },
             "stop": null,
             "targets": {
-              "conservative": 38956,
-              "base": 51941,
-              "bull": 70121
+              "conservative": 39024,
+              "base": 52032,
+              "bull": 70244
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -6080,15 +6080,15 @@
               },
               "capitalEfficiency": {
                 "raw": 0.921,
-                "z": 1.246
+                "z": 1.229
               },
               "cashGeneration": {
-                "raw": 1.099,
-                "z": 2.446
+                "raw": 1.103,
+                "z": 2.255
               },
               "valuation": {
-                "raw": 4.518,
-                "z": 2.522
+                "raw": 4.55,
+                "z": 2.529
               },
               "fScore": {
                 "raw": 3.857,
@@ -6096,7 +6096,6 @@
               }
             },
             "sparkline": [
-              31250,
               32450,
               32150,
               32750,
@@ -6125,7 +6124,8 @@
               29100,
               28000,
               28750,
-              28500
+              28500,
+              28550
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6136,121 +6136,27 @@
           {
             "rank": 7,
             "movement": 1,
-            "heldSessions": 10,
-            "ticker": "090460",
-            "name": "비에이치",
-            "market": "KR",
-            "sector": null,
-            "currency": "KRW",
-            "price": 16640,
-            "changePct": -5.99,
-            "score": 73.5,
-            "rawZ": 1.409,
-            "completeness": 0.8,
-            "riskGauge": 3,
-            "entry": {
-              "low": 15383,
-              "high": 17269
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 22745,
-              "base": 30326,
-              "bull": 40941
-            },
-            "targetBasis": "fair_value_band",
-            "thesisInvalidation": [
-              "Return on invested capital declines for two consecutive quarters",
-              "Free cash flow turns negative on a trailing-twelve-month basis",
-              "Revenue growth falls below zero year-over-year for two quarters"
-            ],
-            "maxHoldSessions": 504,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "growthQuality": {
-                "raw": null,
-                "z": null
-              },
-              "capitalEfficiency": {
-                "raw": 0.462,
-                "z": 0.189
-              },
-              "cashGeneration": {
-                "raw": 0.792,
-                "z": 2.446
-              },
-              "valuation": {
-                "raw": 1.69,
-                "z": 2.46
-              },
-              "fScore": {
-                "raw": 6.75,
-                "z": 0.169
-              }
-            },
-            "sparkline": [
-              20250,
-              19730,
-              21850,
-              21400,
-              19020,
-              19880,
-              19570,
-              18720,
-              19620,
-              20400,
-              19400,
-              19960,
-              20300,
-              20100,
-              20700,
-              20400,
-              20650,
-              20900,
-              22500,
-              21900,
-              21600,
-              18950,
-              18690,
-              18620,
-              16570,
-              17310,
-              18380,
-              17440,
-              17700,
-              16640
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 8,
-            "movement": -1,
-            "heldSessions": 31,
+            "heldSessions": 32,
             "ticker": "005930",
             "name": "삼성전자",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 213000,
-            "changePct": -5.12,
-            "score": 73.4,
-            "rawZ": 1.402,
+            "price": 215000,
+            "changePct": 0.94,
+            "score": 73,
+            "rawZ": 1.377,
             "completeness": 0.8,
             "riskGauge": 2,
             "entry": {
-              "low": 199172,
-              "high": 219914
+              "low": 201303,
+              "high": 221849
             },
             "stop": null,
             "targets": {
-              "conservative": 291144,
-              "base": 388193,
-              "bull": 524060
+              "conservative": 293878,
+              "base": 391838,
+              "bull": 528981
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -6268,15 +6174,15 @@
               },
               "capitalEfficiency": {
                 "raw": 1.4,
-                "z": 2.349
+                "z": 2.33
               },
               "cashGeneration": {
-                "raw": 0.398,
-                "z": 0.915
+                "raw": 0.397,
+                "z": 0.846
               },
               "valuation": {
-                "raw": -0.393,
-                "z": 0.764
+                "raw": -0.399,
+                "z": 0.773
               },
               "fScore": {
                 "raw": 9,
@@ -6284,7 +6190,6 @@
               }
             },
             "sparkline": [
-              250500,
               250000,
               255500,
               270000,
@@ -6313,7 +6218,102 @@
               222000,
               210500,
               224500,
-              213000
+              213000,
+              215000
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 8,
+            "movement": -1,
+            "heldSessions": 11,
+            "ticker": "090460",
+            "name": "비에이치",
+            "market": "KR",
+            "sector": null,
+            "currency": "KRW",
+            "price": 17260,
+            "changePct": 3.73,
+            "score": 72.1,
+            "rawZ": 1.324,
+            "completeness": 0.8,
+            "riskGauge": 3,
+            "entry": {
+              "low": 15970,
+              "high": 17905
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 23592,
+              "base": 31456,
+              "bull": 42466
+            },
+            "targetBasis": "fair_value_band",
+            "thesisInvalidation": [
+              "Return on invested capital declines for two consecutive quarters",
+              "Free cash flow turns negative on a trailing-twelve-month basis",
+              "Revenue growth falls below zero year-over-year for two quarters"
+            ],
+            "maxHoldSessions": 504,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "growthQuality": {
+                "raw": null,
+                "z": null
+              },
+              "capitalEfficiency": {
+                "raw": 0.462,
+                "z": 0.173
+              },
+              "cashGeneration": {
+                "raw": 0.772,
+                "z": 2.255
+              },
+              "valuation": {
+                "raw": 1.532,
+                "z": 2.363
+              },
+              "fScore": {
+                "raw": 6.75,
+                "z": 0.169
+              }
+            },
+            "sparkline": [
+              19730,
+              21850,
+              21400,
+              19020,
+              19880,
+              19570,
+              18720,
+              19620,
+              20400,
+              19400,
+              19960,
+              20300,
+              20100,
+              20700,
+              20400,
+              20650,
+              20900,
+              22500,
+              21900,
+              21600,
+              18950,
+              18690,
+              18620,
+              16570,
+              17310,
+              18380,
+              17440,
+              17700,
+              16640,
+              17260
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6324,27 +6324,27 @@
           {
             "rank": 9,
             "movement": 0,
-            "heldSessions": 9,
+            "heldSessions": 10,
             "ticker": "071970",
             "name": "HD현대마린엔진",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 37000,
-            "changePct": -4.76,
-            "score": 69.8,
-            "rawZ": 1.188,
+            "price": 36200,
+            "changePct": -2.16,
+            "score": 69.7,
+            "rawZ": 1.184,
             "completeness": 0.8,
             "riskGauge": 3,
             "entry": {
-              "low": 34213,
-              "high": 38393
+              "low": 33480,
+              "high": 37560
             },
             "stop": null,
             "targets": {
-              "conservative": 50574,
-              "base": 67433,
-              "bull": 91034
+              "conservative": 49481,
+              "base": 65975,
+              "bull": 89066
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -6362,15 +6362,15 @@
               },
               "capitalEfficiency": {
                 "raw": 1.4,
-                "z": 2.349
+                "z": 2.33
               },
               "cashGeneration": {
-                "raw": 0.384,
-                "z": 0.863
+                "raw": 0.39,
+                "z": 0.819
               },
               "valuation": {
-                "raw": -0.478,
-                "z": 0.695
+                "raw": -0.416,
+                "z": 0.759
               },
               "fScore": {
                 "raw": 6.429,
@@ -6378,7 +6378,6 @@
               }
             },
             "sparkline": [
-              53200,
               53100,
               52100,
               48950,
@@ -6407,7 +6406,8 @@
               41800,
               38850,
               38850,
-              37000
+              37000,
+              36200
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6418,27 +6418,27 @@
           {
             "rank": 10,
             "movement": 0,
-            "heldSessions": 31,
+            "heldSessions": 32,
             "ticker": "000660",
             "name": "SK하이닉스",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 1211000,
-            "changePct": -6.63,
-            "score": 69.2,
-            "rawZ": 1.154,
+            "price": 1278000,
+            "changePct": 5.53,
+            "score": 68.7,
+            "rawZ": 1.12,
             "completeness": 0.8,
-            "riskGauge": 4,
+            "riskGauge": 3,
             "entry": {
-              "low": 1112312,
-              "high": 1260344
+              "low": 1178290,
+              "high": 1327855
             },
             "stop": null,
             "targets": {
-              "conservative": 1655286,
-              "base": 2207048,
-              "bull": 2979514
+              "conservative": 1746866,
+              "base": 2329155,
+              "bull": 3144359
             },
             "targetBasis": "fair_value_band",
             "thesisInvalidation": [
@@ -6456,15 +6456,15 @@
               },
               "capitalEfficiency": {
                 "raw": 1.4,
-                "z": 2.349
+                "z": 2.33
               },
               "cashGeneration": {
-                "raw": 0.273,
-                "z": 0.427
+                "raw": 0.269,
+                "z": 0.362
               },
               "valuation": {
-                "raw": -0.513,
-                "z": 0.666
+                "raw": -0.567,
+                "z": 0.634
               },
               "fScore": {
                 "raw": 7.875,
@@ -6472,7 +6472,6 @@
               }
             },
             "sparkline": [
-              1613000,
               1596000,
               1647000,
               1783000,
@@ -6501,7 +6500,8 @@
               1303000,
               1209000,
               1297000,
-              1211000
+              1211000,
+              1278000
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6515,7 +6515,7 @@
       "ultra_long": {
         "market": "KR",
         "horizon": "ultra_long",
-        "asOf": "2026-10-22",
+        "asOf": "2026-10-23",
         "turnover30d": 0,
         "sampleWarning": true,
         "stoppedOut": [],
@@ -6524,27 +6524,27 @@
           {
             "rank": 1,
             "movement": 0,
-            "heldSessions": 31,
+            "heldSessions": 32,
             "ticker": "042700",
             "name": "한미반도체",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 190100,
-            "changePct": -6.12,
-            "score": 73.2,
-            "rawZ": 1.391,
+            "price": 190500,
+            "changePct": 0.21,
+            "score": 73.7,
+            "rawZ": 1.424,
             "completeness": 1,
             "riskGauge": 4,
             "entry": {
-              "low": 166207,
-              "high": 198064
+              "low": 167350,
+              "high": 198217
             },
             "stop": null,
             "targets": {
-              "conservative": 216103,
-              "base": 239590,
-              "bull": 268222
+              "conservative": 216558,
+              "base": 240095,
+              "bull": 268786
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -6559,19 +6559,19 @@
             "factors": {
               "moatStrength": {
                 "raw": 0.759,
-                "z": 1.707
+                "z": 1.711
               },
               "cashFlowDurability": {
                 "raw": 0.851,
-                "z": 1.618
+                "z": 1.62
               },
               "reinvestmentRunway": {
                 "raw": 0.034,
-                "z": 2.154
+                "z": 2.298
               },
               "balanceSheetStrength": {
                 "raw": 1.24,
-                "z": 0.55
+                "z": 0.569
               },
               "shareholderYield": {
                 "raw": 0.301,
@@ -6579,7 +6579,6 @@
               }
             },
             "sparkline": [
-              213500,
               210500,
               230000,
               240500,
@@ -6608,7 +6607,8 @@
               218000,
               198800,
               202500,
-              190100
+              190100,
+              190500
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6616,123 +6616,28 @@
           },
           {
             "rank": 2,
-            "movement": 0,
-            "heldSessions": 31,
-            "ticker": "240810",
-            "name": "원익IPS",
-            "market": "KR",
-            "sector": "우량기업부",
-            "currency": "KRW",
-            "price": 94500,
-            "changePct": -10.17,
-            "score": 69.6,
-            "rawZ": 1.174,
-            "completeness": 0.8,
-            "riskGauge": 5,
-            "entry": {
-              "low": 79658,
-              "high": 99447
-            },
-            "stop": null,
-            "targets": {
-              "conservative": 116481,
-              "base": 137594,
-              "bull": 164821
-            },
-            "targetBasis": "compounding_scenarios",
-            "thesisInvalidation": [
-              "Return on invested capital declines for three consecutive fiscal years",
-              "Gross margin falls below its 10-year 20th percentile",
-              "Net debt to EBITDA rises above 3.5x",
-              "Share count grows more than 2% per year for three consecutive years"
-            ],
-            "maxHoldSessions": 2520,
-            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
-            "catalystCluster": null,
-            "factors": {
-              "moatStrength": {
-                "raw": 0.631,
-                "z": 0.779
-              },
-              "cashFlowDurability": {
-                "raw": 0.62,
-                "z": 0.312
-              },
-              "reinvestmentRunway": {
-                "raw": 0.055,
-                "z": 3
-              },
-              "balanceSheetStrength": {
-                "raw": 1.599,
-                "z": 0.876
-              },
-              "shareholderYield": {
-                "raw": null,
-                "z": null
-              }
-            },
-            "sparkline": [
-              109700,
-              105000,
-              114800,
-              117600,
-              110300,
-              109100,
-              108000,
-              117400,
-              118300,
-              121100,
-              129700,
-              128300,
-              133300,
-              123500,
-              130600,
-              131500,
-              142400,
-              139300,
-              141300,
-              131100,
-              133700,
-              130900,
-              130400,
-              121300,
-              101200,
-              108400,
-              110900,
-              102100,
-              105200,
-              94500
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 3,
-            "movement": 0,
-            "heldSessions": 31,
+            "movement": 1,
+            "heldSessions": 32,
             "ticker": "068270",
             "name": "셀트리온",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 192700,
-            "changePct": -2.18,
-            "score": 68.6,
-            "rawZ": 1.116,
+            "price": 193500,
+            "changePct": 0.42,
+            "score": 69.1,
+            "rawZ": 1.148,
             "completeness": 0.8,
             "riskGauge": 1,
             "entry": {
-              "low": 183435,
-              "high": 195788
+              "low": 184372,
+              "high": 196543
             },
             "stop": null,
             "targets": {
-              "conservative": 208037,
-              "base": 221352,
-              "bull": 236997
+              "conservative": 208900,
+              "base": 222271,
+              "bull": 237981
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -6747,19 +6652,19 @@
             "factors": {
               "moatStrength": {
                 "raw": 0.714,
-                "z": 1.485
+                "z": 1.487
               },
               "cashFlowDurability": {
                 "raw": 0.759,
-                "z": 1.282
+                "z": 1.281
               },
               "reinvestmentRunway": {
                 "raw": 0.011,
-                "z": 0.712
+                "z": 0.832
               },
               "balanceSheetStrength": {
                 "raw": 1.349,
-                "z": 0.728
+                "z": 0.751
               },
               "shareholderYield": {
                 "raw": null,
@@ -6767,7 +6672,6 @@
               }
             },
             "sparkline": [
-              186300,
               187100,
               188100,
               186300,
@@ -6796,7 +6700,103 @@
               196600,
               196800,
               197000,
-              192700
+              192700,
+              193500
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 3,
+            "movement": -1,
+            "heldSessions": 32,
+            "ticker": "240810",
+            "name": "원익IPS",
+            "market": "KR",
+            "sector": "우량기업부",
+            "currency": "KRW",
+            "price": 95200,
+            "changePct": 0.74,
+            "score": 68.4,
+            "rawZ": 1.105,
+            "completeness": 0.8,
+            "riskGauge": 5,
+            "entry": {
+              "low": 80657,
+              "high": 100048
+            },
+            "stop": null,
+            "targets": {
+              "conservative": 117344,
+              "base": 138613,
+              "bull": 166042
+            },
+            "targetBasis": "compounding_scenarios",
+            "thesisInvalidation": [
+              "Return on invested capital declines for three consecutive fiscal years",
+              "Gross margin falls below its 10-year 20th percentile",
+              "Net debt to EBITDA rises above 3.5x",
+              "Share count grows more than 2% per year for three consecutive years"
+            ],
+            "maxHoldSessions": 2520,
+            "catalyst": "최근 48시간 내 매핑된 뉴스 없음. 순위는 가격·거래량·재무 요인만 반영.",
+            "catalystCluster": null,
+            "factors": {
+              "moatStrength": {
+                "raw": 0.631,
+                "z": 0.755
+              },
+              "cashFlowDurability": {
+                "raw": 0.62,
+                "z": 0.082
+              },
+              "reinvestmentRunway": {
+                "raw": 0.055,
+                "z": 3
+              },
+              "balanceSheetStrength": {
+                "raw": 1.599,
+                "z": 0.88
+              },
+              "shareholderYield": {
+                "raw": null,
+                "z": null
+              }
+            },
+            "sparkline": [
+              105000,
+              114800,
+              117600,
+              110300,
+              109100,
+              108000,
+              117400,
+              118300,
+              121100,
+              129700,
+              128300,
+              133300,
+              123500,
+              130600,
+              131500,
+              142400,
+              139300,
+              141300,
+              131100,
+              133700,
+              130900,
+              130400,
+              121300,
+              101200,
+              108400,
+              110900,
+              102100,
+              105200,
+              94500,
+              95200
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6806,28 +6806,28 @@
           },
           {
             "rank": 4,
-            "movement": 1,
-            "heldSessions": 31,
+            "movement": 0,
+            "heldSessions": 32,
             "ticker": "000100",
             "name": "유한양행",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 83000,
-            "changePct": -4.05,
-            "score": 64.2,
-            "rawZ": 0.853,
+            "price": 84200,
+            "changePct": 1.45,
+            "score": 64.8,
+            "rawZ": 0.886,
             "completeness": 0.8,
             "riskGauge": 1,
             "entry": {
-              "low": 77868,
-              "high": 84711
+              "low": 79081,
+              "high": 85906
             },
             "stop": null,
             "targets": {
-              "conservative": 96855,
-              "base": 109621,
-              "bull": 125472
+              "conservative": 98255,
+              "base": 111206,
+              "bull": 127287
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -6842,19 +6842,19 @@
             "factors": {
               "moatStrength": {
                 "raw": 0.48,
-                "z": 0.332
+                "z": 0.331
               },
               "cashFlowDurability": {
                 "raw": 0.472,
-                "z": 0.229
+                "z": 0.215
               },
               "reinvestmentRunway": {
                 "raw": 0.041,
-                "z": 2.594
+                "z": 2.746
               },
               "balanceSheetStrength": {
                 "raw": 1.224,
-                "z": 0.523
+                "z": 0.542
               },
               "shareholderYield": {
                 "raw": null,
@@ -6862,7 +6862,6 @@
               }
             },
             "sparkline": [
-              81300,
               81400,
               81400,
               80700,
@@ -6891,7 +6890,8 @@
               86500,
               85600,
               86500,
-              83000
+              83000,
+              84200
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6901,28 +6901,28 @@
           },
           {
             "rank": 5,
-            "movement": -1,
-            "heldSessions": 31,
+            "movement": 0,
+            "heldSessions": 32,
             "ticker": "214450",
             "name": "파마리서치",
             "market": "KR",
             "sector": "우량기업부",
             "currency": "KRW",
-            "price": 252500,
-            "changePct": -4.17,
-            "score": 63.2,
-            "rawZ": 0.795,
+            "price": 237500,
+            "changePct": -5.94,
+            "score": 61.9,
+            "rawZ": 0.711,
             "completeness": 0.8,
-            "riskGauge": 2,
+            "riskGauge": 3,
             "entry": {
-              "low": 227883,
-              "high": 260706
+              "low": 212499,
+              "high": 245834
             },
             "stop": null,
             "targets": {
-              "conservative": 272596,
-              "base": 290043,
-              "bull": 310543
+              "conservative": 256402,
+              "base": 272813,
+              "bull": 292095
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -6937,19 +6937,19 @@
             "factors": {
               "moatStrength": {
                 "raw": 0.747,
-                "z": 1.523
+                "z": 1.481
               },
               "cashFlowDurability": {
                 "raw": 0.718,
-                "z": 0.674
+                "z": 0.411
               },
               "reinvestmentRunway": {
                 "raw": 0.003,
-                "z": 0.172
+                "z": 0.171
               },
               "balanceSheetStrength": {
                 "raw": 1.407,
-                "z": 0.479
+                "z": 0.488
               },
               "shareholderYield": {
                 "raw": null,
@@ -6957,7 +6957,6 @@
               }
             },
             "sparkline": [
-              392500,
               381000,
               386500,
               376500,
@@ -6986,7 +6985,8 @@
               276500,
               264500,
               263500,
-              252500
+              252500,
+              237500
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -6997,27 +6997,27 @@
           {
             "rank": 6,
             "movement": 0,
-            "heldSessions": 31,
+            "heldSessions": 32,
             "ticker": "161890",
             "name": "한국콜마",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 123800,
-            "changePct": -2.37,
-            "score": 61,
-            "rawZ": 0.659,
+            "price": 121600,
+            "changePct": -1.78,
+            "score": 61.4,
+            "rawZ": 0.686,
             "completeness": 0.8,
             "riskGauge": 2,
             "entry": {
-              "low": 112146,
-              "high": 127685
+              "low": 110146,
+              "high": 125418
             },
             "stop": null,
             "targets": {
-              "conservative": 137405,
-              "base": 149471,
-              "bull": 163931
+              "conservative": 134963,
+              "base": 146814,
+              "bull": 161018
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -7032,19 +7032,19 @@
             "factors": {
               "moatStrength": {
                 "raw": 0.55,
-                "z": 0.675
+                "z": 0.674
               },
               "cashFlowDurability": {
                 "raw": 0.636,
-                "z": 0.833
+                "z": 0.826
               },
               "reinvestmentRunway": {
                 "raw": 0.027,
-                "z": 1.753
+                "z": 1.89
               },
               "balanceSheetStrength": {
                 "raw": 0.294,
-                "z": -0.998
+                "z": -1.009
               },
               "shareholderYield": {
                 "raw": null,
@@ -7052,7 +7052,6 @@
               }
             },
             "sparkline": [
-              155000,
               150600,
               145800,
               144300,
@@ -7081,7 +7080,8 @@
               129100,
               126100,
               126800,
-              123800
+              123800,
+              121600
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -7092,27 +7092,27 @@
           {
             "rank": 7,
             "movement": 0,
-            "heldSessions": 31,
+            "heldSessions": 32,
             "ticker": "011070",
             "name": "LG이노텍",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 390500,
-            "changePct": -4.05,
-            "score": 60.8,
-            "rawZ": 0.648,
+            "price": 377000,
+            "changePct": -3.46,
+            "score": 61.3,
+            "rawZ": 0.679,
             "completeness": 0.8,
             "riskGauge": 5,
             "entry": {
-              "low": 330609,
-              "high": 410464
+              "low": 318708,
+              "high": 396431
             },
             "stop": null,
             "targets": {
-              "conservative": 462308,
-              "base": 529206,
-              "bull": 613109
+              "conservative": 446325,
+              "base": 510911,
+              "bull": 591913
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -7127,19 +7127,19 @@
             "factors": {
               "moatStrength": {
                 "raw": 0.351,
-                "z": -0.302
+                "z": -0.306
               },
               "cashFlowDurability": {
                 "raw": 0.569,
-                "z": 0.585
+                "z": 0.576
               },
               "reinvestmentRunway": {
                 "raw": 0.044,
-                "z": 2.837
+                "z": 2.993
               },
               "balanceSheetStrength": {
                 "raw": 0.699,
-                "z": -0.335
+                "z": -0.333
               },
               "shareholderYield": {
                 "raw": null,
@@ -7147,7 +7147,6 @@
               }
             },
             "sparkline": [
-              567000,
               556000,
               562000,
               586000,
@@ -7176,7 +7175,8 @@
               427000,
               401000,
               407000,
-              390500
+              390500,
+              377000
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -7187,27 +7187,27 @@
           {
             "rank": 8,
             "movement": 0,
-            "heldSessions": 31,
+            "heldSessions": 32,
             "ticker": "033780",
             "name": "KT&G",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 193500,
-            "changePct": -0.36,
-            "score": 59.5,
-            "rawZ": 0.568,
+            "price": 189000,
+            "changePct": -2.33,
+            "score": 59.9,
+            "rawZ": 0.594,
             "completeness": 0.8,
             "riskGauge": 1,
             "entry": {
-              "low": 186611,
-              "high": 195796
+              "low": 181917,
+              "high": 191361
             },
             "stop": null,
             "targets": {
-              "conservative": 208900,
-              "base": 222271,
-              "bull": 237981
+              "conservative": 204042,
+              "base": 217102,
+              "bull": 232446
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -7226,15 +7226,15 @@
               },
               "cashFlowDurability": {
                 "raw": 0.52,
-                "z": 0.407
+                "z": 0.395
               },
               "reinvestmentRunway": {
                 "raw": 0.003,
-                "z": 0.223
+                "z": 0.335
               },
               "balanceSheetStrength": {
                 "raw": 1.266,
-                "z": 0.592
+                "z": 0.612
               },
               "shareholderYield": {
                 "raw": null,
@@ -7242,7 +7242,6 @@
               }
             },
             "sparkline": [
-              174400,
               174700,
               172500,
               170300,
@@ -7271,7 +7270,8 @@
               193100,
               193500,
               194200,
-              193500
+              193500,
+              189000
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -7282,27 +7282,27 @@
           {
             "rank": 9,
             "movement": 0,
-            "heldSessions": 31,
+            "heldSessions": 32,
             "ticker": "000660",
             "name": "SK하이닉스",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 1211000,
-            "changePct": -6.63,
-            "score": 58.8,
-            "rawZ": 0.53,
+            "price": 1278000,
+            "changePct": 5.53,
+            "score": 59.3,
+            "rawZ": 0.556,
             "completeness": 0.8,
-            "riskGauge": 4,
+            "riskGauge": 3,
             "entry": {
-              "low": 1062968,
-              "high": 1260344
+              "low": 1128435,
+              "high": 1327855
             },
             "stop": null,
             "targets": {
-              "conservative": 1307381,
-              "base": 1391058,
-              "bull": 1489377
+              "conservative": 1379714,
+              "base": 1468020,
+              "bull": 1571779
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -7317,19 +7317,19 @@
             "factors": {
               "moatStrength": {
                 "raw": 0.517,
-                "z": 0.515
+                "z": 0.514
               },
               "cashFlowDurability": {
                 "raw": 0.677,
-                "z": 0.983
+                "z": 0.978
               },
               "reinvestmentRunway": {
                 "raw": 0.003,
-                "z": 0.215
+                "z": 0.327
               },
               "balanceSheetStrength": {
                 "raw": 1.069,
-                "z": 0.271
+                "z": 0.284
               },
               "shareholderYield": {
                 "raw": null,
@@ -7337,7 +7337,6 @@
               }
             },
             "sparkline": [
-              1613000,
               1596000,
               1647000,
               1783000,
@@ -7366,7 +7365,8 @@
               1303000,
               1209000,
               1297000,
-              1211000
+              1211000,
+              1278000
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -7377,27 +7377,27 @@
           {
             "rank": 10,
             "movement": 0,
-            "heldSessions": 31,
+            "heldSessions": 32,
             "ticker": "018260",
             "name": "삼성에스디에스",
             "market": "KR",
             "sector": null,
             "currency": "KRW",
-            "price": 206000,
-            "changePct": 3,
-            "score": 57.1,
-            "rawZ": 0.426,
+            "price": 212000,
+            "changePct": 2.91,
+            "score": 57.5,
+            "rawZ": 0.449,
             "completeness": 0.8,
             "riskGauge": 2,
             "entry": {
-              "low": 190724,
-              "high": 211092
+              "low": 196100,
+              "high": 217300
             },
             "stop": null,
             "targets": {
-              "conservative": 222395,
-              "base": 236629,
-              "bull": 253354
+              "conservative": 228873,
+              "base": 243521,
+              "bull": 260733
             },
             "targetBasis": "compounding_scenarios",
             "thesisInvalidation": [
@@ -7416,15 +7416,15 @@
               },
               "cashFlowDurability": {
                 "raw": 0.757,
-                "z": 1.276
+                "z": 1.275
               },
               "reinvestmentRunway": {
                 "raw": -0.02,
-                "z": -1.251
+                "z": -1.164
               },
               "balanceSheetStrength": {
                 "raw": 1.276,
-                "z": 0.609
+                "z": 0.629
               },
               "shareholderYield": {
                 "raw": null,
@@ -7432,7 +7432,6 @@
               }
             },
             "sparkline": [
-              233000,
               226000,
               238000,
               242500,
@@ -7461,7 +7460,8 @@
               203000,
               196600,
               200000,
-              206000
+              206000,
+              212000
             ],
             "newsCount": 0,
             "sentiment": null,
