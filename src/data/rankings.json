@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T14:58:26.706Z",
+  "generatedAt": "2026-10-29T20:54:06.379Z",
   "methodologyVersion": "1.0.0",
   "asOf": {
     "US": "2026-10-29",
@@ -484,6 +484,96 @@
             "rank": 6,
             "movement": "NEW",
             "heldSessions": 1,
+            "ticker": "UPS",
+            "name": "UNITED PARCEL SERVICE INC",
+            "market": "US",
+            "sector": "Industrials",
+            "currency": "USD",
+            "price": 106.09,
+            "changePct": 5.75,
+            "score": 77,
+            "rawZ": 1.621,
+            "completeness": 0.8,
+            "riskGauge": 1,
+            "entry": {
+              "low": 105.48,
+              "high": 107.06
+            },
+            "stop": 99.37,
+            "targets": {
+              "conservative": 108.52,
+              "base": 110.47,
+              "bull": 113.39
+            },
+            "targetBasis": "atr",
+            "thesisInvalidation": null,
+            "maxHoldSessions": 5,
+            "catalyst": "UPS (UPS) Q3 2026 Earnings Call Transcript Plus 2 related stories.",
+            "catalystCluster": null,
+            "factors": {
+              "relativeVolume": {
+                "raw": 2.347,
+                "z": 2.23
+              },
+              "gapQuality": {
+                "raw": 0.291,
+                "z": 1.666
+              },
+              "newsSentiment": {
+                "raw": null,
+                "z": null
+              },
+              "volatilityExpansion": {
+                "raw": 0.908,
+                "z": 3
+              },
+              "trendPosition": {
+                "raw": 0.327,
+                "z": 0.127
+              }
+            },
+            "sparkline": [
+              98.77,
+              100.17,
+              99.06,
+              94.75,
+              95.87,
+              95.82,
+              92.05,
+              93.96,
+              94.25,
+              93.93,
+              93.44,
+              93.89,
+              93.02,
+              93.14,
+              93.11,
+              92.29,
+              94.13,
+              94.57,
+              95.34,
+              94.79,
+              95.78,
+              97.83,
+              97.48,
+              97.46,
+              98.52,
+              99.57,
+              101.52,
+              101.06,
+              100.32,
+              106.09
+            ],
+            "newsCount": 0,
+            "sentiment": null,
+            "flags": [
+              "partial_data"
+            ]
+          },
+          {
+            "rank": 7,
+            "movement": "NEW",
+            "heldSessions": 1,
             "ticker": "NUE",
             "name": "NUCOR CORP",
             "market": "US",
@@ -563,96 +653,6 @@
               258.11,
               257.35,
               270.79
-            ],
-            "newsCount": 0,
-            "sentiment": null,
-            "flags": [
-              "partial_data"
-            ]
-          },
-          {
-            "rank": 7,
-            "movement": "NEW",
-            "heldSessions": 1,
-            "ticker": "SPGI",
-            "name": "S&P Global Inc.",
-            "market": "US",
-            "sector": "Industrials",
-            "currency": "USD",
-            "price": 448.93,
-            "changePct": -0.38,
-            "score": 74.6,
-            "rawZ": 1.476,
-            "completeness": 0.8,
-            "riskGauge": 2,
-            "entry": {
-              "low": 446.2,
-              "high": 453.3
-            },
-            "stop": 432.54,
-            "targets": {
-              "conservative": 459.86,
-              "base": 468.6,
-              "bull": 481.71
-            },
-            "targetBasis": "atr",
-            "thesisInvalidation": null,
-            "maxHoldSessions": 5,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
-            "catalystCluster": null,
-            "factors": {
-              "relativeVolume": {
-                "raw": 2.189,
-                "z": 1.872
-              },
-              "gapQuality": {
-                "raw": 0.433,
-                "z": 2.48
-              },
-              "newsSentiment": {
-                "raw": null,
-                "z": null
-              },
-              "volatilityExpansion": {
-                "raw": 0,
-                "z": 0
-              },
-              "trendPosition": {
-                "raw": 0.911,
-                "z": 0.821
-              }
-            },
-            "sparkline": [
-              406.76,
-              404.11,
-              405.32,
-              404.47,
-              402.44,
-              406.5,
-              403.25,
-              403.3,
-              395.92,
-              392.45,
-              394.47,
-              388.16,
-              386.27,
-              390.92,
-              396.13,
-              395.18,
-              402.73,
-              407.82,
-              412.19,
-              409.99,
-              408.57,
-              424.81,
-              429.64,
-              427.83,
-              438.12,
-              443.16,
-              453.1,
-              450.31,
-              450.65,
-              448.93
             ],
             "newsCount": 0,
             "sentiment": null,
@@ -932,6 +932,12 @@
           }
         ],
         "justMissed": [
+          {
+            "ticker": "SPGI",
+            "name": "S&P Global Inc.",
+            "score": 74.6,
+            "displacedBy": "sector_cap"
+          },
           {
             "ticker": "JCI",
             "name": "Johnson Controls International plc",
@@ -1830,7 +1836,7 @@
               59.57
             ],
             "newsCount": 2,
-            "sentiment": -0.299,
+            "sentiment": -0.248,
             "flags": []
           }
         ],
@@ -1971,7 +1977,7 @@
               "Revenue growth falls below zero year-over-year for two quarters"
             ],
             "maxHoldSessions": 504,
-            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
+            "catalyst": "Veeva Systems Takes Over #230 Spot From Vistra",
             "catalystCluster": null,
             "factors": {
               "growthQuality": {
@@ -2828,7 +2834,7 @@
               "Share count grows more than 2% per year for three consecutive years"
             ],
             "maxHoldSessions": 2520,
-            "catalyst": "AI build-out hits snag as Google and Microsoft put off raising capex forecasts Plus 11 related stories.",
+            "catalyst": "Microsoft to raise up to $25 billion in bond market as investors get pickier about AI debt binge Plus 11 related stories.",
             "catalystCluster": null,
             "factors": {
               "moatStrength": {
@@ -2884,8 +2890,8 @@
               532.6,
               531.33
             ],
-            "newsCount": 4,
-            "sentiment": 0.087,
+            "newsCount": 5,
+            "sentiment": 0.41,
             "flags": []
           },
           {
@@ -2974,7 +2980,7 @@
               82.42
             ],
             "newsCount": 1,
-            "sentiment": 0.284,
+            "sentiment": 0.222,
             "flags": [
               "partial_data"
             ]
@@ -3107,7 +3113,7 @@
               "Share count grows more than 2% per year for three consecutive years"
             ],
             "maxHoldSessions": 2520,
-            "catalyst": "Verizon (VZ) Q3 2026 Earnings Call Transcript",
+            "catalyst": "No mapped news in the last 48 hours. Rank reflects price, volume and fundamental factors only.",
             "catalystCluster": null,
             "factors": {
               "moatStrength": {
