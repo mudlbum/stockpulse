@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T21:38:41.490Z",
+  "generatedAt": "2026-11-23T05:59:15.544Z",
   "methodologyVersion": "1.0.0",
   "asOf": {
     "US": "2026-11-21",
@@ -851,8 +851,8 @@
             "currency": "USD",
             "price": 127.95,
             "changePct": 1.52,
-            "score": 66.1,
-            "rawZ": 0.963,
+            "score": 65.4,
+            "rawZ": 0.927,
             "completeness": 1,
             "riskGauge": 1,
             "entry": {
@@ -880,8 +880,8 @@
                 "z": 3
               },
               "newsSentiment": {
-                "raw": 0.193,
-                "z": 0.563
+                "raw": 0.131,
+                "z": 0.302
               },
               "volatilityExpansion": {
                 "raw": 0,
@@ -925,11 +925,18 @@
               127.95
             ],
             "newsCount": 1,
-            "sentiment": 0.193,
+            "sentiment": 0.131,
             "flags": []
           }
         ],
-        "justMissed": []
+        "justMissed": [
+          {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "score": 65.9,
+            "displacedBy": "sector_cap"
+          }
+        ]
       },
       "mid_term": {
         "market": "US",
@@ -2966,8 +2973,8 @@
               498.3,
               484.52
             ],
-            "newsCount": 2,
-            "sentiment": -0.588,
+            "newsCount": 1,
+            "sentiment": -0.451,
             "flags": []
           },
           {
@@ -3094,7 +3101,7 @@
               "Share count grows more than 2% per year for three consecutive years"
             ],
             "maxHoldSessions": 2520,
-            "catalyst": "Anthropic’s record IPO collides with tech’s worst week on Wall Street since 2020 Plus 11 related stories.",
+            "catalyst": "Asian Markets A Sea Of Red Amid Tech Selloff Plus 11 related stories.",
             "catalystCluster": null,
             "factors": {
               "moatStrength": {
@@ -3151,7 +3158,7 @@
               102.92
             ],
             "newsCount": 3,
-            "sentiment": 0.506,
+            "sentiment": -0.17,
             "flags": [
               "partial_data"
             ]
